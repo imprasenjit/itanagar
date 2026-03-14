@@ -1,0 +1,57 @@
+/* Admin redesign palette and header overrides */
+:root{
+  --brand-500: #7b3fa3; /* deep purple */
+  --brand-400: #a86ac9;
+  --accent: #ffb86b; /* warm accent */
+  --muted: #6c757d;
+}
+
+/* Header */
+.main-header .logo {
+  background: linear-gradient(90deg,var(--brand-500),var(--brand-400));
+  color: #fff;
+  display:flex;
+  align-items:center;
+  padding:0 18px;
+}
+.main-header .logo .brand-img{ height:40px; margin-right:10px; }
+.main-header .navbar {
+  background: #ffffff;
+  border-bottom:1px solid rgba(0,0,0,0.06);
+}
+.main-header .navbar .nav > li > a{ color:var(--muted); }
+.main-header .navbar .user-image{ border-radius:50%; width:36px; height:36px; }
+.main-header .logo .logo-mini, .main-header .logo .logo-lg{ font-weight:700; font-size:18px; }
+
+/* Sidebar active color */
+.skin-custom .main-sidebar, .skin-custom .left-side{ background:#f7f6fb; }
+.skin-custom .sidebar-menu > li.active > a { background: linear-gradient(90deg,var(--brand-500),var(--brand-400)); color:#fff; }
+
+/* Adjust small screens */
+@media (max-width:768px){
+  .main-header .logo .logo-lg{ display:none; }
+}
+
+/* Modern sidebar */
+.modern-sidebar { width: 250px; }
+.modern-sidebar .sidebar-brand { background: linear-gradient(90deg,var(--brand-500),var(--brand-400)); color: #fff; }
+.brand-img-sm{ height:40px; width:40px; object-fit:cover; border-radius:6px; }
+.brand-name{ font-weight:700; }
+.sidebar-search .input-group .form-control{ border-radius:4px; height:34px; }
+.btn-search{ background:transparent; border:1px solid rgba(0,0,0,0.06); color:var(--muted); }
+.modern-menu { padding: 8px 0; }
+.modern-menu > li { margin: 6px 0; }
+.modern-menu li.menu-header{ padding:8px 18px; font-size:12px; color:var(--muted); text-transform:uppercase; }
+.modern-menu a{ display:flex; align-items:center; padding:10px 18px; color:#374151; border-left:4px solid transparent; }
+.modern-menu a i{ width:22px; text-align:center; margin-right:10px; color:var(--brand-500); }
+.modern-menu a:hover{ background: rgba(123,63,163,0.06); color: var(--brand-500); text-decoration:none; }
+.modern-menu li.active > a{ background: linear-gradient(90deg,var(--brand-500),var(--brand-400)); color:#fff; border-left-color:transparent; }
+.modern-menu li.active > a i{ color:#fff; }
+
+/* compact responsive */
+@media (max-width:768px){
+  .modern-sidebar { width: 70px; }
+  .modern-sidebar .brand-name, .modern-sidebar .menu-header, .modern-menu a span { display:none; }
+  .modern-sidebar .brand-img-sm{ margin: 0 auto; display:block; }
+}
+

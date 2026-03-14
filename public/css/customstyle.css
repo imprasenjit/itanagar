@@ -1,0 +1,238 @@
+.moregames{
+    padding:40px 0;
+    background:#f2f2f2;
+}
+.more_cardheader {
+    padding-bottom: 15px;
+    border-bottom: 2px dotted #fff;
+    margin-bottom: 15px;
+}
+.moregames_bg{
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ff3019+0,cf0404+100;Red+3D */
+background: #ff3019; /* Old browsers */
+background: -moz-linear-gradient(45deg,  #ff3019 0%, #cf0404 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(45deg,  #ff3019 0%,#cf0404 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(45deg,  #ff3019 0%,#cf0404 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3019', endColorstr='#cf0404',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+color:#FFF;
+border: 5px dotted #f2f2f2;
+}
+
+.moregames .moregamescard{
+    position:relative;
+    box-shadow:none;
+    overflow: visible;
+}
+
+.moregames .moregamescard::before {
+    content: "";
+    background: #f2f2f2;
+    position: absolute;
+    left: -28px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    top: 37px;
+    z-index: 999;
+}
+.moregames .moregamescard::after {
+    content: "";
+    background: #f2f2f2;
+    position: absolute;
+    right: -28px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    top: 37px;
+    z-index: 999;
+}
+
+.moregamescard select {
+    width: auto;
+    border: none;
+    border-radius: 2px;
+    padding-left: 4px;
+    text-align: center;
+}
+
+
+
+/*-------------Login Css----------------*/
+
+.login-box-body {
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffffff+0,f3f3f3+50,ededed+51,ffffff+100;White+Gloss+%232 */
+background: #ffffff !important; /* Old browsers */
+background: -moz-linear-gradient(-45deg,  #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%) !important;/* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%) !important; /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%) !important; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=1 ) !important; /* IE6-9 fallback on horizontal gradient */
+
+    border-radius: 10px;
+    border: 2px solid #FFBB00 !important;
+}
+
+.login-box, .register-box {
+    margin: 4% auto !important;
+}
+
+.login-box-body .form-control {
+    height: 40px;
+    border-radius: 5px;
+}
+
+.login-box-body .form-control-feedback {
+    margin-top: 4px;
+}
+
+.custombtn {
+    height: 40px;
+    border-radius: 5px; 
+    width: 100%;
+    border: none;
+    background: #333;
+    color: #fff;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.custombtn:hover{
+    background: #FFBB00;
+    color: #000;
+}
+a.forgotpass {
+    text-align: center;
+    width: 100%;
+    color: #000;
+    display: block;
+    margin:10px 0;
+}
+a.forgotpass:hover {
+    color:#FFBB00 ;
+}
+p.account_t {
+    display: block;
+    text-align: center;
+    color: #757575;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+p.account_t a:hover {
+    color: #FFBB00;
+}
+
+p.account_t a {
+    color: #000;
+    font-weight: 600;
+}
+
+a.register_btn {
+    display: block;
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #000;
+    color: #000;
+    text-transform: uppercase;
+    border-radius: 5px;
+    margin: 0;
+}
+.login-box-msg, .register-box-msg {
+    margin: 0;
+    text-align: center;
+    padding: 0 20px 20px 20px;
+    font-size: 24px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #000;
+}
+
+a.accountlink {
+    color: #000;
+    font-weight: 600;
+    font-size: 13px;
+}
+a.accountlink:hover {
+    color:#FFBB00 ;
+}
+
+.walletbox {
+    padding: 35px 15px;
+    border: 1px dotted #ddd;
+    margin: 20px 0;
+    text-align: center;
+    background: #f2f2f2;
+    border-radius: 5px;
+}
+.walletsec {
+    padding: 20px;
+    background: #f2f2f2;
+    border-radius: 5px;
+}
+.wallet_money {
+    padding: 15px;
+    background: #FFBB00;
+    text-align: center;
+    color: #fff;
+    border-radius: 5px;
+}
+span.wallet_moneyicon {
+    display: block;
+    font-size: 40px;
+    padding: 5px 15px 15px 15px;
+}
+
+span.wallet_moneyicon i {
+    padding: 15px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+}
+.owl-theme .owl-nav .disabled {
+    opacity: 0 !important;
+}
+
+button.owl-prev {
+    position: absolute;
+    left: -45px;
+    top: 0;
+    bottom: 0;
+    margin: auto !important;
+    height: 40px;
+    width: 40px !important;
+    background: #000 !important;
+    font-size: 20px !important;
+    border-radius:50% !important;
+}
+button.owl-prev span {
+    font-size: 32px;
+    color: #fff;
+    line-height: 32px;
+}
+button.owl-next {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto !important;
+    height: 40px;
+    width: 40px !important;
+    background: #000 !important;
+    font-size: 20px !important;
+    right:-45px;
+    border-radius:50% !important;
+}
+button.owl-next span {
+    font-size: 32px;
+    color: #fff;
+    line-height: 32px;
+}
+.lottery-carousel {
+    position: relative;
+}
+.quizno_box{
+    margin-bottom:30px;
+}
+
+
+
+
+

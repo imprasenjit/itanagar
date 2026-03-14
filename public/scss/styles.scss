@@ -1,0 +1,759 @@
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap');
+
+body{
+    color:$gray-900;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-weight: 600;
+}
+
+img{
+    max-width: 100%;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+.user_login {
+    margin: 0;
+    padding: 0;
+        li{
+            display: inline-block;
+            list-style: none;
+            margin: 0;
+            padding:0;
+                a{
+                    color: $black;
+                    padding: 0 10px;
+                    display: inline-block;
+                    border-right: 1px solid $gray-900; 
+                }
+                :hover{
+                    color:$yellow;
+                    text-decoration: none;
+                }
+        }
+        :last-child a{
+            border:none;
+        }
+}
+.cart{
+    .cart_box{
+        position: relative;
+        padding-right: 10px;
+        i{
+            position: absolute;
+            top: -10px;
+            left: 16px;
+            display: inline-block;
+            padding: 0;
+            background: $yellow;
+            color: #fff;
+            line-height: 18px;
+            width: 20px;
+            text-align: center;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 11px;
+            font-style: normal;
+        }
+    }
+    strong{
+        color: $yellow;
+        font-weight: normal;
+    }
+}
+
+.right_inn {display: inline-flex;}
+
+
+
+.custom_bg{
+    background: $yellow;
+        .nav-link{
+            color: $red;
+            font-size: 18px;
+            font-weight: 500;
+            color: $white !important;
+        }
+}
+.banner{
+    background: #1D0B00;
+    padding:0;
+        .banner_box{
+            color: $white;
+                h4{
+                    color: $yellow;
+                    font-weight: 800;
+                    font-size: 44px;
+                }
+                p{
+                    font-size: 25px;
+                }
+                h2{
+                    font-size: 50px;
+                        span{
+                            font-size: 105px;
+                        }
+                }
+                a.playnow_btn {
+                    background: #01B623;
+                    color: #fff;
+                    padding: 10px 30px;
+                    border-radius: 5px;
+                    display: inline-block;
+                    font-size: 20px;
+                    font-weight: 500;
+                }
+        }
+}
+
+.lottery_games{
+    padding: 50px 0;
+        .games_box{
+            padding: 15px;
+            position: relative;
+            border-radius: 8px; 
+            overflow: hidden;
+            margin-bottom: 15px;
+            h4 {
+                font-size: 31px;
+                color: #fff;
+                font-weight: 600;
+                text-shadow: 0 5px 5px rgba(0,0,0,0.2);
+                margin: 0;
+            }
+            p {
+                font-size: 21px;
+                color: #fff;
+            }
+            ul{
+                margin: 0;
+                padding: 0;
+                position: relative;
+                z-index: 9;
+                font-size: 14px;
+                color: $white;
+                li{
+                    list-style: none;
+                    display: inline-block;
+                    margin: 0;
+                    padding: 0;
+                    a{
+                        background: #000;
+                        padding: 4px 10px;
+                        display: inline-block;
+                        color: $white;
+                    }
+                }
+            }
+        }
+        
+        
+}
+.games_box::after{
+    content:'';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(../images/light.png) no-repeat top center;
+    background-size: cover;
+    opacity: 0.1;
+    top: 0;
+}
+.orange_color {
+    background-image: linear-gradient(to top right, rgba(255,187,0,1), rgba(255,128,0,1));
+  }
+.purpal_color {
+background-image: linear-gradient(to top right, rgba(180,0,255,1), rgba(0,128,255,1));
+}
+.pink_color {
+    background-image: linear-gradient(to top right, rgba(255,0,144,1), rgba(168,0,40,1));
+}
+.yellow_color {
+    background-image: linear-gradient(to top right, rgba(255,187,0,1), rgba(3,190,47,1));
+}
+
+.strip_drow{
+    h1{
+        font-weight: 700;
+    }
+}
+.satisfaction{
+    background: url(../images/bg.jpg) top center no-repeat;
+    background-size: cover;
+    padding: 30px 0;
+    color: $white;
+    h1{
+        font-weight: 700;
+    }
+}
+.winners{
+    padding: 50px 0;
+    .winner_box{
+        padding: 20px;
+        border: 1px solid #000;
+        border-radius: 8px;
+        text-align: center;
+        min-height: 360px;
+        margin-top: 20px;
+        .winimg_box{
+            margin-bottom: 15px;
+        }
+        h5{
+            font-size: 25px;
+        }
+        h2{
+            font-weight: 700;
+        }
+        a{
+            color: $black;
+        }
+        a:hover{
+            color: $yellow;
+            text-decoration: none;
+        }
+
+    }
+}
+footer{
+    background-image: linear-gradient( #f2f2f2,#fff);
+    padding-top: 40px;
+    .footer_menu{
+        text-align: center;
+        padding: 10px 0;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        margin-top: 15px;
+        display: block;
+        ul{
+            margin: 0;
+            padding: 0;
+            li{
+                list-style: none;
+                display: inline-block;
+                a{
+                    color: $black;
+                    padding: 4px 10px;
+                }
+                :hover{
+                    color: $yellow;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+    .footer_box{
+        padding: 30px 0;
+        h6{
+            font-size: 21px;
+        }
+        ul{
+            margin: 0;
+            padding: 0;
+            li{
+                list-style: none;
+                display: block;
+                    a{
+                      color: $black;
+                      font-size: 16px;
+                    }
+                    :hover{
+                        color: $yellow;
+                        text-decoration: none;
+                    }
+            }
+
+        }
+    }
+}
+.social_media {
+    a {
+        color:$gray-600;
+        padding: 0 7px;
+        display: inline-block;
+    }
+    :hover{
+        color: $yellow;
+    }
+}
+.copywright{
+    text-align: center;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+    p{
+        font-size: 14px;
+        margin: 0;
+    }
+}
+
+
+h1{
+    font-size: 44px;
+    font-weight: 700;
+}
+
+.modalcustom {
+    a{
+        font-size: 14px;
+        margin-bottom: 10px;
+        display: block;
+    }
+    label {
+        font-size: 14px;
+        line-height: normal;
+    }
+}
+
+small, .small {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+
+/*=====================================*/
+/*============= QUIZ PAGE =============*/
+/*=====================================*/
+
+.quizsec_inn{
+    background: #f2f2f2;
+    .quizsec_box {
+        padding: 15px;
+    }
+}
+
+.picknumber_sec{
+    padding: 40px 0;
+}
+
+.quizno_box {
+    background: #f2f2f2;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 2px solid transparent;
+     .quiznobox_header {
+        background: #f2f2f2;
+        padding: 10px;
+    }
+    .quizstrip {
+        background: #1D0B00;
+        color: #fff;
+        padding: 10px;
+        font-size: 14px;
+    }
+    .quiznobox_body {
+        padding: 10px;
+        ul {
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+            grid-gap: 5px;
+        }
+        li {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            background: #fff;
+            position: relative;
+            height: 29px;
+            font-size: 14px;
+            line-height: 29px;
+            border: 1px dashed #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            width: 29px;
+            label{
+                width: 100%;
+            }
+            .lottery_number {
+                position: absolute;
+                width: 100%;
+                height: 30px;
+                left: 0;
+                top: 0;
+                opacity: 0;
+                z-index: 1;
+                cursor: pointer;
+            }
+            :checked + label {
+                color: #fff;
+                background: #FFBB00;
+            }
+        }
+        
+    }
+    
+}
+.quizno_box:hover {
+    border-color: #01B623;
+}
+.payment_body .nav-link {
+    color: #000;
+}
+.quizsec_border {
+    border-left: 1px solid rgba(255,255,255,0.2);
+    border-right: 1px solid rgba(255,255,255,0.2);
+}
+
+
+.cartsummary {
+    background: #f2f2f2;
+    padding: 40px 0;
+    .cartsummary_box {
+        padding: 0;
+        background: #fff;
+        border-radius: 5px;
+        h4 {
+            border-bottom: 1px solid #ddd;
+            padding: 15px;
+        }
+        .cartsummery_body {
+            padding: 15px;
+        }
+        .table .thead-dark th{
+            background: #FFBB00;
+            border-color: #FFBB00;
+            font-weight: 500;
+            font-size: 16px;
+        }
+        .numberdegits{
+            margin: 0;
+            padding: 0;
+            display: inline-flex;
+            li{
+                display: inline-block;
+                margin-right: 5px;
+                background: #01B623;
+                color: #fff;
+                width: 40px;
+                height: 40px;
+                text-align: center;
+                line-height: 40px;
+                border-radius: 50%;
+                font-weight: 500;
+            }
+        }
+    }
+
+    .table tr td:last-child {
+        text-align: right;
+    }
+    
+}
+
+ul.countdown_timer {
+    margin: 0;
+    padding: 0;
+ li {
+    display: inline-block;
+    list-style: none;
+    padding: 5px;
+    font-size: 13px;
+    span{
+        display: block;
+        font-size: 16px !important;
+        font-weight: 600;
+        }
+    }
+}
+
+.moregamescard {
+    border-radius: 8px;
+    background: #000;
+    box-shadow: 0 5px 7px rgba(0,0,0,0.2);
+    overflow: hidden;
+    margin-top: 30px;
+    a{
+        color: #000;
+    }
+    .card_img {
+        position: relative;
+    }
+    .topimg {
+        width: 100px;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+    .moregamescard_body {
+        padding: 15px 10px;
+        text-align: center;
+        h4{
+            margin-bottom: 0;
+        }
+        .btn{
+            margin-top: 10px;
+        }
+    }
+}
+.lottery_rules {
+    padding: 40px 0;
+    p{
+        font-size: 16px;
+    }
+}
+
+.btn-warning:hover {
+    color: #fff;
+}
+
+/*========================================*/
+/*============== Checkout ================*/
+/*========================================*/
+
+.checkoutsec{
+    padding: 40px 0;
+    h3{
+        font-weight: 600;
+    }
+    .checkout_box{
+        border: 1px solid #ddd;
+        h3 {
+            padding: 15px 22px;
+            border-bottom: 1px solid #ddd;
+            margin: 0px;
+        }
+        .checkout_body{
+            padding: 15px;
+            background: #f2f2f2;
+            .card {
+                border: none;
+                .card-header {
+                    background: #fff;
+                    padding: 0;
+                    .checkoutlist {
+                        padding: 15px;
+                        cursor: pointer;
+                        .viewnumber{
+                            float: right;
+                        }
+                    }
+                }
+                .table .thead-dark th{
+                    background: #FFBB00;
+                    border-color: #FFBB00;
+                    font-weight: 500;
+                    font-size: 16px;
+                }
+                .numberdegits{
+                    margin: 0;
+                    padding: 0;
+                    display: inline-flex;
+                    li{
+                        display: inline-block;
+                        margin-right: 5px;
+                        background: #01B623;
+                        color: #fff;
+                        width: 40px;
+                        height: 40px;
+                        text-align: center;
+                        line-height: 40px;
+                        border-radius: 50%;
+                        font-weight: 500;
+                    }
+                }
+            }
+        
+            .table tr td:last-child {
+                text-align: right;
+            }
+            
+        }
+    }
+}
+.confirm_body{
+    .table{
+        background: #fff;
+    }
+    .table tr td:last-child {
+        text-align: right;
+    }
+    .table tr th:last-child {
+        text-align: right;
+    }
+}
+
+.payment_body{
+    background: #fff;
+    padding: 15px;
+}
+
+
+
+/*-------------- FAQ ---------------*/
+
+.faq_sec{
+    width: 100%;
+    padding: 40px 0;
+}
+.accordioncard-header {
+    button {
+        padding: 15px 50px 15px 0;
+        border-bottom: 1px solid #ddd;
+        border-radius: 0;
+        width: 100%;
+        text-align: left;
+        color: #000;
+        font-weight: 600;
+        text-decoration: none;
+        position: relative;
+        span.arrowdown {
+            position: absolute;
+            right: 0;
+            width: 32px;
+            height: 32px;
+            text-align: center;
+            line-height: 32px;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            transition: all 0.15s ease-in-out;
+        }
+    }
+    :hover{
+        text-decoration: none;
+    }
+    .btn-link .arrowdown{
+        transform: rotate(180deg);
+    }
+    .collapsed .arrowdown{
+        transform: rotate(0);
+    }
+}
+
+.accordioncard-body {
+    padding: 10px 0;
+    font-size: 15px;
+}
+
+
+
+
+/*-------------- TERMS AND CONDITIONS ---------------*/
+
+.terms_sec{
+    width: 100%;
+    padding: 40px 0;
+}
+.terms_sec{
+    ol{
+        li{
+            margin-bottom: 10px;
+        }
+    }
+}
+
+/*-------------- ABOUT SEC ---------------*/
+.about_sec{
+    width: 100%;
+    padding: 40px 0;
+}
+
+/*-------------- PRIVECY POLICY ---------------*/
+
+.privecypolicy{
+    width: 100%;
+    padding: 40px 0;
+}
+.privecypolicy_body{
+    ol{
+        li{
+            margin-bottom: 10px;
+        }
+    }
+}
+
+/*-------------- CONTACT US ---------------*/
+
+.contactus_sec{
+    padding: 40px 0;
+}
+
+.maps{
+    iframe{
+        width: 100%;
+    }
+}
+
+/*-------------- PAYMENT ---------------*/
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #000;
+}
+
+/*-------------- PRIZES ---------------*/
+
+.prize_sec {
+    padding: 40px 0;
+    .prizeheader {
+        padding-bottom: 10px;
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 20px;
+        h4{
+            font-weight: 800;
+        }
+    }
+    .selectbox select {
+        padding: 3px;
+        margin-left: 10px;
+        border-radius: 4px;
+        border-color: #ddd;
+    }
+    .resultlist_header{
+        margin-bottom: 20px;
+    }
+    .result_number{
+        ul{
+            margin: 0;
+            padding: 0;
+            li{
+                list-style: none;
+                display: inline-block;
+                width: 32px;
+                height: 32px;
+                border: 1px solid #ddd;
+                text-align: center;
+                line-height: 32px;
+                font-weight: 600;
+                border-radius: 50%;
+            }
+            .active{
+                background: #FFBB00;
+                color: #fff;
+                border-color: #FFBB00;
+            }
+        }
+    }
+}
+
+
+
+
+
+@media screen and (max-width: 767px) {
+    h1{font-size: 22px;}
+    .banner .banner_box h2 span {font-size: 50px;}
+    .banner .banner_box h2 {font-size: 25px;}
+    .lottery_games{padding-top: 15px;}
+    .right_side {padding: 15px 0; border-top: 1px solid #ddd;}
+    .user_login li a{font-size: 15px;}
+    .footer_box {border-bottom: 1px solid #ddd;}
+    .top_header {text-align: center;}
+    .right_inn {display: inline-flex; margin: 0 auto;}
+  }
+
+@media (min-width: 576px){
+  .modal-sm {
+      max-width: 340px;
+  }
+}

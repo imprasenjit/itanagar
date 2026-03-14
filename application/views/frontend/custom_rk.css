@@ -1,0 +1,1084 @@
+/* Rk Custom Css */
+.bodyrk-back {
+  background: #d2d6de;
+}
+
+.card {
+  border: 1px solid rgb(115 112 112 / 13%) !important;
+  border-radius: 0px;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+.card .btn {
+  border-radius: 0 !important;
+}
+
+.home-card-body {
+  padding: 9px !important;
+}
+
+
+.ticket-button {
+  width: 160px;
+}
+
+article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+  display: block;
+}
+
+.top_header {
+  margin-top: 20px;
+}
+
+.list-group-lottery {
+  width: 100%
+}
+
+.quizno_box .quiznobox_body li.selected {
+  background: #b54d57 !important;
+}
+
+
+.badge {
+  border: 1px solid #000;
+}
+
+.table {
+  border-collapse: collapse !important;
+}
+
+.table td,
+.table th {
+  background-color: #fff !important;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #dee2e6 !important;
+}
+
+.table-dark {
+  color: inherit;
+}
+
+.table-dark th,
+.table-dark td,
+.table-dark thead th,
+.table-dark tbody+tbody {
+  border-color: #dee2e6;
+}
+
+.table .thead-dark th {
+  color: inherit;
+  border-color: #dee2e6;
+}
+}
+
+body {
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+}
+
+img {
+  max-width: 100%;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.user_login {
+  margin: 0;
+  padding: 0;
+}
+
+.user_login li {
+  display: inline-block;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.user_login li a {
+  color: #000;
+  padding: 0 10px;
+  display: inline-block;
+  border-right: 1px solid #212529;
+}
+
+.user_login li :hover {
+  color: #b54d57;
+  text-decoration: none;
+}
+
+.user_login :last-child a {
+  border: none;
+}
+
+.cart .cart_box {
+  position: relative;
+  padding-right: 10px;
+}
+
+.cart .cart_box i {
+  position: absolute;
+  top: -10px;
+  left: 16px;
+  display: inline-block;
+  padding: 0;
+  background: #b54d57;
+  color: #fff;
+  line-height: 18px;
+  width: 20px;
+  text-align: center;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-style: normal;
+}
+
+.cart strong {
+  color: #b54d57;
+  font-weight: normal;
+}
+
+.right_inn {
+  display: inline-flex;
+}
+
+.custom_bg {
+  background: #b54d57;
+}
+
+.custom_bg .nav-link {
+  color: #dc3545;
+  font-size: 18px;
+  font-weight: 500;
+  color: #fff !important;
+}
+
+.banner {
+  background: #1D0B00;
+  padding: 0;
+}
+
+.banner .banner_box {
+  color: #fff;
+}
+
+.banner .banner_box h4 {
+  color: #b54d57;
+  font-weight: 800;
+  font-size: 44px;
+}
+
+.banner .banner_box p {
+  font-size: 25px;
+}
+
+.banner .banner_box h2 {
+  font-size: 50px;
+}
+
+.banner .banner_box h2 span {
+  font-size: 105px;
+}
+
+.banner .banner_box a.playnow_btn {
+  background: #01B623;
+  color: #fff;
+  padding: 10px 30px;
+  border-radius: 5px;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.lottery_games {
+  padding: 50px 0;
+}
+
+.lottery_games .games_box {
+  padding: 15px;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.lottery_games .games_box h4 {
+  font-size: 31px;
+  color: #fff;
+  font-weight: 600;
+  text-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+  margin: 0;
+}
+
+.lottery_games .games_box p {
+  font-size: 21px;
+  color: #fff;
+}
+
+.lottery_games .games_box ul {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 9;
+  font-size: 14px;
+  color: #fff;
+}
+
+.lottery_games .games_box ul li {
+  list-style: none;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+.lottery_games .games_box ul li a {
+  background: #000;
+  padding: 4px 10px;
+  display: inline-block;
+  color: #fff;
+}
+
+.games_box::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(../images/light.png) no-repeat top center;
+  background-size: cover;
+  opacity: 0.1;
+  top: 0;
+}
+
+.orange_color {
+  background-image: linear-gradient(to top right, #b54d57, #ff8000);
+}
+
+.purpal_color {
+  background-image: linear-gradient(to top right, #b400ff, #0080ff);
+}
+
+.pink_color {
+  background-image: linear-gradient(to top right, #ff0090, #a80028);
+}
+
+.yellow_color {
+  background-image: linear-gradient(to top right, #b54d57, #03be2f);
+}
+
+.strip_drow h1 {
+  font-weight: 700;
+}
+
+.satisfaction {
+  background: url(../images/bg.jpg) top center no-repeat;
+  background-size: cover;
+  padding: 30px 0;
+  color: #fff;
+}
+
+.satisfaction h1 {
+  font-weight: 700;
+}
+
+.winners {
+  padding: 50px 0;
+}
+
+.winners .winner_box {
+  padding: 20px;
+  border: 1px solid #000;
+  border-radius: 8px;
+  text-align: center;
+  min-height: 360px;
+  margin-top: 20px;
+}
+
+.winners .winner_box .winimg_box {
+  margin-bottom: 15px;
+}
+
+.winners .winner_box h5 {
+  font-size: 25px;
+}
+
+.winners .winner_box h2 {
+  font-weight: 700;
+}
+
+.winners .winner_box a {
+  color: #000;
+}
+
+.winners .winner_box a:hover {
+  color: #b54d57;
+  text-decoration: none;
+}
+
+footer {
+  padding-top: 40px;
+}
+
+footer .footer_menu {
+  text-align: center;
+  padding: 10px 0;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  margin-top: 15px;
+  display: block;
+}
+
+footer .footer_menu ul {
+  margin: 0;
+  padding: 0;
+}
+
+footer .footer_menu ul li {
+  list-style: none;
+  display: inline-block;
+}
+
+footer .footer_menu ul li a {
+  color: #000;
+  padding: 4px 10px;
+}
+
+footer .footer_menu ul li :hover {
+  color: #b54d57;
+  text-decoration: none;
+}
+
+footer .footer_box {
+  padding: 30px 0;
+}
+
+footer .footer_box h6 {
+  font-size: 21px;
+}
+
+footer .footer_box ul {
+  margin: 0;
+  padding: 0;
+}
+
+footer .footer_box ul li {
+  list-style: none;
+  display: block;
+}
+
+footer .footer_box ul li a {
+  color: #000;
+  font-size: 16px;
+}
+
+footer .footer_box ul li :hover {
+  color: #b54d57;
+  text-decoration: none;
+}
+
+.social_media a {
+  color: #6c757d;
+  padding: 0 7px;
+  display: inline-block;
+}
+
+.social_media :hover {
+  color: #b54d57;
+}
+
+.copywright {
+  text-align: center;
+  padding: 20px 0;
+  border-top: 1px solid #ddd;
+}
+
+.copywright p {
+  font-size: 14px;
+  margin: 0;
+}
+
+h1 {
+  font-size: 44px;
+  font-weight: 700;
+}
+
+.modalcustom a {
+  font-size: 14px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.modalcustom label {
+  font-size: 14px;
+  line-height: normal;
+}
+
+small, .small {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+/*=====================================*/
+/*============= QUIZ PAGE =============*/
+/*=====================================*/
+
+
+.quizsec_inn .quizsec_box {
+  padding: 15px;
+}
+
+.picknumber_sec {
+  padding: 40px 0;
+}
+
+.quizno_box {
+  border-radius: 15px;
+  overflow: hidden;
+  border: 2px solid transparent;
+}
+
+.quizno_box .quiznobox_header {
+  padding: 10px;
+}
+
+.quizno_box .quizstrip {
+  background: #1D0B00;
+  color: #fff;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.quizno_box .quiznobox_body {
+  padding: 10px;
+}
+
+.quizno_box .quiznobox_body ul {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+  grid-gap: 5px;
+}
+
+.quizno_box .quiznobox_body li {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  background: #fff;
+  position: relative;
+  height: 29px;
+  font-size: 14px;
+  line-height: 29px;
+  border: 1px dashed #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  width: 29px;
+}
+
+.quizno_box .quiznobox_body li label {
+  width: 100%;
+}
+
+.quizno_box .quiznobox_body li .lottery_number {
+  position: absolute;
+  width: 100%;
+  height: 30px;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.quizno_box .quiznobox_body li :checked+label {
+  color: #fff;
+  background: #b54d57;
+}
+
+.quizno_box:hover {
+  border-color: #01B623;
+}
+
+.payment_body .nav-link {
+  color: #000;
+}
+
+.quizsec_border {
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cartsummary {
+
+  padding: 40px 0;
+}
+
+.cartsummary .cartsummary_box {
+  padding: 0;
+  background: #fff;
+  border-radius: 5px;
+}
+
+.cartsummary .cartsummary_box h4 {
+  border-bottom: 1px solid #ddd;
+  padding: 15px;
+}
+
+.cartsummary .cartsummary_box .cartsummery_body {
+  padding: 15px;
+}
+
+.cartsummary .cartsummary_box .table .thead-dark th {
+  background: #b54d57;
+  border-color: #b54d57;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.cartsummary .cartsummary_box .numberdegits {
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+}
+
+.cartsummary .cartsummary_box .numberdegits li {
+  display: inline-block;
+  margin-right: 5px;
+  background: #01B623;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 50%;
+  font-weight: 500;
+}
+
+.cartsummary .table tr td:last-child {
+  text-align: right;
+}
+
+ul.countdown_timer {
+  margin: 0;
+  padding: 0;
+}
+
+ul.countdown_timer li {
+  display: inline-block;
+  list-style: none;
+  padding: 5px;
+  font-size: 13px;
+}
+
+ul.countdown_timer li span {
+  display: block;
+  font-size: 16px !important;
+  font-weight: 600;
+}
+
+.moregamescard {
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 5px 7px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  margin-top: 30px;
+}
+
+.moregamescard a {
+  color: #000;
+}
+
+.moregamescard .card_img {
+  position: relative;
+}
+
+.moregamescard .topimg {
+  width: 100px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.moregamescard .moregamescard_body {
+  padding: 15px 10px;
+  text-align: center;
+}
+
+.moregamescard .moregamescard_body h4 {
+  margin-bottom: 0;
+}
+
+.moregamescard .moregamescard_body .btn {
+  margin-top: 10px;
+}
+
+.lottery_rules {
+  padding: 40px 0;
+}
+
+.lottery_rules p {
+  font-size: 16px;
+}
+
+.btn-warning:hover {
+  color: #fff;
+}
+
+/*========================================*/
+/*============== Checkout ================*/
+/*========================================*/
+.checkoutsec {
+  padding: 40px 0;
+}
+
+.checkoutsec h3 {
+  font-weight: 600;
+}
+
+.checkoutsec .checkout_box {
+  border: 1px solid #ddd;
+}
+
+.checkoutsec .checkout_box h3 {
+  padding: 15px 22px;
+  border-bottom: 1px solid #ddd;
+  margin: 0px;
+}
+
+.checkoutsec .checkout_box .checkout_body {
+  padding: 15px;
+
+}
+
+.checkoutsec .checkout_box .checkout_body .card {
+  border: none;
+}
+
+.checkoutsec .checkout_box .checkout_body .card .card-header {
+  background: #fff;
+  padding: 0;
+}
+
+.checkoutsec .checkout_box .checkout_body .card .card-header .checkoutlist {
+  padding: 15px;
+  cursor: pointer;
+}
+
+.checkoutsec .checkout_box .checkout_body .card .card-header .checkoutlist .viewnumber {
+  float: right;
+}
+
+.checkoutsec .checkout_box .checkout_body .card .table .thead-dark th {
+  background: #b54d57;
+  border-color: #b54d57;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.checkoutsec .checkout_box .checkout_body .card .numberdegits {
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+}
+
+.checkoutsec .checkout_box .checkout_body .card .numberdegits li {
+  display: inline-block;
+  margin-right: 5px;
+  background: #01B623;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 50%;
+  font-weight: 500;
+}
+
+.checkoutsec .checkout_box .checkout_body .table tr td:last-child {
+  text-align: right;
+}
+
+.confirm_body .table {
+  background: #fff;
+}
+
+.confirm_body .table tr td:last-child {
+  text-align: right;
+}
+
+.confirm_body .table tr th:last-child {
+  text-align: right;
+}
+
+.payment_body {
+  background: #fff;
+  padding: 15px;
+}
+
+/*-------------- FAQ ---------------*/
+.faq_sec {
+  width: 100%;
+  padding: 40px 0;
+}
+
+.accordioncard-header button {
+  padding: 15px 50px 15px 0;
+  border-bottom: 1px solid #ddd;
+  border-radius: 0;
+  width: 100%;
+  text-align: left;
+  color: #000;
+  font-weight: 600;
+  text-decoration: none;
+  position: relative;
+}
+
+.accordioncard-header button span.arrowdown {
+  position: absolute;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  line-height: 32px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  transition: all 0.15s ease-in-out;
+}
+
+.accordioncard-header :hover {
+  text-decoration: none;
+}
+
+.accordioncard-header .btn-link .arrowdown {
+  transform: rotate(180deg);
+}
+
+.accordioncard-header .collapsed .arrowdown {
+  transform: rotate(0);
+}
+
+.accordioncard-body {
+  padding: 10px 0;
+  font-size: 15px;
+}
+
+/*-------------- TERMS AND CONDITIONS ---------------*/
+.terms_sec {
+  width: 100%;
+  padding: 40px 0;
+}
+
+.terms_sec ol li {
+  margin-bottom: 10px;
+}
+
+/*-------------- ABOUT SEC ---------------*/
+.about_sec {
+  width: 100%;
+  padding: 40px 0;
+}
+
+/*-------------- PRIVECY POLICY ---------------*/
+.privecypolicy {
+  width: 100%;
+  padding: 40px 0;
+}
+
+.privecypolicy_body ol li {
+  margin-bottom: 10px;
+}
+
+/*-------------- CONTACT US ---------------*/
+.contactus_sec {
+  padding: 40px 0;
+}
+
+.maps iframe {
+  width: 100%;
+}
+
+/*-------------- PAYMENT ---------------*/
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  color: #fff;
+  background-color: #000;
+}
+
+/*-------------- PRIZES ---------------*/
+.prize_sec {
+  padding: 40px 0;
+}
+
+.prize_sec .prizeheader {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.prize_sec .prizeheader h4 {
+  font-weight: 800;
+}
+
+.prize_sec .selectbox select {
+  padding: 3px;
+  margin-left: 10px;
+  border-radius: 4px;
+  border-color: #ddd;
+}
+
+.prize_sec .resultlist_header {
+  margin-bottom: 20px;
+}
+
+.prize_sec .result_number ul {
+  margin: 0;
+  padding: 0;
+}
+
+.prize_sec .result_number ul li {
+  list-style: none;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #ddd;
+  text-align: center;
+  line-height: 32px;
+  font-weight: 600;
+  border-radius: 50%;
+}
+
+.prize_sec .result_number ul .active {
+  background: #b54d57;
+  color: #fff;
+  border-color: #b54d57;
+}
+
+.profile_sec {
+  padding: 40px 0;
+}
+
+.profile_sec .profilebox {
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.profile_sec .profilebox .avtarpic {
+  width: 90px;
+  height: 90px;
+  background: #000;
+  margin: 0 auto;
+  border-radius: 50%;
+}
+
+.profile_sec .profilebox .avtarpic img {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+}
+
+.profile_sec .profilebox .editbtn_item {
+  position: relative;
+  margin-bottom: 20px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.profile_sec .profilebox .editbtn_item input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  cursor: pointer;
+}
+
+/*-------------- MY ACCOUNT ---------------*/
+.myaccount {
+  padding: 40px 0;
+  background: #f9f9f9;
+}
+
+.myaccount .account_menu {
+  background: #fff;
+  padding: 10px 0;
+}
+
+.myaccount .account_menu ul {
+  margin: 0;
+  padding: 0;
+}
+
+.myaccount .account_menu ul li {
+  list-style: none;
+}
+
+.myaccount .account_menu ul li a {
+  padding: 7px 15px;
+  display: block;
+  border-right: 2px solid transparent;
+  color: #333;
+}
+
+.myaccount .account_menu ul li a i {
+  margin-right: 5px;
+}
+
+.myaccount .account_menu ul li .active {
+  border-color: #b54d57;
+  color: #b54d57;
+}
+
+.myaccount .myaccount_content {
+  background: #fff;
+  padding: 15px;
+}
+
+.myaccount .myaccount_content .myorder_list {
+  border: 1px solid #ddd;
+  margin-bottom: 25px;
+  padding: 15px;
+}
+
+.myaccount .myaccount_content .order_logo {
+  width: 100px;
+  margin-right: 10px;
+}
+
+.myaccount .myaccount_content ul.numberdegits {
+  margin: 0;
+  padding: 0;
+}
+
+.myaccount .myaccount_content ul.numberdegits li {
+  display: inline-block;
+  list-style: none;
+  background: #01B623;
+  color: #fff;
+  width: 32px;
+  text-align: center;
+  height: 32px;
+  line-height: 32px;
+  border-radius: 50%;
+}
+
+.myaccount .myaccount_content .order_footer {
+  border-top: 1px solid #ddd;
+  padding-top: 5px;
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ticket-image-ticket-details {
+  height: 150px;
+}
+
+@media screen and (max-width: 767px) {
+  h1 {
+    font-size: 22px;
+  }
+
+  .banner .banner_box h2 span {
+    font-size: 50px;
+  }
+
+  .banner .banner_box h2 {
+    font-size: 25px;
+  }
+
+  .lottery_games {
+    padding-top: 15px;
+  }
+
+  .right_side {
+    padding: 15px 0;
+    border-top: 1px solid #ddd;
+  }
+
+  .user_login li a {
+    font-size: 15px;
+  }
+
+  .footer_box {
+    border-bottom: 1px solid #ddd;
+  }
+
+  .top_header {
+    text-align: center;
+  }
+
+  .right_inn {
+    display: inline-flex;
+    margin: 0 auto;
+  }
+
+  .quizsec_inn .quizsec_box {
+    padding: 0px;
+  }
+
+  .ticket-details-card {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 10000;
+  }
+
+  .quizsec_border {
+    border-left: none;
+    border-right: none;
+  }
+
+  .ticket-image-ticket-details {
+    height: 80px;
+  }
+
+  .card-title-ticket-details {
+    margin: 0;
+    padding: 0;
+    line-height: 0.2 !important;
+    font-weight: 400;
+    font-size: 14px;
+  }
+
+  .ticket-price {
+    padding: 0px;
+  }
+}
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
+  .quizsec_inn .quizsec_box {
+    padding: 0px;
+  }
+
+  .ticket-details-card {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 10000;
+  }
+
+  .quizsec_border {
+    border-left: none;
+    border-right: none;
+  }
+
+}
+
+@media (min-width: 576px) {
+  .modal-sm {
+    max-width: 340px;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */
