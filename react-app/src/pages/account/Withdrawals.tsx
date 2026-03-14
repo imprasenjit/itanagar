@@ -3,19 +3,19 @@ import AccountLayout from '../../components/AccountLayout';
 import { getWithdrawals, createWithdrawal } from '../../api';
 import { useToast } from '../../components/Toast';
 
-const STATUS = { 0: ['Pending', 'yellow'], 1: ['Approved', 'emerald'], 2: ['Rejected', 'red'] };
+const STATUS: Record<number, [string, string]> = { 0: ['Pending', 'yellow'], 1: ['Approved', 'emerald'], 2: ['Rejected', 'red'] };
 
 export default function Withdrawals() {
   const addToast = useToast();
-  const [list, setList]           = useState([]);
-  const [form, setForm]           = useState({ amount: '', account_number: '', ifsc: '', account_name: '' });
+  const [list, setList]           = useState<Record<string, any>[]>([]);
+  const [form, setForm]           = useState<{ amount: string; account_number: string; ifsc: string; account_name: string }>({ amount: '', account_number: '', ifsc: '', account_name: '' });
   const [submitting, setSubmitting] = useState(false);
 
   const fetchList = () => getWithdrawals().then(r => setList(r.data.data || [])).catch(() => {});
 
   useEffect(() => { fetchList(); }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
     try {
@@ -26,7 +26,7 @@ export default function Withdrawals() {
     finally  { setSubmitting(false); }
   };
 
-  const setF = (k, v) => setForm(f => ({ ...f, [k]: v }));
+  const setF = (k: string, v: string) => setForm(f => ({ ...f, [k]: v }));
 
   return (
     <AccountLayout>

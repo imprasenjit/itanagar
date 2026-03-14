@@ -1,3 +1,4 @@
+import { type ReactNode } from 'react';
 import { NavLink, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import LoadingSpinner from './LoadingSpinner';
@@ -12,7 +13,7 @@ const links = [
   { to: '/account/transfers',   icon: '🔄', label: 'Transfers' },
 ];
 
-export default function AccountLayout({ children }) {
+export default function AccountLayout({ children }: { children: ReactNode }) {
   const { user, loading } = useAuth();
 
   if (loading) return <LoadingSpinner size="lg" text="Loading..." />;

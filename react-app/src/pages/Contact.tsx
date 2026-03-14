@@ -4,13 +4,13 @@ import { useToast } from '../components/Toast';
 
 export default function Contact() {
   const addToast = useToast();
-  const [form, setForm]       = useState({ name: '', email: '', mobile: '', message: '' });
+  const [form, setForm]       = useState<{ name: string; email: string; mobile: string; message: string }>({ name: '', email: '', mobile: '', message: '' });
   const [loading, setLoading] = useState(false);
   const [sent, setSent]       = useState(false);
 
-  const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+  const set = (k: string, v: string) => setForm(f => ({ ...f, [k]: v }));
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {

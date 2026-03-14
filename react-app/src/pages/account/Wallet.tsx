@@ -5,7 +5,7 @@ import { useToast } from '../../components/Toast';
 
 export default function Wallet() {
   const addToast = useToast();
-  const [data, setData]       = useState(null);
+  const [data, setData]       = useState<{ balance: number; history: Record<string, any>[] } | null>(null);
   const [topupAmount, setTopupAmount] = useState('');
   const [topping, setTopping] = useState(false);
 
@@ -31,7 +31,11 @@ export default function Wallet() {
         description: 'Wallet Top-up',
         prefill: { name: user_name, email: user_email, contact: user_mobile },
         theme: { color: '#f97316' },
-        handler: async (response) => {
+        handler: async (response: {
+          razorpay_payment_id: string;
+          razorpay_order_id: string;
+          razorpay_signature: string;
+        }) => {
           const cr = await confirmPayment({ ...response, order_id, type: 'wallet' });
           if (cr.data.status) { addToast('Wallet topped up! 💳', 'success'); fetchWallet(); setTopupAmount(''); }
           else addToast(cr.data.message || 'Verification failed', 'error');
@@ -40,8 +44,8 @@ export default function Wallet() {
       };
       const rzp = new window.Razorpay(options);
       rzp.open();
-    } catch (e) {
-      addToast(e.message || 'Failed to initiate topup', 'error');
+    } catch (e: unknown) {
+      addToast((e as Error).message || 'Failed to initiate topup', 'error');
       setTopping(false);
     }
   };

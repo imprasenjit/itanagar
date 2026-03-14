@@ -5,8 +5,10 @@ import logo from '../assets/logo.png';
 import GameCard from '../components/GameCard';
 import { SkeletonCard } from '../components/LoadingSpinner';
 
+import type { Game } from '../types';
+
 export default function Home() {
-  const [data, setData]  = useState(null);
+  const [data, setData]  = useState<{ games: Game[]; results: Record<string, any>[]; stats: Record<string, any> } | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

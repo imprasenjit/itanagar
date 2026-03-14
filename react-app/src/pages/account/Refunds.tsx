@@ -3,19 +3,19 @@ import AccountLayout from '../../components/AccountLayout';
 import { getRefunds, createRefund } from '../../api';
 import { useToast } from '../../components/Toast';
 
-const STATUS = { 0: ['Pending', 'yellow'], 1: ['Approved', 'emerald'], 2: ['Rejected', 'red'] };
+const STATUS: Record<number, [string, string]> = { 0: ['Pending', 'yellow'], 1: ['Approved', 'emerald'], 2: ['Rejected', 'red'] };
 
 export default function Refunds() {
   const addToast = useToast();
-  const [refunds, setRefunds] = useState([]);
-  const [form, setForm]       = useState({ order_id: '', reason: '' });
+  const [refunds, setRefunds] = useState<Record<string, any>[]>([]);
+  const [form, setForm]       = useState<{ order_id: string; reason: string }>({ order_id: '', reason: '' });
   const [submitting, setSubmitting] = useState(false);
 
   const fetchRefunds = () => getRefunds().then(r => setRefunds(r.data.data || [])).catch(() => {});
 
   useEffect(() => { fetchRefunds(); }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
     try {

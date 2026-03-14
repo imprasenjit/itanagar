@@ -1,12 +1,22 @@
-import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { getCart, addToCart as apiAdd, removeCartItem as apiRemove } from '../api';
 import { useAuth } from './AuthContext';
+import type { CartItem } from '../types';
 
-const CartContext = createContext(null);
+interface CartContextValue {
+  items: CartItem[];
+  count: number;
+  cartLoading: boolean;
+  addToCart: (payload: Record<string, unknown>) => Promise<unknown>;
+  removeItem: (id: number) => Promise<void>;
+  fetchCart: () => Promise<void>;
+}
 
-export function CartProvider({ children }) {
+const CartContext = createContext<CartContextValue | null>(null);
+
+export function CartProvider({ children }: { children: ReactNode }) {
   const { user, loading: authLoading } = useAuth();
-  const [items, setItems]              = useState([]);
+  const [items, setItems]              = useState<CartItem[]>([]);
   const [cartLoading, setCartLoading]  = useState(false);
 
   const fetchCart = useCallback(async () => {
@@ -28,13 +38,13 @@ export function CartProvider({ children }) {
     if (!authLoading) fetchCart();
   }, [fetchCart, user, authLoading]);
 
-  const addToCart = async (payload) => {
+  const addToCart = async (payload: Record<string, unknown>) => {
     const { data } = await apiAdd(payload);
     if (data.status) { await fetchCart(); return data; }
     throw new Error(data.message || 'Could not add to cart');
   };
 
-  const removeItem = async (id) => {
+  const removeItem = async (id: number) => {
     await apiRemove(id);
     await fetchCart();
   };
@@ -48,4 +58,4 @@ export function CartProvider({ children }) {
   );
 }
 
-export const useCart = () => useContext(CartContext);
+export const useCart = () => useContext(CartContext)!;

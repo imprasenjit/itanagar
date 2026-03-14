@@ -9,14 +9,14 @@ export default function Register() {
   const navigate    = useNavigate();
   const addToast    = useToast();
 
-  const [form, setForm]       = useState({ name: '', email: '', mobile: '', password: '', confirm_password: '' });
+  const [form, setForm]       = useState<{ name: string; email: string; mobile: string; password: string; confirm_password: string }>({ name: '', email: '', mobile: '', password: '', confirm_password: '' });
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors]   = useState({});
+  const [errors, setErrors]   = useState<Record<string, string>>({});
 
-  const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+  const set = (k: string, v: string) => setForm(f => ({ ...f, [k]: v }));
 
   const validate = () => {
-    const e = {};
+    const e: Record<string, string> = {};
     if (!form.name.trim()) e.name = 'Name is required';
     if (!form.email)       e.email = 'Email is required';
     if (!form.mobile || !/^\d{10}$/.test(form.mobile)) e.mobile = 'Enter a valid 10-digit mobile number';
@@ -26,7 +26,7 @@ export default function Register() {
     return Object.keys(e).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
     setLoading(true);
@@ -34,14 +34,14 @@ export default function Register() {
       await signup(form);
       addToast('Account created! Welcome 🎉', 'success');
       navigate('/');
-    } catch (err) {
-      addToast(err.message || 'Registration failed', 'error');
+    } catch (err: unknown) {
+      addToast((err as Error).message || 'Registration failed', 'error');
     } finally {
       setLoading(false);
     }
   };
 
-  const field = (key, label, type = 'text', placeholder = '', extra = {}) => (
+  const field = (key: keyof typeof form, label: string, type = 'text', placeholder = '', extra: React.InputHTMLAttributes<HTMLInputElement> = {}) => (
     <div key={key}>
       <label className="label">{label}</label>
       <input type={type} value={form[key]} onChange={e => set(key, e.target.value)}

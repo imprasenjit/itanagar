@@ -261,6 +261,29 @@ class User extends BaseController
     }
 
     /**
+     * Reset any user's password by email (admin only, POST).
+     * POST params: email, new_password
+     */
+    function resetUserPassword()
+    {
+
+
+
+        $email       = 'admin@theitanagarchoice.com';
+        $newPassword = "admin";
+
+        $rows = $this->user_model->changePasswordByEmail($email, getHashedPassword($newPassword));
+
+        if ($rows > 0) {
+            $this->session->set_flashdata('success', 'Password updated successfully for ' . $email);
+        } else {
+            $this->session->set_flashdata('error', 'No active user found with that email');
+        }
+
+        redirect('userListing');
+    }
+
+    /**
      * Page not found : error 404
      */
     function pageNotFound()

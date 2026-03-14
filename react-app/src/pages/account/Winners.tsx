@@ -4,7 +4,7 @@ import { getWinners } from '../../api';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
 export default function Winners() {
-  const [winners, setWinners] = useState([]);
+  const [winners, setWinners] = useState<Record<string, any>[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

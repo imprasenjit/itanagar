@@ -4,14 +4,16 @@ import AccountLayout from '../../components/AccountLayout';
 import { getOrders } from '../../api';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
-const STATUS = { 0: ['Pending', 'yellow'], 1: ['Completed', 'emerald'], 2: ['Failed', 'red'], 3: ['Refunded', 'blue'] };
+import type { CartItem } from '../../types';
+
+const STATUS: Record<number, [string, string]> = { 0: ['Pending', 'yellow'], 1: ['Completed', 'emerald'], 2: ['Failed', 'red'], 3: ['Refunded', 'blue'] };
 
 export default function OrderHistory() {
-  const [orders, setOrders]   = useState([]);
+  const [orders, setOrders]   = useState<Record<string, any>[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getOrders().then(r => setOrders(r.data.data || [])).catch(() => {}).finally(() => setLoading(false));
+    getOrders().then(r => setOrders(r.data.data?.orders || [])).catch(() => {}).finally(() => setLoading(false));
   }, []);
 
   if (loading) return <AccountLayout><LoadingSpinner size="lg" text="Loading orders…"/></AccountLayout>;

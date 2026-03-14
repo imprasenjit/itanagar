@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
+import type { Game } from '../types';
 
 // Strip HTML tags from jackpot string e.g. "<p>1st Prize: Rs. 200000</p>" → "1st Prize: Rs. 200000"
-function stripHtml(str) {
+function stripHtml(str: string): string {
   return str ? str.replace(/<[^>]*>/g, '').trim() : '';
 }
 
-export default function GameCard({ game }) {
+export default function GameCard({ game }: { game: Game }) {
   const {
     id,
     name,
@@ -20,10 +21,10 @@ export default function GameCard({ game }) {
     soldTickets,
   } = game;
 
-  const remaining   = totalTickets && soldTickets != null ? totalTickets - soldTickets : null;
-  const pct         = totalTickets > 0 ? Math.round((soldTickets / totalTickets) * 100) : 0;
+  const remaining   = totalTickets != null && soldTickets != null ? totalTickets - soldTickets : null;
+  const pct         = totalTickets && totalTickets > 0 ? Math.round(((soldTickets ?? 0) / totalTickets) * 100) : 0;
   const hot         = pct >= 70;
-  const jackpotText = stripHtml(jackpot);
+  const jackpotText = stripHtml(jackpot ?? '');
   // Prefer upcoming draw date; fall back to result_date
   const drawDate    = date || result_date;
 

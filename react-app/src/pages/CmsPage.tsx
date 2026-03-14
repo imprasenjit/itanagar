@@ -4,13 +4,13 @@ import { getPage } from '../api';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function CmsPage() {
-  const { type }  = useParams();
-  const [page, setPage]     = useState(null);
+  const { type }  = useParams<{ type: string }>();
+  const [page, setPage]     = useState<Record<string, any> | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
-    getPage(type)
+    getPage(type!)
       .then(r => setPage(r.data.data || null))
       .catch(() => {})
       .finally(() => setLoading(false));

@@ -214,6 +214,17 @@ class User_model extends CI_Model
         return $this->db->affected_rows();
     }
 
+    function changePasswordByEmail($email, $hashedPassword)
+    {
+        $this->db->where('email', $email);
+        $this->db->where('isDeleted', 0);
+        $this->db->update('tbl_users', [
+            'password'   => $hashedPassword,
+            'updatedDtm' => date('Y-m-d H:i:s'),
+        ]);
+        return $this->db->affected_rows();
+    }
+
 
     /**
      * This function is used to get user login history

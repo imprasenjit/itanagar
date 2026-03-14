@@ -5,15 +5,15 @@ import { useToast } from '../../components/Toast';
 
 export default function Transfers() {
   const addToast = useToast();
-  const [list, setList]           = useState([]);
-  const [form, setForm]           = useState({ to_user: '', amount: '', note: '' });
+  const [list, setList]           = useState<Record<string, any>[]>([]);
+  const [form, setForm]           = useState<{ to_user: string; amount: string; note: string }>({ to_user: '', amount: '', note: '' });
   const [submitting, setSubmitting] = useState(false);
 
   const fetchList = () => getTransfers().then(r => setList(r.data.data || [])).catch(() => {});
 
   useEffect(() => { fetchList(); }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
     try {
@@ -24,7 +24,7 @@ export default function Transfers() {
     finally  { setSubmitting(false); }
   };
 
-  const setF = (k, v) => setForm(f => ({ ...f, [k]: v }));
+  const setF = (k: string, v: string) => setForm(f => ({ ...f, [k]: v }));
 
   return (
     <AccountLayout>

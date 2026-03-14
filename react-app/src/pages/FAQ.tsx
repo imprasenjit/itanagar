@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { getFaq } from '../api';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-function FaqItem({ item }) {
+function FaqItem({ item }: { item: Record<string, string> }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="card overflow-hidden">
@@ -24,7 +24,7 @@ function FaqItem({ item }) {
 }
 
 export default function FAQ() {
-  const [faqs, setFaqs]     = useState([]);
+  const [faqs, setFaqs]     = useState<Record<string, string>[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

@@ -8,8 +8,8 @@ export default function Profile() {
   const { refresh } = useAuth();
   const addToast    = useToast();
 
-  const [profile, setProfile]   = useState({});
-  const [pwForm, setPwForm]     = useState({ old_password: '', new_password: '', confirm: '' });
+  const [profile, setProfile]   = useState<Record<string, any>>({});
+  const [pwForm, setPwForm]     = useState<{ old_password: string; new_password: string; confirm: string }>({ old_password: '', new_password: '', confirm: '' });
   const [saving, setSaving]     = useState(false);
   const [savingPw, setSavingPw] = useState(false);
 
@@ -17,10 +17,10 @@ export default function Profile() {
     getProfile().then(r => setProfile(r.data.data || {})).catch(() => {});
   }, []);
 
-  const setP = (k, v) => setProfile(p => ({ ...p, [k]: v }));
-  const setPw = (k, v) => setPwForm(p => ({ ...p, [k]: v }));
+  const setP = (k: string, v: string) => setProfile(p => ({ ...p, [k]: v }));
+  const setPw = (k: string, v: string) => setPwForm(p => ({ ...p, [k]: v }));
 
-  const saveProfile = async (e) => {
+  const saveProfile = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
     try {
@@ -31,7 +31,7 @@ export default function Profile() {
     finally  { setSaving(false); }
   };
 
-  const savePassword = async (e) => {
+  const savePassword = async (e: React.FormEvent) => {
     e.preventDefault();
     if (pwForm.new_password !== pwForm.confirm) { addToast('Passwords do not match', 'error'); return; }
     setSavingPw(true);

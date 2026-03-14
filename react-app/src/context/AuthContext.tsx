@@ -1,10 +1,20 @@
-import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { getMe, login as apiLogin, logout as apiLogout, register as apiRegister } from '../api';
+import type { User } from '../types';
 
-const AuthContext = createContext(null);
+interface AuthContextValue {
+  user: User | null;
+  loading: boolean;
+  login: (credentials: { email: string; password: string }) => Promise<unknown>;
+  logout: () => Promise<void>;
+  signup: (payload: Record<string, string>) => Promise<unknown>;
+  refresh: () => Promise<void>;
+}
 
-export function AuthProvider({ children }) {
-  const [user, setUser]       = useState(null);
+const AuthContext = createContext<AuthContextValue | null>(null);
+
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [user, setUser]       = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   const refresh = useCallback(async () => {
@@ -21,7 +31,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => { refresh(); }, [refresh]);
 
-  const login = async (credentials) => {
+  const login = async (credentials: { email: string; password: string }) => {
     const { data } = await apiLogin(credentials);
     // login response: { status, data: { user: {...}, cartCount, redirect }, message }
     if (data.status) { setUser(data.data.user); return data; }
@@ -33,7 +43,7 @@ export function AuthProvider({ children }) {
     setUser(null);
   };
 
-  const signup = async (payload) => {
+  const signup = async (payload: Record<string, string>) => {
     const { data } = await apiRegister(payload);
     // register does NOT create a session — just returns { userId }
     // caller is responsible for redirecting to login
@@ -48,4 +58,4 @@ export function AuthProvider({ children }) {
   );
 }
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => useContext(AuthContext)!;

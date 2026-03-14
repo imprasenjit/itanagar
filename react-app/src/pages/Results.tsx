@@ -2,16 +2,18 @@ import { useEffect, useState } from 'react';
 import { getResults, getGames } from '../api';
 import LoadingSpinner from '../components/LoadingSpinner';
 
+import type { Game } from '../types';
+
 export default function Results() {
-  const [results, setResults] = useState([]);
-  const [games, setGames]     = useState([]);
+  const [results, setResults] = useState<Record<string, any>[]>([]);
+  const [games, setGames]     = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
   const [webId, setWebId]     = useState('');
   const [date, setDate]       = useState('');
 
   const fetchResults = async () => {
     setLoading(true);
-    const params = {};
+    const params: Record<string, string> = {};
     if (webId) params.web_id = webId;
     if (date)  params.date   = date;
     try {
@@ -25,7 +27,7 @@ export default function Results() {
   };
 
   useEffect(() => {
-    getGames().then(r => setGames(r.data.data || [])).catch(() => {});
+    getGames().then(r => setGames(r.data.data?.games || [])).catch(() => {});
     fetchResults();
   }, []);
 

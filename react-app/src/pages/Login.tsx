@@ -11,21 +11,21 @@ export default function Login() {
   const addToast    = useToast();
   const redirect    = location.state?.from || '/';
 
-  const [form, setForm]       = useState({ email: '', password: '' });
+  const [form, setForm]       = useState<{ email: string; password: string }>({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors]   = useState({});
+  const [errors, setErrors]   = useState<Record<string, string>>({});
 
-  const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+  const set = (k: string, v: string) => setForm(f => ({ ...f, [k]: v }));
 
   const validate = () => {
-    const e = {};
+    const e: Record<string, string> = {};
     if (!form.email) e.email = 'Email is required';
     if (!form.password) e.password = 'Password is required';
     setErrors(e);
     return Object.keys(e).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
     setLoading(true);
@@ -33,8 +33,8 @@ export default function Login() {
       await login(form);
       addToast('Welcome back!', 'success');
       navigate(redirect, { replace: true });
-    } catch (err) {
-      addToast(err.message || 'Invalid credentials', 'error');
+    } catch (err: unknown) {
+      addToast((err as Error).message || 'Invalid credentials', 'error');
     } finally {
       setLoading(false);
     }

@@ -4,8 +4,10 @@ import { getOrderConfirm, createPayment, confirmPayment, cancelPayment } from '.
 import LoadingSpinner from '../components/LoadingSpinner';
 import { useToast } from '../components/Toast';
 
+import type { CartItem } from '../types';
+
 export default function ConfirmOrder() {
-  const [items, setItems]     = useState([]);
+  const [items, setItems]     = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [paying, setPaying]   = useState(false);
   const navigate  = useNavigate();
@@ -37,7 +39,11 @@ export default function ConfirmOrder() {
         description: 'Lottery Ticket Purchase',
         prefill: { name: user_name, email: user_email, contact: user_mobile },
         theme: { color: '#f97316' },
-        handler: async (response) => {
+        handler: async (response: {
+          razorpay_payment_id: string;
+          razorpay_order_id: string;
+          razorpay_signature: string;
+        }) => {
           try {
             const cr = await confirmPayment({
               razorpay_order_id:   response.razorpay_order_id,
@@ -71,8 +77,8 @@ export default function ConfirmOrder() {
       }
       const rzp = new window.Razorpay(options);
       rzp.open();
-    } catch (e) {
-      addToast(e.message || 'Failed to initiate payment', 'error');
+    } catch (e: unknown) {
+      addToast((e as Error).message || 'Failed to initiate payment', 'error');
       setPaying(false);
     }
   };

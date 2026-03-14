@@ -3,8 +3,10 @@ import { getGames } from '../api';
 import GameCard from '../components/GameCard';
 import { SkeletonCard } from '../components/LoadingSpinner';
 
+import type { Game } from '../types';
+
 export default function Games() {
-  const [games, setGames]   = useState([]);
+  const [games, setGames]   = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch]   = useState('');
 

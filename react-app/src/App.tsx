@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { type ReactNode } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
@@ -26,7 +27,7 @@ import Refunds       from './pages/account/Refunds';
 import Withdrawals   from './pages/account/Withdrawals';
 import Transfers     from './pages/account/Transfers';
 
-function Layout({ children }) {
+function Layout({ children }: { children: ReactNode }) {
   return (
     <>
       <Navbar />
@@ -36,7 +37,7 @@ function Layout({ children }) {
   );
 }
 
-function AuthLayout({ children }) {
+function AuthLayout({ children }: { children: ReactNode }) {
   return <main className="min-h-screen">{children}</main>;
 }
 

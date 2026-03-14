@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import logo from '../assets/logo.png';
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -9,12 +10,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center">
-                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                </svg>
-              </div>
-              <span className="font-display font-bold text-lg text-white">Itanagar<span className="text-brand-400">Choice</span></span>
+              <img src={logo} alt="ItanagarChoice" className="h-12 w-auto object-contain" />
             </div>
             <p className="text-sm text-gray-500 leading-relaxed max-w-xs">
               Your trusted platform for lottery tickets. Play responsibly and may luck be on your side.
