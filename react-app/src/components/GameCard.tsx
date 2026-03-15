@@ -1,5 +1,25 @@
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import type { Game } from '../types';
+
+function useCountdown(drawDate: string | null | undefined) {
+  const getRemaining = () => {
+    if (!drawDate) return null;
+    const diff = new Date(drawDate).getTime() - Date.now();
+    if (diff <= 0) return { days: 0, hours: 0, minutes: 0, ended: true };
+    const days    = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours   = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    return { days, hours, minutes, ended: false };
+  };
+  const [remaining, setRemaining] = useState(getRemaining);
+  useEffect(() => {
+    if (!drawDate) return;
+    const id = setInterval(() => setRemaining(getRemaining()), 60_000);
+    return () => clearInterval(id);
+  }, [drawDate]);
+  return remaining;
+}
 
 // Strip HTML tags from jackpot string e.g. "<p>1st Prize: Rs. 200000</p>" → "1st Prize: Rs. 200000"
 function stripHtml(str: string): string {
@@ -28,10 +48,7 @@ export default function GameCard({ game }: { game: Game }) {
   // Prefer upcoming draw date; fall back to result_date
   const drawDate    = date || result_date;
 
-  // Countdown — days until draw
-  const daysLeft = drawDate
-    ? Math.ceil((new Date(drawDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
-    : null;
+  const countdown = useCountdown(drawDate);
 
   return (
     <Link to={`/games/${id}`} className="group block">
@@ -51,15 +68,18 @@ export default function GameCard({ game }: { game: Game }) {
           <div className="absolute inset-0 bg-gradient-to-t from-dark-900/90 via-transparent to-transparent"/>
 
           {/* Countdown badge — top left */}
-          {daysLeft !== null && daysLeft > 0 && (
-            <div className="absolute top-3 left-3 flex items-center gap-1 bg-dark-900/80 backdrop-blur-sm text-white px-2.5 py-1 rounded-lg text-[11px] font-bold">
-              <svg className="w-3 h-3 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          {countdown && !countdown.ended && (
+            <div className="absolute top-3 left-3 flex items-center gap-1.5 bg-dark-900/80 backdrop-blur-sm text-white px-2.5 py-1 rounded-lg text-[18px] font-bold">
+              <svg className="w-3 h-3 text-brand-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
-              {daysLeft}d left
+              {countdown.days > 0 && <span><span className="text-brand-400">{countdown.days}</span>Days</span>}
+              <span><span className="text-brand-400">{countdown.hours}</span>Hours</span>
+              {countdown.days === 0 && <span><span className="text-brand-400">{countdown.minutes}</span>m</span>}
+              <span className="text-gray-400 font-normal">left</span>
             </div>
           )}
-          {daysLeft !== null && daysLeft <= 0 && (
+          {countdown?.ended && (
             <div className="absolute top-3 left-3 bg-gray-700/80 backdrop-blur-sm text-gray-400 px-2.5 py-1 rounded-lg text-[11px] font-bold">
               Draw Ended
             </div>
@@ -82,7 +102,7 @@ export default function GameCard({ game }: { game: Game }) {
 
         {/* Content */}
         <div className="p-4">
-          <h3 className="font-display font-bold text-white text-base mb-0.5 truncate">{name}</h3>
+          <h3 className="font-display font-bold text-white text-base mb-0.5">{name}</h3>
           {heading && <p className="text-xs text-gray-500 mb-3 line-clamp-1">{heading}</p>}
 
           {/* Progress */}
@@ -106,13 +126,13 @@ export default function GameCard({ game }: { game: Game }) {
               <p className="text-xs text-gray-500">Price per ticket</p>
               <p className="text-base font-bold text-white">₹{Number(price).toLocaleString('en-IN')}</p>
             </div>
-            {drawDate && daysLeft !== null && daysLeft > 0 && (
+            {countdown && !countdown.ended && drawDate && (
               <div className="text-right">
                 <p className="text-xs text-gray-500">Draw date</p>
                 <p className="text-xs font-semibold text-brand-400">{new Date(drawDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
               </div>
             )}
-            {daysLeft !== null && daysLeft <= 0 && (
+            {countdown?.ended && (
               <span className="text-xs font-semibold text-gray-500 bg-gray-700/50 px-2 py-0.5 rounded-full">Ended</span>
             )}
           </div>

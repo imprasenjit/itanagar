@@ -31,6 +31,9 @@ export default function GameDetail() {
   const [searchNum, setSearchNum]     = useState('');
   const [searchResult, setSearchResult] = useState<Record<string, any> | 'error' | null>(null);
   const [adding, setAdding]           = useState(false);
+  const [addSuccess, setAddSuccess]   = useState(false);
+  const [slideIdx, setSlideIdx]       = useState(0);
+  const [lightbox, setLightbox]       = useState(false);
 
   // Parse flat [s1,e1,s2,e2,...] into [[s1,e1],[s2,e2],...] — matches PHP $i+=2 logic
   const segments = useMemo<[number, number][]>(() => {
@@ -111,6 +114,14 @@ export default function GameDetail() {
     } catch { setSearchResult('error'); }
   };
 
+  // Auto-advance slider every 6 seconds (must be before early returns)
+  const slideImgCount = range ? [range.logo, range.logo2].filter(Boolean).length : 0;
+  useEffect(() => {
+    if (slideImgCount < 2 || lightbox) return;
+    const id = setInterval(() => setSlideIdx(prev => (prev + 1) % slideImgCount), 6000);
+    return () => clearInterval(id);
+  }, [slideImgCount, lightbox]);
+
   const handleAddToCart = async () => {
     if (selected.length === 0) { addToast('Select at least one ticket', 'error'); return; }
     setAdding(true);
@@ -118,6 +129,8 @@ export default function GameDetail() {
       await addToCart({ web_id: id, range_id: range?.id, tickets: selected });
       addToast(`${selected.length} ticket(s) added to cart!`, 'success');
       setSelected([]);
+      setAddSuccess(true);
+      setTimeout(() => setAddSuccess(false), 2000);
     } catch (e: unknown) {
       addToast((e as Error).message || 'Failed to add tickets', 'error');
     } finally {
@@ -134,8 +147,10 @@ export default function GameDetail() {
     </div>
   );
 
+  const slideImgs = (range ? [range.logo, range.logo2].filter(Boolean) : []) as string[];
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-28 lg:pb-20">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-xs text-gray-500 mb-6">
         <Link to="/" className="hover:text-white transition-colors">Home</Link>
@@ -149,23 +164,45 @@ export default function GameDetail() {
         {/* Left: Game info */}
         <div className="lg:col-span-1">
           <div className="card overflow-hidden sticky top-24">
-            {/* Flip card: logo (front) / logo2 (back) */}
-            {(range?.logo || range?.logo2) && (
-              <div className="relative h-52 overflow-hidden group">
-                {/* Front */}
-                <img
-                  src={`/itanagar/assets/imglogo/${range.logo}`}
-                  alt={game.name}
-                  className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0"
-                />
-                {/* Back */}
-                {range?.logo2 && (
+            {/* Image slider */}
+            {slideImgs.length > 0 && (
+              <div className="relative h-52 overflow-hidden bg-dark-800 cursor-zoom-in" onClick={() => setLightbox(true)}>
+                {slideImgs.map((src, i) => (
                   <img
-                    src={`/itanagar/assets/imglogo/${range.logo2}`}
-                    alt={`${game.name} back`}
-                    className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                    key={src}
+                    src={`/itanagar/assets/imglogo/${src}`}
+                    alt={`${game.name} ${i + 1}`}
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${i === slideIdx ? 'opacity-100' : 'opacity-0'}`}
                   />
+                ))}
+                {slideImgs.length > 1 && (
+                  <>
+                    <button
+                      onClick={e => { e.stopPropagation(); setSlideIdx(prev => (prev - 1 + slideImgs.length) % slideImgs.length); }}
+                      className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-dark-900/70 backdrop-blur-sm flex items-center justify-center text-white text-lg hover:bg-dark-900 transition-colors z-10">
+                      ‹
+                    </button>
+                    <button
+                      onClick={e => { e.stopPropagation(); setSlideIdx(prev => (prev + 1) % slideImgs.length); }}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-dark-900/70 backdrop-blur-sm flex items-center justify-center text-white text-lg hover:bg-dark-900 transition-colors z-10">
+                      ›
+                    </button>
+                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                      {slideImgs.map((_, i) => (
+                        <button
+                          key={i}
+                          onClick={e => { e.stopPropagation(); setSlideIdx(i); }}
+                          className={`w-1.5 h-1.5 rounded-full transition-colors ${i === slideIdx ? 'bg-white' : 'bg-white/40'}`}
+                        />
+                      ))}
+                    </div>
+                  </>
                 )}
+                <div className="absolute top-2 right-2 z-10 bg-dark-900/60 rounded-lg p-1 pointer-events-none">
+                  <svg className="w-3.5 h-3.5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                  </svg>
+                </div>
               </div>
             )}
 
@@ -209,8 +246,16 @@ export default function GameDetail() {
               )}
 
               <button onClick={handleAddToCart} disabled={selected.length === 0 || adding}
-                className="btn-primary w-full disabled:opacity-40 disabled:cursor-not-allowed">
-                {adding ? 'Adding…' : '🛒 Add to Cart'}
+                className={`hidden lg:flex items-center justify-center gap-2 w-full transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed ${
+                  addSuccess ? 'bg-emerald-500 text-white px-4 py-3 rounded-xl font-bold text-sm scale-[1.02]' : 'btn-primary'
+                }`}>
+                {adding ? (
+                  <><svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>Adding…</>
+                ) : addSuccess ? (
+                  <><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7"/></svg>Added to Cart!</>
+                ) : (
+                  <><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-9H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>Add to Cart</>
+                )}
               </button>
             </div>
           </div>
@@ -323,6 +368,80 @@ export default function GameDetail() {
           )}
         </div>
       </div>
+
+      {/* Fixed bottom bar — mobile only */}
+      <div className={`fixed bottom-0 left-0 right-0 z-40 lg:hidden transition-transform duration-300 ${
+        selected.length > 0 ? 'translate-y-0' : 'translate-y-full'
+      }`}>
+        <div className="bg-dark-800/95 backdrop-blur-md border-t border-white/10 px-4 py-3">
+          <div className="flex items-center gap-3 max-w-lg mx-auto">
+            <div className="flex-1 min-w-0">
+              <p className="text-xs text-gray-400">{selected.length} ticket{selected.length !== 1 ? 's' : ''} selected</p>
+              <p className="text-base font-bold text-white">₹{(selected.length * Number(range?.price || 0)).toLocaleString('en-IN')}</p>
+            </div>
+            <button
+              onClick={handleAddToCart}
+              disabled={adding}
+              className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 active:scale-95 disabled:opacity-60 ${
+                addSuccess
+                  ? 'bg-emerald-500 text-white scale-105'
+                  : 'bg-brand-500 hover:bg-brand-600 text-white'
+              }`}>
+              {adding ? (
+                <><svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>Adding…</>
+              ) : addSuccess ? (
+                <><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7"/></svg>Added!</>
+              ) : (
+                <><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-9H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>Add to Cart</>
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Lightbox */}
+      {lightbox && slideImgs.length > 0 && (
+        <div
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setLightbox(false)}>
+          <button
+            onClick={() => setLightbox(false)}
+            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-xl transition-colors">
+            ✕
+          </button>
+          {slideImgs.length > 1 && (
+            <button
+              onClick={e => { e.stopPropagation(); setSlideIdx(prev => (prev - 1 + slideImgs.length) % slideImgs.length); }}
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-3xl transition-colors">
+              ‹
+            </button>
+          )}
+          <img
+            src={`/itanagar/assets/imglogo/${slideImgs[slideIdx]}`}
+            alt={game.name}
+            className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl"
+            onClick={e => e.stopPropagation()}
+          />
+          {slideImgs.length > 1 && (
+            <button
+              onClick={e => { e.stopPropagation(); setSlideIdx(prev => (prev + 1) % slideImgs.length); }}
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-3xl transition-colors">
+              ›
+            </button>
+          )}
+          {slideImgs.length > 1 && (
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+              {slideImgs.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={e => { e.stopPropagation(); setSlideIdx(i); }}
+                  className={`w-2 h-2 rounded-full transition-colors ${i === slideIdx ? 'bg-white' : 'bg-white/30'}`}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

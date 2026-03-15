@@ -38,7 +38,12 @@ function Layout({ children }: { children: ReactNode }) {
 }
 
 function AuthLayout({ children }: { children: ReactNode }) {
-  return <main className="min-h-screen">{children}</main>;
+  return (
+    <>
+      <Navbar />
+      <main className="min-h-screen">{children}</main>
+    </>
+  );
 }
 
 export default function App() {
