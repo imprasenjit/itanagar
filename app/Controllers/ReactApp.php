@@ -8,8 +8,8 @@ class ReactApp extends Controller
 {
     public function serve()
     {
-        // FCPATH = itanagar/public/, so app/index.html = itanagar/public/app/index.html
-        $indexPath = realpath(FCPATH . 'app/index.html');
+        // FCPATH = itanagar/public/, so ui/index.html = itanagar/public/ui/index.html
+        $indexPath = realpath(FCPATH . 'ui/index.html');
 
         if ($indexPath === false || ! file_exists($indexPath)) {
             return service('response')

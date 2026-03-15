@@ -85,9 +85,9 @@ react-app/node_modules/
 react-app/dist/
 react-app/.env.local
 
-# React build output (compiled into public/app)
-public/app/assets/
-public/app/index.html
+# React build output (compiled into public/ui)
+public/ui/assets/
+public/ui/index.html
 
 # Don't save phpunit under version control.
 phpunit

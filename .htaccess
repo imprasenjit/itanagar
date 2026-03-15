@@ -11,9 +11,9 @@ RewriteRule ^ - [L]
 RewriteCond %{REQUEST_URI} ^/itanagar/public
 RewriteRule ^ - [L]
 
-# ── 2. React built assets (Vite base = /itanagar/, files live in public/app/) ─
-#       /itanagar/assets/* → public/app/assets/*
-RewriteRule ^assets/(.*)$ public/app/assets/$1 [L]
+# ── 2. React built assets (Vite base = /ui/, files live in public/ui/) ─────────
+#       /ui/assets/* → serve from public/ui/assets/* (no need to hit CI4)
+RewriteRule ^ui/assets/(.*)$ public/ui/assets/$1 [L]
 
 # ── 3. /ci/* → CI4 admin (strips the ci/ prefix; CI4 sees /login, /web, etc.) ─
 RewriteRule ^ci/?(.*) public/index.php/$1 [L,QSA]

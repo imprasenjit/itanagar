@@ -150,8 +150,8 @@
     jQuery('ul.pagination li a').click(function(e) {
       e.preventDefault();
       var link = jQuery(this).get(0).href;
-      var value = link.substring(link.lastIndexOf('/') + 1);
-      // alert(link+value );
+      var pageMatch = link.match(/[?&]page=(\d+)/);
+      var value = pageMatch ? pageMatch[1] : '1';
       jQuery("#searchList").attr("action", baseURL + "web/order/" + value);
       jQuery("#searchList").submit();
     });

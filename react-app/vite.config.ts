@@ -4,13 +4,13 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: '../public/app',
+    outDir: '../public/ui',
     emptyOutDir: true,
     assetsDir: 'assets',
   },
   // Dev: /itanagar/ (runs under XAMPP subfolder)
-  // Production: /app/ (CI4 public/ is document root; React assets live at public/app/)
-  base: process.env.NODE_ENV === 'production' ? '/app/' : '/itanagar/',
+  // Production: /ui/ (CI4 public/ is document root; React assets live at public/ui/)
+  base: process.env.NODE_ENV === 'production' ? '/ui/' : '/itanagar/',
   server: {
     port: 5173,
     proxy: {

