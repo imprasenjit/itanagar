@@ -4494,3 +4494,651 @@ INFO - 2026-03-15 10:41:30 --> Model "Web_model" initialized
 INFO - 2026-03-15 10:41:30 --> Model "Login_model" initialized
 INFO - 2026-03-15 10:41:30 --> Helper loaded: form_helper
 INFO - 2026-03-15 10:41:30 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:46:08 --> Config Class Initialized
+INFO - 2026-03-15 10:46:08 --> Config Class Initialized
+INFO - 2026-03-15 10:46:08 --> Hooks Class Initialized
+INFO - 2026-03-15 10:46:08 --> Hooks Class Initialized
+DEBUG - 2026-03-15 10:46:08 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:46:08 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:46:08 --> URI Class Initialized
+DEBUG - 2026-03-15 10:46:08 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:46:08 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:46:08 --> Router Class Initialized
+INFO - 2026-03-15 10:46:08 --> URI Class Initialized
+INFO - 2026-03-15 10:46:08 --> Output Class Initialized
+INFO - 2026-03-15 10:46:08 --> Router Class Initialized
+INFO - 2026-03-15 10:46:08 --> Output Class Initialized
+INFO - 2026-03-15 10:46:08 --> Security Class Initialized
+DEBUG - 2026-03-15 10:46:08 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:46:08 --> Security Class Initialized
+INFO - 2026-03-15 10:46:08 --> Input Class Initialized
+INFO - 2026-03-15 10:46:08 --> Language Class Initialized
+INFO - 2026-03-15 10:46:08 --> Loader Class Initialized
+DEBUG - 2026-03-15 10:46:08 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:46:08 --> Input Class Initialized
+INFO - 2026-03-15 10:46:08 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:46:08 --> Language Class Initialized
+INFO - 2026-03-15 10:46:08 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:46:08 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:46:08 --> Database Driver Class Initialized
+INFO - 2026-03-15 10:46:08 --> Loader Class Initialized
+INFO - 2026-03-15 10:46:08 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:46:08 --> Helper loaded: file_helper
+DEBUG - 2026-03-15 10:46:08 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:46:08 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:46:08 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:46:08 --> Model "User_model" initialized
+INFO - 2026-03-15 10:46:08 --> Controller Class Initialized
+INFO - 2026-03-15 10:46:08 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:46:08 --> Database Driver Class Initialized
+INFO - 2026-03-15 10:46:08 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:46:08 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:46:08 --> Form Validation Class Initialized
+DEBUG - 2026-03-15 10:46:08 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:46:08 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:46:08 --> Model "User_model" initialized
+INFO - 2026-03-15 10:46:08 --> Controller Class Initialized
+INFO - 2026-03-15 10:46:08 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:46:08 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:46:08 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:46:08 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:46:08 --> Config Class Initialized
+INFO - 2026-03-15 10:46:08 --> Hooks Class Initialized
+DEBUG - 2026-03-15 10:46:08 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:46:08 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:46:08 --> URI Class Initialized
+INFO - 2026-03-15 10:46:08 --> Router Class Initialized
+INFO - 2026-03-15 10:46:08 --> Output Class Initialized
+INFO - 2026-03-15 10:46:08 --> Security Class Initialized
+DEBUG - 2026-03-15 10:46:08 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:46:08 --> Input Class Initialized
+INFO - 2026-03-15 10:46:08 --> Language Class Initialized
+INFO - 2026-03-15 10:46:08 --> Loader Class Initialized
+INFO - 2026-03-15 10:46:08 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:46:08 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:46:08 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:46:08 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 10:46:08 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:46:08 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:46:08 --> Model "User_model" initialized
+INFO - 2026-03-15 10:46:08 --> Controller Class Initialized
+INFO - 2026-03-15 10:46:08 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:46:08 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:46:08 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:46:08 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:46:12 --> Config Class Initialized
+INFO - 2026-03-15 10:46:12 --> Config Class Initialized
+INFO - 2026-03-15 10:46:12 --> Hooks Class Initialized
+INFO - 2026-03-15 10:46:12 --> Hooks Class Initialized
+DEBUG - 2026-03-15 10:46:12 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:46:12 --> Utf8 Class Initialized
+DEBUG - 2026-03-15 10:46:12 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:46:12 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:46:12 --> URI Class Initialized
+INFO - 2026-03-15 10:46:12 --> URI Class Initialized
+INFO - 2026-03-15 10:46:12 --> Router Class Initialized
+INFO - 2026-03-15 10:46:12 --> Router Class Initialized
+INFO - 2026-03-15 10:46:12 --> Output Class Initialized
+INFO - 2026-03-15 10:46:12 --> Output Class Initialized
+INFO - 2026-03-15 10:46:12 --> Security Class Initialized
+INFO - 2026-03-15 10:46:12 --> Security Class Initialized
+DEBUG - 2026-03-15 10:46:12 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:46:12 --> Input Class Initialized
+DEBUG - 2026-03-15 10:46:12 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:46:12 --> Language Class Initialized
+INFO - 2026-03-15 10:46:12 --> Input Class Initialized
+INFO - 2026-03-15 10:46:12 --> Language Class Initialized
+INFO - 2026-03-15 10:46:12 --> Loader Class Initialized
+INFO - 2026-03-15 10:46:12 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:46:12 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:46:12 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:46:12 --> Database Driver Class Initialized
+INFO - 2026-03-15 10:46:12 --> Loader Class Initialized
+INFO - 2026-03-15 10:46:12 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:46:12 --> Helper loaded: file_helper
+DEBUG - 2026-03-15 10:46:12 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:46:12 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:46:12 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:46:12 --> Model "User_model" initialized
+INFO - 2026-03-15 10:46:12 --> Controller Class Initialized
+INFO - 2026-03-15 10:46:12 --> Database Driver Class Initialized
+INFO - 2026-03-15 10:46:12 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:46:12 --> Model "Login_model" initialized
+DEBUG - 2026-03-15 10:46:12 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:46:12 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:46:12 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:46:12 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:46:12 --> Model "User_model" initialized
+INFO - 2026-03-15 10:46:12 --> Controller Class Initialized
+INFO - 2026-03-15 10:46:12 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:46:12 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:46:12 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:46:12 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:46:12 --> Config Class Initialized
+INFO - 2026-03-15 10:46:12 --> Hooks Class Initialized
+DEBUG - 2026-03-15 10:46:12 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:46:12 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:46:12 --> URI Class Initialized
+INFO - 2026-03-15 10:46:12 --> Router Class Initialized
+INFO - 2026-03-15 10:46:12 --> Output Class Initialized
+INFO - 2026-03-15 10:46:12 --> Security Class Initialized
+DEBUG - 2026-03-15 10:46:12 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:46:12 --> Input Class Initialized
+INFO - 2026-03-15 10:46:12 --> Language Class Initialized
+INFO - 2026-03-15 10:46:12 --> Loader Class Initialized
+INFO - 2026-03-15 10:46:12 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:46:12 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:46:12 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:46:12 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 10:46:12 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:46:12 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:46:12 --> Model "User_model" initialized
+INFO - 2026-03-15 10:46:12 --> Controller Class Initialized
+INFO - 2026-03-15 10:46:12 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:46:12 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:46:12 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:46:12 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:51:47 --> Config Class Initialized
+INFO - 2026-03-15 10:51:47 --> Hooks Class Initialized
+DEBUG - 2026-03-15 10:51:47 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:51:47 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:51:47 --> URI Class Initialized
+INFO - 2026-03-15 10:51:47 --> Router Class Initialized
+INFO - 2026-03-15 10:51:47 --> Output Class Initialized
+INFO - 2026-03-15 10:51:47 --> Security Class Initialized
+DEBUG - 2026-03-15 10:51:47 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:51:47 --> Input Class Initialized
+INFO - 2026-03-15 10:51:47 --> Language Class Initialized
+INFO - 2026-03-15 10:51:47 --> Loader Class Initialized
+INFO - 2026-03-15 10:51:47 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:51:47 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:51:47 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:51:47 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 10:51:47 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:51:47 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:51:47 --> Model "User_model" initialized
+INFO - 2026-03-15 10:51:47 --> Controller Class Initialized
+INFO - 2026-03-15 10:51:47 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:51:47 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:51:47 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:51:47 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:51:47 --> Config Class Initialized
+INFO - 2026-03-15 10:51:47 --> Hooks Class Initialized
+DEBUG - 2026-03-15 10:51:47 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:51:47 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:51:47 --> URI Class Initialized
+INFO - 2026-03-15 10:51:47 --> Router Class Initialized
+INFO - 2026-03-15 10:51:47 --> Output Class Initialized
+INFO - 2026-03-15 10:51:47 --> Security Class Initialized
+DEBUG - 2026-03-15 10:51:47 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:51:47 --> Input Class Initialized
+INFO - 2026-03-15 10:51:47 --> Language Class Initialized
+INFO - 2026-03-15 10:51:47 --> Loader Class Initialized
+INFO - 2026-03-15 10:51:47 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:51:47 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:51:47 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:51:47 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 10:51:47 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:51:47 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:51:47 --> Model "User_model" initialized
+INFO - 2026-03-15 10:51:47 --> Controller Class Initialized
+INFO - 2026-03-15 10:51:47 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:51:47 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:51:47 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:51:47 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:51:54 --> Config Class Initialized
+INFO - 2026-03-15 10:51:54 --> Hooks Class Initialized
+DEBUG - 2026-03-15 10:51:54 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:51:54 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:51:54 --> URI Class Initialized
+INFO - 2026-03-15 10:51:54 --> Router Class Initialized
+INFO - 2026-03-15 10:51:54 --> Output Class Initialized
+INFO - 2026-03-15 10:51:54 --> Security Class Initialized
+DEBUG - 2026-03-15 10:51:54 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:51:54 --> Input Class Initialized
+INFO - 2026-03-15 10:51:54 --> Language Class Initialized
+INFO - 2026-03-15 10:51:54 --> Loader Class Initialized
+INFO - 2026-03-15 10:51:54 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:51:54 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:51:54 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:51:54 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 10:51:54 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:51:54 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:51:54 --> Model "User_model" initialized
+INFO - 2026-03-15 10:51:54 --> Controller Class Initialized
+INFO - 2026-03-15 10:51:54 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:51:54 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:51:54 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:51:54 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:51:54 --> Config Class Initialized
+INFO - 2026-03-15 10:51:54 --> Hooks Class Initialized
+DEBUG - 2026-03-15 10:51:54 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:51:54 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:51:54 --> URI Class Initialized
+INFO - 2026-03-15 10:51:54 --> Router Class Initialized
+INFO - 2026-03-15 10:51:54 --> Output Class Initialized
+INFO - 2026-03-15 10:51:54 --> Security Class Initialized
+DEBUG - 2026-03-15 10:51:54 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:51:54 --> Input Class Initialized
+INFO - 2026-03-15 10:51:54 --> Language Class Initialized
+INFO - 2026-03-15 10:51:54 --> Loader Class Initialized
+INFO - 2026-03-15 10:51:54 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:51:54 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:51:54 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:51:54 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 10:51:54 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:51:54 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:51:54 --> Model "User_model" initialized
+INFO - 2026-03-15 10:51:54 --> Controller Class Initialized
+INFO - 2026-03-15 10:51:54 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:51:54 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:51:54 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:51:54 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:52:07 --> Config Class Initialized
+INFO - 2026-03-15 10:52:07 --> Hooks Class Initialized
+DEBUG - 2026-03-15 10:52:07 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:52:07 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:52:07 --> URI Class Initialized
+INFO - 2026-03-15 10:52:07 --> Router Class Initialized
+INFO - 2026-03-15 10:52:07 --> Output Class Initialized
+INFO - 2026-03-15 10:52:07 --> Security Class Initialized
+DEBUG - 2026-03-15 10:52:07 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:52:07 --> Input Class Initialized
+INFO - 2026-03-15 10:52:07 --> Language Class Initialized
+INFO - 2026-03-15 10:52:07 --> Loader Class Initialized
+INFO - 2026-03-15 10:52:07 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:52:07 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:52:07 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:52:07 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 10:52:07 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:52:07 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:52:07 --> Model "User_model" initialized
+INFO - 2026-03-15 10:52:07 --> Controller Class Initialized
+INFO - 2026-03-15 10:52:07 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:52:07 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:52:07 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:52:07 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:56:58 --> Config Class Initialized
+INFO - 2026-03-15 10:56:58 --> Hooks Class Initialized
+INFO - 2026-03-15 10:56:58 --> Config Class Initialized
+INFO - 2026-03-15 10:56:58 --> Hooks Class Initialized
+DEBUG - 2026-03-15 10:56:58 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:56:58 --> Utf8 Class Initialized
+DEBUG - 2026-03-15 10:56:58 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:56:58 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:56:58 --> URI Class Initialized
+INFO - 2026-03-15 10:56:58 --> URI Class Initialized
+INFO - 2026-03-15 10:56:58 --> Router Class Initialized
+INFO - 2026-03-15 10:56:58 --> Router Class Initialized
+INFO - 2026-03-15 10:56:58 --> Output Class Initialized
+INFO - 2026-03-15 10:56:58 --> Output Class Initialized
+INFO - 2026-03-15 10:56:58 --> Security Class Initialized
+INFO - 2026-03-15 10:56:58 --> Security Class Initialized
+DEBUG - 2026-03-15 10:56:58 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:56:58 --> Input Class Initialized
+INFO - 2026-03-15 10:56:58 --> Language Class Initialized
+DEBUG - 2026-03-15 10:56:58 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:56:58 --> Input Class Initialized
+INFO - 2026-03-15 10:56:58 --> Language Class Initialized
+INFO - 2026-03-15 10:56:58 --> Loader Class Initialized
+INFO - 2026-03-15 10:56:58 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:56:58 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:56:58 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:56:58 --> Loader Class Initialized
+INFO - 2026-03-15 10:56:58 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:56:58 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:56:58 --> Database Driver Class Initialized
+INFO - 2026-03-15 10:56:58 --> Helper loaded: cias_helper
+DEBUG - 2026-03-15 10:56:58 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:56:58 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:56:58 --> Database Driver Class Initialized
+INFO - 2026-03-15 10:56:58 --> Model "User_model" initialized
+INFO - 2026-03-15 10:56:58 --> Controller Class Initialized
+INFO - 2026-03-15 10:56:58 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:56:58 --> Model "Login_model" initialized
+DEBUG - 2026-03-15 10:56:58 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:56:58 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:56:58 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:56:58 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:56:58 --> Model "User_model" initialized
+INFO - 2026-03-15 10:56:58 --> Controller Class Initialized
+INFO - 2026-03-15 10:56:58 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:56:58 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:56:58 --> Config Class Initialized
+INFO - 2026-03-15 10:56:58 --> Hooks Class Initialized
+INFO - 2026-03-15 10:56:58 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:56:58 --> Form Validation Class Initialized
+DEBUG - 2026-03-15 10:56:58 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:56:58 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:56:58 --> URI Class Initialized
+INFO - 2026-03-15 10:56:58 --> Router Class Initialized
+INFO - 2026-03-15 10:56:58 --> Output Class Initialized
+INFO - 2026-03-15 10:56:58 --> Security Class Initialized
+INFO - 2026-03-15 10:56:58 --> Config Class Initialized
+INFO - 2026-03-15 10:56:58 --> Hooks Class Initialized
+DEBUG - 2026-03-15 10:56:58 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:56:58 --> Input Class Initialized
+INFO - 2026-03-15 10:56:58 --> Language Class Initialized
+DEBUG - 2026-03-15 10:56:58 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:56:58 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:56:58 --> URI Class Initialized
+INFO - 2026-03-15 10:56:58 --> Router Class Initialized
+INFO - 2026-03-15 10:56:59 --> Output Class Initialized
+INFO - 2026-03-15 10:56:59 --> Loader Class Initialized
+INFO - 2026-03-15 10:56:59 --> Security Class Initialized
+INFO - 2026-03-15 10:56:59 --> Helper loaded: url_helper
+DEBUG - 2026-03-15 10:56:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:56:59 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:56:59 --> Input Class Initialized
+INFO - 2026-03-15 10:56:59 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:56:59 --> Language Class Initialized
+INFO - 2026-03-15 10:56:59 --> Database Driver Class Initialized
+INFO - 2026-03-15 10:56:59 --> Loader Class Initialized
+INFO - 2026-03-15 10:56:59 --> Helper loaded: url_helper
+DEBUG - 2026-03-15 10:56:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:56:59 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:56:59 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:56:59 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:56:59 --> Model "User_model" initialized
+INFO - 2026-03-15 10:56:59 --> Controller Class Initialized
+INFO - 2026-03-15 10:56:59 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:56:59 --> Database Driver Class Initialized
+INFO - 2026-03-15 10:56:59 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:56:59 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:56:59 --> Form Validation Class Initialized
+DEBUG - 2026-03-15 10:56:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:56:59 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:56:59 --> Model "User_model" initialized
+INFO - 2026-03-15 10:56:59 --> Controller Class Initialized
+INFO - 2026-03-15 10:56:59 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:56:59 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:56:59 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:56:59 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:56:59 --> Config Class Initialized
+INFO - 2026-03-15 10:56:59 --> Hooks Class Initialized
+DEBUG - 2026-03-15 10:56:59 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:56:59 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:56:59 --> URI Class Initialized
+INFO - 2026-03-15 10:56:59 --> Router Class Initialized
+INFO - 2026-03-15 10:56:59 --> Output Class Initialized
+INFO - 2026-03-15 10:56:59 --> Security Class Initialized
+DEBUG - 2026-03-15 10:56:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:56:59 --> Input Class Initialized
+INFO - 2026-03-15 10:56:59 --> Language Class Initialized
+INFO - 2026-03-15 10:56:59 --> Loader Class Initialized
+INFO - 2026-03-15 10:56:59 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:56:59 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:56:59 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:56:59 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 10:56:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:56:59 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:56:59 --> Model "User_model" initialized
+INFO - 2026-03-15 10:56:59 --> Controller Class Initialized
+INFO - 2026-03-15 10:56:59 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:56:59 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:56:59 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:56:59 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:57:13 --> Config Class Initialized
+INFO - 2026-03-15 10:57:13 --> Hooks Class Initialized
+DEBUG - 2026-03-15 10:57:13 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:57:13 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:57:13 --> URI Class Initialized
+INFO - 2026-03-15 10:57:13 --> Router Class Initialized
+INFO - 2026-03-15 10:57:13 --> Output Class Initialized
+INFO - 2026-03-15 10:57:13 --> Security Class Initialized
+DEBUG - 2026-03-15 10:57:13 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:57:13 --> Input Class Initialized
+INFO - 2026-03-15 10:57:13 --> Language Class Initialized
+INFO - 2026-03-15 10:57:13 --> Loader Class Initialized
+INFO - 2026-03-15 10:57:13 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:57:13 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:57:13 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:57:13 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 10:57:13 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:57:13 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:57:13 --> Model "User_model" initialized
+INFO - 2026-03-15 10:57:13 --> Controller Class Initialized
+INFO - 2026-03-15 10:57:13 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:57:13 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:57:13 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:57:13 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:57:13 --> Config Class Initialized
+INFO - 2026-03-15 10:57:13 --> Hooks Class Initialized
+DEBUG - 2026-03-15 10:57:13 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:57:13 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:57:13 --> URI Class Initialized
+INFO - 2026-03-15 10:57:13 --> Router Class Initialized
+INFO - 2026-03-15 10:57:13 --> Output Class Initialized
+INFO - 2026-03-15 10:57:13 --> Security Class Initialized
+DEBUG - 2026-03-15 10:57:13 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:57:13 --> Input Class Initialized
+INFO - 2026-03-15 10:57:13 --> Language Class Initialized
+INFO - 2026-03-15 10:57:13 --> Loader Class Initialized
+INFO - 2026-03-15 10:57:13 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:57:13 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:57:13 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:57:13 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 10:57:13 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:57:13 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:57:13 --> Model "User_model" initialized
+INFO - 2026-03-15 10:57:13 --> Controller Class Initialized
+INFO - 2026-03-15 10:57:13 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:57:13 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:57:13 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:57:13 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:57:32 --> Config Class Initialized
+INFO - 2026-03-15 10:57:32 --> Hooks Class Initialized
+DEBUG - 2026-03-15 10:57:32 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:57:32 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:57:32 --> URI Class Initialized
+INFO - 2026-03-15 10:57:32 --> Router Class Initialized
+INFO - 2026-03-15 10:57:32 --> Output Class Initialized
+INFO - 2026-03-15 10:57:32 --> Security Class Initialized
+DEBUG - 2026-03-15 10:57:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:57:32 --> Input Class Initialized
+INFO - 2026-03-15 10:57:32 --> Language Class Initialized
+INFO - 2026-03-15 10:57:32 --> Loader Class Initialized
+INFO - 2026-03-15 10:57:32 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:57:32 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:57:32 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:57:32 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 10:57:32 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:57:32 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:57:32 --> Model "User_model" initialized
+INFO - 2026-03-15 10:57:32 --> Controller Class Initialized
+INFO - 2026-03-15 10:57:32 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:57:32 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:57:32 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:57:32 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:58:14 --> Config Class Initialized
+INFO - 2026-03-15 10:58:14 --> Hooks Class Initialized
+DEBUG - 2026-03-15 10:58:14 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:58:14 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:58:14 --> URI Class Initialized
+INFO - 2026-03-15 10:58:14 --> Router Class Initialized
+INFO - 2026-03-15 10:58:14 --> Output Class Initialized
+INFO - 2026-03-15 10:58:14 --> Security Class Initialized
+DEBUG - 2026-03-15 10:58:14 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:58:14 --> Input Class Initialized
+INFO - 2026-03-15 10:58:14 --> Language Class Initialized
+INFO - 2026-03-15 10:58:15 --> Loader Class Initialized
+INFO - 2026-03-15 10:58:15 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:58:15 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:58:15 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:58:15 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 10:58:15 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:58:15 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:58:15 --> Model "User_model" initialized
+INFO - 2026-03-15 10:58:15 --> Controller Class Initialized
+INFO - 2026-03-15 10:58:15 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:58:15 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:58:15 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:58:15 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:58:16 --> Config Class Initialized
+INFO - 2026-03-15 10:58:16 --> Hooks Class Initialized
+INFO - 2026-03-15 10:58:16 --> Config Class Initialized
+INFO - 2026-03-15 10:58:16 --> Hooks Class Initialized
+DEBUG - 2026-03-15 10:58:16 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:58:16 --> Utf8 Class Initialized
+DEBUG - 2026-03-15 10:58:16 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:58:16 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:58:16 --> URI Class Initialized
+INFO - 2026-03-15 10:58:16 --> URI Class Initialized
+INFO - 2026-03-15 10:58:16 --> Router Class Initialized
+INFO - 2026-03-15 10:58:16 --> Router Class Initialized
+INFO - 2026-03-15 10:58:16 --> Output Class Initialized
+INFO - 2026-03-15 10:58:16 --> Output Class Initialized
+INFO - 2026-03-15 10:58:16 --> Security Class Initialized
+DEBUG - 2026-03-15 10:58:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:58:16 --> Security Class Initialized
+INFO - 2026-03-15 10:58:16 --> Input Class Initialized
+DEBUG - 2026-03-15 10:58:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:58:16 --> Language Class Initialized
+INFO - 2026-03-15 10:58:16 --> Input Class Initialized
+INFO - 2026-03-15 10:58:16 --> Language Class Initialized
+INFO - 2026-03-15 10:58:16 --> Loader Class Initialized
+INFO - 2026-03-15 10:58:16 --> Loader Class Initialized
+INFO - 2026-03-15 10:58:16 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:58:16 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:58:16 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:58:16 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:58:16 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:58:16 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:58:16 --> Database Driver Class Initialized
+INFO - 2026-03-15 10:58:16 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 10:58:16 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2026-03-15 10:58:16 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:58:16 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:58:16 --> Model "User_model" initialized
+INFO - 2026-03-15 10:58:16 --> Controller Class Initialized
+INFO - 2026-03-15 10:58:16 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:58:16 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:58:16 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:58:16 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:58:16 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:58:16 --> Model "User_model" initialized
+INFO - 2026-03-15 10:58:16 --> Controller Class Initialized
+INFO - 2026-03-15 10:58:16 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:58:16 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:58:16 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:58:16 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:58:16 --> Config Class Initialized
+INFO - 2026-03-15 10:58:16 --> Hooks Class Initialized
+DEBUG - 2026-03-15 10:58:16 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:58:16 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:58:16 --> URI Class Initialized
+INFO - 2026-03-15 10:58:16 --> Router Class Initialized
+INFO - 2026-03-15 10:58:16 --> Output Class Initialized
+INFO - 2026-03-15 10:58:16 --> Security Class Initialized
+INFO - 2026-03-15 10:58:16 --> Config Class Initialized
+INFO - 2026-03-15 10:58:16 --> Hooks Class Initialized
+DEBUG - 2026-03-15 10:58:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:58:16 --> Input Class Initialized
+INFO - 2026-03-15 10:58:16 --> Language Class Initialized
+DEBUG - 2026-03-15 10:58:16 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:58:16 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:58:16 --> URI Class Initialized
+INFO - 2026-03-15 10:58:16 --> Router Class Initialized
+INFO - 2026-03-15 10:58:16 --> Output Class Initialized
+INFO - 2026-03-15 10:58:16 --> Loader Class Initialized
+INFO - 2026-03-15 10:58:16 --> Security Class Initialized
+INFO - 2026-03-15 10:58:16 --> Helper loaded: url_helper
+DEBUG - 2026-03-15 10:58:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:58:16 --> Input Class Initialized
+INFO - 2026-03-15 10:58:16 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:58:16 --> Language Class Initialized
+INFO - 2026-03-15 10:58:16 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:58:16 --> Database Driver Class Initialized
+INFO - 2026-03-15 10:58:16 --> Loader Class Initialized
+INFO - 2026-03-15 10:58:16 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:58:16 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:58:16 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:58:16 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 10:58:16 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:58:16 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:58:16 --> Model "User_model" initialized
+INFO - 2026-03-15 10:58:16 --> Controller Class Initialized
+INFO - 2026-03-15 10:58:16 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:58:16 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:58:16 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:58:16 --> Form Validation Class Initialized
+DEBUG - 2026-03-15 10:58:16 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:58:16 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:58:16 --> Model "User_model" initialized
+INFO - 2026-03-15 10:58:16 --> Controller Class Initialized
+INFO - 2026-03-15 10:58:16 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:58:16 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:58:16 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:58:16 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:58:17 --> Config Class Initialized
+INFO - 2026-03-15 10:58:17 --> Hooks Class Initialized
+DEBUG - 2026-03-15 10:58:17 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:58:17 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:58:17 --> URI Class Initialized
+INFO - 2026-03-15 10:58:17 --> Router Class Initialized
+INFO - 2026-03-15 10:58:17 --> Output Class Initialized
+INFO - 2026-03-15 10:58:17 --> Security Class Initialized
+DEBUG - 2026-03-15 10:58:17 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:58:17 --> Input Class Initialized
+INFO - 2026-03-15 10:58:17 --> Language Class Initialized
+INFO - 2026-03-15 10:58:17 --> Loader Class Initialized
+INFO - 2026-03-15 10:58:17 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:58:17 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:58:17 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:58:17 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 10:58:17 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:58:17 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:58:17 --> Model "User_model" initialized
+INFO - 2026-03-15 10:58:17 --> Controller Class Initialized
+INFO - 2026-03-15 10:58:17 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:58:17 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:58:17 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:58:17 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:58:45 --> Config Class Initialized
+INFO - 2026-03-15 10:58:45 --> Hooks Class Initialized
+DEBUG - 2026-03-15 10:58:45 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:58:45 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:58:45 --> URI Class Initialized
+INFO - 2026-03-15 10:58:45 --> Router Class Initialized
+INFO - 2026-03-15 10:58:45 --> Output Class Initialized
+INFO - 2026-03-15 10:58:45 --> Security Class Initialized
+DEBUG - 2026-03-15 10:58:45 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:58:45 --> Input Class Initialized
+INFO - 2026-03-15 10:58:45 --> Language Class Initialized
+INFO - 2026-03-15 10:58:45 --> Loader Class Initialized
+INFO - 2026-03-15 10:58:45 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:58:45 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:58:45 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:58:45 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 10:58:45 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:58:45 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:58:45 --> Model "User_model" initialized
+INFO - 2026-03-15 10:58:45 --> Controller Class Initialized
+INFO - 2026-03-15 10:58:45 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:58:45 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:58:45 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:58:45 --> Form Validation Class Initialized
+INFO - 2026-03-15 10:59:03 --> Config Class Initialized
+INFO - 2026-03-15 10:59:03 --> Hooks Class Initialized
+DEBUG - 2026-03-15 10:59:03 --> UTF-8 Support Enabled
+INFO - 2026-03-15 10:59:03 --> Utf8 Class Initialized
+INFO - 2026-03-15 10:59:03 --> URI Class Initialized
+INFO - 2026-03-15 10:59:03 --> Router Class Initialized
+INFO - 2026-03-15 10:59:03 --> Output Class Initialized
+INFO - 2026-03-15 10:59:03 --> Security Class Initialized
+DEBUG - 2026-03-15 10:59:03 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 10:59:03 --> Input Class Initialized
+INFO - 2026-03-15 10:59:03 --> Language Class Initialized
+INFO - 2026-03-15 10:59:03 --> Loader Class Initialized
+INFO - 2026-03-15 10:59:03 --> Helper loaded: url_helper
+INFO - 2026-03-15 10:59:03 --> Helper loaded: file_helper
+INFO - 2026-03-15 10:59:03 --> Helper loaded: cias_helper
+INFO - 2026-03-15 10:59:03 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 10:59:03 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 10:59:03 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 10:59:03 --> Model "User_model" initialized
+INFO - 2026-03-15 10:59:03 --> Controller Class Initialized
+INFO - 2026-03-15 10:59:03 --> Model "Web_model" initialized
+INFO - 2026-03-15 10:59:03 --> Model "Login_model" initialized
+INFO - 2026-03-15 10:59:03 --> Helper loaded: form_helper
+INFO - 2026-03-15 10:59:03 --> Form Validation Class Initialized

@@ -6,27 +6,45 @@ import { useToast } from '../components/Toast';
 
 import type { CartItem } from '../types';
 
+interface GuestForm { fname: string; address: string; mobile: string; email: string; }
+const EMPTY_GUEST: GuestForm = { fname: '', address: '', mobile: '', email: '' };
+
 export default function ConfirmOrder() {
-  const [items, setItems]     = useState<CartItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [paying, setPaying]   = useState(false);
+  const [items, setItems]       = useState<CartItem[]>([]);
+  const [loading, setLoading]   = useState(true);
+  const [paying, setPaying]     = useState(false);
+  const [isGuest, setIsGuest]   = useState(false);
+  const [guest, setGuest]       = useState<GuestForm>(EMPTY_GUEST);
+  const [guestErrors, setGuestErrors] = useState<Partial<GuestForm>>({});
   const navigate  = useNavigate();
   const addToast  = useToast();
 
   useEffect(() => {
     getOrderConfirm()
-      // order_confirm response: { status, data: { items: [...], total, isGuest } }
-      .then(r => setItems(r.data.data?.items || []))
+      .then(r => {
+        setItems(r.data.data?.items || []);
+        setIsGuest(r.data.data?.isGuest === true);
+      })
       .catch(() => navigate('/cart'))
       .finally(() => setLoading(false));
   }, [navigate]);
 
   const total = items.reduce((sum, i) => sum + Number(i.total_price || 0), 0);
 
+  const validateGuest = (): boolean => {
+    const errs: Partial<GuestForm> = {};
+    if (!guest.fname.trim()) errs.fname = 'Name is required';
+    if (!guest.mobile.trim()) errs.mobile = 'Mobile is required';
+    else if (!/^\d{10}$/.test(guest.mobile.trim())) errs.mobile = 'Enter a valid 10-digit mobile number';
+    setGuestErrors(errs);
+    return Object.keys(errs).length === 0;
+  };
+
   const handlePay = async () => {
+    if (isGuest && !validateGuest()) return;
     setPaying(true);
     try {
-      const r = await createPayment();
+      const r = await createPayment(isGuest ? guest : undefined);
       if (!r.data.status) throw new Error(r.data.message);
       const { order_id, amount, currency, key_id, user_name, user_email, user_mobile } = r.data.data;
 
@@ -115,6 +133,77 @@ export default function ConfirmOrder() {
               ))}
             </div>
           </div>
+
+          {/* ── Guest checkout form ───────────────────────────────────── */}
+          {isGuest && (
+            <div className="card overflow-hidden">
+              <div className="px-5 py-3 border-b border-white/5 bg-dark-600/30 flex items-center justify-between">
+                <p className="text-sm font-semibold text-gray-300">Your Details</p>
+                <Link to="/login" className="text-xs text-brand-400 hover:text-brand-300 transition-colors">
+                  Already have an account? Sign In →
+                </Link>
+              </div>
+              <div className="p-5 space-y-4">
+                {/* Name */}
+                <div>
+                  <label className="block text-xs font-medium text-gray-400 mb-1.5">
+                    Full Name <span className="text-brand-400">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={guest.fname}
+                    onChange={e => { setGuest(g => ({ ...g, fname: e.target.value })); setGuestErrors(er => ({ ...er, fname: '' })); }}
+                    placeholder="John Doe"
+                    className={`w-full bg-dark-600 border rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-1 transition-colors ${guestErrors.fname ? 'border-red-500 focus:ring-red-500' : 'border-white/10 focus:ring-brand-500 focus:border-brand-500'}`}
+                  />
+                  {guestErrors.fname && <p className="mt-1 text-xs text-red-400">{guestErrors.fname}</p>}
+                </div>
+
+                {/* Mobile */}
+                <div>
+                  <label className="block text-xs font-medium text-gray-400 mb-1.5">
+                    Mobile Number <span className="text-brand-400">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    value={guest.mobile}
+                    onChange={e => { setGuest(g => ({ ...g, mobile: e.target.value.replace(/\D/g, '').slice(0, 10) })); setGuestErrors(er => ({ ...er, mobile: '' })); }}
+                    placeholder="10-digit mobile number"
+                    className={`w-full bg-dark-600 border rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-1 transition-colors ${guestErrors.mobile ? 'border-red-500 focus:ring-red-500' : 'border-white/10 focus:ring-brand-500 focus:border-brand-500'}`}
+                  />
+                  {guestErrors.mobile && <p className="mt-1 text-xs text-red-400">{guestErrors.mobile}</p>}
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label className="block text-xs font-medium text-gray-400 mb-1.5">
+                    Email Address <span className="text-gray-600 font-normal">(optional)</span>
+                  </label>
+                  <input
+                    type="email"
+                    value={guest.email}
+                    onChange={e => setGuest(g => ({ ...g, email: e.target.value }))}
+                    placeholder="you@example.com"
+                    className="w-full bg-dark-600 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-brand-500 focus:border-brand-500 transition-colors"
+                  />
+                </div>
+
+                {/* Address */}
+                <div>
+                  <label className="block text-xs font-medium text-gray-400 mb-1.5">
+                    Address <span className="text-gray-600 font-normal">(optional)</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={guest.address}
+                    onChange={e => setGuest(g => ({ ...g, address: e.target.value }))}
+                    placeholder="Your address"
+                    className="w-full bg-dark-600 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-brand-500 focus:border-brand-500 transition-colors"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="card p-5">
             <div className="flex justify-between items-center text-sm mb-2">

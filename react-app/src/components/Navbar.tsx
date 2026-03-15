@@ -27,7 +27,7 @@ export default function Navbar() {
   const activeNavLink = `${navLink} !text-brand-400`;
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-dark-900/95 backdrop-blur-md shadow-lg shadow-black/30' : 'bg-transparent'}`}>
+    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled || menuOpen ? 'bg-dark-900/95 backdrop-blur-md shadow-lg shadow-black/30' : 'bg-dark-900/95 backdrop-blur-md md:bg-transparent md:backdrop-blur-none'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
 
@@ -107,7 +107,7 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         {menuOpen && (
-          <div className="md:hidden py-3 border-t border-white/5">
+          <div className="md:hidden py-3 border-t border-white/10 bg-dark-900">
             {[['/', 'Home'], ['/games', 'Games'], ['/results', 'Results'], ['/faq', 'FAQ'], ['/contact', 'Contact']].map(([to, label]) => (
               <NavLink key={to} to={to} end={to === '/'} onClick={() => setMenuOpen(false)}
                 className={({isActive}) => `block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${isActive ? 'text-brand-400 bg-brand-500/10' : 'text-gray-300 hover:text-white hover:bg-white/5'}`}>

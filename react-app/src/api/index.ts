@@ -31,7 +31,8 @@ export const removeCartItem = (id: number) => api.delete(`/cart/${id}`);
 
 // ── Payment ──────────────────────────────────────────────────────────────────
 export const getOrderConfirm = () => api.get('/order/confirm');
-export const createPayment = () => api.post('/payment/create');
+interface GuestInfo { fname?: string; address?: string; mobile?: string; email?: string; }
+export const createPayment = (guestData?: GuestInfo) => api.post('/payment/create', guestData ?? {});
 export const confirmPayment = (data: Record<string, unknown>) => api.post('/payment/confirm', data);
 export const cancelPayment = (data: Record<string, unknown>) => api.post('/payment/cancel', data);
 

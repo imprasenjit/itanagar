@@ -230,7 +230,7 @@ export default function GameDetail() {
                   </div>
                 )}
                 {range?.play_description && (
-                  <div className="pt-2 border-t border-white/5 text-xs text-gray-500 leading-relaxed"
+                  <div className="pt-2 border-t border-white/5 text-xs text-gray-500 leading-relaxed [&_p]:mb-2 [&_p:last-child]:mb-0 [&_strong]:text-gray-300 [&_ul]:list-disc [&_ul]:pl-4 [&_ul]:space-y-1 [&_ol]:list-decimal [&_ol]:pl-4 [&_ol]:space-y-1"
                     dangerouslySetInnerHTML={{ __html: range.play_description }}/>
                 )}
               </div>
