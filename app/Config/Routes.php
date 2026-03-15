@@ -7,7 +7,9 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 // ── Default / React SPA ──────────────────────────────────────────────────────
-$routes->get('/', 'ReactApp::serve');
+$routes->addRedirect('/', 'app');
+$routes->get('app',        'ReactApp::serve');
+$routes->get('app/(:any)', 'ReactApp::serve');
 
 // ── Auth ─────────────────────────────────────────────────────────────────────
 $routes->get('login',            'Login::index');
@@ -136,5 +138,5 @@ $routes->post('api/payment/create',  'Api::payment_create');
 $routes->post('api/payment/confirm', 'Api::payment_confirm');
 $routes->post('api/payment/cancel',  'Api::payment_cancel');
 
-// ── React SPA catch-all (must be last) ────────────────────────────────────────
-$routes->get('(:any)', 'ReactApp::serve');
+// ── React SPA catch-all for /app/* (must be last) ───────────────────────────
+$routes->get('app/(:any)', 'ReactApp::serve');
