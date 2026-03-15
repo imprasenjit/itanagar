@@ -78,6 +78,17 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 #-------------------------
 tests/coverage*
 
+#-------------------------
+# Node / React App
+#-------------------------
+react-app/node_modules/
+react-app/dist/
+react-app/.env.local
+
+# React build output (compiled into public/app)
+public/app/assets/
+public/app/index.html
+
 # Don't save phpunit under version control.
 phpunit
 
