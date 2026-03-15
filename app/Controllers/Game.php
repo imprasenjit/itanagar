@@ -353,7 +353,7 @@ class Game extends BaseController
             'currency'     => $razorpayOrder['currency'],
             'name'         => APP_NAME,
             'description'  => 'Event Tickets',
-            'image'        => base_url('public/images/logo.png'),
+            'image'        => base_url('images/logo.png'),
             'order_id'     => $razorpayOrder['id'],
             'callback_url' => base_url('game/payment_confirm'),
             'prefill'      => [

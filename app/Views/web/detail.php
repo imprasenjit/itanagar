@@ -56,7 +56,7 @@
                                     <h4 style="color:green;">Logo</h4>
 
                                     <br>
-                                    <img style="height:100px;" src="<?php echo base_url('public/imglogo') . "/" . $RangeInfo->logo; ?>">
+                                    <img style="height:100px;" src="<?php echo base_url('imglogo') . "/" . $RangeInfo->logo; ?>">
                                 </div>
                             </div>
 

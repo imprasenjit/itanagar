@@ -8,9 +8,9 @@ export default defineConfig({
     emptyOutDir: true,
     assetsDir: 'assets',
   },
-  // base = /itanagar/ → import.meta.env.BASE_URL = '/itanagar/'
-  // BrowserRouter uses BASE_URL as its basename → clean URLs like /itanagar/games/3
-  base: '/itanagar/',
+  // Dev: /itanagar/ (runs under XAMPP subfolder)
+  // Production: /app/ (CI4 public/ is document root; React assets live at public/app/)
+  base: process.env.NODE_ENV === 'production' ? '/app/' : '/itanagar/',
   server: {
     port: 5173,
     proxy: {

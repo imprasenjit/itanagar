@@ -14,7 +14,7 @@
             }
 
             .background_style_for_mobile {
-                background-image: url('<?php echo base_url('public/imglogo') . "/" . $value["range"]->logo; ?>');
+                background-image: url('<?php echo base_url('imglogo') . "/" . $value["range"]->logo; ?>');
                 background-size: cover !important;
                 background-position: top center !important;
                 height: 300px !important;
@@ -42,9 +42,9 @@
     <?php foreach ($ticket_details as $key => $value) { ?>
         <table width="970" align="center" border="0" cellpadding="0" cellspacing="0">
             <tr>
-                <td class="background_style_for_mobile" height="450" valign="top" background="<?php echo base_url('public/imglogo') . "/" . $value["range"]->logo; ?>" bgcolor="#FFFFFF" style="background-position:center;background-size:cover;background-repeat:no-repeat;text-align:center;font-size:0;line-height:0;height:450px;">
+                <td class="background_style_for_mobile" height="450" valign="top" background="<?php echo base_url('imglogo') . "/" . $value["range"]->logo; ?>" bgcolor="#FFFFFF" style="background-position:center;background-size:cover;background-repeat:no-repeat;text-align:center;font-size:0;line-height:0;height:450px;">
                     <!--[if mso]>
-  		  		<v:image xmlns:v="urn:schemas-microsoft-com:vml" style="behavior:url(#default#VML);display:inline-block;position:absolute;width:450pt;height:277.5pt;top:0;left:0;border:0;z-index:1;" src="<?php echo base_url('public/imglogo') . "/" . $value["range"]->logo; ?>" />
+  		  		<v:image xmlns:v="urn:schemas-microsoft-com:vml" style="behavior:url(#default#VML);display:inline-block;position:absolute;width:450pt;height:277.5pt;top:0;left:0;border:0;z-index:1;" src="<?php echo base_url('imglogo') . "/" . $value["range"]->logo; ?>" />
   		  		<v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="border:0;display:inline-block;position:absolute;width:450pt;height:277.5pt;">
   		  		<v:fill opacity="0%" color="#FFFFFF" />
   		  		<v:textbox inset="0,0,0,0">

@@ -73,7 +73,7 @@ export default function Home() {
           </div>
         ))}
 
-        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
+        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto pt-24">
 
           {/* Logo */}
           <div className="flex justify-center mb-6">
@@ -175,7 +175,7 @@ export default function Home() {
                 {featuredGame.logo && (
                   <div className="sm:w-72 h-56 sm:h-auto relative overflow-hidden shrink-0">
                     <img
-                      src={`/itanagar/public/imglogo/${featuredGame.logo}`}
+                      src={`${import.meta.env.VITE_PUBLIC_URL}/imglogo/${featuredGame.logo}`}
                       alt={featuredGame.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />

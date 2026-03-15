@@ -427,7 +427,7 @@ class Api extends BaseController
     public function cart_remove(int $cartId)
     {
         $userId = $this->getCartUserId();
-        $this->db->table('tbl_cart')->where('id', $cartId)->where('user_id', $userId)->delete();
+        $this->webModel->delete_cart_item($cartId, $userId);
         return $this->json([], true, 'Removed');
     }
 

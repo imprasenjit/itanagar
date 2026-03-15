@@ -128,7 +128,7 @@ class Web extends BaseController
 
         $data['RangeInfo'] = $this->webModel->getrangeInfo($id);
         $count  = $this->webModel->count_date($id);
-        $pgData = $this->paginationCompress("ci/web/view/$id/", $count, 10, 4);
+        $pgData = $this->paginationCompress("web/view/$id/", $count, 10, 4);
 
         $data['userRecords'] = $this->webModel->list_date($id, $pgData['page'], $pgData['segment']);
         $data['pager']       = $pgData['pager'];
@@ -399,7 +399,84 @@ class Web extends BaseController
         session()->setFlashdata($result ? 'success' : 'error', $result ? 'Page updated successfully' : 'Page updation failed');
         return redirect()->to("ci/web/pageedit/$id");
     }
+    // ── FAQ / Announcements ──────────────────────────────────────────────────
 
+    public function faq()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->loadThis();
+        }
+        $searchText         = esc($this->request->getPost('searchText') ?? '');
+        $data['searchText'] = $searchText;
+        $data['web']        = $this->webModel->get_allfaq($searchText);
+        $this->global['pageTitle'] = 'Lottery : Announcements';
+        return $this->loadViews('faq', $this->global, $data, null);
+    }
+
+    public function addfaq()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->loadThis();
+        }
+        $this->global['pageTitle'] = 'Lottery : Add Announcement';
+        return $this->loadViews('web/addfaq', $this->global, null, null);
+    }
+
+    public function addNewfaq()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->loadThis();
+        }
+
+        if (!$this->validate(['question' => 'required', 'answer' => 'required'])) {
+            return $this->addfaq();
+        }
+
+        $this->webModel->insert_date('tbl_faqs', [
+            'question' => esc($this->request->getPost('question')),
+            'answer'   => $this->request->getPost('answer'),
+        ]);
+        session()->setFlashdata('success', 'Announcement added successfully');
+        return redirect()->to('web/faq');
+    }
+
+    public function faqedit(int $id = 0)
+    {
+        if ($this->isAdmin() === false) {
+            return $this->loadThis();
+        }
+        if ($id === 0) {
+            return redirect()->to('web/faq');
+        }
+        $data['userInfo'] = $this->webModel->getfaq($id);
+        $this->global['pageTitle'] = 'Lottery : Edit Announcement';
+        return $this->loadViews('web/editfaq', $this->global, $data, null);
+    }
+
+    public function faqupdate()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->loadThis();
+        }
+
+        $id = (int) $this->request->getPost('id');
+        $this->webModel->editWeb_all('tbl_faqs', [
+            'question' => esc($this->request->getPost('question')),
+            'answer'   => $this->request->getPost('answer'),
+        ], $id);
+        session()->setFlashdata('success', 'Announcement updated successfully');
+        return redirect()->to('web/faq');
+    }
+
+    public function deletefaq()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['status' => 'access']);
+        }
+        $id     = (int) $this->request->getPost('userId');
+        $result = $this->webModel->deleteWeb('tbl_faqs', $id);
+        return $this->response->setJSON(['status' => $result > 0]);
+    }
     // ── Contact Listing ───────────────────────────────────────────────────────
 
     public function contact_list()
@@ -409,7 +486,7 @@ class Web extends BaseController
         }
 
         $count  = $this->webModel->count_contact();
-        $pgData = $this->paginationCompress('ci/web/contact_list/', $count, 10, 3);
+        $pgData = $this->paginationCompress('web/contact_list/', $count, 10, 3);
 
         $data = [
             'userRecords' => $this->webModel->contact_ls($pgData['page'], $pgData['segment']),
@@ -417,6 +494,27 @@ class Web extends BaseController
         ];
         $this->global['pageTitle'] = 'Lottery : Contact List';
         return $this->loadViews('web/contact', $this->global, $data, null);
+    }
+
+    // ── Admin Order Listing ───────────────────────────────────────────────────
+
+    public function order()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->loadThis();
+        }
+
+        $searchText = esc($this->request->getPost('searchText') ?? '');
+        $count      = $this->webModel->order_list_count($searchText);
+        $pgData     = $this->paginationCompress('web/order/', $count, 10, 3);
+
+        $data = [
+            'searchText' => $searchText,
+            'orders'     => $this->webModel->order_list($searchText, $pgData['page'], $pgData['segment']),
+            'pager'      => $pgData['pager'],
+        ];
+        $this->global['pageTitle'] = 'Lottery : Order History';
+        return $this->loadViews('web/order', $this->global, $data, null);
     }
 
     // ── Admin Order Management ────────────────────────────────────────────────

@@ -460,7 +460,7 @@ ul.social li{
       	<tr>
           <td valign="top" class="bg_white" style="padding: 1em 2.5em; text-align: center;">
 
-			            <h1><a href="#"><img width="150" src="<?php echo base_url("public/email_image") ?>/logo.png"></a></h1>
+			            <h1><a href="#"><img width="150" src="<?php echo base_url("email_image") ?>/logo.png"></a></h1>
           </td>
 	      </tr><!-- end tr -->
 				<tr>

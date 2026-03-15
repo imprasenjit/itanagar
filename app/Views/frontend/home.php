@@ -27,10 +27,10 @@
             <div class="flip-box">
               <div class="flip-box-inner">
                 <div class="flip-box-front">
-                  <img class="card-img-top" src="<?php echo base_url('public/imglogo') . "/" . $l->logo; ?>" style="height:200px">
+                  <img class="card-img-top" src="<?php echo base_url('imglogo') . "/" . $l->logo; ?>" style="height:200px">
                 </div>
                 <div class="flip-box-back">
-                  <img class="card-img-top" src="<?php echo base_url('public/imglogo') . "/" . $l->logo2; ?>" style="height:200px">
+                  <img class="card-img-top" src="<?php echo base_url('imglogo') . "/" . $l->logo2; ?>" style="height:200px">
 
                 </div>
               </div>

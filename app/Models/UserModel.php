@@ -26,7 +26,7 @@ class UserModel extends Model
     public function userListing(string $searchText, int $limit, int $offset)
     {
         $builder = $this->db->table('tbl_users as BaseTbl')
-            ->select('BaseTbl.userId, BaseTbl.email, BaseTbl.name, BaseTbl.mobile, BaseTbl.createdDtm, Role.role')
+            ->select('BaseTbl.userId, BaseTbl.email, BaseTbl.name, BaseTbl.mobile, BaseTbl.phonecode, BaseTbl.createdDtm, Role.role')
             ->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left')
             ->where('BaseTbl.isDeleted', 0)
             ->where('BaseTbl.roleId !=', 1)
@@ -74,7 +74,7 @@ class UserModel extends Model
     public function getUserInfo(int $userId)
     {
         return $this->db->table('tbl_users')
-            ->select('userId, name, email, mobile, roleId')
+            ->select('userId, name, email, mobile, roleId, phonecode')
             ->where('isDeleted', 0)
             ->where('roleId !=', 1)
             ->where('userId',    $userId)

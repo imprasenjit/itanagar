@@ -52,7 +52,7 @@ class User extends BaseController
 
         $searchText = esc($this->request->getPost('searchText') ?? '');
         $count      = $this->userModel->userListingCount($searchText);
-        $pgData     = $this->paginationCompress('ci/userListing/', $count, 10);
+        $pgData     = $this->paginationCompress('userListing/', $count, 10);
 
         $data = [
             'searchText'  => $searchText,
@@ -227,7 +227,7 @@ class User extends BaseController
         $toDate     = $this->request->getPost('toDate')     ?? '';
 
         $count  = $this->userModel->loginHistoryCount($userId, $searchText, $fromDate, $toDate);
-        $pgData = $this->paginationCompress("ci/login-history/$userId/", $count, 10, 3);
+        $pgData = $this->paginationCompress("login-history/$userId/", $count, 10, 3);
 
         $data = [
             'userInfo'    => $this->userModel->getUserInfoById($userId),

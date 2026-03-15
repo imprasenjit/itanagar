@@ -56,7 +56,7 @@ export default function GameCard({ game }: { game: Game }) {
         {/* Image */}
         <div className="relative h-48 overflow-hidden bg-dark-800">
           {logo ? (
-            <img src={`/itanagar/public/imglogo/${logo}`} alt={name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            <img src={`${import.meta.env.VITE_PUBLIC_URL}/imglogo/${logo}`} alt={name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-dark-600 to-dark-800">
               <svg className="w-16 h-16 text-dark-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">

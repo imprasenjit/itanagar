@@ -7,7 +7,7 @@
 <div class="col-md-4 mt-3">
   <div class="card game-card">
     <div class="card-img-top game-card-media">
-      <img src="<?php echo base_url('public/imglogo') . '/' . $l->logo; ?>" alt="<?= htmlspecialchars($l->name) ?>">
+      <img src="<?php echo base_url('imglogo') . '/' . $l->logo; ?>" alt="<?= htmlspecialchars($l->name) ?>">
     </div>
     <div class="card-body">
       <h5 class="card-title"><?= htmlspecialchars($l->name) ?></h5>

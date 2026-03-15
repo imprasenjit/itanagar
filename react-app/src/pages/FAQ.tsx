@@ -28,7 +28,7 @@ export default function FAQ() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getFaq().then(r => setFaqs(r.data.data || [])).catch(() => {}).finally(() => setLoading(false));
+    getFaq().then(r => setFaqs(r.data.data?.faqs || [])).catch(() => {}).finally(() => setLoading(false));
   }, []);
 
   return (

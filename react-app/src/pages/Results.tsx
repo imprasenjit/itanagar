@@ -18,7 +18,7 @@ export default function Results() {
     if (date)  params.date   = date;
     try {
       const r = await getResults(params);
-      setResults(r.data.data || []);
+      setResults(r.data.data?.results || []);
     } catch {
       setResults([]);
     } finally {

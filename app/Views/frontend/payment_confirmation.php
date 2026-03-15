@@ -31,7 +31,7 @@
                             <?php foreach ($ticket_details as $key => $value) { ?>
                                 <div>
                                     <div class="container">
-                                        <img src="<?php echo base_url('public/imglogo') . "/" . $value["range"]->logo; ?>" alt="ticket" style="width:100%;">
+                                        <img src="<?php echo base_url('imglogo') . "/" . $value["range"]->logo; ?>" alt="ticket" style="width:100%;">
                                         <div class="top-right"><?= $value["ticketNo"]; ?></div>
                                     </div>
                                 </div><br />

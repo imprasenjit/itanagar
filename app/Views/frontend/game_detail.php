@@ -85,18 +85,18 @@ foreach ($ticketRange as $key => $value) {
                   <div class="flip-box">
                     <div class="flip-box-inner">
                       <div class="flip-box-front">
-                        <img class="card-img-top" src="<?php echo base_url('public/imglogo') . "/" . $range->logo; ?>"
+                        <img class="card-img-top" src="<?php echo base_url('imglogo') . "/" . $range->logo; ?>"
                         style="height:200px">
                       </div>
                       <div class="flip-box-back">
-                        <img class="card-img-top" src="<?php echo base_url('public/imglogo') . "/" . $range->logo2; ?>"
+                        <img class="card-img-top" src="<?php echo base_url('imglogo') . "/" . $range->logo2; ?>"
                         style="height:200px">
 
                       </div>
                     </div>
                   </div>
-                  <!-- <img style="height:100%;" src="<?php echo base_url('public/imglogo') . "/" . $range->logo; ?>">
-                  <img style="height:100%;" src="<?php echo base_url('public/imglogo') . "/" . $range->logo2; ?>"> -->
+                  <!-- <img style="height:100%;" src="<?php echo base_url('imglogo') . "/" . $range->logo; ?>">
+                  <img style="height:100%;" src="<?php echo base_url('imglogo') . "/" . $range->logo2; ?>"> -->
 
                 </div>
                 <div class="form-group col-md-12">

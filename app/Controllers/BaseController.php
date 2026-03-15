@@ -85,8 +85,16 @@ abstract class BaseController extends Controller
     {
         $pager = service('pager');
 
-        $currentPage = (int) ($this->request->uri->getSegment($segment) ?: 1);
-        $offset      = ($currentPage - 1) * $perPage;
+        // segment > 0 → page number lives in a URI segment (e.g. /path/2)
+        // segment = 0 → fall back to ?page=N query param
+        $currentPage = $segment > 0
+            ? (int) ($this->request->getUri()->getSegment($segment) ?: 1)
+            : (int) ($this->request->getGet('page') ?: 1);
+
+        $offset = ($currentPage - 1) * $perPage;
+
+        // Register total/page data so $pager->links() can render pagination HTML
+        $pager->store('default', $currentPage, $perPage, $count);
 
         return [
             'page'    => $perPage,

@@ -9,7 +9,7 @@ import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
+    <BrowserRouter basename={import.meta.env.VITE_BASENAME ?? import.meta.env.BASE_URL}>
       <AuthProvider>
         <CartProvider>
           <ToastProvider>

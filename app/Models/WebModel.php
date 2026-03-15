@@ -223,6 +223,14 @@ class WebModel extends Model
         return $this->db->affectedRows();
     }
 
+    public function delete_cart_item(int $cartId, int $userId): void
+    {
+        $this->db->table('tbl_cart')
+            ->where('id', $cartId)
+            ->where('user_id', $userId)
+            ->delete();
+    }
+
     public function clear_cart_data(int $userId, int $ticket_no, int $web_id): int
     {
         $this->db->table('tbl_cart')
@@ -405,6 +413,38 @@ class WebModel extends Model
         return $this->db->table('tbl_withdrawl')
             ->where('user_id', $userId)
             ->orderBy('id', 'DESC')
+            ->get()->getResult();
+    }
+
+    // ── Admin Order Listing (with search by user name/email/mobile) ──────────
+
+    private function _orderListBuilder(string $searchText)
+    {
+        $builder = $this->db->table('tbl_order')
+            ->join('tbl_users', 'tbl_users.userId = tbl_order.user_id', 'left');
+        if (!empty($searchText)) {
+            $builder->groupStart()
+                ->like('tbl_users.name',   $searchText)
+                ->orLike('tbl_users.email',  $searchText)
+                ->orLike('tbl_users.mobile', $searchText)
+                ->groupEnd();
+        }
+        return $builder;
+    }
+
+    public function order_list_count(string $searchText = ''): int
+    {
+        return $this->_orderListBuilder($searchText)
+            ->select('tbl_order.id')
+            ->get()->getNumRows();
+    }
+
+    public function order_list(string $searchText, int $limit, int $offset)
+    {
+        return $this->_orderListBuilder($searchText)
+            ->select('tbl_order.*')
+            ->orderBy('tbl_order.id', 'DESC')
+            ->limit($limit, $offset)
             ->get()->getResult();
     }
 
