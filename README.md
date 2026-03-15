@@ -1,90 +1,69 @@
-# Admin Panel - User Management using CodeIgniter
-**Admin Panel - User Management Demo using CodeIgniter + AdminLTE Bootstrap Theme**
+# CodeIgniter 4 Application Starter
 
-The code is uploaded to demonstrate the simple role based Admin Panel application using CodeIgniter(MVC Framework)
+## What is CodeIgniter?
 
-**Purpose :**
+CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
+More information can be found at the [official site](https://codeigniter.com).
 
-For every website, we need some sort of admin panel to monitor over the content of the website. The developers must have to start with the basic functinalities like login, logout, create/manage admin users, manage their roles, change password, forget password etc. This repository gives you all above things readymade as boilerplate for admin panel (but by using CodeIgniter PHP MVC framework). You just start code to add your project feature in it.
+This repository holds a composer-installable app starter.
+It has been built from the
+[development repository](https://github.com/codeigniter4/CodeIgniter4).
 
-## Features
-1. Login, Logout.
-2. Change Password, Forget Password.
-3. Create, Update, Delete Users.
-4. Predefined Roles (You can change roles and rights as per your project requirement).
-3. Login history of Users.
+More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
 
+You can read the [user guide](https://codeigniter.com/user_guide/)
+corresponding to the latest version of the framework.
 
-## Version Information
-**1) Upto Release 1.2 -** CodeIgniter 2.2, PHP version 5.1.6 or newer, MySQL (4.1+), MySQLi
-    
-**2) Latest (master) -** CodeIgniter 3.1.6, PHP version 5.6 or newer, MySQL (5.1+), MySQLi
+## Installation & updates
 
-## Installation
+`composer create-project codeigniter4/appstarter` then `composer update` whenever
+there is a new release of the framework.
 
-Download the code from repository.
-Unzip the zip file.
+When updating, check the release notes to see if there are any changes you might need to apply
+to your `app` folder. The affected files can be copied or merged from
+`vendor/codeigniter4/framework/app`.
 
-Open browser; goto [localhost/phpmyadmin](http://localhost/phpmyadmin).
+## Setup
 
-Create a database with name "cias" and import the file "cias.sql" in that database.
+Copy `env` to `.env` and tailor for your app, specifically the baseURL
+and any database settings.
 
-Copy the remaining code into your root directory:
+## Important Change with index.php
 
-for example, for windows
+`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
+for better security and separation of components.
 
-**WAMP : c:/wamp/www/cias**
+This means that you should configure your web server to "point" to your project's *public* folder, and
+not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
+framework are exposed.
 
-OR
+**Please** read the user guide for a better explanation of how CI4 works!
 
-**XAMPP : c:/xampp/htdocs/cias**
+## Repository Management
 
-Open browser; goto [localhost/cias](http://localhost/cias) and press enter:
+We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
+We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
+FEATURE REQUESTS.
 
-The login screen will appear.
+This repository is a "distribution" one, built by our release preparation script.
+Problems with it can be raised on our forum, or as issues in the main repository.
 
-To login, I am going to provide the user-email ids and password below.
+## Server Requirements
 
-**System Administrator Account :**
+PHP version 8.2 or higher is required, with the following extensions installed:
 
-email : admin@example.com
+- [intl](http://php.net/manual/en/intl.requirements.php)
+- [mbstring](http://php.net/manual/en/mbstring.installation.php)
 
-password : codeinsect
+> [!WARNING]
+> - The end of life date for PHP 7.4 was November 28, 2022.
+> - The end of life date for PHP 8.0 was November 26, 2023.
+> - The end of life date for PHP 8.1 was December 31, 2025.
+> - If you are still using below PHP 8.2, you should upgrade immediately.
+> - The end of life date for PHP 8.2 will be December 31, 2026.
 
-**Manager Account :**
+Additionally, make sure that the following extensions are enabled in your PHP:
 
-email :  manager@example.com
-
-password : codeinsect
-
-**Employee Account :**
-
-email : employee@example.com
-
-password : codeinsect
-
-Once you logged in with System Administrator account, you can create user or edit previous user if you want.
-
-**Youtube Links :**
-
-[CodeIgniter Admin Panel Demo](https://youtu.be/RFRXUd8LHUM) : This video contain the demo of CodeIgniter Admin Panel.
-
-[![CodeIgniter Admin Panel Demo](http://img.youtube.com/vi/RFRXUd8LHUM/0.jpg)](http://www.youtube.com/watch?v=RFRXUd8LHUM)
-
-[How to setup CodeIgniter Admin Panel](https://youtu.be/tU1PbcRj7ww) : This video contain the procedure of setting up CodeIgniter Admin Panel.
-
-[![How to setup CodeIgniter Admin Panel](http://img.youtube.com/vi/tU1PbcRj7ww/0.jpg)](http://www.youtube.com/watch?v=tU1PbcRj7ww)
-
-
-**ISSUE # 1 : After login "loginMe" controller is not found :**
-
-Lot of people raising this issue, I resolved it 4-5 times for every user. People are not searching for closed issues. Thats why I am going to put this here.
-
-How to get over this issue?
-
-1) enable mod_rewrite.dll (or mod_rewrite.so) by removing leading # in httpd.conf.
-2) After that, follow this solution https://stackoverflow.com/questions/24472349/htaccess-doesnt-work-on-xampp-windows-7
-
-**ISSUE # 2 : Call to undefined function password_verify() :**
-
-Solution is here : [Call to undefined function password_verify()](https://github.com/kishor10d/Admin-Panel-User-Management-using-CodeIgniter/issues/1)
+- json (enabled by default - don't turn it off)
+- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
+- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library

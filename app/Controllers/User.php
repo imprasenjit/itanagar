@@ -1,0 +1,329 @@
+<?php
+
+namespace App\Controllers;
+
+use App\Models\UserModel;
+use App\Models\WebModel;
+
+class User extends BaseController
+{
+    protected UserModel $userModel;
+    protected WebModel  $webModel;
+
+    protected $helpers = ['url', 'cias_helper'];
+
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger): void
+    {
+        parent::initController($request, $response, $logger);
+        $this->isLoggedIn();
+        $this->userModel = new UserModel();
+        $this->webModel  = new WebModel();
+    }
+
+    // ── Dashboard ─────────────────────────────────────────────────────────────
+
+    public function index()
+    {
+        if ($this->isAdmin() === false) {
+            return redirect()->to('home');
+        }
+
+        $data = [
+            'totalweb'  => $this->userModel->count_record('tbl_webs'),
+            'totaluser' => $this->userModel->count_record('tbl_users'),
+        ];
+        $this->global['pageTitle'] = 'Lottery : Dashboard';
+        return $this->loadViews('dashboard', $this->global, $data, null);
+    }
+
+    public function logout()
+    {
+        session()->destroy();
+        return redirect()->to('login');
+    }
+
+    // ── User Listing ──────────────────────────────────────────────────────────
+
+    public function userListing()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->loadThis();
+        }
+
+        $searchText = esc($this->request->getPost('searchText') ?? '');
+        $count      = $this->userModel->userListingCount($searchText);
+        $pgData     = $this->paginationCompress('ci/userListing/', $count, 10);
+
+        $data = [
+            'searchText'  => $searchText,
+            'userRecords' => $this->userModel->userListing($searchText, $pgData['page'], $pgData['segment']),
+            'pager'       => $pgData['pager'],
+        ];
+        $this->global['pageTitle'] = 'Lottery : User Listing';
+        return $this->loadViews('users', $this->global, $data, null);
+    }
+
+    // ── Add New User ──────────────────────────────────────────────────────────
+
+    public function addNew()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->loadThis();
+        }
+
+        $data = [
+            'country' => $this->webModel->getallcountry(),
+            'roles'   => $this->userModel->getUserRoles(),
+        ];
+        $this->global['pageTitle'] = 'Lottery : Add New User';
+        return $this->loadViews('addNew', $this->global, $data, null);
+    }
+
+    public function checkEmailExists()
+    {
+        $userId = $this->request->getPost('userId');
+        $email  = $this->request->getPost('email') ?? '';
+        $result = empty($userId)
+            ? $this->userModel->checkEmailExists($email)
+            : $this->userModel->checkEmailExists($email, (int)$userId);
+        echo empty($result) ? 'true' : 'false';
+    }
+
+    public function addNewUser()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->loadThis();
+        }
+
+        $rules = [
+            'fname'     => 'required|max_length[128]',
+            'email'     => 'required|valid_email|max_length[128]',
+            'password'  => 'required|max_length[20]',
+            'cpassword' => 'required|matches[password]|max_length[20]',
+            'role'      => 'required|numeric',
+            'mobile'    => 'required|min_length[10]',
+        ];
+
+        if (!$this->validate($rules)) {
+            return $this->addNew();
+        }
+
+        $userInfo = [
+            'email'      => strtolower(esc($this->request->getPost('email'))),
+            'password'   => getHashedPassword($this->request->getPost('password')),
+            'roleId'     => $this->request->getPost('role'),
+            'name'       => ucwords(strtolower(esc($this->request->getPost('fname')))),
+            'mobile'     => esc($this->request->getPost('mobile')),
+            'phonecode'  => $this->request->getPost('phonecode') ?? '',
+            'createdBy'  => $this->vendorId,
+            'createdDtm' => date('Y-m-d H:i:s'),
+        ];
+
+        $result = $this->userModel->addNewUser($userInfo);
+        if ($result > 0) {
+            session()->setFlashdata('success', 'New User created successfully');
+        } else {
+            session()->setFlashdata('error', 'User creation failed');
+        }
+        return redirect()->to('addNew');
+    }
+
+    // ── Edit User ─────────────────────────────────────────────────────────────
+
+    public function editOld(int $userId = 0)
+    {
+        if ($this->isAdmin() === false || $userId === 1) {
+            return $this->loadThis();
+        }
+        if ($userId === 0) {
+            return redirect()->to('userListing');
+        }
+
+        $data = [
+            'country'  => $this->webModel->getallcountry(),
+            'roles'    => $this->userModel->getUserRoles(),
+            'userInfo' => $this->userModel->getUserInfo($userId),
+        ];
+        $this->global['pageTitle'] = 'Lottery : Edit User';
+        return $this->loadViews('editOld', $this->global, $data, null);
+    }
+
+    public function editUser()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->loadThis();
+        }
+
+        $userId = (int) $this->request->getPost('userId');
+        $rules  = [
+            'fname'     => 'required|max_length[128]',
+            'email'     => 'required|valid_email|max_length[128]',
+            'password'  => 'permit_empty|matches[cpassword]|max_length[20]',
+            'cpassword' => 'permit_empty|matches[password]|max_length[20]',
+            'role'      => 'required|numeric',
+            'mobile'    => 'required|min_length[10]',
+            'phonecode' => 'required',
+        ];
+
+        if (!$this->validate($rules)) {
+            return $this->editOld($userId);
+        }
+
+        $name     = ucwords(strtolower(esc($this->request->getPost('fname'))));
+        $email    = strtolower(esc($this->request->getPost('email')));
+        $password = $this->request->getPost('password') ?? '';
+        $roleId   = $this->request->getPost('role');
+        $mobile   = esc($this->request->getPost('mobile'));
+
+        $userInfo = [
+            'email'      => $email,
+            'roleId'     => $roleId,
+            'name'       => $name,
+            'mobile'     => $mobile,
+            'phonecode'  => $this->request->getPost('phonecode') ?? '',
+            'updatedBy'  => $this->vendorId,
+            'updatedDtm' => date('Y-m-d H:i:s'),
+        ];
+
+        if (!empty($password)) {
+            $userInfo['password'] = getHashedPassword($password);
+        }
+
+        $result = $this->userModel->editUser($userInfo, $userId);
+        if ($result) {
+            session()->setFlashdata('success', 'User updated successfully');
+        } else {
+            session()->setFlashdata('error', 'User updation failed');
+        }
+        return redirect()->to('userListing');
+    }
+
+    public function deleteUser()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['status' => 'access']);
+        }
+
+        $userId   = (int) $this->request->getPost('userId');
+        $userInfo = [
+            'isDeleted'  => 1,
+            'updatedBy'  => $this->vendorId,
+            'updatedDtm' => date('Y-m-d H:i:s'),
+        ];
+        $result = $this->userModel->deleteUser($userId, $userInfo);
+        return $this->response->setJSON(['status' => $result > 0]);
+    }
+
+    // ── Login History ────────────────────────────────────────────────────────
+
+    public function loginHistoy(int $userId = 0)
+    {
+        if ($this->isAdmin() === false) {
+            return $this->loadThis();
+        }
+
+        $searchText = $this->request->getPost('searchText') ?? '';
+        $fromDate   = $this->request->getPost('fromDate')   ?? '';
+        $toDate     = $this->request->getPost('toDate')     ?? '';
+
+        $count  = $this->userModel->loginHistoryCount($userId, $searchText, $fromDate, $toDate);
+        $pgData = $this->paginationCompress("ci/login-history/$userId/", $count, 10, 3);
+
+        $data = [
+            'userInfo'    => $this->userModel->getUserInfoById($userId),
+            'searchText'  => $searchText,
+            'fromDate'    => $fromDate,
+            'toDate'      => $toDate,
+            'userRecords' => $this->userModel->loginHistory($userId, $searchText, $fromDate, $toDate, $pgData['page'], $pgData['segment']),
+            'pager'       => $pgData['pager'],
+        ];
+        $this->global['pageTitle'] = 'Lottery : User Login History';
+        return $this->loadViews('loginHistory', $this->global, $data, null);
+    }
+
+    // ── Admin Profile ────────────────────────────────────────────────────────
+
+    public function profile(string $active = 'details')
+    {
+        $data = [
+            'userInfo' => $this->userModel->getUserInfoWithRole($this->vendorId),
+            'active'   => $active,
+        ];
+        $this->global['pageTitle'] = $active === 'details' ? 'Lottery : My Profile' : 'Lottery : Change Password';
+        return $this->loadViews('profile', $this->global, $data, null);
+    }
+
+    public function profileUpdate(string $active = 'details')
+    {
+        $rules = [
+            'fname'  => 'required|max_length[128]',
+            'mobile' => 'required|min_length[10]',
+            'email'  => 'required|valid_email|max_length[128]',
+        ];
+
+        if (!$this->validate($rules)) {
+            return $this->profile($active);
+        }
+
+        $name   = ucwords(strtolower(esc($this->request->getPost('fname'))));
+        $mobile = esc($this->request->getPost('mobile'));
+        $email  = strtolower(esc($this->request->getPost('email')));
+
+        $result = $this->userModel->editUser([
+            'name'       => $name,
+            'email'      => $email,
+            'mobile'     => $mobile,
+            'updatedBy'  => $this->vendorId,
+            'updatedDtm' => date('Y-m-d H:i:s'),
+        ], $this->vendorId);
+
+        if ($result) {
+            session()->set('name', $name);
+            session()->setFlashdata('success', 'Profile updated successfully');
+        } else {
+            session()->setFlashdata('error', 'Profile updation failed');
+        }
+        return redirect()->to("ci/profile/$active");
+    }
+
+    public function changePassword(string $active = 'changepass')
+    {
+        $rules = [
+            'oldPassword'  => 'required|max_length[20]',
+            'newPassword'  => 'required|max_length[20]',
+            'cNewPassword' => 'required|matches[newPassword]|max_length[20]',
+        ];
+
+        if (!$this->validate($rules)) {
+            return $this->profile($active);
+        }
+
+        $oldPassword = $this->request->getPost('oldPassword');
+        $newPassword = $this->request->getPost('newPassword');
+        $resultPas   = $this->userModel->matchOldPassword($this->vendorId, $oldPassword);
+
+        if (empty($resultPas)) {
+            session()->setFlashdata('nomatch', 'Your old password is not correct');
+            return redirect()->to("ci/profile/$active");
+        }
+
+        $result = $this->userModel->changePassword($this->vendorId, [
+            'password'   => getHashedPassword($newPassword),
+            'updatedBy'  => $this->vendorId,
+            'updatedDtm' => date('Y-m-d H:i:s'),
+        ]);
+
+        if ($result > 0) {
+            session()->setFlashdata('success', 'Password updated successfully');
+        } else {
+            session()->setFlashdata('error', 'Password updation failed');
+        }
+        return redirect()->to("ci/profile/$active");
+    }
+
+    public function pageNotFound()
+    {
+        $this->global['pageTitle'] = 'Lottery : 404 - Page Not Found';
+        return $this->loadViews('404', $this->global, null, null);
+    }
+}

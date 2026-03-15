@@ -77,18 +77,22 @@
 | `id` | int PK | |
 | `user_id` | int FK | → `tbl_users.userId` |
 | `web_id` | int FK | → `tbl_webs.id` |
-| `razorpay_order_id` | varchar | Razorpay order reference |
-| `tickets` | text/JSON | JSON-encoded ticket details |
-| `total_price` | decimal | Order total |
-| `paid_status` | mixed | `0` = unpaid, `1` = paid, `2` = failed, `"RELEASED"` = refunded |
-| `order_status` | int | `0` = incomplete/failed |
-| `date` | date | Associated draw date |
-| `prize` | decimal | Prize amount won (NULL if not a winner) |
-| `is_jackpot` | tinyint | `1` = jackpot winner |
-| `pattern` | varchar | Winning pattern string e.g. `"1 4"` (1 mega + 4 white matches) |
-| `white1`–`white5` | int | Matched white ball numbers |
-| `yellow1`, `yellow2` | int | Matched mega/yellow ball numbers |
-| `createdAt` | datetime | Timestamp (`Y-m-d H:i:s`) |
+| `tickets` | text | JSON-encoded ticket details |
+| `user_id` | varchar(30) | User ID (FK → tbl_users.userId) |
+| `web_id` | int | FK → tbl_webs.id (added column) |
+| `custom_user_id` | varchar(255) | Guest user ID for pre-login orders |
+| `paid_type` | varchar(20) | Payment method type |
+| `transaction_id` | varchar(50) | Payment gateway transaction ID |
+| `total_price` | int | Order total |
+| `razorpay_order_response` | text | Full Razorpay order response JSON |
+| `razorpay_order_id` | varchar(255) | Razorpay order reference |
+| `paid_status` | varchar(255) | `0`=unpaid, `1`=paid, `2`=failed, `'PAID'`=confirmed, `'RELEASED'`=refunded |
+| `order_status` | tinyint | `0` = incomplete/failed |
+| `prize` | decimal(10,2) | Prize amount won (NULL if not a winner) |
+| `payment_response` | text | Payment confirmation response JSON |
+| `createdAt` | timestamp | Auto-set creation timestamp |
+
+> ⚠️ Use `createdAt` (not `createdDtm`) for date filtering on this table.
 
 ---
 
@@ -97,14 +101,20 @@
 | Column | Type | Notes |
 |---|---|---|
 | `userId` | int PK | ⚠️ Not `id` — FK references use `userId` |
-| `name` | varchar | Full name (stored via `ucwords(strtolower(...))`) |
 | `email` | varchar | Unique |
+| `address` | varchar(500) | Optional address |
+| `name` | varchar | Full name (stored via `ucwords(strtolower(...))`) |
 | `mobile` | varchar | Unique |
+| `phonecode` | varchar(10) | Country phone code (e.g. `'91'` for India) |
+| `paypal` | varchar(200) | PayPal address for payouts |
+| `bank` | varchar(500) | Bank details for withdrawals |
 | `password` | varchar | bcrypt hash via `getHashedPassword()` |
 | `roleId` | int FK | → `tbl_roles.roleId`; `1` = Admin |
-| `paypal` | varchar | PayPal address for payouts |
 | `isDeleted` | tinyint | `0` = active, `1` = soft-deleted |
+| `createdBy` | int | userId of creator |
 | `createdDtm` | datetime | Account creation timestamp |
+| `updatedBy` | int | userId of last editor |
+| `updatedDtm` | datetime | Last update timestamp |
 
 ---
 
