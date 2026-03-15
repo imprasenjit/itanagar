@@ -6006,3 +6006,392 @@ INFO - 2026-03-15 11:38:27 --> Model "Web_model" initialized
 INFO - 2026-03-15 11:38:27 --> Model "Login_model" initialized
 INFO - 2026-03-15 11:38:27 --> Helper loaded: form_helper
 INFO - 2026-03-15 11:38:27 --> Form Validation Class Initialized
+INFO - 2026-03-15 11:59:41 --> Config Class Initialized
+INFO - 2026-03-15 11:59:41 --> Config Class Initialized
+INFO - 2026-03-15 11:59:41 --> Hooks Class Initialized
+INFO - 2026-03-15 11:59:41 --> Hooks Class Initialized
+DEBUG - 2026-03-15 11:59:41 --> UTF-8 Support Enabled
+DEBUG - 2026-03-15 11:59:41 --> UTF-8 Support Enabled
+INFO - 2026-03-15 11:59:41 --> Utf8 Class Initialized
+INFO - 2026-03-15 11:59:41 --> Utf8 Class Initialized
+INFO - 2026-03-15 11:59:41 --> URI Class Initialized
+INFO - 2026-03-15 11:59:41 --> URI Class Initialized
+INFO - 2026-03-15 11:59:41 --> Router Class Initialized
+INFO - 2026-03-15 11:59:41 --> Router Class Initialized
+INFO - 2026-03-15 11:59:41 --> Output Class Initialized
+INFO - 2026-03-15 11:59:41 --> Output Class Initialized
+INFO - 2026-03-15 11:59:41 --> Security Class Initialized
+INFO - 2026-03-15 11:59:41 --> Security Class Initialized
+DEBUG - 2026-03-15 11:59:41 --> Global POST, GET and COOKIE data sanitized
+DEBUG - 2026-03-15 11:59:41 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 11:59:41 --> Input Class Initialized
+INFO - 2026-03-15 11:59:41 --> Input Class Initialized
+INFO - 2026-03-15 11:59:41 --> Language Class Initialized
+INFO - 2026-03-15 11:59:41 --> Language Class Initialized
+INFO - 2026-03-15 11:59:41 --> Loader Class Initialized
+INFO - 2026-03-15 11:59:41 --> Loader Class Initialized
+INFO - 2026-03-15 11:59:41 --> Helper loaded: url_helper
+INFO - 2026-03-15 11:59:41 --> Helper loaded: url_helper
+INFO - 2026-03-15 11:59:41 --> Helper loaded: file_helper
+INFO - 2026-03-15 11:59:41 --> Helper loaded: file_helper
+INFO - 2026-03-15 11:59:41 --> Helper loaded: cias_helper
+INFO - 2026-03-15 11:59:41 --> Helper loaded: cias_helper
+INFO - 2026-03-15 11:59:41 --> Database Driver Class Initialized
+INFO - 2026-03-15 11:59:41 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 11:59:41 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+DEBUG - 2026-03-15 11:59:41 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 11:59:41 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 11:59:41 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 11:59:41 --> Model "User_model" initialized
+INFO - 2026-03-15 11:59:41 --> Controller Class Initialized
+INFO - 2026-03-15 11:59:41 --> Model "User_model" initialized
+INFO - 2026-03-15 11:59:41 --> Controller Class Initialized
+INFO - 2026-03-15 11:59:41 --> Model "Web_model" initialized
+INFO - 2026-03-15 11:59:41 --> Model "Web_model" initialized
+INFO - 2026-03-15 11:59:41 --> Model "Login_model" initialized
+INFO - 2026-03-15 11:59:41 --> Model "Login_model" initialized
+INFO - 2026-03-15 11:59:41 --> Helper loaded: form_helper
+INFO - 2026-03-15 11:59:41 --> Form Validation Class Initialized
+INFO - 2026-03-15 11:59:41 --> Helper loaded: form_helper
+INFO - 2026-03-15 11:59:41 --> Form Validation Class Initialized
+INFO - 2026-03-15 11:59:41 --> Config Class Initialized
+INFO - 2026-03-15 11:59:41 --> Hooks Class Initialized
+DEBUG - 2026-03-15 11:59:41 --> UTF-8 Support Enabled
+INFO - 2026-03-15 11:59:41 --> Utf8 Class Initialized
+INFO - 2026-03-15 11:59:41 --> URI Class Initialized
+INFO - 2026-03-15 11:59:41 --> Router Class Initialized
+INFO - 2026-03-15 11:59:41 --> Output Class Initialized
+INFO - 2026-03-15 11:59:41 --> Security Class Initialized
+DEBUG - 2026-03-15 11:59:41 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 11:59:41 --> Input Class Initialized
+INFO - 2026-03-15 11:59:41 --> Language Class Initialized
+INFO - 2026-03-15 11:59:41 --> Loader Class Initialized
+INFO - 2026-03-15 11:59:41 --> Helper loaded: url_helper
+INFO - 2026-03-15 11:59:41 --> Helper loaded: file_helper
+INFO - 2026-03-15 11:59:41 --> Helper loaded: cias_helper
+INFO - 2026-03-15 11:59:41 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 11:59:41 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 11:59:41 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 11:59:41 --> Model "User_model" initialized
+INFO - 2026-03-15 11:59:41 --> Controller Class Initialized
+INFO - 2026-03-15 11:59:41 --> Model "Web_model" initialized
+INFO - 2026-03-15 11:59:41 --> Model "Login_model" initialized
+INFO - 2026-03-15 11:59:41 --> Helper loaded: form_helper
+INFO - 2026-03-15 11:59:41 --> Form Validation Class Initialized
+INFO - 2026-03-15 11:59:46 --> Config Class Initialized
+INFO - 2026-03-15 11:59:46 --> Hooks Class Initialized
+DEBUG - 2026-03-15 11:59:46 --> UTF-8 Support Enabled
+INFO - 2026-03-15 11:59:46 --> Utf8 Class Initialized
+INFO - 2026-03-15 11:59:46 --> URI Class Initialized
+DEBUG - 2026-03-15 11:59:46 --> No URI present. Default controller set.
+INFO - 2026-03-15 11:59:46 --> Router Class Initialized
+INFO - 2026-03-15 11:59:46 --> Output Class Initialized
+INFO - 2026-03-15 11:59:46 --> Security Class Initialized
+DEBUG - 2026-03-15 11:59:46 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 11:59:46 --> Input Class Initialized
+INFO - 2026-03-15 11:59:46 --> Language Class Initialized
+INFO - 2026-03-15 11:59:46 --> Loader Class Initialized
+INFO - 2026-03-15 11:59:46 --> Helper loaded: url_helper
+INFO - 2026-03-15 11:59:46 --> Helper loaded: file_helper
+INFO - 2026-03-15 11:59:46 --> Helper loaded: cias_helper
+INFO - 2026-03-15 11:59:46 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 11:59:46 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 11:59:46 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 11:59:46 --> Model "User_model" initialized
+INFO - 2026-03-15 11:59:46 --> Controller Class Initialized
+INFO - 2026-03-15 11:59:46 --> Model "Web_model" initialized
+INFO - 2026-03-15 11:59:46 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\frontend/header.php
+INFO - 2026-03-15 11:59:46 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\frontend/home.php
+INFO - 2026-03-15 11:59:46 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\frontend/footer.php
+INFO - 2026-03-15 11:59:46 --> Final output sent to browser
+DEBUG - 2026-03-15 11:59:46 --> Total execution time: 0.0738
+INFO - 2026-03-15 11:59:48 --> Config Class Initialized
+INFO - 2026-03-15 11:59:48 --> Hooks Class Initialized
+DEBUG - 2026-03-15 11:59:48 --> UTF-8 Support Enabled
+INFO - 2026-03-15 11:59:48 --> Utf8 Class Initialized
+INFO - 2026-03-15 11:59:48 --> URI Class Initialized
+INFO - 2026-03-15 11:59:48 --> Router Class Initialized
+INFO - 2026-03-15 11:59:48 --> Output Class Initialized
+INFO - 2026-03-15 11:59:48 --> Security Class Initialized
+DEBUG - 2026-03-15 11:59:48 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 11:59:48 --> Input Class Initialized
+INFO - 2026-03-15 11:59:48 --> Language Class Initialized
+INFO - 2026-03-15 11:59:48 --> Loader Class Initialized
+INFO - 2026-03-15 11:59:48 --> Helper loaded: url_helper
+INFO - 2026-03-15 11:59:48 --> Helper loaded: file_helper
+INFO - 2026-03-15 11:59:48 --> Helper loaded: cias_helper
+INFO - 2026-03-15 11:59:48 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 11:59:48 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 11:59:48 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 11:59:48 --> Model "User_model" initialized
+INFO - 2026-03-15 11:59:48 --> Controller Class Initialized
+INFO - 2026-03-15 11:59:48 --> Model "Login_model" initialized
+INFO - 2026-03-15 11:59:48 --> Model "Web_model" initialized
+INFO - 2026-03-15 11:59:48 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\frontend/header.php
+INFO - 2026-03-15 11:59:48 --> Helper loaded: form_helper
+INFO - 2026-03-15 11:59:48 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\login.php
+INFO - 2026-03-15 11:59:48 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\frontend/footer.php
+INFO - 2026-03-15 11:59:48 --> Final output sent to browser
+DEBUG - 2026-03-15 11:59:48 --> Total execution time: 0.0602
+INFO - 2026-03-15 12:00:58 --> Config Class Initialized
+INFO - 2026-03-15 12:00:58 --> Hooks Class Initialized
+DEBUG - 2026-03-15 12:00:58 --> UTF-8 Support Enabled
+INFO - 2026-03-15 12:00:58 --> Utf8 Class Initialized
+INFO - 2026-03-15 12:00:58 --> URI Class Initialized
+INFO - 2026-03-15 12:00:58 --> Router Class Initialized
+INFO - 2026-03-15 12:00:58 --> Output Class Initialized
+INFO - 2026-03-15 12:00:58 --> Security Class Initialized
+DEBUG - 2026-03-15 12:00:58 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 12:00:58 --> Input Class Initialized
+INFO - 2026-03-15 12:00:58 --> Language Class Initialized
+INFO - 2026-03-15 12:00:58 --> Loader Class Initialized
+INFO - 2026-03-15 12:00:58 --> Helper loaded: url_helper
+INFO - 2026-03-15 12:00:58 --> Helper loaded: file_helper
+INFO - 2026-03-15 12:00:58 --> Helper loaded: cias_helper
+INFO - 2026-03-15 12:00:58 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 12:00:58 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 12:00:58 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 12:00:58 --> Model "User_model" initialized
+INFO - 2026-03-15 12:00:58 --> Controller Class Initialized
+INFO - 2026-03-15 12:00:58 --> Model "Login_model" initialized
+INFO - 2026-03-15 12:00:58 --> Model "Web_model" initialized
+INFO - 2026-03-15 12:00:58 --> Helper loaded: form_helper
+INFO - 2026-03-15 12:00:58 --> Form Validation Class Initialized
+INFO - 2026-03-15 12:00:58 --> Language file loaded: language/english/form_validation_lang.php
+ERROR - 2026-03-15 12:00:58 --> Severity: Warning --> Undefined variable $lastLogin C:\xampp2\htdocs\itanagar\application\controllers\Login.php 107
+ERROR - 2026-03-15 12:00:58 --> Severity: Warning --> Attempt to read property "createdDtm" on null C:\xampp2\htdocs\itanagar\application\controllers\Login.php 107
+INFO - 2026-03-15 12:00:59 --> User Agent Class Initialized
+INFO - 2026-03-15 12:00:59 --> Config Class Initialized
+INFO - 2026-03-15 12:00:59 --> Hooks Class Initialized
+DEBUG - 2026-03-15 12:00:59 --> UTF-8 Support Enabled
+INFO - 2026-03-15 12:00:59 --> Utf8 Class Initialized
+INFO - 2026-03-15 12:00:59 --> URI Class Initialized
+INFO - 2026-03-15 12:00:59 --> Router Class Initialized
+INFO - 2026-03-15 12:00:59 --> Output Class Initialized
+INFO - 2026-03-15 12:00:59 --> Security Class Initialized
+DEBUG - 2026-03-15 12:00:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 12:00:59 --> Input Class Initialized
+INFO - 2026-03-15 12:00:59 --> Language Class Initialized
+INFO - 2026-03-15 12:00:59 --> Loader Class Initialized
+INFO - 2026-03-15 12:00:59 --> Helper loaded: url_helper
+INFO - 2026-03-15 12:00:59 --> Helper loaded: file_helper
+INFO - 2026-03-15 12:00:59 --> Helper loaded: cias_helper
+INFO - 2026-03-15 12:00:59 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 12:00:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 12:00:59 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 12:00:59 --> Model "User_model" initialized
+INFO - 2026-03-15 12:00:59 --> Controller Class Initialized
+INFO - 2026-03-15 12:00:59 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\includes/header.php
+INFO - 2026-03-15 12:00:59 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\dashboard.php
+INFO - 2026-03-15 12:00:59 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\includes/footer.php
+INFO - 2026-03-15 12:00:59 --> Final output sent to browser
+DEBUG - 2026-03-15 12:00:59 --> Total execution time: 0.0674
+INFO - 2026-03-15 12:01:02 --> Config Class Initialized
+INFO - 2026-03-15 12:01:02 --> Hooks Class Initialized
+DEBUG - 2026-03-15 12:01:02 --> UTF-8 Support Enabled
+INFO - 2026-03-15 12:01:02 --> Utf8 Class Initialized
+INFO - 2026-03-15 12:01:02 --> URI Class Initialized
+INFO - 2026-03-15 12:01:02 --> Router Class Initialized
+INFO - 2026-03-15 12:01:02 --> Output Class Initialized
+INFO - 2026-03-15 12:01:02 --> Security Class Initialized
+DEBUG - 2026-03-15 12:01:02 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 12:01:02 --> Input Class Initialized
+INFO - 2026-03-15 12:01:02 --> Language Class Initialized
+INFO - 2026-03-15 12:01:02 --> Loader Class Initialized
+INFO - 2026-03-15 12:01:02 --> Helper loaded: url_helper
+INFO - 2026-03-15 12:01:02 --> Helper loaded: file_helper
+INFO - 2026-03-15 12:01:02 --> Helper loaded: cias_helper
+INFO - 2026-03-15 12:01:02 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 12:01:02 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 12:01:02 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 12:01:02 --> Model "User_model" initialized
+INFO - 2026-03-15 12:01:02 --> Controller Class Initialized
+INFO - 2026-03-15 12:01:02 --> Model "Web_model" initialized
+INFO - 2026-03-15 12:01:02 --> Helper loaded: form_helper
+INFO - 2026-03-15 12:01:02 --> Form Validation Class Initialized
+INFO - 2026-03-15 12:01:02 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\includes/header.php
+INFO - 2026-03-15 12:01:02 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\weblist.php
+INFO - 2026-03-15 12:01:02 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\includes/footer.php
+INFO - 2026-03-15 12:01:02 --> Final output sent to browser
+DEBUG - 2026-03-15 12:01:02 --> Total execution time: 0.0649
+INFO - 2026-03-15 12:02:23 --> Config Class Initialized
+INFO - 2026-03-15 12:02:23 --> Hooks Class Initialized
+DEBUG - 2026-03-15 12:02:23 --> UTF-8 Support Enabled
+INFO - 2026-03-15 12:02:23 --> Utf8 Class Initialized
+INFO - 2026-03-15 12:02:23 --> URI Class Initialized
+INFO - 2026-03-15 12:02:23 --> Router Class Initialized
+INFO - 2026-03-15 12:02:23 --> Output Class Initialized
+INFO - 2026-03-15 12:02:23 --> Security Class Initialized
+DEBUG - 2026-03-15 12:02:23 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 12:02:23 --> Input Class Initialized
+INFO - 2026-03-15 12:02:23 --> Language Class Initialized
+INFO - 2026-03-15 12:02:23 --> Loader Class Initialized
+INFO - 2026-03-15 12:02:23 --> Helper loaded: url_helper
+INFO - 2026-03-15 12:02:24 --> Helper loaded: file_helper
+INFO - 2026-03-15 12:02:24 --> Helper loaded: cias_helper
+INFO - 2026-03-15 12:02:24 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 12:02:24 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 12:02:24 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 12:02:24 --> Model "User_model" initialized
+INFO - 2026-03-15 12:02:24 --> Controller Class Initialized
+INFO - 2026-03-15 12:02:24 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\includes/header.php
+INFO - 2026-03-15 12:02:24 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\dashboard.php
+INFO - 2026-03-15 12:02:24 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\includes/footer.php
+INFO - 2026-03-15 12:02:24 --> Final output sent to browser
+DEBUG - 2026-03-15 12:02:24 --> Total execution time: 0.0675
+INFO - 2026-03-15 12:02:25 --> Config Class Initialized
+INFO - 2026-03-15 12:02:25 --> Hooks Class Initialized
+DEBUG - 2026-03-15 12:02:25 --> UTF-8 Support Enabled
+INFO - 2026-03-15 12:02:25 --> Utf8 Class Initialized
+INFO - 2026-03-15 12:02:25 --> URI Class Initialized
+INFO - 2026-03-15 12:02:25 --> Router Class Initialized
+INFO - 2026-03-15 12:02:25 --> Output Class Initialized
+INFO - 2026-03-15 12:02:25 --> Security Class Initialized
+DEBUG - 2026-03-15 12:02:25 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 12:02:25 --> Input Class Initialized
+INFO - 2026-03-15 12:02:25 --> Language Class Initialized
+INFO - 2026-03-15 12:02:25 --> Loader Class Initialized
+INFO - 2026-03-15 12:02:25 --> Helper loaded: url_helper
+INFO - 2026-03-15 12:02:25 --> Helper loaded: file_helper
+INFO - 2026-03-15 12:02:25 --> Helper loaded: cias_helper
+INFO - 2026-03-15 12:02:25 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 12:02:25 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 12:02:25 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 12:02:25 --> Model "User_model" initialized
+INFO - 2026-03-15 12:02:25 --> Controller Class Initialized
+INFO - 2026-03-15 12:02:25 --> Model "Web_model" initialized
+INFO - 2026-03-15 12:02:25 --> Helper loaded: form_helper
+INFO - 2026-03-15 12:02:25 --> Form Validation Class Initialized
+INFO - 2026-03-15 12:02:25 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\includes/header.php
+INFO - 2026-03-15 12:02:25 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\pagelist.php
+INFO - 2026-03-15 12:02:25 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\includes/footer.php
+INFO - 2026-03-15 12:02:25 --> Final output sent to browser
+DEBUG - 2026-03-15 12:02:25 --> Total execution time: 0.0665
+INFO - 2026-03-15 12:02:26 --> Config Class Initialized
+INFO - 2026-03-15 12:02:26 --> Hooks Class Initialized
+DEBUG - 2026-03-15 12:02:26 --> UTF-8 Support Enabled
+INFO - 2026-03-15 12:02:26 --> Utf8 Class Initialized
+INFO - 2026-03-15 12:02:26 --> URI Class Initialized
+INFO - 2026-03-15 12:02:26 --> Router Class Initialized
+INFO - 2026-03-15 12:02:26 --> Output Class Initialized
+INFO - 2026-03-15 12:02:26 --> Security Class Initialized
+DEBUG - 2026-03-15 12:02:26 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 12:02:26 --> Input Class Initialized
+INFO - 2026-03-15 12:02:26 --> Language Class Initialized
+INFO - 2026-03-15 12:02:26 --> Loader Class Initialized
+INFO - 2026-03-15 12:02:26 --> Helper loaded: url_helper
+INFO - 2026-03-15 12:02:26 --> Helper loaded: file_helper
+INFO - 2026-03-15 12:02:26 --> Helper loaded: cias_helper
+INFO - 2026-03-15 12:02:26 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 12:02:26 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 12:02:26 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 12:02:26 --> Model "User_model" initialized
+INFO - 2026-03-15 12:02:26 --> Controller Class Initialized
+INFO - 2026-03-15 12:02:26 --> Model "Web_model" initialized
+INFO - 2026-03-15 12:02:26 --> Helper loaded: form_helper
+INFO - 2026-03-15 12:02:26 --> Form Validation Class Initialized
+INFO - 2026-03-15 12:02:26 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\includes/header.php
+INFO - 2026-03-15 12:02:26 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\faq.php
+INFO - 2026-03-15 12:02:26 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\includes/footer.php
+INFO - 2026-03-15 12:02:26 --> Final output sent to browser
+DEBUG - 2026-03-15 12:02:26 --> Total execution time: 0.0658
+INFO - 2026-03-15 12:02:27 --> Config Class Initialized
+INFO - 2026-03-15 12:02:27 --> Hooks Class Initialized
+DEBUG - 2026-03-15 12:02:27 --> UTF-8 Support Enabled
+INFO - 2026-03-15 12:02:27 --> Utf8 Class Initialized
+INFO - 2026-03-15 12:02:27 --> URI Class Initialized
+INFO - 2026-03-15 12:02:27 --> Router Class Initialized
+INFO - 2026-03-15 12:02:27 --> Output Class Initialized
+INFO - 2026-03-15 12:02:27 --> Security Class Initialized
+DEBUG - 2026-03-15 12:02:27 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 12:02:27 --> Input Class Initialized
+INFO - 2026-03-15 12:02:27 --> Language Class Initialized
+INFO - 2026-03-15 12:02:27 --> Loader Class Initialized
+INFO - 2026-03-15 12:02:27 --> Helper loaded: url_helper
+INFO - 2026-03-15 12:02:27 --> Helper loaded: file_helper
+INFO - 2026-03-15 12:02:27 --> Helper loaded: cias_helper
+INFO - 2026-03-15 12:02:27 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 12:02:27 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 12:02:27 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 12:02:27 --> Model "User_model" initialized
+INFO - 2026-03-15 12:02:27 --> Controller Class Initialized
+INFO - 2026-03-15 12:02:27 --> Model "Web_model" initialized
+INFO - 2026-03-15 12:02:27 --> Helper loaded: form_helper
+INFO - 2026-03-15 12:02:27 --> Form Validation Class Initialized
+INFO - 2026-03-15 12:02:27 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2026-03-15 12:02:27 --> Pagination Class Initialized
+DEBUG - 2026-03-15 12:02:27 --> Pagination class already loaded. Second attempt ignored.
+INFO - 2026-03-15 12:02:27 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\includes/header.php
+INFO - 2026-03-15 12:02:27 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\web/contact.php
+INFO - 2026-03-15 12:02:27 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\includes/footer.php
+INFO - 2026-03-15 12:02:27 --> Final output sent to browser
+DEBUG - 2026-03-15 12:02:27 --> Total execution time: 0.1221
+INFO - 2026-03-15 12:02:29 --> Config Class Initialized
+INFO - 2026-03-15 12:02:29 --> Hooks Class Initialized
+DEBUG - 2026-03-15 12:02:29 --> UTF-8 Support Enabled
+INFO - 2026-03-15 12:02:29 --> Utf8 Class Initialized
+INFO - 2026-03-15 12:02:29 --> URI Class Initialized
+INFO - 2026-03-15 12:02:29 --> Router Class Initialized
+INFO - 2026-03-15 12:02:29 --> Output Class Initialized
+INFO - 2026-03-15 12:02:29 --> Security Class Initialized
+DEBUG - 2026-03-15 12:02:29 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 12:02:29 --> Input Class Initialized
+INFO - 2026-03-15 12:02:29 --> Language Class Initialized
+INFO - 2026-03-15 12:02:29 --> Loader Class Initialized
+INFO - 2026-03-15 12:02:29 --> Helper loaded: url_helper
+INFO - 2026-03-15 12:02:29 --> Helper loaded: file_helper
+INFO - 2026-03-15 12:02:29 --> Helper loaded: cias_helper
+INFO - 2026-03-15 12:02:29 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 12:02:29 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 12:02:29 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 12:02:29 --> Model "User_model" initialized
+INFO - 2026-03-15 12:02:29 --> Controller Class Initialized
+INFO - 2026-03-15 12:02:29 --> Model "Web_model" initialized
+INFO - 2026-03-15 12:02:29 --> Helper loaded: form_helper
+INFO - 2026-03-15 12:02:29 --> Form Validation Class Initialized
+INFO - 2026-03-15 12:02:29 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2026-03-15 12:02:29 --> Pagination Class Initialized
+DEBUG - 2026-03-15 12:02:29 --> Pagination class already loaded. Second attempt ignored.
+INFO - 2026-03-15 12:02:29 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\includes/header.php
+INFO - 2026-03-15 12:02:29 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\web/order.php
+INFO - 2026-03-15 12:02:29 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\includes/footer.php
+INFO - 2026-03-15 12:02:29 --> Final output sent to browser
+DEBUG - 2026-03-15 12:02:29 --> Total execution time: 0.0708
+INFO - 2026-03-15 12:02:37 --> Config Class Initialized
+INFO - 2026-03-15 12:02:37 --> Hooks Class Initialized
+DEBUG - 2026-03-15 12:02:37 --> UTF-8 Support Enabled
+INFO - 2026-03-15 12:02:37 --> Utf8 Class Initialized
+INFO - 2026-03-15 12:02:37 --> URI Class Initialized
+INFO - 2026-03-15 12:02:37 --> Router Class Initialized
+INFO - 2026-03-15 12:02:37 --> Output Class Initialized
+INFO - 2026-03-15 12:02:37 --> Security Class Initialized
+DEBUG - 2026-03-15 12:02:37 --> Global POST, GET and COOKIE data sanitized
+INFO - 2026-03-15 12:02:37 --> Input Class Initialized
+INFO - 2026-03-15 12:02:37 --> Language Class Initialized
+INFO - 2026-03-15 12:02:37 --> Loader Class Initialized
+INFO - 2026-03-15 12:02:37 --> Helper loaded: url_helper
+INFO - 2026-03-15 12:02:37 --> Helper loaded: file_helper
+INFO - 2026-03-15 12:02:37 --> Helper loaded: cias_helper
+INFO - 2026-03-15 12:02:37 --> Database Driver Class Initialized
+DEBUG - 2026-03-15 12:02:37 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2026-03-15 12:02:37 --> Session: Class initialized using 'files' driver.
+INFO - 2026-03-15 12:02:37 --> Model "User_model" initialized
+INFO - 2026-03-15 12:02:37 --> Controller Class Initialized
+INFO - 2026-03-15 12:02:37 --> Language file loaded: language/english/pagination_lang.php
+INFO - 2026-03-15 12:02:37 --> Pagination Class Initialized
+DEBUG - 2026-03-15 12:02:37 --> Pagination class already loaded. Second attempt ignored.
+INFO - 2026-03-15 12:02:37 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\includes/header.php
+ERROR - 2026-03-15 12:02:37 --> Severity: Warning --> Undefined property: stdClass::$phonecode C:\xampp2\htdocs\itanagar\application\views\users.php 53
+ERROR - 2026-03-15 12:02:37 --> Severity: Warning --> Undefined property: stdClass::$phonecode C:\xampp2\htdocs\itanagar\application\views\users.php 53
+ERROR - 2026-03-15 12:02:37 --> Severity: Warning --> Undefined property: stdClass::$phonecode C:\xampp2\htdocs\itanagar\application\views\users.php 53
+ERROR - 2026-03-15 12:02:37 --> Severity: Warning --> Undefined property: stdClass::$phonecode C:\xampp2\htdocs\itanagar\application\views\users.php 53
+ERROR - 2026-03-15 12:02:37 --> Severity: Warning --> Undefined property: stdClass::$phonecode C:\xampp2\htdocs\itanagar\application\views\users.php 53
+ERROR - 2026-03-15 12:02:37 --> Severity: Warning --> Undefined property: stdClass::$phonecode C:\xampp2\htdocs\itanagar\application\views\users.php 53
+ERROR - 2026-03-15 12:02:37 --> Severity: Warning --> Undefined property: stdClass::$phonecode C:\xampp2\htdocs\itanagar\application\views\users.php 53
+ERROR - 2026-03-15 12:02:37 --> Severity: Warning --> Undefined property: stdClass::$phonecode C:\xampp2\htdocs\itanagar\application\views\users.php 53
+ERROR - 2026-03-15 12:02:37 --> Severity: Warning --> Undefined property: stdClass::$phonecode C:\xampp2\htdocs\itanagar\application\views\users.php 53
+ERROR - 2026-03-15 12:02:37 --> Severity: Warning --> Undefined property: stdClass::$phonecode C:\xampp2\htdocs\itanagar\application\views\users.php 53
+INFO - 2026-03-15 12:02:37 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\users.php
+INFO - 2026-03-15 12:02:37 --> File loaded: C:\xampp2\htdocs\itanagar\application\views\includes/footer.php
+INFO - 2026-03-15 12:02:37 --> Final output sent to browser
+DEBUG - 2026-03-15 12:02:37 --> Total execution time: 0.0688
