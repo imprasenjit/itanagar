@@ -56,7 +56,7 @@
                                     <div class="form-group">
                                         <?php
                                         if ($rangeInfo->logo != '') {
-                                            $logo = base_url('assets/imglogo') . "/" . $rangeInfo->logo;
+                                            $logo = base_url('public/imglogo') . "/" . $rangeInfo->logo;
                                             echo '<img height="250" src=' . $logo . '>';
                                         }
                                         ?>
@@ -68,7 +68,7 @@
                                     <div class="form-group">
                                         <?php
                                         if ($rangeInfo->logo2 != '') {
-                                            $logo2 = base_url('assets/imglogo') . "/" . $rangeInfo->logo2;
+                                            $logo2 = base_url('public/imglogo') . "/" . $rangeInfo->logo2;
                                             echo '<img height="250" src=' . $logo2 . '>';
                                         }
                                         ?>

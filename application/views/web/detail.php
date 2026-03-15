@@ -56,7 +56,7 @@
                                     <h4 style="color:green;">Logo</h4>
 
                                     <br>
-                                    <img style="height:100px;" src="<?php echo base_url('assets/imglogo') . "/" . $RangeInfo->logo; ?>">
+                                    <img style="height:100px;" src="<?php echo base_url('public/imglogo') . "/" . $RangeInfo->logo; ?>">
                                 </div>
                             </div>
 
@@ -185,7 +185,7 @@
     </section>
 </div>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/common.js" charset="utf-8"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>public/admin/js/common.js" charset="utf-8"></script>
 <script type="text/javascript">
     jQuery(document).ready(function() {
         jQuery('ul.pagination li a').click(function(e) {

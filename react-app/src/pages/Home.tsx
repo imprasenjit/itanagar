@@ -175,7 +175,7 @@ export default function Home() {
                 {featuredGame.logo && (
                   <div className="sm:w-72 h-56 sm:h-auto relative overflow-hidden shrink-0">
                     <img
-                      src={`/itanagar/assets/imglogo/${featuredGame.logo}`}
+                      src={`/itanagar/public/imglogo/${featuredGame.logo}`}
                       alt={featuredGame.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />

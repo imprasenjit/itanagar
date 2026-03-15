@@ -31,7 +31,7 @@
                             <?php foreach ($ticket_details as $key => $value) { ?>
                                 <div>
                                     <div class="container">
-                                        <img src="<?php echo base_url('assets/imglogo') . "/" . $value["range"]->logo; ?>" alt="ticket" style="width:100%;">
+                                        <img src="<?php echo base_url('public/imglogo') . "/" . $value["range"]->logo; ?>" alt="ticket" style="width:100%;">
                                         <div class="top-right"><?= $value["ticketNo"]; ?></div>
                                     </div>
                                 </div><br />
@@ -46,7 +46,7 @@
     </div>
 </div>
 </div>
-<script src="<?= base_url() . "assets/js/html2canvas.js" ?>"></script>
+<script src="<?= base_url() . "public/admin/js/html2canvas.js" ?>"></script>
 <script>
     function PrintDiv() {
         html2canvas(document.querySelector("#paymentDetails")).then(canvas => {

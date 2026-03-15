@@ -67,7 +67,7 @@ $counter++;
       ?>
         <div class="col-md-4 mt-3">
           <div class="card">
-            <img class="card-img-top" height="200px" src="<?php echo base_url('assets/imglogo') . "/" . $l->logo; ?>">
+            <img class="card-img-top" height="200px" src="<?php echo base_url('public/imglogo') . "/" . $l->logo; ?>">
             <div class="card-body">
               <h5 class="card-title"><?= $l->name ?></h5>
             </div>

@@ -1,6 +1,6 @@
-<link href="<?php echo base_url(); ?>assets/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<link href="<?php echo base_url(); ?>assets/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-<link href="<?php echo base_url(); ?>assets/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo base_url(); ?>public/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo base_url(); ?>public/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo base_url(); ?>public/admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 
 
 
@@ -56,5 +56,5 @@
   </div><!-- /.login-box-body -->
 </div><!-- /.login-box -->
 
-<script src="<?php echo base_url(); ?>assets/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="<?php echo base_url(); ?>public/admin/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="<?php echo base_url(); ?>public/admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>

@@ -26,7 +26,7 @@ $role = $userInfo->role;
 
                 <div class="box box-warning">
                     <div class="box-body box-profile">
-                        <img class="profile-user-img img-responsive img-circle" src="<?php echo base_url(); ?>assets/dist/img/avatar.png" alt="User profile picture">
+                        <img class="profile-user-img img-responsive img-circle" src="<?php echo base_url(); ?>public/admin/dist/img/avatar.png" alt="User profile picture">
                         <h3 class="profile-username text-center"><?= $name ?></h3>
 
                         <p class="text-muted text-center"><?= $role ?></p>
@@ -170,4 +170,4 @@ $role = $userInfo->role;
     </section>
 </div>
 
-<script src="<?php echo base_url(); ?>assets/js/editUser.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>public/admin/js/editUser.js" type="text/javascript"></script>

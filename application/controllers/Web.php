@@ -322,7 +322,7 @@ class Web extends BaseController
             $filename = "";
             $filename2 = "";
             if (isset($_FILES['logo']) && $_FILES['logo']['error'] == 0) {
-                $config['upload_path'] = './assets/imglogo/';
+                $config['upload_path'] = './public/imglogo/';
                 $config['allowed_types'] = 'jpeg|jpg|JPEG|gif|jpg|png|svg';
                 $config['max_size'] = 2000;
                 $config['max_width'] = 1500;
@@ -337,7 +337,7 @@ class Web extends BaseController
                 }
             }
             if (isset($_FILES['logo2']) && $_FILES['logo2']['error'] == 0) {
-                $config['upload_path'] = './assets/imglogo/';
+                $config['upload_path'] = './public/imglogo/';
                 $config['allowed_types'] = 'jpeg|jpg|JPEG|gif|jpg|png|svg';
                 $config['max_size'] = 2000;
                 $config['max_width'] = 1500;

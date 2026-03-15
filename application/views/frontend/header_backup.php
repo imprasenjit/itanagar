@@ -16,7 +16,7 @@
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="<?php echo base_url(); ?>assets/bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="<?php echo base_url(); ?>public/admin/bower_components/jquery/dist/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 
   <script src="<?php echo base_url('public'); ?>/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>

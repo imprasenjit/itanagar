@@ -17,7 +17,7 @@ export default defineConfig(({ command }) => ({
         rewrite: (path) => path,
       },
       // Proxy game image requests to Apache so dev server can serve them
-      '/itanagar/assets': {
+      '/itanagar/public/imglogo': {
         target: 'http://localhost',
         changeOrigin: true,
       },

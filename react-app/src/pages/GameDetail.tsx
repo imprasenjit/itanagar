@@ -1,5 +1,25 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
+
+function useCountdown(drawDate: string | null | undefined) {
+  const getRemaining = () => {
+    if (!drawDate) return null;
+    const diff = new Date(drawDate).getTime() - Date.now();
+    if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0, ended: true };
+    const days    = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours   = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    return { days, hours, minutes, seconds, ended: false };
+  };
+  const [remaining, setRemaining] = useState(getRemaining);
+  useEffect(() => {
+    if (!drawDate) return;
+    const t = setInterval(() => setRemaining(getRemaining()), 1000);
+    return () => clearInterval(t);
+  }, [drawDate]);
+  return remaining;
+}
 import { getGameDetail, getGameTickets, searchTickets } from '../api';
 import { useCart } from '../context/CartContext';
 import { useToast } from '../components/Toast';
@@ -32,6 +52,7 @@ export default function GameDetail() {
   const [searchResult, setSearchResult] = useState<Record<string, any> | 'error' | null>(null);
   const [adding, setAdding]           = useState(false);
   const [addSuccess, setAddSuccess]   = useState(false);
+  const countdown = useCountdown(range?.result_date);
   const [slideIdx, setSlideIdx]       = useState(0);
   const [lightbox, setLightbox]       = useState(false);
 
@@ -170,7 +191,7 @@ export default function GameDetail() {
                 {slideImgs.map((src, i) => (
                   <img
                     key={src}
-                    src={`/itanagar/assets/imglogo/${src}`}
+                    src={`/itanagar/public/imglogo/${src}`}
                     alt={`${game.name} ${i + 1}`}
                     className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${i === slideIdx ? 'opacity-100' : 'opacity-0'}`}
                   />
@@ -224,9 +245,27 @@ export default function GameDetail() {
                   </div>
                 )}
                 {range?.result_date && (
-                  <div className="flex justify-between">
-                    <span className="text-sm text-gray-500">Draw date</span>
-                    <span className="text-sm text-white">{new Date(range.result_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span className="text-sm text-gray-500">Draw date</span>
+                      <span className="text-sm text-white">{new Date(range.result_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                    </div>
+                    {countdown && !countdown.ended && (
+                      <div className="bg-dark-700 border border-white/10 rounded-xl p-3">
+                        <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-2 text-center">Draw closes in</p>
+                        <div className="grid grid-cols-4 gap-1.5">
+                          {[{ v: countdown.days, l: 'Days' }, { v: countdown.hours, l: 'Hrs' }, { v: countdown.minutes, l: 'Min' }, { v: countdown.seconds, l: 'Sec' }].map(({ v, l }) => (
+                            <div key={l} className="flex flex-col items-center bg-dark-800 rounded-lg py-2">
+                              <span className="text-lg font-bold text-brand-400 tabular-nums leading-none">{String(v).padStart(2, '0')}</span>
+                              <span className="text-[9px] text-gray-500 mt-0.5 uppercase tracking-wider">{l}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {countdown?.ended && (
+                      <p className="text-xs text-center text-yellow-400/80 bg-yellow-400/10 rounded-lg py-1.5 px-2">Draw has ended</p>
+                    )}
                   </div>
                 )}
                 {range?.play_description && (
@@ -417,7 +456,7 @@ export default function GameDetail() {
             </button>
           )}
           <img
-            src={`/itanagar/assets/imglogo/${slideImgs[slideIdx]}`}
+            src={`/itanagar/public/imglogo/${slideImgs[slideIdx]}`}
             alt={game.name}
             className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl"
             onClick={e => e.stopPropagation()}
