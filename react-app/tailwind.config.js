@@ -39,7 +39,7 @@ export default {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'float': 'float 6s ease-in-out infinite',
         'shimmer': 'shimmer 2s linear infinite',
-        'marquee': 'marquee 30s linear infinite',
+        'marquee': 'marquee 8s linear infinite',
       },
       keyframes: {
         float: {

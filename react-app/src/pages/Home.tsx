@@ -107,7 +107,7 @@ export default function Home() {
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/games" className="btn-primary text-base px-8 py-3.5 shadow-lg shadow-brand-500/25">
-              Participate Now
+              Buy Now
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
             </Link>
             <Link to="/results" className="btn-secondary text-base px-8 py-3.5">View Results</Link>
