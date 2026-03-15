@@ -263,28 +263,6 @@ export default function GameDetail() {
 
         {/* Right: Ticket series + grid */}
         <div className="lg:col-span-2">
-
-          {/* Segment selector — mirrors PHP's "Event Ticket Series" range cards */}
-          {segments.length > 0 && (
-            <div className="card p-4 mb-5">
-              <p className="text-sm font-semibold text-white mb-3">Event Ticket Series</p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-                {segments.map(([s, e], idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => handleSegmentSelect(idx)}
-                    className={`py-2.5 px-3 rounded-xl border text-sm font-semibold transition-all ${
-                      segIdx === idx
-                        ? 'bg-brand-500/20 border-brand-500 text-brand-300'
-                        : 'bg-dark-700 border-white/10 text-gray-400 hover:border-brand-500/50 hover:text-white'
-                    }`}>
-                    {s}–{e}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
           {/* Search */}
           <div className="card p-4 mb-5">
             <p className="text-sm font-semibold text-white mb-3">Search Ticket Number</p>
@@ -307,6 +285,28 @@ export default function GameDetail() {
               </div>
             )}
           </div>
+          {/* Segment selector — mirrors PHP's "Event Ticket Series" range cards */}
+          {segments.length > 0 && (
+            <div className="card p-4 mb-5">
+              <p className="text-sm font-semibold text-white mb-3">Event Ticket Series</p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                {segments.map(([s, e], idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => handleSegmentSelect(idx)}
+                    className={`py-2.5 px-3 rounded-xl border text-sm font-semibold transition-all ${
+                      segIdx === idx
+                        ? 'bg-brand-500/20 border-brand-500 text-brand-300'
+                        : 'bg-dark-700 border-white/10 text-gray-400 hover:border-brand-500/50 hover:text-white'
+                    }`}>
+                    {s}–{e}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+
 
           {/* Grid header */}
           {currentSeg && (
