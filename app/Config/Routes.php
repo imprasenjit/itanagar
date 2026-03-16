@@ -128,9 +128,10 @@ $routes->get('api/results',      'Api::results');
 $routes->post('api/contact',     'Api::contact');
 $routes->get('api/auth/me',      'Api::me');
 $routes->post('api/auth/login',  'Api::login');
-$routes->get('api/auth/logout',  'Api::logout');
-$routes->post('api/auth/register', 'Api::register');
-$routes->post('api/auth/forgot-password', 'Api::forgot_password');
+$routes->post('api/auth/logout',           'Api::logout');
+$routes->post('api/auth/register',         'Api::register');
+$routes->post('api/auth/forgot-password',  'Api::forgot_password');
+$routes->post('api/auth/reset-password',   'Api::reset_password');
 $routes->get('api/cart',         'Api::cart');
 $routes->post('api/cart/add',    'Api::cart_add');
 $routes->delete('api/cart/(:num)', 'Api::cart_remove/$1');
@@ -138,6 +139,21 @@ $routes->get('api/order/confirm', 'Api::order_confirm');
 $routes->post('api/payment/create',  'Api::payment_create');
 $routes->post('api/payment/confirm', 'Api::payment_confirm');
 $routes->post('api/payment/cancel',  'Api::payment_cancel');
+
+// ── API Account (authenticated) ─────────────────────────────────────────────
+$routes->get('api/account/profile',           'Api::account_profile');
+$routes->post('api/account/profile',          'Api::account_profile_update');
+$routes->post('api/account/password',         'Api::account_password');
+$routes->get('api/account/wallet',            'Api::account_wallet');
+$routes->post('api/account/wallet/topup',     'Api::account_wallet_topup');
+$routes->get('api/account/orders',            'Api::account_orders');
+$routes->get('api/account/refunds',           'Api::account_refunds');
+$routes->post('api/account/refunds',          'Api::account_refund_create');
+$routes->get('api/account/withdrawals',       'Api::account_withdrawals');
+$routes->post('api/account/withdrawals',      'Api::account_withdrawal_create');
+$routes->get('api/account/transfers',         'Api::account_transfers');
+$routes->post('api/account/transfers',        'Api::account_transfer_create');
+$routes->get('api/account/winners',           'Api::account_winners');
 
 // ── React SPA catch-all for /ui/* (must be last) ───────────────────────────
 $routes->get('ui/(:any)', 'ReactApp::serve');

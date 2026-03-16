@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { getOrderConfirm, createPayment, confirmPayment, cancelPayment } from '../api';
+import { getOrderConfirm, getCart, createPayment, confirmPayment, cancelPayment } from '../api';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { useToast } from '../components/Toast';
 
@@ -22,10 +22,22 @@ export default function ConfirmOrder() {
   useEffect(() => {
     getOrderConfirm()
       .then(r => {
-        setItems(r.data.data?.items || []);
-        setIsGuest(r.data.data?.isGuest === true);
+        setItems(r.data.data?.cart || []);
+        setIsGuest(false);
       })
-      .catch(() => navigate('/cart'))
+      .catch(async (err) => {
+        if (err?.response?.status === 401) {
+          setIsGuest(true);
+          try {
+            const cr = await getCart();
+            setItems(cr.data.data?.cart || []);
+          } catch {
+            navigate('/cart');
+          }
+        } else {
+          navigate('/cart');
+        }
+      })
       .finally(() => setLoading(false));
   }, [navigate]);
 

@@ -339,7 +339,7 @@ class WebModel extends Model
     {
         return $this->db->table('tbl_order')
             ->select('tbl_order.*, tbl_webs.name')
-            ->join('tbl_webs', 'tbl_webs.id = tbl_order.web_id')
+            ->join('tbl_webs', 'tbl_webs.id = CAST(JSON_UNQUOTE(JSON_EXTRACT(tbl_order.tickets, "$[0].web_id")) AS UNSIGNED)', 'left')
             ->where('user_id', $userId)
             ->where('prize !=', '')
             ->orderBy('id', 'desc')
@@ -416,6 +416,17 @@ class WebModel extends Model
             ->get()->getResult();
     }
 
+    public function transfer_history(int $userId = 0)
+    {
+        if ($userId === 0) {
+            $userId = (int) session()->get('userId');
+        }
+        return $this->db->table('tbl_transfer')
+            ->where('user_id', $userId)
+            ->orderBy('id', 'DESC')
+            ->get()->getResult();
+    }
+
     // ── Admin Order Listing (with search by user name/email/mobile) ──────────
 
     private function _orderListBuilder(string $searchText)
@@ -465,18 +476,21 @@ class WebModel extends Model
 
     // ── Results ────────────────────────────────────────────────────────────
 
-    public function result_list(?int $webId = null, ?string $date = null)
+    public function result_list(?int $webId = null, ?string $date = null, int $limit = 0)
     {
         $builder = $this->db->table('tbl_order')
             ->select('tbl_order.*, tbl_webs.name')
-            ->join('tbl_webs', 'tbl_webs.id = tbl_order.web_id')
+            ->join('tbl_webs', 'tbl_webs.id = CAST(JSON_UNQUOTE(JSON_EXTRACT(tbl_order.tickets, "$[0].web_id")) AS UNSIGNED)', 'left')
             ->where('paid_status', 'PAID')
             ->orderBy('tbl_order.id', 'desc');
         if (!empty($webId)) {
-            $builder->where('tbl_order.web_id', $webId);
+            $builder->where('CAST(JSON_UNQUOTE(JSON_EXTRACT(tbl_order.tickets, "$[0].web_id")) AS UNSIGNED)', $webId);
         }
         if (!empty($date)) {
             $builder->where('DATE(tbl_order.createdAt)', $date);
+        }
+        if ($limit > 0) {
+            $builder->limit($limit);
         }
         return $builder->get()->getResult();
     }

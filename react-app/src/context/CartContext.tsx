@@ -23,8 +23,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setCartLoading(true);
     try {
       const { data } = await getCart();
-      // cart response: { status, data: { items: [...], total, count } }
-      setItems(data.status ? (data.data?.items || []) : []);
+      // cart response: { status, data: { cart: [...], total } }
+      setItems(data.status ? (data.data?.cart || []) : []);
     } catch {
       setItems([]);
     } finally {

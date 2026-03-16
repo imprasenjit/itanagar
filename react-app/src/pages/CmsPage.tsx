@@ -11,7 +11,7 @@ export default function CmsPage() {
   useEffect(() => {
     setLoading(true);
     getPage(type!)
-      .then(r => setPage(r.data.data || null))
+      .then(r => setPage(r.data.data?.page || null))
       .catch(() => {})
       .finally(() => setLoading(false));
   }, [type]);

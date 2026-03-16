@@ -129,8 +129,13 @@ class Api extends BaseController
     public function home()
     {
         return $this->json([
-            'games' => $this->webModel->home_web(6),
-            'faq'   => $this->webModel->faq(1),
+            'games'   => $this->webModel->home_web(6),
+            'faq'     => $this->webModel->faq(1),
+            'results' => $this->webModel->result_list(null, null, 5),
+            'stats'   => [
+                'games' => count($this->webModel->home_web()),
+                'users' => $this->userModel->userListingCount(''),
+            ],
         ]);
     }
 
@@ -377,12 +382,26 @@ class Api extends BaseController
 
     public function reset_password()
     {
-        $email            = 'admin@theitanagarchoice.com';
-        $password         = 'Itanagar';
- 
+        $body            = $this->getBody();
+        $email           = strtolower(trim($body['email'] ?? ''));
+        $activationCode  = trim($body['activation_code'] ?? '');
+        $password        = $body['password'] ?? '';
+        $confirmPassword = $body['password_confirmation'] ?? '';
+
+        if (empty($email) || empty($activationCode) || empty($password) || empty($confirmPassword)) {
+            return $this->error('All fields are required');
+        }
+        if ($password !== $confirmPassword) {
+            return $this->error('Passwords do not match');
+        }
+        if (strlen($password) < 6) {
+            return $this->error('Password must be at least 6 characters');
+        }
+        if (!$this->loginModel->checkActivationDetails($email, $activationCode)) {
+            return $this->error('Invalid or expired reset link', 400);
+        }
 
         $this->loginModel->createPasswordUser($email, $password);
-
         return $this->json([], true, 'Password changed successfully');
     }
 
@@ -500,21 +519,26 @@ class Api extends BaseController
 
         session()->set('payment_order_id', $razorpayOrder['id']);
 
+        $userInfo = $this->userModel->getUserInfo($userId);
         return $this->json([
-            'order_id'   => $razorpayOrder['id'],
-            'amount'     => $razorpayOrder['amount'],
-            'currency'   => $razorpayOrder['currency'],
-            'key_id'     => $keyId,
+            'order_id'    => $razorpayOrder['id'],
+            'amount'      => $razorpayOrder['amount'],
+            'currency'    => $razorpayOrder['currency'],
+            'key_id'      => $keyId,
+            'user_name'   => $userInfo->name   ?? '',
+            'user_email'  => $userInfo->email  ?? '',
+            'user_mobile' => $userInfo->mobile ?? '',
         ]);
     }
 
     public function payment_confirm()
     {
         helper('email_helper');
-        $body           = $this->getBody();
-        $razorpayOrderId  = esc($body['razorpay_order_id']  ?? '');
-        $razorpayPayId    = esc($body['razorpay_payment_id'] ?? '');
-        $razorpaySignature= esc($body['razorpay_signature']  ?? '');
+        $body              = $this->getBody();
+        $razorpayOrderId   = esc($body['razorpay_order_id']  ?? '');
+        $razorpayPayId     = esc($body['razorpay_payment_id'] ?? '');
+        $razorpaySignature = esc($body['razorpay_signature']  ?? '');
+        $type              = $body['type'] ?? 'ticket';
 
         if (empty($razorpayOrderId) || empty($razorpayPayId) || empty($razorpaySignature)) {
             return $this->error('Payment response incomplete');
@@ -530,6 +554,27 @@ class Api extends BaseController
                 'razorpay_payment_id' => $razorpayPayId,
                 'razorpay_signature'  => $razorpaySignature,
             ]);
+
+            if ($type === 'wallet') {
+                $userId = (int) session()->get('userId');
+                $amount = (float) (session()->get('wallet_amount') ?? 0);
+                $wallet = $this->webModel->wallet($userId);
+                if (!$wallet) {
+                    $this->webModel->insert_date('tbl_wallet', ['user_id' => $userId, 'money' => $amount]);
+                } else {
+                    $this->webModel->editWeb_all('tbl_wallet', ['money' => $wallet->money + $amount], $wallet->id);
+                }
+                $this->webModel->insert_date('tbl_wallet_history', [
+                    'user_id'        => $userId,
+                    'money'          => $amount,
+                    'trancaction_id' => $razorpayPayId,
+                    'type'           => 'Credit',
+                    'p_type'         => 'RAZORPAY',
+                ]);
+                session()->remove('wallet_order_id');
+                session()->remove('wallet_amount');
+                return $this->json(['status' => 'CREDITED'], true, 'Wallet topped up');
+            }
 
             $this->webModel->update_order_by_orderId($razorpayOrderId, [
                 'paid_status'      => 'PAID',
@@ -589,6 +634,243 @@ class Api extends BaseController
         $userId = (int) session()->get('userId');
         $cart   = $this->webModel->order_data($userId);
         $total  = array_reduce($cart, fn($c, $r) => $c + $r->total_price, 0);
-        return $this->json(['cart' => $cart, 'total' => $total]);
+        return $this->json(['cart' => $cart, 'total' => $total, 'isGuest' => false]);
+    }
+
+    // ── Account ───────────────────────────────────────────────────────────────
+
+    public function account_profile()
+    {
+        $auth = $this->requireAuth();
+        if ($auth !== null) return $auth;
+        $userId = (int) session()->get('userId');
+        $user   = $this->userModel->getUserInfo($userId);
+        return $this->json($user ? (array) $user : []);
+    }
+
+    public function account_profile_update()
+    {
+        $auth = $this->requireAuth();
+        if ($auth !== null) return $auth;
+        $userId = (int) session()->get('userId');
+        $body   = $this->getBody();
+        $name   = ucwords(strtolower(esc($body['name']   ?? '')));
+        $mobile = esc($body['mobile'] ?? '');
+        if (empty($name)) {
+            return $this->error('Name is required');
+        }
+        $this->userModel->editUser([
+            'name'       => $name,
+            'mobile'     => $mobile,
+            'updatedDtm' => date('Y-m-d H:i:s'),
+        ], $userId);
+        session()->set('name',   $name);
+        session()->set('mobile', $mobile);
+        return $this->json([], true, 'Profile updated');
+    }
+
+    public function account_password()
+    {
+        $auth = $this->requireAuth();
+        if ($auth !== null) return $auth;
+        $userId      = (int) session()->get('userId');
+        $body        = $this->getBody();
+        $oldPassword = $body['old_password'] ?? '';
+        $newPassword = $body['new_password'] ?? '';
+        if (empty($oldPassword) || empty($newPassword)) {
+            return $this->error('All fields are required');
+        }
+        if (strlen($newPassword) < 6) {
+            return $this->error('Password must be at least 6 characters');
+        }
+        if (empty($this->userModel->matchOldPassword($userId, $oldPassword))) {
+            return $this->error('Current password is incorrect', 401);
+        }
+        $this->userModel->changePassword($userId, [
+            'password'   => getHashedPassword($newPassword),
+            'updatedDtm' => date('Y-m-d H:i:s'),
+        ]);
+        return $this->json([], true, 'Password updated');
+    }
+
+    public function account_wallet()
+    {
+        $auth = $this->requireAuth();
+        if ($auth !== null) return $auth;
+        $userId  = (int) session()->get('userId');
+        $wallet  = $this->webModel->wallet($userId);
+        $history = $this->webModel->wallet_history($userId);
+        return $this->json([
+            'balance' => $wallet ? (float) $wallet->money : 0.0,
+            'history' => $history,
+        ]);
+    }
+
+    public function account_wallet_topup()
+    {
+        $auth = $this->requireAuth();
+        if ($auth !== null) return $auth;
+        $userId   = (int) session()->get('userId');
+        $userInfo = $this->userModel->getUserInfo($userId);
+        $body     = $this->getBody();
+        $amount   = (float) ($body['amount'] ?? 0);
+        if ($amount < 1) {
+            return $this->error('Invalid amount');
+        }
+        $keyId     = env('RAZORPAY_KEY_ID',    'rzp_live_mIBUSRL7Pn4XUj');
+        $keySecret = env('RAZORPAY_KEY_SECRET', 'pRTdkyxSIxXrvQuYcDu9GL4f');
+        $api       = new RazorpayApi($keyId, $keySecret);
+
+        $razorpayOrder = $api->order->create([
+            'receipt'  => $this->getRandomString(),
+            'amount'   => (int) ($amount * 100),
+            'currency' => 'INR',
+            'notes'    => ['type' => 'wallet', 'user_id' => $userId],
+        ]);
+        if (!$razorpayOrder['id']) {
+            return $this->error('Could not create Razorpay order');
+        }
+        session()->set('wallet_order_id', $razorpayOrder['id']);
+        session()->set('wallet_amount',   $amount);
+        return $this->json([
+            'order_id'    => $razorpayOrder['id'],
+            'amount'      => $razorpayOrder['amount'],
+            'currency'    => $razorpayOrder['currency'],
+            'key_id'      => $keyId,
+            'user_name'   => $userInfo->name   ?? '',
+            'user_email'  => $userInfo->email  ?? '',
+            'user_mobile' => $userInfo->mobile ?? '',
+        ]);
+    }
+
+    public function account_orders()
+    {
+        $auth = $this->requireAuth();
+        if ($auth !== null) return $auth;
+        $userId = (int) session()->get('userId');
+        return $this->json(['orders' => $this->webModel->order_history($userId)]);
+    }
+
+    public function account_refunds()
+    {
+        $auth = $this->requireAuth();
+        if ($auth !== null) return $auth;
+        $userId = (int) session()->get('userId');
+        return $this->json($this->webModel->refund_history($userId));
+    }
+
+    public function account_refund_create()
+    {
+        $auth = $this->requireAuth();
+        if ($auth !== null) return $auth;
+        $userId  = (int) session()->get('userId');
+        $body    = $this->getBody();
+        $orderId = esc($body['order_id'] ?? '');
+        $reason  = esc($body['reason']   ?? '');
+        if (empty($orderId) || empty($reason)) {
+            return $this->error('Order ID and reason are required');
+        }
+        $this->webModel->insert_date('tbl_refund', [
+            'user_id'    => $userId,
+            'order_id'   => $orderId,
+            'reason'     => $reason,
+            'status'     => 0,
+            'createdDtm' => date('Y-m-d H:i:s'),
+        ]);
+        return $this->json([], true, 'Refund request submitted');
+    }
+
+    public function account_withdrawals()
+    {
+        $auth = $this->requireAuth();
+        if ($auth !== null) return $auth;
+        $userId = (int) session()->get('userId');
+        return $this->json($this->webModel->withdrawl_history($userId));
+    }
+
+    public function account_withdrawal_create()
+    {
+        $auth = $this->requireAuth();
+        if ($auth !== null) return $auth;
+        $userId        = (int) session()->get('userId');
+        $body          = $this->getBody();
+        $amount        = (float) ($body['amount']         ?? 0);
+        $accountNumber = esc($body['account_number']   ?? '');
+        $ifsc          = esc($body['ifsc']             ?? '');
+        $accountName   = esc($body['account_name']     ?? '');
+        if ($amount < 1 || empty($accountNumber) || empty($ifsc) || empty($accountName)) {
+            return $this->error('All fields are required');
+        }
+        $this->webModel->insert_date('tbl_withdrawl', [
+            'user_id'        => $userId,
+            'amount'         => $amount,
+            'account_number' => $accountNumber,
+            'ifsc'           => $ifsc,
+            'account_name'   => $accountName,
+            'status'         => 0,
+            'createdDtm'     => date('Y-m-d H:i:s'),
+        ]);
+        return $this->json([], true, 'Withdrawal request submitted');
+    }
+
+    public function account_transfers()
+    {
+        $auth = $this->requireAuth();
+        if ($auth !== null) return $auth;
+        $userId = (int) session()->get('userId');
+        return $this->json($this->webModel->transfer_history($userId));
+    }
+
+    public function account_transfer_create()
+    {
+        $auth = $this->requireAuth();
+        if ($auth !== null) return $auth;
+        $userId    = (int) session()->get('userId');
+        $body      = $this->getBody();
+        $toUser    = trim($body['to_user'] ?? '');
+        $amount    = (float) ($body['amount'] ?? 0);
+        $note      = esc($body['note'] ?? '');
+        if (empty($toUser) || $amount < 1) {
+            return $this->error('Recipient and amount are required');
+        }
+        $recipient = is_numeric($toUser)
+            ? $this->userModel->getUserInfo((int) $toUser)
+            : $this->loginModel->getCustomerInfoByEmail(strtolower($toUser));
+        if (!$recipient) {
+            return $this->error('Recipient not found', 404);
+        }
+        $wallet = $this->webModel->wallet($userId);
+        if (!$wallet || (float) $wallet->money < $amount) {
+            return $this->error('Insufficient wallet balance');
+        }
+        $this->webModel->editWeb_all('tbl_wallet', ['money' => $wallet->money - $amount], $wallet->id);
+        $this->webModel->insert_date('tbl_wallet_history', [
+            'user_id' => $userId, 'money' => $amount, 'type' => 'Debit', 'p_type' => 'Transfer',
+        ]);
+        $recipientWallet = $this->webModel->wallet($recipient->userId);
+        if (!$recipientWallet) {
+            $this->webModel->insert_date('tbl_wallet', ['user_id' => $recipient->userId, 'money' => $amount]);
+        } else {
+            $this->webModel->editWeb_all('tbl_wallet', ['money' => $recipientWallet->money + $amount], $recipientWallet->id);
+        }
+        $this->webModel->insert_date('tbl_wallet_history', [
+            'user_id' => $recipient->userId, 'money' => $amount, 'type' => 'Credit', 'p_type' => 'Transfer',
+        ]);
+        $this->webModel->insert_date('tbl_transfer', [
+            'user_id'    => $userId,
+            'to_user_id' => $recipient->userId,
+            'amount'     => $amount,
+            'note'       => $note,
+            'createdDtm' => date('Y-m-d H:i:s'),
+        ]);
+        return $this->json([], true, 'Transfer successful');
+    }
+
+    public function account_winners()
+    {
+        $auth = $this->requireAuth();
+        if ($auth !== null) return $auth;
+        $userId = (int) session()->get('userId');
+        return $this->json($this->webModel->winner_history($userId));
     }
 }
