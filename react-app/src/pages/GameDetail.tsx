@@ -174,11 +174,11 @@ export default function GameDetail() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-28 lg:pb-20">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-xs text-gray-500 mb-6">
-        <Link to="/" className="hover:text-white transition-colors">Home</Link>
+        <Link to="/" className="hover:text-gray-900 transition-colors">Home</Link>
         <span>/</span>
-        <Link to="/games" className="hover:text-white transition-colors">Games</Link>
+        <Link to="/games" className="hover:text-gray-900 transition-colors">Games</Link>
         <span>/</span>
-        <span className="text-gray-300">{game.name}</span>
+        <span className="text-gray-700">{game.name}</span>
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -187,7 +187,7 @@ export default function GameDetail() {
           <div className="card overflow-hidden sticky top-24">
             {/* Image slider */}
             {slideImgs.length > 0 && (
-              <div className="relative h-52 overflow-hidden bg-dark-800 cursor-zoom-in" onClick={() => setLightbox(true)}>
+              <div className="relative h-52 overflow-hidden bg-gray-100 cursor-zoom-in" onClick={() => setLightbox(true)}>
                 {slideImgs.map((src, i) => (
                   <img
                     key={src}
@@ -228,35 +228,35 @@ export default function GameDetail() {
             )}
 
             <div className="p-5">
-              <h1 className="font-display font-bold text-xl text-white mb-1">{game.name}</h1>
-              {range?.heading && <p className="text-sm text-gray-400 mb-4">{range.heading}</p>}
+              <h1 className="font-display font-bold text-xl text-gray-900 mb-1">{game.name}</h1>
+              {range?.heading && <p className="text-sm text-gray-500 mb-4">{range.heading}</p>}
 
               <div className="space-y-3 mb-5">
                 {range?.price && (
                   <div className="flex justify-between">
                     <span className="text-sm text-gray-500">Price/ticket</span>
-                    <span className="text-sm font-semibold text-white">₹{Number(range.price).toLocaleString('en-IN')}</span>
+                    <span className="text-sm font-semibold text-gray-900">₹{Number(range.price).toLocaleString('en-IN')}</span>
                   </div>
                 )}
                 {range?.jackpot && (
                   <div className="flex flex-col gap-0.5">
                     <span className="text-xs text-gray-500 uppercase tracking-wider">Jackpot</span>
-                    <span className="text-sm font-bold text-brand-400">{stripHtml(range.jackpot)}</span>
+                    <span className="text-sm font-bold text-brand-600">{stripHtml(range.jackpot)}</span>
                   </div>
                 )}
                 {range?.result_date && (
                   <div className="space-y-2">
                     <div className="flex justify-between">
                       <span className="text-sm text-gray-500">Draw date</span>
-                      <span className="text-sm text-white">{new Date(range.result_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                      <span className="text-sm text-gray-900">{new Date(range.result_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
                     </div>
                     {countdown && !countdown.ended && (
-                      <div className="bg-dark-700 border border-white/10 rounded-xl p-3">
+                      <div className="bg-gray-100 border border-gray-200 rounded-xl p-3">
                         <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-2 text-center">Draw closes in</p>
                         <div className="grid grid-cols-4 gap-1.5">
                           {[{ v: countdown.days, l: 'Days' }, { v: countdown.hours, l: 'Hrs' }, { v: countdown.minutes, l: 'Min' }, { v: countdown.seconds, l: 'Sec' }].map(({ v, l }) => (
-                            <div key={l} className="flex flex-col items-center bg-dark-800 rounded-lg py-2">
-                              <span className="text-lg font-bold text-brand-400 tabular-nums leading-none">{String(v).padStart(2, '0')}</span>
+                            <div key={l} className="flex flex-col items-center bg-white border border-gray-200 rounded-lg py-2">
+                              <span className="text-lg font-bold text-brand-600 tabular-nums leading-none">{String(v).padStart(2, '0')}</span>
                               <span className="text-[9px] text-gray-500 mt-0.5 uppercase tracking-wider">{l}</span>
                             </div>
                           ))}
@@ -269,16 +269,16 @@ export default function GameDetail() {
                   </div>
                 )}
                 {range?.play_description && (
-                  <div className="pt-2 border-t border-white/5 text-xs text-gray-500 leading-relaxed [&_p]:mb-2 [&_p:last-child]:mb-0 [&_strong]:text-gray-300 [&_ul]:list-disc [&_ul]:pl-4 [&_ul]:space-y-1 [&_ol]:list-decimal [&_ol]:pl-4 [&_ol]:space-y-1"
+                  <div className="pt-2 border-t border-gray-200 text-xs text-gray-600 leading-relaxed [&_p]:mb-2 [&_p:last-child]:mb-0 [&_strong]:text-gray-700 [&_ul]:list-disc [&_ul]:pl-4 [&_ul]:space-y-1 [&_ol]:list-decimal [&_ol]:pl-4 [&_ol]:space-y-1"
                     dangerouslySetInnerHTML={{ __html: range.play_description }}/>
                 )}
               </div>
 
               {/* Selection summary */}
               {selected.length > 0 && (
-                <div className="bg-brand-500/10 border border-brand-500/20 rounded-xl p-3 mb-4">
-                  <p className="text-xs text-brand-400 font-semibold mb-1">{selected.length} ticket(s) selected</p>
-                  <p className="text-sm font-bold text-white">
+                <div className="bg-brand-50 border border-brand-200 rounded-xl p-3 mb-4">
+                  <p className="text-xs text-brand-600 font-semibold mb-1">{selected.length} ticket(s) selected</p>
+                  <p className="text-sm font-bold text-gray-900">
                     Total: ₹{(selected.length * Number(range?.price || 0)).toLocaleString('en-IN')}
                   </p>
                 </div>
@@ -304,7 +304,7 @@ export default function GameDetail() {
         <div className="lg:col-span-2">
           {/* Search */}
           <div className="card p-4 mb-5">
-            <p className="text-sm font-semibold text-white mb-3">Search Ticket Number</p>
+            <p className="text-sm font-semibold text-gray-900 mb-3">Search Ticket Number</p>
             <div className="flex gap-2">
               <input
                 value={searchNum}
@@ -327,7 +327,7 @@ export default function GameDetail() {
           {/* Segment selector — mirrors PHP's "Event Ticket Series" range cards */}
           {segments.length > 0 && (
             <div className="card p-4 mb-5">
-              <p className="text-sm font-semibold text-white mb-3">Event Ticket Series</p>
+              <p className="text-sm font-semibold text-gray-900 mb-3">Event Ticket Series</p>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
                 {segments.map(([s, e], idx) => (
                   <button
@@ -335,8 +335,8 @@ export default function GameDetail() {
                     onClick={() => handleSegmentSelect(idx)}
                     className={`py-2.5 px-3 rounded-xl border text-sm font-semibold transition-all ${
                       segIdx === idx
-                        ? 'bg-brand-500/20 border-brand-500 text-brand-300'
-                        : 'bg-dark-700 border-white/10 text-gray-400 hover:border-brand-500/50 hover:text-white'
+                        ? 'bg-brand-500/20 border-brand-500 text-brand-600'
+                        : 'bg-gray-100 border-gray-200 text-gray-600 hover:border-brand-400 hover:text-gray-900'
                     }`}>
                     {s}–{e}
                   </button>
@@ -350,14 +350,14 @@ export default function GameDetail() {
           {/* Grid header */}
           {currentSeg && (
             <div className="flex items-center justify-between mb-4">
-              <p className="text-sm text-gray-400">
-                Showing <span className="text-white font-semibold">{currentSeg[0] + page * PAGE_SIZE}</span>–
-                <span className="text-white font-semibold">{Math.min(currentSeg[0] + (page + 1) * PAGE_SIZE - 1, currentSeg[1])}</span>
+              <p className="text-sm text-gray-500">
+                Showing <span className="text-gray-900 font-semibold">{currentSeg[0] + page * PAGE_SIZE}</span>–
+                <span className="text-gray-900 font-semibold">{Math.min(currentSeg[0] + (page + 1) * PAGE_SIZE - 1, currentSeg[1])}</span>
               </p>
               <div className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded-sm bg-dark-600 border border-white/10 inline-block"/>
+                <span className="w-3 h-3 rounded-sm bg-gray-200 border border-gray-300 inline-block"/>
                 <span className="text-xs text-gray-500 mr-3">Available</span>
-                <span className="w-3 h-3 rounded-sm bg-red-900/50 border border-red-500/30 inline-block"/>
+                <span className="w-3 h-3 rounded-sm bg-red-100 border border-red-300 inline-block"/>
                 <span className="text-xs text-gray-500 mr-3">Sold</span>
                 <span className="w-3 h-3 rounded-sm bg-brand-500/30 border border-brand-500 inline-block"/>
                 <span className="text-xs text-gray-500">Selected</span>
@@ -375,9 +375,9 @@ export default function GameDetail() {
                   disabled={!available}
                   onClick={() => toggleTicket(num)}
                   className={`h-9 rounded-lg text-xs font-semibold transition-all active:scale-95 ${
-                    !available ? 'bg-red-900/30 border border-red-500/20 text-red-900 cursor-not-allowed' :
-                    sel        ? 'bg-brand-500/30 border border-brand-500 text-brand-300 shadow-sm shadow-brand-500/30' :
-                                 'bg-dark-600 border border-white/5 text-gray-400 hover:border-brand-500/50 hover:text-white'
+                    !available ? 'bg-red-50 border border-red-200 text-red-400 cursor-not-allowed' :
+                    sel        ? 'bg-brand-500/30 border border-brand-500 text-brand-600 shadow-sm shadow-brand-500/30' :
+                                 'bg-gray-50 border border-gray-200 text-gray-600 hover:border-brand-400 hover:text-gray-900'
                   }`}>
                   {num}
                 </button>
@@ -395,7 +395,7 @@ export default function GameDetail() {
                 ← Prev
               </button>
               <span className="text-sm text-gray-500">
-                Page <span className="text-white font-semibold">{page + 1}</span> / {totalPages}
+                Page <span className="text-gray-900 font-semibold">{page + 1}</span> / {totalPages}
               </span>
               <button
                 onClick={() => fetchTickets(page + 1)}
@@ -412,11 +412,11 @@ export default function GameDetail() {
       <div className={`fixed bottom-0 left-0 right-0 z-40 lg:hidden transition-transform duration-300 ${
         selected.length > 0 ? 'translate-y-0' : 'translate-y-full'
       }`}>
-        <div className="bg-dark-800/95 backdrop-blur-md border-t border-white/10 px-4 py-3">
+        <div className="bg-white/95 backdrop-blur-md border-t border-gray-200 px-4 py-3">
           <div className="flex items-center gap-3 max-w-lg mx-auto">
             <div className="flex-1 min-w-0">
-              <p className="text-xs text-gray-400">{selected.length} ticket{selected.length !== 1 ? 's' : ''} selected</p>
-              <p className="text-base font-bold text-white">₹{(selected.length * Number(range?.price || 0)).toLocaleString('en-IN')}</p>
+              <p className="text-xs text-gray-500">{selected.length} ticket{selected.length !== 1 ? 's' : ''} selected</p>
+              <p className="text-base font-bold text-gray-900">₹{(selected.length * Number(range?.price || 0)).toLocaleString('en-IN')}</p>
             </div>
             <button
               onClick={handleAddToCart}

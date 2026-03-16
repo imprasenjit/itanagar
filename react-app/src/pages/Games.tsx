@@ -26,9 +26,9 @@ export default function Games() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20">
       {/* Header */}
       <div className="mb-8">
-        <p className="text-xs text-brand-400 font-semibold uppercase tracking-widest mb-1">All Lotteries</p>
+        <p className="text-xs text-brand-600 font-semibold uppercase tracking-widest mb-1">All Lotteries</p>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <h1 className="font-display font-bold text-3xl text-white">Browse Games</h1>
+          <h1 className="font-display font-bold text-3xl text-gray-900">Browse Games</h1>
           <input
             type="search"
             placeholder="Search games…"

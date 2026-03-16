@@ -34,8 +34,8 @@ export default function Results() {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20">
       <div className="mb-8">
-        <p className="text-xs text-brand-400 font-semibold uppercase tracking-widest mb-1">Draw History</p>
-        <h1 className="font-display font-bold text-3xl text-white">Results</h1>
+        <p className="text-xs text-brand-600 font-semibold uppercase tracking-widest mb-1">Draw History</p>
+        <h1 className="font-display font-bold text-3xl text-gray-900">Results</h1>
       </div>
 
       {/* Filters */}
@@ -61,15 +61,15 @@ export default function Results() {
             <div key={r.id} className="card p-4 flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-400/20 to-orange-500/20 border border-yellow-500/20 flex items-center justify-center text-2xl shrink-0">🏆</div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-white">{r.game_name || r.name}</p>
+                <p className="text-sm font-semibold text-gray-900">{r.game_name || r.name}</p>
                 <p className="text-xs text-gray-500">
-                  Tickets: <span className="text-gray-300">{r.tickets || '—'}</span>
+                  Tickets: <span className="text-gray-700">{r.tickets || '—'}</span>
                   {r.createdAt && <> · <span>{new Date(r.createdAt).toLocaleDateString('en-IN')}</span></>}
                 </p>
               </div>
               <div className="text-right shrink-0">
                 <p className="text-xs text-gray-500">Prize</p>
-                <p className="text-sm font-bold text-brand-400">₹{Number(r.prize || 0).toLocaleString('en-IN')}</p>
+                <p className="text-sm font-bold text-brand-600">₹{Number(r.prize || 0).toLocaleString('en-IN')}</p>
               </div>
             </div>
           ))}

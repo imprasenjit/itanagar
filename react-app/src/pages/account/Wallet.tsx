@@ -55,17 +55,17 @@ export default function Wallet() {
 
   return (
     <AccountLayout>
-      <h1 className="font-display font-bold text-2xl text-white mb-6">My Wallet</h1>
+      <h1 className="font-display font-bold text-2xl text-gray-900 mb-6">My Wallet</h1>
 
       {/* Balance card */}
-      <div className="card p-5 mb-5 bg-gradient-to-br from-brand-500/10 to-brand-700/5 border-brand-500/20">
-        <p className="text-xs text-brand-400 uppercase tracking-widest font-semibold mb-1">Available Balance</p>
-        <p className="font-display font-black text-4xl text-white">₹{Number(balance).toLocaleString('en-IN')}</p>
+      <div className="card p-5 mb-5 bg-gradient-to-br from-brand-50 to-red-50 border-brand-200">
+        <p className="text-xs text-brand-600 uppercase tracking-widest font-semibold mb-1">Available Balance</p>
+        <p className="font-display font-black text-4xl text-gray-900">₹{Number(balance).toLocaleString('en-IN')}</p>
       </div>
 
       {/* Top-up */}
       <div className="card p-5 mb-5">
-        <h2 className="text-sm font-semibold text-white mb-3">Add Money to Wallet</h2>
+          <h2 className="text-sm font-semibold text-gray-900 mb-3">Add Money to Wallet</h2>
         <div className="flex gap-2">
           <input type="number" value={topupAmount} onChange={e => setTopupAmount(e.target.value)}
             className="input flex-1" placeholder="Enter amount (₹)" min="1"/>
@@ -76,7 +76,7 @@ export default function Wallet() {
         <div className="flex gap-2 mt-2">
           {[100, 200, 500, 1000].map(a => (
             <button key={a} onClick={() => setTopupAmount(String(a))}
-              className="px-3 py-1.5 rounded-lg text-xs font-medium bg-dark-600 border border-white/5 text-gray-400 hover:text-white hover:border-brand-500/50 transition-colors">
+              className="px-3 py-1.5 rounded-lg text-xs font-medium bg-gray-100 border border-gray-200 text-gray-600 hover:text-gray-900 hover:border-brand-400 transition-colors">
               ₹{a}
             </button>
           ))}
@@ -85,17 +85,17 @@ export default function Wallet() {
 
       {/* Transaction history */}
       <div className="card overflow-hidden">
-        <div className="px-5 py-3 border-b border-white/5">
-          <h2 className="text-sm font-semibold text-white">Transaction History</h2>
+        <div className="px-5 py-3 border-b border-gray-200">
+          <h2 className="text-sm font-semibold text-gray-900">Transaction History</h2>
         </div>
         {history.length === 0 ? (
           <div className="text-center py-10 text-gray-500 text-sm">No transactions yet.</div>
         ) : (
-          <div className="divide-y divide-white/5">
+          <div className="divide-y divide-gray-100">
             {history.map(t => (
               <div key={t.id} className="flex items-center justify-between px-5 py-3.5">
                 <div>
-                  <p className="text-sm font-medium text-white">{t.description || t.type || 'Transaction'}</p>
+                  <p className="text-sm font-medium text-gray-900">{t.description || t.type || 'Transaction'}</p>
                   <p className="text-xs text-gray-500">{t.createdDtm ? new Date(t.createdDtm).toLocaleDateString('en-IN') : ''}</p>
                 </div>
                 <span className={`text-sm font-bold ${t.type === 'credit' || Number(t.amount) > 0 ? 'text-emerald-400' : 'text-red-400'}`}>

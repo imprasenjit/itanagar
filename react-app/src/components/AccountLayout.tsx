@@ -32,16 +32,16 @@ export default function AccountLayout({ children }: { children: ReactNode }) {
                   {user.name?.charAt(0).toUpperCase()}
                 </div>
                 <div className="min-w-0">
-                  <p className="text-sm font-semibold text-white truncate">{user.name}</p>
+                  <p className="text-sm font-semibold text-gray-900 truncate">{user.name}</p>
                   <p className="text-xs text-gray-500 truncate">{user.email}</p>
                 </div>
               </div>
-              <div className="border-t border-white/5 my-1"/>
+              <div className="border-t border-gray-200 my-1"/>
               {links.map(({ to, icon, label }) => (
                 <NavLink key={to} to={to}
                   className={({ isActive }) =>
                     `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-                      isActive ? 'bg-brand-500/15 text-brand-400' : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                      isActive ? 'bg-brand-50 text-brand-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                     }`
                   }>
                   <span className="text-base">{icon}</span>

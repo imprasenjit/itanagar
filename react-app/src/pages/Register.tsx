@@ -56,7 +56,7 @@ export default function Register() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <img src={logo} alt="ItanagarChoice" className="h-16 w-auto object-contain mx-auto mb-3" />
-          <h1 className="font-display font-bold text-2xl text-white">Create account</h1>
+          <h1 className="font-display font-bold text-2xl text-gray-900">Create account</h1>
           <p className="text-gray-500 text-sm mt-1">Join ItanagarChoice and start winning</p>
         </div>
 
@@ -75,7 +75,7 @@ export default function Register() {
 
         <p className="text-center text-sm text-gray-500 mt-5">
           Already have an account?{' '}
-          <Link to="/login" className="text-brand-400 hover:text-brand-300 font-medium transition-colors">Sign in</Link>
+          <Link to="/login" className="text-brand-600 hover:text-brand-700 font-medium transition-colors">Sign in</Link>
         </p>
       </div>
     </div>

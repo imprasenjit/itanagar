@@ -33,7 +33,7 @@ export default {
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'hero-pattern': 'linear-gradient(135deg, #0b0808 0%, #1c1212 50%, #221515 100%)',
+        'hero-pattern': 'linear-gradient(135deg, #fdf2f2 0%, #fef8f8 50%, #fff5f5 100%)',
       },
       animation: {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',

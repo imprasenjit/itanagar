@@ -45,11 +45,11 @@ export default function Profile() {
 
   return (
     <AccountLayout>
-      <h1 className="font-display font-bold text-2xl text-white mb-6">My Profile</h1>
+      <h1 className="font-display font-bold text-2xl text-gray-900 mb-6">My Profile</h1>
       <div className="space-y-5">
         {/* Profile form */}
         <div className="card p-5">
-          <h2 className="text-base font-semibold text-white mb-4">Personal Information</h2>
+          <h2 className="text-base font-semibold text-gray-900 mb-4">Personal Information</h2>
           <form onSubmit={saveProfile} className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div><label className="label">Full Name</label><input value={profile.name || ''} onChange={e => setP('name', e.target.value)} className="input" placeholder="Your name"/></div>
@@ -62,7 +62,7 @@ export default function Profile() {
 
         {/* Password form */}
         <div className="card p-5">
-          <h2 className="text-base font-semibold text-white mb-4">Change Password</h2>
+          <h2 className="text-base font-semibold text-gray-900 mb-4">Change Password</h2>
           <form onSubmit={savePassword} className="space-y-4">
             <div><label className="label">Current Password</label><input type="password" value={pwForm.old_password} onChange={e => setPw('old_password', e.target.value)} className="input" placeholder="••••••••"/></div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

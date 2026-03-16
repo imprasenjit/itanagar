@@ -28,11 +28,11 @@ export default function Refunds() {
 
   return (
     <AccountLayout>
-      <h1 className="font-display font-bold text-2xl text-white mb-6">Refund Requests</h1>
+      <h1 className="font-display font-bold text-2xl text-gray-900 mb-6">Refund Requests</h1>
 
       {/* Request form */}
       <div className="card p-5 mb-5">
-        <h2 className="text-sm font-semibold text-white mb-3">New Refund Request</h2>
+        <h2 className="text-sm font-semibold text-gray-900 mb-3">New Refund Request</h2>
         <form onSubmit={handleSubmit} className="space-y-3">
           <div>
             <label className="label">Order ID</label>
@@ -52,19 +52,19 @@ export default function Refunds() {
 
       {/* History */}
       <div className="card overflow-hidden">
-        <div className="px-5 py-3 border-b border-white/5">
-          <h2 className="text-sm font-semibold text-white">Request History</h2>
+        <div className="px-5 py-3 border-b border-gray-200">
+          <h2 className="text-sm font-semibold text-gray-900">Request History</h2>
         </div>
         {refunds.length === 0 ? (
           <div className="text-center py-10 text-gray-500 text-sm">No refund requests yet.</div>
         ) : (
-          <div className="divide-y divide-white/5">
+          <div className="divide-y divide-gray-100">
             {refunds.map(r => {
               const [label, color] = STATUS[r.status] || STATUS[0];
               return (
                 <div key={r.id} className="flex items-center justify-between px-5 py-3.5">
                   <div>
-                    <p className="text-sm font-medium text-white">Order #{r.order_id}</p>
+                    <p className="text-sm font-medium text-gray-900">Order #{r.order_id}</p>
                     <p className="text-xs text-gray-500 truncate max-w-xs">{r.reason}</p>
                   </div>
                   <span className={`badge bg-${color}-500/15 text-${color}-400 border border-${color}-500/20`}>{label}</span>

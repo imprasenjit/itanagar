@@ -28,10 +28,10 @@ export default function Transfers() {
 
   return (
     <AccountLayout>
-      <h1 className="font-display font-bold text-2xl text-white mb-6">Wallet Transfers</h1>
+      <h1 className="font-display font-bold text-2xl text-gray-900 mb-6">Wallet Transfers</h1>
 
       <div className="card p-5 mb-5">
-        <h2 className="text-sm font-semibold text-white mb-3">Transfer to User</h2>
+        <h2 className="text-sm font-semibold text-gray-900 mb-3">Transfer to User</h2>
         <form onSubmit={handleSubmit} className="space-y-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div><label className="label">Recipient Email / ID</label><input value={form.to_user} onChange={e => setF('to_user', e.target.value)} className="input" placeholder="Email or User ID" required/></div>
@@ -45,15 +45,15 @@ export default function Transfers() {
       </div>
 
       <div className="card overflow-hidden">
-        <div className="px-5 py-3 border-b border-white/5"><h2 className="text-sm font-semibold text-white">Transfer History</h2></div>
+        <div className="px-5 py-3 border-b border-gray-200"><h2 className="text-sm font-semibold text-gray-900">Transfer History</h2></div>
         {list.length === 0 ? (
           <div className="text-center py-10 text-gray-500 text-sm">No transfers yet.</div>
         ) : (
-          <div className="divide-y divide-white/5">
+          <div className="divide-y divide-gray-100">
             {list.map(t => (
               <div key={t.id} className="flex items-center justify-between px-5 py-3.5">
                 <div>
-                  <p className="text-sm font-medium text-white">{t.to_user || t.to_email || `User #${t.to_user_id}`}</p>
+                  <p className="text-sm font-medium text-gray-900">{t.to_user || t.to_email || `User #${t.to_user_id}`}</p>
                   {t.note && <p className="text-xs text-gray-500">{t.note}</p>}
                 </div>
                 <p className="text-sm font-bold text-red-400">-₹{Number(t.amount).toLocaleString('en-IN')}</p>

@@ -17,12 +17,12 @@ export default function Cart() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20">
-      <h1 className="font-display font-bold text-3xl text-white mb-8">Your Cart</h1>
+      <h1 className="font-display font-bold text-3xl text-gray-900 mb-8">Your Cart</h1>
 
       {items.length === 0 ? (
         <div className="text-center py-24 card">
           <p className="text-5xl mb-4">🛒</p>
-          <p className="text-gray-400 mb-6">Your cart is empty.</p>
+          <p className="text-gray-500 mb-6">Your cart is empty.</p>
           <Link to="/games" className="btn-primary">Browse Games</Link>
         </div>
       ) : (
@@ -31,13 +31,13 @@ export default function Cart() {
           <div className="lg:col-span-2 space-y-3">
             {items.map(item => (
               <div key={item.id} className="card p-4 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-brand-500/10 flex items-center justify-center text-brand-400 text-lg shrink-0">🎫</div>
+                <div className="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center text-brand-600 text-lg shrink-0">🎫</div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-white">{item.name}</p>
+                  <p className="text-sm font-semibold text-gray-900">{item.name}</p>
                   <p className="text-xs text-gray-500">Ticket #{item.ticket_no}</p>
                 </div>
                 <div className="text-right shrink-0">
-                  <p className="text-sm font-bold text-white">₹{Number(item.total_price || 0).toLocaleString('en-IN')}</p>
+                  <p className="text-sm font-bold text-gray-900">₹{Number(item.total_price || 0).toLocaleString('en-IN')}</p>
                 </div>
                 <button
                   onClick={() => removeItem(item.id)}
@@ -53,21 +53,21 @@ export default function Cart() {
           {/* Summary */}
           <div className="lg:col-span-1">
             <div className="card p-5 sticky top-24">
-              <h2 className="font-semibold text-white text-base mb-4">Order Summary</h2>
+              <h2 className="font-semibold text-gray-900 text-base mb-4">Order Summary</h2>
               <div className="space-y-2 mb-4">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">{items.length} ticket{items.length !== 1 ? 's' : ''}</span>
-                  <span className="text-white font-medium">₹{total.toLocaleString('en-IN')}</span>
+                  <span className="text-gray-500">{items.length} ticket{items.length !== 1 ? 's' : ''}</span>
+                  <span className="text-gray-900 font-medium">₹{total.toLocaleString('en-IN')}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Processing fee</span>
-                  <span className="text-emerald-400 text-xs font-semibold">FREE</span>
+                  <span className="text-gray-500">Processing fee</span>
+                  <span className="text-emerald-600 text-xs font-semibold">FREE</span>
                 </div>
               </div>
-              <div className="border-t border-white/5 pt-3 mb-5">
+              <div className="border-t border-gray-200 pt-3 mb-5">
                 <div className="flex justify-between">
-                  <span className="font-semibold text-white">Total</span>
-                  <span className="font-bold text-brand-400 text-lg">₹{total.toLocaleString('en-IN')}</span>
+                  <span className="font-semibold text-gray-900">Total</span>
+                  <span className="font-bold text-brand-600 text-lg">₹{total.toLocaleString('en-IN')}</span>
                 </div>
               </div>
               <button onClick={() => navigate('/order/confirm')} className="btn-primary w-full">

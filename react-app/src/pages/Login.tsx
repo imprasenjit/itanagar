@@ -46,7 +46,7 @@ export default function Login() {
         {/* Logo */}
         <div className="text-center mb-8">
           <img src={logo} alt="ItanagarChoice" className="h-16 w-auto object-contain mx-auto mb-3" />
-          <h1 className="font-display font-bold text-2xl text-white">Sign in</h1>
+          <h1 className="font-display font-bold text-2xl text-gray-900">Sign in</h1>
           <p className="text-gray-500 text-sm mt-1">Welcome back to ItanagarChoice</p>
         </div>
 
@@ -62,7 +62,7 @@ export default function Login() {
             <div>
               <div className="flex justify-between mb-1.5">
                 <label className="label m-0">Password</label>
-                <Link to="/forgot-password" className="text-xs text-brand-400 hover:text-brand-300 transition-colors">Forgot password?</Link>
+                <Link to="/forgot-password" className="text-xs text-brand-600 hover:text-brand-700 transition-colors">Forgot password?</Link>
               </div>
               <input type="password" value={form.password} onChange={e => set('password', e.target.value)}
                 className={`input ${errors.password ? 'border-red-500' : ''}`}
@@ -77,7 +77,7 @@ export default function Login() {
 
         <p className="text-center text-sm text-gray-500 mt-5">
           Don't have an account?{' '}
-          <Link to="/register" className="text-brand-400 hover:text-brand-300 font-medium transition-colors">Create one</Link>
+          <Link to="/register" className="text-brand-600 hover:text-brand-700 font-medium transition-colors">Create one</Link>
         </p>
       </div>
     </div>

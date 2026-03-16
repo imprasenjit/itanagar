@@ -14,27 +14,27 @@ export default function PaymentSuccess() {
           </svg>
         </div>
 
-        <h1 className="font-display font-bold text-2xl text-white mb-2">Payment Successful!</h1>
-        <p className="text-gray-400 text-sm mb-6">Your lottery tickets have been confirmed. Good luck! 🍀</p>
+        <h1 className="font-display font-bold text-2xl text-gray-900 mb-2">Payment Successful!</h1>
+        <p className="text-gray-500 text-sm mb-6">Your Event tickets have been confirmed. Good luck! 🍀</p>
 
         {order && (
-          <div className="bg-dark-600/50 rounded-xl p-4 text-left mb-6 space-y-2">
+          <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 text-left mb-6 space-y-2">
             {order.order_id && (
               <div className="flex justify-between text-sm">
                 <span className="text-gray-500">Order ID</span>
-                <span className="text-white font-mono text-xs">{order.order_id}</span>
+                <span className="text-gray-900 font-mono text-xs">{order.order_id}</span>
               </div>
             )}
             {order.amount && (
               <div className="flex justify-between text-sm">
                 <span className="text-gray-500">Amount Paid</span>
-                <span className="text-white font-semibold">₹{Number(order.amount).toLocaleString('en-IN')}</span>
+                <span className="text-gray-900 font-semibold">₹{Number(order.amount).toLocaleString('en-IN')}</span>
               </div>
             )}
           </div>
         )}
 
-        <p className="text-xs text-gray-600 mb-6">A confirmation email has been sent to your registered email address.</p>
+        <p className="text-xs text-gray-400 mb-6">A confirmation email has been sent to your registered email address.</p>
 
         <div className="flex flex-col gap-2">
           <Link to="/account/orders" className="btn-primary w-full justify-center">View My Tickets</Link>

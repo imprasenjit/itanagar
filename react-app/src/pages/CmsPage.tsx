@@ -22,10 +22,10 @@ export default function CmsPage() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20">
       {page ? (
         <>
-          <h1 className="font-display font-bold text-3xl text-white mb-8">{page.title}</h1>
-          <div className="card p-6 prose prose-invert prose-sm max-w-none
-            prose-headings:font-display prose-a:text-brand-400
-            prose-p:text-gray-400 prose-li:text-gray-400"
+          <h1 className="font-display font-bold text-3xl text-gray-900 mb-8">{page.title}</h1>
+          <div className="card p-6 prose prose-sm max-w-none
+            prose-headings:font-display prose-a:text-brand-600
+            prose-p:text-gray-600 prose-li:text-gray-600"
             dangerouslySetInnerHTML={{ __html: page.description || page.content }}
           />
         </>
