@@ -144,7 +144,7 @@ class AuthController extends ApiBaseController
         ]);
 
         $userInfo  = $this->loginModel->getCustomerInfoByEmail($email);
-        $resetLink = base_url('resetPasswordConfirmUser/' . $activationId . '/' . urlencode($email));
+        $resetLink = base_url('ui/reset-password?code=' . $activationId . '&email=' . urlencode($email));
         resetPasswordEmail([
             'name'       => $userInfo->name ?? '',
             'email'      => $email,

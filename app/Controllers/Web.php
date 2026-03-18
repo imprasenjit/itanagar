@@ -97,7 +97,7 @@ class Web extends BaseController
         ], $id);
 
         session()->setFlashdata($result ? 'success' : 'error', $result ? 'Game updated successfully' : 'Game updation failed');
-        return redirect()->to("ci/web/edit/$id");
+        return redirect()->to("web/edit/$id");
     }
 
     public function deleteWeb()
@@ -320,7 +320,7 @@ class Web extends BaseController
                 session()->setFlashdata('success', 'Prize Tier updated successfully');
             }
         }
-        return redirect()->to("ci/web/tier/$webId");
+        return redirect()->to("web/tier/$webId");
     }
 
     // ── Draw Dates ────────────────────────────────────────────────────────────
@@ -344,7 +344,7 @@ class Web extends BaseController
             ]);
             session()->setFlashdata('success', 'New Date added successfully');
         }
-        return redirect()->to("ci/web/view/$webId");
+        return redirect()->to("web/view/$webId");
     }
 
     public function addtwoWebdate(int $webId)
@@ -366,7 +366,7 @@ class Web extends BaseController
             }
         }
         session()->setFlashdata('success', "$added dates added successfully");
-        return redirect()->to("ci/web/view/$webId");
+        return redirect()->to("web/view/$webId");
     }
 
     public function deleteWebDate()
@@ -413,7 +413,7 @@ class Web extends BaseController
         ], $id);
 
         session()->setFlashdata($result ? 'success' : 'error', $result ? 'Page updated successfully' : 'Page updation failed');
-        return redirect()->to("ci/web/pageedit/$id");
+        return redirect()->to("web/pageedit/$id");
     }
     // ── FAQ / Announcements ──────────────────────────────────────────────────
 

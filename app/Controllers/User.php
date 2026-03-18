@@ -283,7 +283,7 @@ class User extends BaseController
         } else {
             session()->setFlashdata('error', 'Profile updation failed');
         }
-        return redirect()->to("ci/profile/$active");
+        return redirect()->to("profile/$active");
     }
 
     public function changePassword(string $active = 'changepass')
@@ -304,7 +304,7 @@ class User extends BaseController
 
         if (empty($resultPas)) {
             session()->setFlashdata('nomatch', 'Your old password is not correct');
-            return redirect()->to("ci/profile/$active");
+            return redirect()->to("profile/$active");
         }
 
         $result = $this->userModel->changePassword($this->vendorId, [
@@ -318,7 +318,7 @@ class User extends BaseController
         } else {
             session()->setFlashdata('error', 'Password updation failed');
         }
-        return redirect()->to("ci/profile/$active");
+        return redirect()->to("profile/$active");
     }
 
     public function pageNotFound()

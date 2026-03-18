@@ -27,6 +27,7 @@ import RefundsCancellations from './pages/RefundsCancellations';
 import Login         from './pages/Login';
 import Register      from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword  from './pages/ResetPassword';
 
 // Account pages
 import Profile       from './pages/account/Profile';
@@ -65,6 +66,7 @@ export default function App() {
       <Route path="/login"           element={<AuthLayout><Login/></AuthLayout>}/>
       <Route path="/register"        element={<AuthLayout><Register/></AuthLayout>}/>
       <Route path="/forgot-password" element={<AuthLayout><ForgotPassword/></AuthLayout>}/>
+      <Route path="/reset-password"  element={<AuthLayout><ResetPassword/></AuthLayout>}/>
 
       {/* Public — with Navbar/Footer */}
       <Route path="/"                element={<Layout><Home/></Layout>}/>
