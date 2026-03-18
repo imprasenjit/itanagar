@@ -1,7 +1,13 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { type ReactNode } from 'react';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { type ReactNode, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
 
 // Public pages
 import Home          from './pages/Home';
@@ -14,6 +20,10 @@ import Results       from './pages/Results';
 import FAQ           from './pages/FAQ';
 import Contact       from './pages/Contact';
 import CmsPage       from './pages/CmsPage';
+import AboutUs       from './pages/AboutUs';
+import Terms         from './pages/Terms';
+import Privacy       from './pages/Privacy';
+import RefundsCancellations from './pages/RefundsCancellations';
 import Login         from './pages/Login';
 import Register      from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
@@ -48,6 +58,8 @@ function AuthLayout({ children }: { children: ReactNode }) {
 
 export default function App() {
   return (
+    <>
+    <ScrollToTop/>
     <Routes>
       {/* Auth — no Navbar/Footer */}
       <Route path="/login"           element={<AuthLayout><Login/></AuthLayout>}/>
@@ -64,6 +76,10 @@ export default function App() {
       <Route path="/results"         element={<Layout><Results/></Layout>}/>
       <Route path="/faq"             element={<Layout><FAQ/></Layout>}/>
       <Route path="/contact"         element={<Layout><Contact/></Layout>}/>
+      <Route path="/about"           element={<Layout><AboutUs/></Layout>}/>
+      <Route path="/terms"           element={<Layout><Terms/></Layout>}/>
+      <Route path="/privacy"         element={<Layout><Privacy/></Layout>}/>
+      <Route path="/refunds"         element={<Layout><RefundsCancellations/></Layout>}/>
       <Route path="/page/:type"      element={<Layout><CmsPage/></Layout>}/>
 
       {/* Account */}
@@ -78,6 +94,7 @@ export default function App() {
       {/* Fallback */}
       <Route path="*" element={<Navigate to="/" replace/>}/>
     </Routes>
+    </>
   );
 }
 

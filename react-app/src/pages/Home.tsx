@@ -27,7 +27,10 @@ export default function Home() {
   const stats   = data?.stats   || {};
 
   const featuredGame = !loading && games.length > 0 ? games[0] : null;
-  const gridGames    = !loading ? games : [];
+  const gridGames    = !loading ? games.filter(g => {
+    const drawDate = g.date || g.result_date;
+    return !drawDate || new Date(drawDate).getTime() > Date.now();
+  }) : [];
 
   return (
     <>
@@ -38,25 +41,26 @@ export default function Home() {
       
 
       {/* ── ACTIVE GAMES GRID ─────────────────────────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex items-end justify-between mb-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="flex items-end justify-between mb-10">
           <div>
             <p className="text-xs text-brand-600 font-semibold uppercase tracking-widest mb-1">Available Now</p>
-            <h2 className="font-display font-bold text-3xl text-gray-900">Active Games</h2>
+            <h2 className="font-display font-bold text-3xl sm:text-4xl text-gray-900">Active Games</h2>
+            <p className="text-gray-500 text-sm mt-1">Pick your game and try your luck today</p>
           </div>
-          <Link to="/games" className="hidden sm:inline-flex items-center gap-1 text-sm text-brand-600 hover:text-brand-700 font-medium transition-colors">
+          <Link to="/games" className="hidden sm:inline-flex items-center gap-1.5 text-sm text-brand-600 hover:text-brand-700 font-semibold bg-brand-50 hover:bg-brand-100 px-4 py-2 rounded-full border border-brand-200 transition-all">
             View all
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7"/></svg>
           </Link>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {loading
-            ? Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i}/>)
+            ? Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i}/>)
             : gridGames.map(g => <GameCard key={g.id} game={g}/>)
           }
         </div>
-        <div className="mt-6 text-center sm:hidden">
-          <Link to="/games" className="text-sm text-brand-600 hover:text-brand-700 font-medium transition-colors">View all games →</Link>
+        <div className="mt-8 text-center sm:hidden">
+          <Link to="/games" className="inline-flex items-center gap-1.5 text-sm text-brand-600 hover:text-brand-700 font-semibold bg-brand-50 hover:bg-brand-100 px-5 py-2.5 rounded-full border border-brand-200 transition-all">View all games →</Link>
         </div>
       </section>
 
@@ -73,15 +77,15 @@ export default function Home() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <p className="text-xs text-brand-600 font-semibold uppercase tracking-widest mb-2">Simple &amp; Secure</p>
-            <h2 className="font-display font-bold text-3xl text-gray-900">How to Play</h2>
+            <h2 className="font-display font-bold text-3xl text-gray-900">how to buy your Tickects or Coupons</h2>
             <p className="text-gray-500 text-sm mt-2 max-w-md mx-auto">Follow these 3 easy steps to start winning today</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
             <div className="hidden md:block absolute top-12 left-1/3 right-1/3 h-px bg-gradient-to-r from-brand-500/20 via-brand-500/50 to-brand-500/20 pointer-events-none"/>
             {[
-              { step: '01', icon: '🎰', title: 'Choose a Game',    desc: 'Register to ItanagarChoice & browse our selection of exciting Event draws.' },
-              { step: '02', icon: '🎫', title: 'Buy Your Tickets', desc: 'Pick your lucky tickets & complete your purchase securely in minutes.' },
-              { step: '03', icon: '🏆', title: 'Win Prizes',       desc: 'Check results on draw day. Winners are notified instantly — prizes go to your wallet.' },
+              { step: '01', icon: '🎰', title: 'Choose a Game',    desc: '' },
+              { step: '02', icon: '🎫', title: 'Buy Your Tickets', desc: '' },
+              { step: '03', icon: '🏆', title: 'Win Prizes',       desc: '' },
             ].map(({ step, icon, title, desc }) => (
               <div key={step} className="card p-8 text-center relative overflow-hidden group hover:border-brand-400 hover:shadow-xl hover:shadow-brand-500/10 transition-all duration-300">
                 <div className="absolute -top-6 -right-4 text-9xl font-display font-black text-gray-900/[0.04] select-none pointer-events-none">{step}</div>
@@ -147,37 +151,7 @@ export default function Home() {
         </section>
       )}
 
-      {/* ── BOTTOM CTA ────────────────────────────────────────────────────── */}
-      <section className="relative py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-red-50 via-gray-50 to-white pointer-events-none"/>
-        <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-brand-100/60 rounded-full blur-[100px] pointer-events-none animate-pulse-slow"/>
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-orange-100/60 rounded-full blur-[80px] pointer-events-none animate-pulse-slow" style={{ animationDelay: '1.5s' }}/>
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-300/40 to-transparent pointer-events-none"/>
 
-        <div className="relative max-w-3xl mx-auto px-4 text-center">
-          {/* Mini Event balls row */}
-          <div className="flex justify-center gap-3 mb-8">
-            {([{ n: 7, cls: 'from-brand-400 to-brand-600' }, { n: 14, cls: 'from-blue-400 to-blue-600' }, { n: 22, cls: 'from-emerald-400 to-emerald-600' }, { n: 35, cls: 'from-yellow-400 to-orange-500' }, { n: 42, cls: 'from-purple-400 to-purple-600' }] as const).map(({ n, cls }) => (
-              <div key={n} className={`w-12 h-12 rounded-full bg-gradient-to-br ${cls} flex items-center justify-center shadow-lg text-white font-black text-sm opacity-80`}>
-                {n}
-              </div>
-            ))}
-          </div>
-
-          <h2 className="font-display font-black text-4xl sm:text-5xl text-gray-900 mb-4 leading-tight">
-            Ready to Try Your{' '}
-            <span className="bg-gradient-to-r from-brand-500 to-orange-500 bg-clip-text text-transparent">Luck?</span>
-          </h2>
-          <p className="text-gray-600 text-base mb-8 max-w-xl mx-auto leading-relaxed">
-            Join thousands of winners on India's most trusted Event platform. Your jackpot is just a ticket away.
-          </p>
-          <Link to="/games" className="inline-flex items-center gap-2 btn-primary text-base px-10 py-4 shadow-xl shadow-brand-500/25">
-            Play Now — It's Free to Join
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-          </Link>
-          <p className="text-xs text-gray-400 mt-5">No hidden fees · Secure payments · Instant tickets</p>
-        </div>
-      </section>
     </>
   );
 }

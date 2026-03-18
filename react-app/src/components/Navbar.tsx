@@ -39,6 +39,7 @@ export default function Navbar() {
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-7">
             <NavLink to="/"        end className={({isActive}) => isActive ? activeNavLink : navLink}>Home</NavLink>
+            <NavLink to="/about"       className={({isActive}) => isActive ? activeNavLink : navLink}>About Us</NavLink>
             <NavLink to="/games"       className={({isActive}) => isActive ? activeNavLink : navLink}>Games</NavLink>
             <NavLink to="/results"     className={({isActive}) => isActive ? activeNavLink : navLink}>Results</NavLink>
             <NavLink to="/faq"         className={({isActive}) => isActive ? activeNavLink : navLink}>FAQ</NavLink>
@@ -108,7 +109,7 @@ export default function Navbar() {
         {/* Mobile menu */}
         {menuOpen && (
           <div className="md:hidden py-3 border-t border-gray-100 bg-white">
-            {[['/', 'Home'], ['/games', 'Games'], ['/results', 'Results'], ['/faq', 'FAQ'], ['/contact', 'Contact']].map(([to, label]) => (
+            {[['/', 'Home'], ['/about', 'About Us'], ['/games', 'Games'], ['/results', 'Results'], ['/faq', 'FAQ'], ['/contact', 'Contact']].map(([to, label]) => (
               <NavLink key={to} to={to} end={to === '/'} onClick={() => setMenuOpen(false)}
                 className={({isActive}) => `block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${isActive ? 'text-brand-600 bg-brand-50' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'}`}>
                 {label}

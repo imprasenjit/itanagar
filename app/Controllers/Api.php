@@ -36,7 +36,7 @@ class Api extends BaseController
     private function _cors(): void
     {
         $origin  = $this->request->getHeaderLine('Origin');
-        $allowed = ['http://localhost:5173', 'https://theitanagarchoice.com'];
+        $allowed = ['http://localhost:5173', 'http://localhost:5174', 'https://theitanagarchoice.com'];
         if (in_array($origin, $allowed, true)) {
             header("Access-Control-Allow-Origin: $origin");
         }
@@ -465,29 +465,72 @@ class Api extends BaseController
 
     public function payment_create()
     {
-        $auth = $this->requireAuth();
-        if ($auth !== null) {
-            return $auth;
-        }
+        $body         = $this->getBody();
+        $customUserId = null;
 
-        $userId = (int) session()->get('userId');
-        $cart   = $this->webModel->order_data($userId);
+        if (session()->get('isLoggedIn') === true) {
+            // ── Logged-in user ────────────────────────────────────────────────
+            $userId   = (int) session()->get('userId');
+            $cart     = $this->webModel->order_data($userId);
+            $userInfo = $this->userModel->getUserInfo($userId);
+        } else {
+            // ── Guest / unregistered user ─────────────────────────────────────
+            // Expect: mobile (required), name, email, address in request body
+            $mobile  = strtolower(esc($body['mobile']  ?? ''));
+            $email   = strtolower(esc($body['email']   ?? ''));
+            $name    = ucwords(strtolower(esc($body['name'] ?? $body['fname'] ?? '')));
+            $address = strtolower(esc($body['address'] ?? ''));
+
+            if (empty($mobile)) {
+                return $this->error('Mobile number is required for guest checkout');
+            }
+
+            if ($this->loginModel->checkMobileExist($mobile)) {
+                // User already registered — fetch their account
+                $userInfo = $this->userModel->getUserInfoByMobile($mobile);
+                if (!empty($email)) {
+                    $this->userModel->editUserByMobile(['email' => $email, 'address' => $address], $mobile);
+                }
+            } else {
+                // New guest — register them
+                $newUserId = $this->userModel->addNewUser([
+                    'name'       => $name,
+                    'address'    => $address,
+                    'mobile'     => $mobile,
+                    'email'      => $email,
+                    'roleId'     => 2,
+                    'createdDtm' => date('Y-m-d H:i:s'),
+                ]);
+                if (!$newUserId) {
+                    return $this->error('Could not register guest user');
+                }
+                $userInfo = $this->userModel->getUserInfo($newUserId);
+            }
+
+            $userId = (int) ($userInfo->userId ?? $userInfo->id ?? 0);
+            if (!$userId) {
+                return $this->error('Could not resolve user');
+            }
+
+            // Cart was built under the guest session key
+            $customUserId = session()->get('custom_userId') ? (int) session()->get('custom_userId') : null;
+            $cart         = $this->webModel->order_data($customUserId ?? $userId);
+        }
 
         if (empty($cart)) {
             return $this->error('Cart is empty');
         }
 
-        $tickets     = [];
-        $totalPrice  = 0;
+        $tickets    = [];
+        $totalPrice = 0;
         foreach ($cart as $item) {
             $totalPrice += $item->total_price;
             $tickets[]   = ['ticket_no' => $item->ticket_no, 'web_id' => $item->web_id];
         }
 
         $transactionId = $this->getRandomString();
-        $config        = config('App');
-        $keyId         = env('RAZORPAY_KEY_ID',     'rzp_live_mIBUSRL7Pn4XUj');
-        $keySecret     = env('RAZORPAY_KEY_SECRET',  'pRTdkyxSIxXrvQuYcDu9GL4f');
+        $keyId         = env('RAZORPAY_KEY_ID',    'rzp_live_mIBUSRL7Pn4XUj');
+        $keySecret     = env('RAZORPAY_KEY_SECRET', 'pRTdkyxSIxXrvQuYcDu9GL4f');
         $api           = new RazorpayApi($keyId, $keySecret);
 
         $razorpayOrder = $api->order->create([
@@ -501,25 +544,28 @@ class Api extends BaseController
             return $this->error('Could not create Razorpay order');
         }
 
-        $orderId = $this->webModel->insert_order([
-            'tickets'                  => json_encode($tickets),
-            'user_id'                  => $userId,
-            'total_price'              => $totalPrice,
-            'paid_type'                => 'RAZORPAY',
-            'paid_status'              => 'CREATED',
-            'transaction_id'           => $transactionId,
-            'razorpay_order_id'        => $razorpayOrder['id'],
-            'razorpay_order_response'  => json_encode((array)$razorpayOrder),
-            'createdDtm'               => date('Y-m-d H:i:s'),
+        $this->webModel->insert_order([
+            'tickets'                 => json_encode($tickets),
+            'user_id'                 => $userId,
+            'custom_user_id'          => $customUserId,
+            'total_price'             => $totalPrice,
+            'paid_type'               => 'RAZORPAY',
+            'paid_status'             => 'CREATED',
+            'transaction_id'          => $transactionId,
+            'razorpay_order_id'       => $razorpayOrder['id'],
+            'razorpay_order_response' => json_encode((array) $razorpayOrder),
         ]);
 
+        // Mark cart rows as paid for both guest and registered user ids
         foreach ($cart as $item) {
+            if ($customUserId !== null) {
+                $this->webModel->update_cart_data($customUserId, $item->web_id, $item->ticket_no, ['paid_status' => 1]);
+            }
             $this->webModel->update_cart_data($userId, $item->web_id, $item->ticket_no, ['paid_status' => 1]);
         }
 
         session()->set('payment_order_id', $razorpayOrder['id']);
 
-        $userInfo = $this->userModel->getUserInfo($userId);
         return $this->json([
             'order_id'    => $razorpayOrder['id'],
             'amount'      => $razorpayOrder['amount'],

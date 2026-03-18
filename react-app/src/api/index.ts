@@ -23,6 +23,7 @@ export const login = (data: { email: string; password: string }) => api.post('/a
 export const logout = () => api.post('/auth/logout');
 export const register = (data: Record<string, string>) => api.post('/auth/register', data);
 export const forgotPassword = (data: { email: string }) => api.post('/auth/forgot-password', data);
+export const resetPassword  = (data: { email: string; activation_code: string; password: string; password_confirmation: string }) => api.post('/auth/reset-password', data);
 
 // ── Cart ─────────────────────────────────────────────────────────────────────
 export const getCart = () => api.get('/cart');
