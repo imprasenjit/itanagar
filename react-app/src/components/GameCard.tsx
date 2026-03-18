@@ -1,21 +1,23 @@
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { Game } from '../types';
+import FlipClock from './FlipClock';
 
 function useCountdown(drawDate: string | null | undefined) {
   const getRemaining = () => {
     if (!drawDate) return null;
     const diff = new Date(drawDate).getTime() - Date.now();
-    if (diff <= 0) return { days: 0, hours: 0, minutes: 0, ended: true };
+    if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0, ended: true };
     const days    = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours   = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    return { days, hours, minutes, ended: false };
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    return { days, hours, minutes, seconds, ended: false };
   };
   const [remaining, setRemaining] = useState(getRemaining);
   useEffect(() => {
     if (!drawDate) return;
-    const id = setInterval(() => setRemaining(getRemaining()), 60_000);
+    const id = setInterval(() => setRemaining(getRemaining()), 1_000);
     return () => clearInterval(id);
   }, [drawDate]);
   return remaining;
@@ -26,7 +28,7 @@ function stripHtml(str: string): string {
   return str ? str.replace(/<[^>]*>/g, '').trim() : '';
 }
 
-export default function GameCard({ game }: { game: Game }) {
+export default function GameCard({ game, index = 0 }: { game: Game; index?: number }) {
   const {
     id,
     name,
@@ -50,7 +52,20 @@ export default function GameCard({ game }: { game: Game }) {
 
   const countdown = useCountdown(drawDate);
 
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setVisible(true); observer.disconnect(); }
+    }, { threshold: 0.1 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
+    <div ref={ref} className={visible ? 'animate-fade-in-up' : 'opacity-0'} style={visible ? { animationDelay: `${index * 120}ms` } : undefined}>
     <Link to={`/games/${id}`} className="group block h-full">
       <div className="card h-full flex flex-col overflow-hidden hover:border-brand-500/30 hover:shadow-2xl hover:shadow-brand-500/10 transition-all duration-300 group-hover:-translate-y-1.5">
         {/* Image */}
@@ -128,26 +143,14 @@ export default function GameCard({ game }: { game: Game }) {
           {/* Spacer pushes footer down */}
           <div className="flex-1"/>
 
-          {/* Footer — Countdown */}
+          {/* Footer — Countdown + Buy Now */}
           {countdown && !countdown.ended ? (
-            <div className="border-t border-gray-100 pt-3 mt-1">
-              <div className="flex items-center justify-center gap-3">
-                <div className="text-center">
-                  <span className="block text-xl font-display font-black text-gray-900">{countdown.days}</span>
-                  <span className="text-[10px] text-gray-400 uppercase tracking-wider font-medium">Days</span>
-                </div>
-                <span className="text-gray-300 font-light text-lg">:</span>
-                <div className="text-center">
-                  <span className="block text-xl font-display font-black text-gray-900">{countdown.hours}</span>
-                  <span className="text-[10px] text-gray-400 uppercase tracking-wider font-medium">Hrs</span>
-                </div>
-                <span className="text-gray-300 font-light text-lg">:</span>
-                <div className="text-center">
-                  <span className="block text-xl font-display font-black text-gray-900">{countdown.minutes}</span>
-                  <span className="text-[10px] text-gray-400 uppercase tracking-wider font-medium">Min</span>
-                </div>
-                <span className="ml-1 text-[10px] text-brand-500 font-bold uppercase tracking-wider">Left</span>
-              </div>
+            <div className="border-t border-gray-100 pt-3 mt-1 flex items-center justify-between">
+              <FlipClock countdown={countdown} />
+              <span className="inline-flex items-center gap-1 text-xs font-bold text-white bg-brand-600 group-hover:bg-brand-700 px-4 py-2 rounded-full transition-colors">
+                Buy Now
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7"/></svg>
+              </span>
             </div>
           ) : countdown?.ended ? (
             <div className="border-t border-gray-100 pt-3 mt-1">
@@ -157,5 +160,6 @@ export default function GameCard({ game }: { game: Game }) {
         </div>
       </div>
     </Link>
+    </div>
   );
 }

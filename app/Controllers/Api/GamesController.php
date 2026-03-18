@@ -55,16 +55,27 @@ class GamesController extends ApiBaseController
 
     public function ticket_search(int $web_id)
     {
+
         $body   = $this->getBody();
-        $search = isset($body['search']) ? (int) $body['search'] : 0;
+        $search = isset($body['ticket']) ? (int) $body['ticket'] : 0;
 
         $range = $this->webModel->getrangeInfo($web_id);
         if (!$range) {
             return $this->error('Game not found', 404);
         }
         $checkRange = $this->webModel->getRangeAvailability($search, $web_id);
-        $available  = count($checkRange) > 0 && $this->getTicketAvailability($search, $web_id);
-        return $this->json(['available' => $available, 'ticket' => $search]);
+        $available  = $checkRange && $this->getTicketAvailability($search, $web_id);
+        // return $this->json(['available' => $available, 'ticket' => $search]);
+        return $this->json([
+    'available'  => $available,
+    'ticket'     => $search,
+    'debug'      => [
+        'checkRange'  => $checkRange,
+        'ticketAvail' => $this->getTicketAvailability($search, $web_id),
+        'web_id'      => $web_id,
+        'search'      => $search,
+    ],
+]);
     }
 
     // ── Public: FAQ, Pages, Results, Contact ─────────────────────────────────

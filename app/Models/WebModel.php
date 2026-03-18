@@ -73,12 +73,13 @@ class WebModel extends Model
         return $this->db->table('tbl_faqs')->where('id', $id)->get()->getRow();
     }
 
-    public function getRangeAvailability(int $ticket, int $web_id)
+    public function getRangeAvailability(int $ticket, int $web_id): bool
     {
-        return $this->db->table('tbl_ranges')
-            ->where('rangeStart <', $ticket)
-            ->where('web_id', $web_id)
-            ->get()->getResult();
+        $range = $this->getrangeInfo($web_id);
+        if (!$range || empty($range->rangeStart)) {
+            return false;
+        }
+        return isTicketInRange($ticket, $range->rangeStart);
     }
 
     public function getrangeInfo(int $id)

@@ -24,6 +24,7 @@ import AboutUs       from './pages/AboutUs';
 import Terms         from './pages/Terms';
 import Privacy       from './pages/Privacy';
 import RefundsCancellations from './pages/RefundsCancellations';
+import ScamSecurity  from './pages/ScamSecurity';
 import Login         from './pages/Login';
 import Register      from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
@@ -82,6 +83,7 @@ export default function App() {
       <Route path="/terms"           element={<Layout><Terms/></Layout>}/>
       <Route path="/privacy"         element={<Layout><Privacy/></Layout>}/>
       <Route path="/refunds"         element={<Layout><RefundsCancellations/></Layout>}/>
+      <Route path="/scam-security"   element={<Layout><ScamSecurity/></Layout>}/>
       <Route path="/page/:type"      element={<Layout><CmsPage/></Layout>}/>
 
       {/* Account */}

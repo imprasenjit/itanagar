@@ -38,12 +38,20 @@ export default function Navbar() {
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-7">
-            <NavLink to="/"        end className={({isActive}) => isActive ? activeNavLink : navLink}>Home</NavLink>
-            <NavLink to="/about"       className={({isActive}) => isActive ? activeNavLink : navLink}>About Us</NavLink>
-            <NavLink to="/games"       className={({isActive}) => isActive ? activeNavLink : navLink}>Games</NavLink>
-            <NavLink to="/results"     className={({isActive}) => isActive ? activeNavLink : navLink}>Results</NavLink>
+            <NavLink to="/" end className={({ isActive }) => isActive ? activeNavLink : navLink}>Home</NavLink>
+            <NavLink to="/results" className={({ isActive }) => isActive ? activeNavLink : navLink}>Results</NavLink>
+            <NavLink to="/games"       className={({isActive}) => isActive ? activeNavLink : navLink}>Check Tickets</NavLink>
+            
+            <NavLink to="/about" className={({ isActive }) => isActive ? activeNavLink : navLink}>About Us</NavLink>
+            <NavLink to="/contact" className={({ isActive }) => isActive ? activeNavLink : navLink}>Contact Us</NavLink>
             <NavLink to="/faq"         className={({isActive}) => isActive ? activeNavLink : navLink}>FAQ</NavLink>
-            <NavLink to="/contact"     className={({isActive}) => isActive ? activeNavLink : navLink}>Contact</NavLink>
+            
+
+            <NavLink to="/privacy"     className={({isActive}) => isActive ? activeNavLink : navLink}>Privacy</NavLink>
+             <NavLink to="/terms"       className={({isActive}) => isActive ? activeNavLink : navLink}>Terms And Conditions</NavLink>
+            <NavLink to="/scam-security" className={({isActive}) => isActive ? activeNavLink : navLink}>Scam Security</NavLink>
+            
+           
           </nav>
 
           {/* Right side */}
@@ -109,7 +117,7 @@ export default function Navbar() {
         {/* Mobile menu */}
         {menuOpen && (
           <div className="md:hidden py-3 border-t border-gray-100 bg-white">
-            {[['/', 'Home'], ['/about', 'About Us'], ['/games', 'Games'], ['/results', 'Results'], ['/faq', 'FAQ'], ['/contact', 'Contact']].map(([to, label]) => (
+            {[['/', 'Home'], ['/results', 'Results'], ['/games', 'Check Tickets'], ['/about', 'About Us'], ['/contact', 'Contact Us'], ['/faq', 'FAQ'], ['/privacy', 'Privacy'], ['/terms', 'Terms And Conditions'], ['/scam-security', 'Scam Security']].map(([to, label]) => (
               <NavLink key={to} to={to} end={to === '/'} onClick={() => setMenuOpen(false)}
                 className={({isActive}) => `block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${isActive ? 'text-brand-600 bg-brand-50' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'}`}>
                 {label}

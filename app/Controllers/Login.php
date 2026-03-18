@@ -80,9 +80,9 @@ class Login extends BaseController
         ];
         $this->loginModel->lastLogin($loginInfo);
 
-        if (count($this->webModel->order_data($result->userId)) > 0 || $result->roleId == 2) {
-            return redirect()->to('game/confirm_order');
-        }
+        // if (count($this->webModel->order_data($result->userId)) > 0 || $result->roleId == 2) {
+        //     return redirect()->to('game/confirm_order');
+        // }
         return redirect()->to('dashboard');
     }
 

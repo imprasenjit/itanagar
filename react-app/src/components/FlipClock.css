@@ -1,0 +1,103 @@
+.flip-clock {
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.flip-separator {
+  font-size: 14px;
+  font-weight: 300;
+  color: #d1d5db;
+  line-height: 34px;
+  padding: 0 1px;
+  user-select: none;
+}
+
+.flip-unit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flip-unit {
+  position: relative;
+  width: 32px;
+  height: 34px;
+  perspective: 300px;
+}
+
+/* Shared segment styling */
+.flip-unit .segment {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50%;
+  overflow: hidden;
+}
+
+.flip-unit .segment.top {
+  top: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, #1e293b, #1a2332);
+  border-radius: 4px 4px 0 0;
+  border-bottom: 0.5px solid #0f172a;
+}
+
+.flip-unit .segment.bottom {
+  bottom: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, #162032, #1e293b);
+  border-radius: 0 0 4px 4px;
+}
+
+/* Number text — full container height, clipped by each half */
+.flip-unit .segment span {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-family: 'Exo 2', ui-monospace, monospace;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 34px;
+  color: #f1f5f9;
+  font-variant-numeric: tabular-nums;
+}
+
+.flip-unit .segment.bottom span {
+  margin-top: -17px; /* shift up to show bottom half of text */
+}
+
+.flip-label {
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  color: #9ca3af;
+  margin-top: 3px;
+}
+
+/* ---- Flip animation overlays ---- */
+.flip-unit .segment.flip-away {
+  z-index: 3;
+  transform-origin: bottom center;
+  animation: flipDown 0.3s ease-in forwards;
+  backface-visibility: hidden;
+}
+
+.flip-unit .segment.flip-in {
+  z-index: 2;
+  transform-origin: top center;
+  transform: rotateX(90deg);
+  animation: flipUp 0.3s 0.15s ease-out forwards;
+  backface-visibility: hidden;
+}
+
+@keyframes flipDown {
+  0%   { transform: rotateX(0deg); }
+  100% { transform: rotateX(-90deg); }
+}
+
+@keyframes flipUp {
+  0%   { transform: rotateX(90deg); }
+  100% { transform: rotateX(0deg); }
+}

@@ -117,12 +117,9 @@ class ApiBaseController extends BaseController
             return [];
         }
         $ticketRanges = [];
-        foreach (explode(',', trim($range->rangeStart)) as $part) {
-            $parts = explode('-', trim($part));
-            if (count($parts) === 2) {
-                $ticketRanges[] = (int) $parts[0];
-                $ticketRanges[] = (int) $parts[1];
-            }
+        foreach (parseTicketRanges($range->rangeStart) as $r) {
+            $ticketRanges[] = $r['start'];
+            $ticketRanges[] = $r['end'];
         }
         return $ticketRanges;
     }

@@ -35,8 +35,9 @@ function stripHtml(str: string): string {
 
 export default function GameDetail() {
   const { id = '' } = useParams<{ id: string }>();
-  const { addToCart } = useCart();
+  const { addToCart, count: cartCount, items: cartItems } = useCart();
   const addToast      = useToast();
+  const cartTotal = cartItems.reduce((sum, item) => sum + Number(item.total_price || 0), 0);
 
   const [game, setGame]               = useState<Game | null>(null);
   const [range, setRange]             = useState<Record<string, any> | null>(null);
@@ -52,6 +53,7 @@ export default function GameDetail() {
   const [searchResult, setSearchResult] = useState<Record<string, any> | 'error' | null>(null);
   const [adding, setAdding]           = useState(false);
   const [addSuccess, setAddSuccess]   = useState(false);
+  const [ticketsLoading, setTicketsLoading] = useState(false);
   const countdown = useCountdown(range?.result_date);
   const [slideIdx, setSlideIdx]       = useState(0);
   const [lightbox, setLightbox]       = useState(false);
@@ -74,6 +76,8 @@ export default function GameDetail() {
     const start = segStart + p * PAGE_SIZE;
     const end   = Math.min(start + PAGE_SIZE - 1, segEnd);
 
+    setTicketsLoading(true);
+    setTickets([]);
     try {
       // API returns only AVAILABLE ticket numbers in [start..end]
       const r = await getGameTickets(id, start, end);
@@ -87,6 +91,8 @@ export default function GameDetail() {
       setTickets(all);
     } catch {
       setTickets([]);
+    } finally {
+      setTicketsLoading(false);
     }
     setPage(p);
     setSelected([]);
@@ -159,7 +165,7 @@ export default function GameDetail() {
     }
   };
 
-  if (loading) return <LoadingSpinner size="lg" text="Loading game…"/>;
+  if (loading) return <div className="flex items-center justify-center min-h-screen"><LoadingSpinner size="lg" text="Loading game…"/></div>;
   if (!game)   return (
     <div className="text-center pt-40 pb-20">
       <p className="text-5xl mb-4">🎰</p>
@@ -286,7 +292,7 @@ export default function GameDetail() {
 
               <button onClick={handleAddToCart} disabled={selected.length === 0 || adding}
                 className={`hidden lg:flex items-center justify-center gap-2 w-full transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed ${
-                  addSuccess ? 'bg-emerald-500 text-white px-4 py-3 rounded-xl font-bold text-sm scale-[1.02]' : 'btn-primary'
+                  addSuccess ? 'bg-emerald-500 text-white px-6 py-4 rounded-xl font-bold text-base scale-[1.02]' : 'btn-primary !py-4 !text-base'
                 }`}>
                 {adding ? (
                   <><svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>Adding…</>
@@ -296,6 +302,12 @@ export default function GameDetail() {
                   <><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-9H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>Add to Cart</>
                 )}
               </button>
+              {cartCount > 0 && (
+                <Link to="/cart" className="hidden lg:flex items-center justify-center gap-2 w-full mt-2 py-3 rounded-xl font-semibold text-sm border border-brand-500 text-brand-600 hover:bg-brand-50 transition-colors">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-9H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                  View Cart · {cartCount} ticket{cartCount !== 1 ? 's' : ''} · ₹{cartTotal.toLocaleString('en-IN')}
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -317,10 +329,30 @@ export default function GameDetail() {
               <button onClick={handleSearch} className="btn-secondary px-4">Search</button>
             </div>
             {searchResult != null && (
-              <div className={`mt-3 p-3 rounded-xl text-sm ${searchResult === 'error' ? 'bg-red-500/10 text-red-400' : searchResult?.available ? 'bg-emerald-500/10 text-emerald-400' : 'bg-yellow-500/10 text-yellow-400'}`}>
-                {searchResult === 'error'    ? 'Error searching ticket.' :
-                  searchResult?.available    ? `✅ Ticket #${searchNum} is available!`
-                                             : `❌ Ticket #${searchNum} is already sold.`}
+              <div className="mt-3">
+                {searchResult === 'error' ? (
+                  <div className="p-3 rounded-xl text-sm bg-red-500/10 text-red-400">Error searching ticket.</div>
+                ) : searchResult?.available ? (
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => {
+                        const num = Number(searchNum.trim());
+                        if (!isNaN(num)) toggleTicket(num);
+                      }}
+                      className={`h-11 px-5 rounded-lg text-sm font-semibold transition-all active:scale-95 ${
+                        selected.includes(Number(searchNum.trim()))
+                          ? 'bg-brand-500/30 border-2 border-brand-500 text-brand-600 shadow-sm shadow-brand-500/30'
+                          : 'bg-gray-50 border border-green-300 text-gray-700 hover:border-brand-400 hover:text-gray-900'
+                      }`}>
+                      {searchNum.trim()}
+                    </button>
+                    <span className="text-sm text-emerald-500 font-medium">
+                      {selected.includes(Number(searchNum.trim())) ? '✅ Selected' : 'Available — click to select'}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="p-3 rounded-xl text-sm bg-yellow-500/10 ">❌ Ticket #{searchNum} is not available.</div>
+                )}
               </div>
             )}
           </div>
@@ -355,7 +387,7 @@ export default function GameDetail() {
                 <span className="text-gray-900 font-semibold">{Math.min(currentSeg[0] + (page + 1) * PAGE_SIZE - 1, currentSeg[1])}</span>
               </p>
               <div className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded-sm bg-gray-200 border border-gray-300 inline-block"/>
+                <span className="w-3 h-3 rounded-sm bg-gray-50 border border-green-300 inline-block"/>
                 <span className="text-xs text-gray-500 mr-3">Available</span>
                 <span className="w-3 h-3 rounded-sm bg-red-100 border border-red-300 inline-block"/>
                 <span className="text-xs text-gray-500 mr-3">Sold</span>
@@ -366,7 +398,13 @@ export default function GameDetail() {
           )}
 
           {/* Ticket grid — each item is { num, available } */}
-          <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 gap-1.5">
+          {ticketsLoading ? (
+            <div className="flex flex-col items-center justify-center py-16">
+              <svg className="w-8 h-8 animate-spin text-brand-500 mb-3" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+              <p className="text-sm text-gray-400">Loading tickets…</p>
+            </div>
+          ) : (
+          <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 gap-2">
             {tickets.map(({ num, available }) => {
               const sel = selected.includes(num);
               return (
@@ -374,16 +412,17 @@ export default function GameDetail() {
                   key={num}
                   disabled={!available}
                   onClick={() => toggleTicket(num)}
-                  className={`h-9 rounded-lg text-xs font-semibold transition-all active:scale-95 ${
+                  className={`h-11 rounded-lg text-sm font-semibold transition-all active:scale-95 ${
                     !available ? 'bg-red-50 border border-red-200 text-red-400 cursor-not-allowed' :
-                    sel        ? 'bg-brand-500/30 border border-brand-500 text-brand-600 shadow-sm shadow-brand-500/30' :
-                                 'bg-gray-50 border border-gray-200 text-gray-600 hover:border-brand-400 hover:text-gray-900'
+                    sel        ? 'bg-brand-500/30 border-2 border-brand-500 text-brand-600 shadow-sm shadow-brand-500/30' :
+                                 'bg-gray-50 border border-green-300 text-gray-700 hover:border-brand-400 hover:text-gray-900'
                   }`}>
                   {num}
                 </button>
               );
             })}
           </div>
+          )}
 
           {/* Pagination within segment */}
           {totalPages > 1 && (
@@ -410,9 +449,10 @@ export default function GameDetail() {
 
       {/* Fixed bottom bar — mobile only */}
       <div className={`fixed bottom-0 left-0 right-0 z-40 lg:hidden transition-transform duration-300 ${
-        selected.length > 0 ? 'translate-y-0' : 'translate-y-full'
+        selected.length > 0 || cartCount > 0 ? 'translate-y-0' : 'translate-y-full'
       }`}>
         <div className="bg-white/95 backdrop-blur-md border-t border-gray-200 px-4 py-3">
+          {selected.length > 0 ? (
           <div className="flex items-center gap-3 max-w-lg mx-auto">
             <div className="flex-1 min-w-0">
               <p className="text-xs text-gray-500">{selected.length} ticket{selected.length !== 1 ? 's' : ''} selected</p>
@@ -435,6 +475,12 @@ export default function GameDetail() {
               )}
             </button>
           </div>
+          ) : (
+          <Link to="/cart" className="flex items-center justify-center gap-2 max-w-lg mx-auto py-3 rounded-xl font-bold text-sm bg-brand-500 hover:bg-brand-600 text-white transition-colors active:scale-95">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-9H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+            View Cart · {cartCount} ticket{cartCount !== 1 ? 's' : ''} · ₹{cartTotal.toLocaleString('en-IN')}
+          </Link>
+          )}
         </div>
       </div>
 

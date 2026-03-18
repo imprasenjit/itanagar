@@ -137,8 +137,9 @@ export default function ConfirmOrder() {
               {items.map(item => (
                 <div key={item.id} className="flex items-center justify-between px-5 py-3.5">
                   <div>
-                    <p className="text-sm font-medium text-gray-900">{item.name}</p>
-                    <p className="text-xs text-gray-500">Ticket #{item.ticket_no}</p>
+                    <p className="text-xs text-gray-900">Ticket #{item.ticket_no}</p>
+                    <p className="text-sm font-medium text-gray-500">{item.name}</p>
+                    
                   </div>
                   <p className="text-sm font-semibold text-gray-900">₹{Number(item.total_price || 0).toLocaleString('en-IN')}</p>
                 </div>
