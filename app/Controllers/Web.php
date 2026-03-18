@@ -146,10 +146,18 @@ class Web extends BaseController
         if ($id === 0) {
             return redirect()->to('web');
         }
-        $data = [
-            'WebInfo'   => $this->webModel->getWebInfo($id),
-            'rangeInfo' => $this->webModel->getrangeInfo($id),
-        ];
+
+        $data['WebInfo'] = $this->webModel->getWebInfo($id);
+        if (!$data['WebInfo']) {
+            return redirect()->to('web');
+        }
+
+        $data['rangeInfo'] = $this->webModel->getrangeInfo($id);
+        if (!$data['rangeInfo']) {
+            session()->setFlashdata('error', 'Range data not found for this game');
+            return redirect()->to('web');
+        }
+
         $this->global['pageTitle'] = 'Lottery : Edit Lottery Details';
         return $this->loadViews('web/rangeedit', $this->global, $data, null);
     }
@@ -189,7 +197,7 @@ class Web extends BaseController
 
         $result = $this->webModel->editWeb_all('tbl_ranges', $rangeInfo, $id);
         session()->setFlashdata($result ? 'success' : 'error', $result ? 'Range updated successfully' : 'Range updation failed');
-        return redirect()->to("ci/web/rangeEdit/$webId");
+        return redirect()->to("web/rangeEdit/$webId");
     }
 
     // ── Common Settings ───────────────────────────────────────────────────────
@@ -231,10 +239,18 @@ class Web extends BaseController
         if ($id === 0) {
             return redirect()->to('web');
         }
-        $data = [
-            'WebInfo'   => $this->webModel->getWebInfo($id),
-            'rangeInfo' => $this->webModel->getrangeInfo($id),
-        ];
+
+        $data['WebInfo'] = $this->webModel->getWebInfo($id);
+        if (!$data['WebInfo']) {
+            return redirect()->to('web');
+        }
+
+        $data['rangeInfo'] = $this->webModel->getrangeInfo($id);
+        if (!$data['rangeInfo']) {
+            session()->setFlashdata('error', 'Range data not found for this game');
+            return redirect()->to('web');
+        }
+
         $this->global['pageTitle'] = 'Lottery : Edit Range Game';
         return $this->loadViews('web/descriptionedit', $this->global, $data, null);
     }
@@ -254,7 +270,7 @@ class Web extends BaseController
         ], $id);
 
         session()->setFlashdata($result ? 'success' : 'error', $result ? 'Description updated successfully' : 'Description updation failed');
-        return redirect()->to("ci/web/descriptionEdit/$webId");
+        return redirect()->to("web/descriptionEdit/$webId");
     }
 
     // ── Tier ─────────────────────────────────────────────────────────────────
