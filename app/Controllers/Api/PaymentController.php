@@ -220,7 +220,23 @@ class PaymentController extends ApiBaseController
             ]);
             sendmail($userInfo->email, 'Order: ' . $razorpayOrderId, $emailBody);
 
-            return $this->json(['status' => 'PAID'], true, 'Payment verified');
+            $responseTickets = array_map(function ($t) {
+                return [
+                    'ticketNo'   => $t['ticketNo'],
+                    'gameName'   => $t['webInfo']->name ?? '',
+                    'heading'    => $t['range']->heading ?? '',
+                    'logo'       => $t['range']->logo ? base_url('imglogo') . '/' . $t['range']->logo : '',
+                    'resultDate' => $t['range']->result_date ?? '',
+                    'price'      => $t['range']->price ?? '',
+                ];
+            }, $ticketDetails);
+
+            return $this->json([
+                'status'     => 'PAID',
+                'order_id'   => $razorpayOrderId,
+                'payment_id' => $razorpayPayId,
+                'tickets'    => $responseTickets,
+            ], true, 'Payment verified');
 
         } catch (PaymentError $e) {
             $this->webModel->update_order_by_orderId($razorpayOrderId, [
