@@ -30,10 +30,10 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={addToast}>
       {children}
-      <div className="fixed bottom-4 right-4 z-[9999] flex flex-col gap-2 max-w-sm w-full pointer-events-none">
+      <div className="fixed top-20 right-4 z-[9999] flex flex-col gap-2 max-w-sm w-full pointer-events-none">
         {toasts.map(t => (
           <div key={t.id}
-            className={`flex items-start gap-3 card p-3.5 border ${borders[t.type] || borders.info} shadow-xl pointer-events-auto animate-in slide-in-from-right-5`}>
+            className={`flex items-start gap-3 card p-3.5 border ${borders[t.type] || borders.info} shadow-xl pointer-events-auto animate-in slide-in-from-top-5`}>
             {icons[t.type] || icons.info}
             <p className="text-sm text-gray-700 flex-1">{t.message}</p>
             <button onClick={() => setToasts(ts => ts.filter(x => x.id !== t.id))}

@@ -27,38 +27,38 @@ export default function Home() {
   });
 
   return (
-    <><section className="px-4 py-5 bg-gray-50">
+    <><section className="px-4 sm:px-6 lg:px-8 py-5 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
         <div
-          className="max-w-2xl mx-auto text-white px-3 py-2 rounded-2xl shadow-2xl overflow-hidden relative"
+          className="w-full text-white px-3 py-2 sm:px-10 sm:py-10 lg:px-16 lg:py-14 rounded-2xl shadow-2xl overflow-hidden relative"
           style={{ backgroundImage: `url(${heroBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
         >
-          <div className="absolute inset-0  from-blue-600/70 via-indigo-600/70 to-purple-600/70 rounded-2xl" />
-          <div className="relative z-10 w-[80%] text-left">
-          <h2 className="text-lg font-bold tracking-tight text-left leading-snug">
+          <div className="absolute inset-0 from-blue-600/70 via-indigo-600/70 to-purple-600/70 rounded-2xl" />
+          <div className="relative z-10 w-[80%] sm:w-[60%] lg:w-[50%] text-left">
+          <h2 className="text-lg sm:text-3xl lg:text-4xl font-bold tracking-tight text-left leading-snug">
             Book Tickets & <span className="text-yellow-400 font-extrabold">Coupons</span><br />for Verified Events
           </h2>
-          <div className="flex justify-start space-x-6 mt-2 text-sm font-medium">
-            
-            <span className="flex gap-1">
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L4 5v6c0 5.25 3.5 10.15 8 11.35C16.5 21.15 20 16.25 20 11V5l-8-3z"/></svg>
-             Safe . Secure . Instant Confirmation
+          <div className="flex justify-start space-x-6 mt-2 sm:mt-4 text-sm font-medium">
+            <span className="flex gap-1 items-center sm:text-base">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L4 5v6c0 5.25 3.5 10.15 8 11.35C16.5 21.15 20 16.25 20 11V5l-8-3z"/></svg>
+              Safe . Secure . Instant Confirmation
             </span>
-     
           </div>
-          <div className="flex justify-start space-x-4 mt-7">
-            <Link to="/games" className="bg-yellow-400 text-gray-900 px-5 py-2 rounded-full text-xs font-semibold shadow-md hover:shadow-lg hover:bg-yellow-300 transition-all">
+          <div className="flex justify-start space-x-4 mt-7 sm:mt-8">
+            <Link to="/games" className="bg-yellow-400 text-gray-900 px-5 py-2 sm:px-7 sm:py-3 rounded-full text-xs sm:text-sm font-semibold shadow-md hover:shadow-lg hover:bg-yellow-300 transition-all">
               Explore Events
             </Link>
-            <Link to="/results" className="bg-yellow-400 text-gray-900 px-5 py-2 rounded-full text-xs font-semibold shadow-md hover:shadow-lg hover:bg-yellow-300 transition-all">
+            <Link to="/results" className="bg-yellow-400 text-gray-900 px-5 py-2 sm:px-7 sm:py-3 rounded-full text-xs sm:text-sm font-semibold shadow-md hover:shadow-lg hover:bg-yellow-300 transition-all">
               Results
             </Link>
           </div>
           </div>
         </div>
+        </div>
     </section>
-      <section className="bg-gray-50 px-4 py-2">
+      <section className=" bg-gray-50 px-4 py-2">
         <h3 className="text-2xl font-bold text-gray-800 mb-8 text-center">How It Works</h3>
-        <div className="max-w-3xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { step: "Browse Events", desc: "Explore upcoming events and draws.", icon: browseEventsIcon, link: '/games' },
             { step: "Select Ticket", desc: "Choose your option easily.", icon: selectTicketIcon, link: '/games' },

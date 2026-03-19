@@ -14,7 +14,7 @@
             }
 
             .background_style_for_mobile {
-                background-image: url('<?php echo base_url('imglogo') . "/" . $value["range"]->logo; ?>');
+                background-image: url('<?php echo base_url('imglogo') . "/" . ($ticket_details[0]['range']->logo ?? ''); ?>');
                 background-size: cover !important;
                 background-position: top center !important;
                 height: 300px !important;

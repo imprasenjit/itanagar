@@ -74,7 +74,7 @@ class UserModel extends Model
     public function getUserInfo(int $userId)
     {
         return $this->db->table('tbl_users')
-            ->select('userId, name, email, mobile, roleId, phonecode')
+            ->select('userId, name, email, mobile, roleId')
             ->where('isDeleted', 0)
             ->where('roleId !=', 1)
             ->where('userId',    $userId)
