@@ -10,6 +10,7 @@ use CodeIgniter\Router\RouteCollection;
 $routes->addRedirect('/', 'ui');
 $routes->get('ui',        'ReactApp::serve');
 $routes->get('ui/(:any)', 'ReactApp::serve');
+$routes->get('ui/(:any)/(:any)', 'ReactApp::serve');
 $routes->get('reset', 'ReactApp::resetPassword');
 $routes->post('reset-password', 'Api::reset_password');
 // ── Auth ─────────────────────────────────────────────────────────────────────

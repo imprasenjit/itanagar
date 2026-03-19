@@ -26,7 +26,7 @@ import { useToast } from '../components/Toast';
 import LoadingSpinner from '../components/LoadingSpinner';
 import type { Game } from '../types';
 
-const PAGE_SIZE = 60;
+const PAGE_SIZE = 50;
 
 // Strip HTML tags — jackpot is stored as "<p>...</p>" in DB
 function stripHtml(str: string): string {
@@ -177,7 +177,7 @@ export default function GameDetail() {
   const slideImgs = (range ? [range.logo, range.logo2].filter(Boolean) : []) as string[];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-28 lg:pb-20">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-28 lg:pb-20">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-xs text-gray-500 mb-6">
         <Link to="/" className="hover:text-gray-900 transition-colors">Home</Link>
@@ -386,13 +386,19 @@ export default function GameDetail() {
                 Showing <span className="text-gray-900 font-semibold">{currentSeg[0] + page * PAGE_SIZE}</span>–
                 <span className="text-gray-900 font-semibold">{Math.min(currentSeg[0] + (page + 1) * PAGE_SIZE - 1, currentSeg[1])}</span>
               </p>
-              <div className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded-sm bg-gray-50 border border-green-300 inline-block"/>
-                <span className="text-xs text-gray-500 mr-3">Available</span>
-                <span className="w-3 h-3 rounded-sm bg-red-100 border border-red-300 inline-block"/>
-                <span className="text-xs text-gray-500 mr-3">Sold</span>
-                <span className="w-3 h-3 rounded-sm bg-brand-500/30 border border-brand-500 inline-block"/>
-                <span className="text-xs text-gray-500">Selected</span>
+              <div className="flex items-end gap-3">
+                <div className="flex flex-col items-center gap-1">
+                  <span className="w-3 h-3 rounded-sm bg-green-300 border border-green-600 inline-block"/>
+                  <span className="text-[10px] text-gray-500">Available</span>
+                </div>
+                <div className="flex flex-col items-center gap-1">
+                  <span className="w-3 h-3 rounded-sm bg-red-400 border border-red-600 inline-block"/>
+                  <span className="text-[10px] text-gray-500">Sold</span>
+                </div>
+                <div className="flex flex-col items-center gap-1">
+                  <span className="w-3 h-3 rounded-sm bg-brand-500 border border-brand-700 inline-block"/>
+                  <span className="text-[10px] text-gray-500">Selected</span>
+                </div>
               </div>
             </div>
           )}

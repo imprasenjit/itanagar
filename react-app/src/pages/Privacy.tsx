@@ -1,13 +1,13 @@
 export default function Privacy() {
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-20">
       <h1 className="font-display font-bold text-3xl text-gray-900 mb-8">Privacy Policy</h1>
       <div className="card p-6 sm:p-8 prose prose-sm max-w-none prose-headings:font-display prose-a:text-brand-600 prose-p:text-gray-600 prose-li:text-gray-600">
         <p>
-          Welcome to <strong>theitanagarchoice.com</strong>. Your privacy is important to us. This Privacy Policy explains how Itanagar Choice collects, uses, protects, and handles your personal information when you use our website and services.
+          Welcome to <strong>Itanagarchoice.com</strong>. Your privacy is important to us. This Privacy Policy explains how Itanagar Choice collects, uses, protects, and handles your personal information when you use our website and services.
         </p>
         <p>
-          By accessing or using theitanagarchoice.com, you agree to the terms described in this Privacy Policy.
+          By accessing or using Itanagarchoice.com, you agree to the terms described in this Privacy Policy.
         </p>
 
         <h2>1. Information We Collect</h2>
@@ -91,7 +91,7 @@ export default function Privacy() {
       <h1 className="font-display font-bold text-3xl text-gray-900 mt-16 mb-8">Shipping &amp; Delivery Policy (Digital Ticket Delivery)</h1>
       <div className="card p-6 sm:p-8 prose prose-sm max-w-none prose-headings:font-display prose-a:text-brand-600 prose-p:text-gray-600 prose-li:text-gray-600">
         <p>
-          At Itanagar Choice, all tickets purchased through <strong>theitanagarchoice.com</strong> are delivered digitally. We do not provide any physical shipping of tickets.
+          At Itanagar Choice, all tickets purchased through <strong>Itanagarchoice.com</strong> are delivered digitally. We do not provide any physical shipping of tickets.
         </p>
 
         <h2>1. Digital Ticket Delivery</h2>

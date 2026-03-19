@@ -4,9 +4,9 @@ import logo from '../assets/logo.png';
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="bg-white border-t border-gray-200 mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="flex flex-col items-center gap-6">
+    <footer className="bg-white border-t border-gray-200 mt-7">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+        <div className="flex flex-col items-center gap-2">
           {/* Logo */}
           <img src={logo} alt="ItanagarChoice" className="h-20 w-auto object-contain" />
           <p className='text-gray-500'>Your Ticketing partner since 2024</p>

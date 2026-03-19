@@ -116,7 +116,7 @@ export default function ConfirmOrder() {
   if (loading) return <LoadingSpinner size="lg" text="Preparing order…"/>;
 
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-20">
       {/* Razorpay script */}
       <script src="https://checkout.razorpay.com/v1/checkout.js" async/>
 

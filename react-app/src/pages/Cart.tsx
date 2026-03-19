@@ -16,7 +16,7 @@ export default function Cart() {
   if (cartLoading) return <LoadingSpinner size="lg" text="Loading cart…"/>;
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-20">
       <h1 className="font-display font-bold text-3xl text-gray-900 mb-8">Your Cart</h1>
 
       {items.length === 0 ? (

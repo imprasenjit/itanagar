@@ -1,6 +1,6 @@
 export default function ScamSecurity() {
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-20">
       <h1 className="font-display font-bold text-3xl text-gray-900 mb-6">Scam Security</h1>
 
       <div className="card p-6 sm:p-8 space-y-6">
@@ -12,7 +12,7 @@ export default function ScamSecurity() {
           <h2 className="font-display font-semibold text-lg text-gray-900 mb-3">Important Safety Guidelines</h2>
           <ul className="space-y-3">
             {[
-              <>Only purchase tickets from the official website <a href="https://theitanagarchoice.com" className="text-brand-600 font-medium hover:underline" target="_blank" rel="noopener noreferrer">theitanagarchoice.com</a></>,
+              <>Only purchase tickets from the official website <a href="https://Itanagarchoice.com" className="text-brand-600 font-medium hover:underline" target="_blank" rel="noopener noreferrer">Itanagarchoice.com</a></>,
               'Never trust unofficial agents or third-party sellers',
               'Always verify your ticket using the Check Ticket feature',
               'Report suspicious activity immediately',

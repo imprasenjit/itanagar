@@ -32,8 +32,8 @@ export default function Results() {
   }, []);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20">
-      <div className="mb-8">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-20">
+      <div className="mb-8 text-center">
         <p className="text-xs text-brand-600 font-semibold uppercase tracking-widest mb-1">Draw History</p>
         <h1 className="font-display font-bold text-3xl text-gray-900">Results</h1>
       </div>
@@ -44,7 +44,7 @@ export default function Results() {
           <option value="">All Games</option>
           {games.map(g => <option key={g.id} value={g.id}>{g.name}</option>)}
         </select>
-        <input type="date" value={date} onChange={e => setDate(e.target.value)} className="input flex-1"/>
+        <input type="date" value={date} onChange={e => setDate(e.target.value)} className="input flex-1 min-w-0"/>
         <button onClick={fetchResults} className="btn-primary px-6">Filter</button>
       </div>
 

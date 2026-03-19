@@ -23,18 +23,18 @@ export default function Games() {
   );
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-20">
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-8 text-center">
         <p className="text-xs text-brand-600 font-semibold uppercase tracking-widest mb-1">All Events</p>
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <h1 className="font-display font-bold text-3xl text-gray-900">Search</h1>
+        <h1 className="font-display font-bold text-3xl text-gray-900 mb-4">Search</h1>
+        <div className="flex justify-center">
           <input
             type="search"
             placeholder="Search games…"
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="input max-w-xs"
+            className="input w-full max-w-sm"
           />
         </div>
       </div>

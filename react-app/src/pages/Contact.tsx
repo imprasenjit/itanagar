@@ -25,7 +25,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20">
+    <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-20">
       <div className="text-center mb-10">
         <p className="text-xs text-brand-600 font-semibold uppercase tracking-widest mb-1">Get in Touch</p>
         <h1 className="font-display font-bold text-3xl text-gray-900">Contact Us</h1>

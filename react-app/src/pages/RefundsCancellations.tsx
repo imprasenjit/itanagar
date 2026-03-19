@@ -1,6 +1,6 @@
 export default function RefundsCancellations() {
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-20">
       <h1 className="font-display font-bold text-3xl text-gray-900 mb-8">Refunds &amp; Cancellations</h1>
       <div className="card p-6 sm:p-8 prose prose-sm max-w-none prose-headings:font-display prose-a:text-brand-600 prose-p:text-gray-600 prose-li:text-gray-600">
         <p>
@@ -9,7 +9,7 @@ export default function RefundsCancellations() {
 
         <h2>1. Ticket Cancellation</h2>
         <p>
-          Once a ticket is successfully purchased through <strong>theitanagarchoice.com</strong>, it is generally <strong>non-cancellable</strong> and <strong>non-transferable</strong>, unless otherwise stated for a specific event.
+          Once a ticket is successfully purchased through <strong>Itanagarchoice.com</strong>, it is generally <strong>non-cancellable</strong> and <strong>non-transferable</strong>, unless otherwise stated for a specific event.
         </p>
 
         <h2>2. Refund Policy</h2>
@@ -40,8 +40,8 @@ export default function RefundsCancellations() {
         <p>For refund or cancellation related queries, please contact:</p>
         <p>
           <strong>Itanagar Choice Support Team</strong><br/>
-          Website: <a href="https://theitanagarchoice.com">theitanagarchoice.com</a><br/>
-          Email: <a href="mailto:support@theitanagarchoice.com">support@theitanagarchoice.com</a><br/>
+          Website: <a href="https://Itanagarchoice.com">Itanagarchoice.com</a><br/>
+          Email: <a href="mailto:support@Itanagarchoice.com">support@Itanagarchoice.com</a><br/>
           Phone / WhatsApp: <strong>8974558500</strong>
         </p>
       </div>

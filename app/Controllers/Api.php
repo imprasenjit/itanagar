@@ -36,7 +36,7 @@ class Api extends BaseController
     private function _cors(): void
     {
         $origin  = $this->request->getHeaderLine('Origin');
-        $allowed = ['http://localhost:5173', 'http://localhost:5174', 'https://theitanagarchoice.com'];
+        $allowed = ['http://localhost:5173', 'http://localhost:5174', 'https://itanagarchoice.com'];
         if (in_array($origin, $allowed, true)) {
             header("Access-Control-Allow-Origin: $origin");
         }

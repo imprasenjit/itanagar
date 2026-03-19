@@ -7,7 +7,7 @@ const faqs = [
   },
   {
     question: 'How can I buy a ticket?',
-    answer: 'You can purchase a ticket by selecting the event on <strong>theitanagarchoice.com</strong>, entering the required details, and completing the payment through the available payment methods.',
+    answer: 'You can purchase a ticket by selecting the event on <strong>Itanagarchoice.com</strong>, entering the required details, and completing the payment through the available payment methods.',
   },
   {
     question: 'How will I receive my ticket?',
@@ -62,7 +62,7 @@ function FaqItem({ item }: { item: { question: string; answer: string } }) {
 
 export default function FAQ() {
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-20">
       <div className="text-center mb-10">
         <p className="text-xs text-brand-600 font-semibold uppercase tracking-widest mb-1">Help Center</p>
         <h1 className="font-display font-bold text-3xl text-gray-900">Frequently Asked Questions</h1>

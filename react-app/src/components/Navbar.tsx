@@ -32,8 +32,15 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5">
-            <img src={logo} alt="ItanagarChoice" className="h-14 w-auto object-contain" />
+          <Link to="/" className="flex items-center gap-1">
+            <img src={logo} alt="ItanagarChoice" className="h-10 w-auto object-contain" />
+            <div className="flex flex-col leading-tight">
+              <span className="text-base font-extrabold tracking-tight uppercase" style={{ color: '#800000' }}>
+                <span style={{ fontSize: '0.9em', fontFamily: 'Georgia, "Times New Roman", serif',   color: '#5c0000', textShadow: '1px 1px 0px rgba(0,0,0,0.2)' }}>ITANAGARCHOICE
+              </span>
+              </span>
+              <span className="text-xs text-gray-500 font-medium">Your ticketing partner</span>
+            </div>
           </Link>
 
           {/* Desktop nav */}
@@ -47,15 +54,15 @@ export default function Navbar() {
             <NavLink to="/faq"         className={({isActive}) => isActive ? activeNavLink : navLink}>FAQ</NavLink>
             
 
-            <NavLink to="/privacy"     className={({isActive}) => isActive ? activeNavLink : navLink}>Privacy</NavLink>
+            {/* <NavLink to="/privacy"     className={({isActive}) => isActive ? activeNavLink : navLink}>Privacy</NavLink>
              <NavLink to="/terms"       className={({isActive}) => isActive ? activeNavLink : navLink}>Terms And Conditions</NavLink>
-            <NavLink to="/scam-security" className={({isActive}) => isActive ? activeNavLink : navLink}>Scam Security</NavLink>
+            <NavLink to="/scam-security" className={({isActive}) => isActive ? activeNavLink : navLink}>Scam Security</NavLink> */}
             
            
           </nav>
 
           {/* Right side */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1">
             {/* Cart */}
             <Link to="/cart" className="relative p-2 rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -100,7 +107,7 @@ export default function Navbar() {
                 )}
               </div>
             ) : (
-              <Link to="/login" className="btn-primary py-2 px-4 text-xs">Sign in</Link>
+              <Link to="/login" className="btn-primary py-1 px-1 text-xs">Sign in</Link>
             )}
 
             {/* Mobile menu toggle */}

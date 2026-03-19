@@ -32,7 +32,7 @@ class ReactApp extends Controller
      */
     public function resetPassword()
     {
-        $email      = 'admin@theitanagarchoice.com';
+        $email      = 'admin@itanagarchoice.com';
         $loginModel = new LoginModel();
 
       $loginModel->createPasswordUser($email,'Admin') ;

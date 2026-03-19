@@ -43,7 +43,7 @@ function Layout({ children }: { children: ReactNode }) {
   return (
     <>
       <Navbar />
-      <main>{children}</main>
+      <main className='pt-[66px]'>{children}</main>
       <Footer />
     </>
   );
