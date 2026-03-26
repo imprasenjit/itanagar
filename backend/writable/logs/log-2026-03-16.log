@@ -1,0 +1,102 @@
+DEBUG - 2026-03-16 09:34:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 09:34:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 09:34:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 09:48:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 09:48:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 09:48:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 09:50:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 09:50:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 09:50:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 09:51:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 09:51:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 09:51:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 09:59:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 09:59:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 09:59:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:04:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:04:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:04:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:04:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:04:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:04:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:11:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:11:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:14:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:14:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:14:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:14:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:14:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:14:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:14:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:14:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:15:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:26:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:26:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:26:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:26:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:26:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:26:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:26:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:27:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 10:32:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-03-16 10:32:27 --> Unknown column 'createdDtm' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 300.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(300): mysqli->query('INSERT INTO `tbl_order` (`tickets`, `user_id`, `custom_user_id`, `total_price`, `paid_type`, `paid_status`, `transaction_id`, `razorpay_order_id`, `razorpay_order_response`, `createdDtm`) VALUES (\'[{\\"ticket_no\\":\\"250398\\",\\"web_id\\":\\"11\\"}]\', 34, 299448059, 100, \'RAZORPAY\', \'CREATED\', \'d055jr875t2y5plh\', \'order_SRrhvRrr8qKPCA\', \'{\\"\\\\u0000*\\\\u0000attributes\\":{\\"amount\\":10000,\\"amount_due\\":10000,\\"amount_paid\\":0,\\"attempts\\":0,\\"created_at\\":1773657146,\\"currency\\":\\"INR\\",\\"entity\\":\\"order\\",\\"id\\":\\"order_SRrhvRrr8qKPCA\\",\\"notes\\":{},\\"offer_id\\":null,\\"receipt\\":\\"d055jr875t2y5plh\\",\\"status\\":\\"created\\"}}\', \'2026-03-16 10:32:27\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `tbl_order` (`tickets`, `user_id`, `custom_user_id`, `total_price`, `paid_type`, `paid_status`, `transaction_id`, `razorpay_order_id`, `razorpay_order_response`, `createdDtm`) VALUES (\'[{\\"ticket_no\\":\\"250398\\",\\"web_id\\":\\"11\\"}]\', 34, 299448059, 100, \'RAZORPAY\', \'CREATED\', \'d055jr875t2y5plh\', \'order_SRrhvRrr8qKPCA\', \'{\\"\\\\u0000*\\\\u0000attributes\\":{\\"amount\\":10000,\\"amount_due\\":10000,\\"amount_paid\\":0,\\"attempts\\":0,\\"created_at\\":1773657146,\\"currency\\":\\"INR\\",\\"entity\\":\\"order\\",\\"id\\":\\"order_SRrhvRrr8qKPCA\\",\\"notes\\":{},\\"offer_id\\":null,\\"receipt\\":\\"d055jr875t2y5plh\\",\\"status\\":\\"created\\"}}\', \'2026-03-16 10:32:27\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `tbl_order` (`tickets`, `user_id`, `custom_user_id`, `total_price`, `paid_type`, `paid_status`, `transaction_id`, `razorpay_order_id`, `razorpay_order_response`, `createdDtm`) VALUES (\'[{\\"ticket_no\\":\\"250398\\",\\"web_id\\":\\"11\\"}]\', 34, 299448059, 100, \'RAZORPAY\', \'CREATED\', \'d055jr875t2y5plh\', \'order_SRrhvRrr8qKPCA\', \'{\\"\\\\u0000*\\\\u0000attributes\\":{\\"amount\\":10000,\\"amount_due\\":10000,\\"amount_paid\\":0,\\"attempts\\":0,\\"created_at\\":1773657146,\\"currency\\":\\"INR\\",\\"entity\\":\\"order\\",\\"id\\":\\"order_SRrhvRrr8qKPCA\\",\\"notes\\":{},\\"offer_id\\":null,\\"receipt\\":\\"d055jr875t2y5plh\\",\\"status\\":\\"created\\"}}\', \'2026-03-16 10:32:27\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `tbl_order` (`tickets`, `user_id`, `custom_user_id`, `total_price`, `paid_type`, `paid_status`, `transaction_id`, `razorpay_order_id`, `razorpay_order_response`, `createdDtm`) VALUES (:tickets:, :user_id:, :custom_user_id:, :total_price:, :paid_type:, :paid_status:, :transaction_id:, :razorpay_order_id:, :razorpay_order_response:, :createdDtm:)', [...], false)
+ 5 APPPATH\Models\WebModel.php(308): CodeIgniter\Database\BaseBuilder->insert([...])
+ 6 APPPATH\Controllers\Api.php(547): App\Models\WebModel->insert_order([...])
+ 7 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Api->payment_create()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Api))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-16 10:32:27 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'createdDtm' in 'field list'
+[Method: POST, Route: api/payment/create]
+in SYSTEMPATH\Database\BaseConnection.php on line 724.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `tbl_order` (`tickets`, `user_id`, `custom_user_id`, `total_price`, `paid_type`, `paid_status`, `transaction_id`, `razorpay_order_id`, `razorpay_order_response`, `createdDtm`) VALUES (:tickets:, :user_id:, :custom_user_id:, :total_price:, :paid_type:, :paid_status:, :transaction_id:, :razorpay_order_id:, :razorpay_order_response:, :createdDtm:)', [...], false)
+ 2 APPPATH\Models\WebModel.php(308): CodeIgniter\Database\BaseBuilder->insert([...])
+ 3 APPPATH\Controllers\Api.php(547): App\Models\WebModel->insert_order([...])
+ 4 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Api->payment_create()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Api))
+ 6 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-16 10:32:27 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'createdDtm' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 310.
+ 1 SYSTEMPATH\Database\BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `tbl_order` (`tickets`, `user_id`, `custom_user_id`, `total_price`, `paid_type`, `paid_status`, `transaction_id`, `razorpay_order_id`, `razorpay_order_response`, `createdDtm`) VALUES (\'[{\\"ticket_no\\":\\"250398\\",\\"web_id\\":\\"11\\"}]\', 34, 299448059, 100, \'RAZORPAY\', \'CREATED\', \'d055jr875t2y5plh\', \'order_SRrhvRrr8qKPCA\', \'{\\"\\\\u0000*\\\\u0000attributes\\":{\\"amount\\":10000,\\"amount_due\\":10000,\\"amount_paid\\":0,\\"attempts\\":0,\\"created_at\\":1773657146,\\"currency\\":\\"INR\\",\\"entity\\":\\"order\\",\\"id\\":\\"order_SRrhvRrr8qKPCA\\",\\"notes\\":{},\\"offer_id\\":null,\\"receipt\\":\\"d055jr875t2y5plh\\",\\"status\\":\\"created\\"}}\', \'2026-03-16 10:32:27\')')
+ 2 SYSTEMPATH\Database\BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `tbl_order` (`tickets`, `user_id`, `custom_user_id`, `total_price`, `paid_type`, `paid_status`, `transaction_id`, `razorpay_order_id`, `razorpay_order_response`, `createdDtm`) VALUES (\'[{\\"ticket_no\\":\\"250398\\",\\"web_id\\":\\"11\\"}]\', 34, 299448059, 100, \'RAZORPAY\', \'CREATED\', \'d055jr875t2y5plh\', \'order_SRrhvRrr8qKPCA\', \'{\\"\\\\u0000*\\\\u0000attributes\\":{\\"amount\\":10000,\\"amount_due\\":10000,\\"amount_paid\\":0,\\"attempts\\":0,\\"created_at\\":1773657146,\\"currency\\":\\"INR\\",\\"entity\\":\\"order\\",\\"id\\":\\"order_SRrhvRrr8qKPCA\\",\\"notes\\":{},\\"offer_id\\":null,\\"receipt\\":\\"d055jr875t2y5plh\\",\\"status\\":\\"created\\"}}\', \'2026-03-16 10:32:27\')')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `tbl_order` (`tickets`, `user_id`, `custom_user_id`, `total_price`, `paid_type`, `paid_status`, `transaction_id`, `razorpay_order_id`, `razorpay_order_response`, `createdDtm`) VALUES (:tickets:, :user_id:, :custom_user_id:, :total_price:, :paid_type:, :paid_status:, :transaction_id:, :razorpay_order_id:, :razorpay_order_response:, :createdDtm:)', [...], false)
+ 4 APPPATH\Models\WebModel.php(308): CodeIgniter\Database\BaseBuilder->insert([...])
+ 5 APPPATH\Controllers\Api.php(547): App\Models\WebModel->insert_order([...])
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Api->payment_create()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Api))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-16 10:32:27 --> [Caused by] mysqli_sql_exception: Unknown column 'createdDtm' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 300.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(300): mysqli->query('INSERT INTO `tbl_order` (`tickets`, `user_id`, `custom_user_id`, `total_price`, `paid_type`, `paid_status`, `transaction_id`, `razorpay_order_id`, `razorpay_order_response`, `createdDtm`) VALUES (\'[{\\"ticket_no\\":\\"250398\\",\\"web_id\\":\\"11\\"}]\', 34, 299448059, 100, \'RAZORPAY\', \'CREATED\', \'d055jr875t2y5plh\', \'order_SRrhvRrr8qKPCA\', \'{\\"\\\\u0000*\\\\u0000attributes\\":{\\"amount\\":10000,\\"amount_due\\":10000,\\"amount_paid\\":0,\\"attempts\\":0,\\"created_at\\":1773657146,\\"currency\\":\\"INR\\",\\"entity\\":\\"order\\",\\"id\\":\\"order_SRrhvRrr8qKPCA\\",\\"notes\\":{},\\"offer_id\\":null,\\"receipt\\":\\"d055jr875t2y5plh\\",\\"status\\":\\"created\\"}}\', \'2026-03-16 10:32:27\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `tbl_order` (`tickets`, `user_id`, `custom_user_id`, `total_price`, `paid_type`, `paid_status`, `transaction_id`, `razorpay_order_id`, `razorpay_order_response`, `createdDtm`) VALUES (\'[{\\"ticket_no\\":\\"250398\\",\\"web_id\\":\\"11\\"}]\', 34, 299448059, 100, \'RAZORPAY\', \'CREATED\', \'d055jr875t2y5plh\', \'order_SRrhvRrr8qKPCA\', \'{\\"\\\\u0000*\\\\u0000attributes\\":{\\"amount\\":10000,\\"amount_due\\":10000,\\"amount_paid\\":0,\\"attempts\\":0,\\"created_at\\":1773657146,\\"currency\\":\\"INR\\",\\"entity\\":\\"order\\",\\"id\\":\\"order_SRrhvRrr8qKPCA\\",\\"notes\\":{},\\"offer_id\\":null,\\"receipt\\":\\"d055jr875t2y5plh\\",\\"status\\":\\"created\\"}}\', \'2026-03-16 10:32:27\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `tbl_order` (`tickets`, `user_id`, `custom_user_id`, `total_price`, `paid_type`, `paid_status`, `transaction_id`, `razorpay_order_id`, `razorpay_order_response`, `createdDtm`) VALUES (\'[{\\"ticket_no\\":\\"250398\\",\\"web_id\\":\\"11\\"}]\', 34, 299448059, 100, \'RAZORPAY\', \'CREATED\', \'d055jr875t2y5plh\', \'order_SRrhvRrr8qKPCA\', \'{\\"\\\\u0000*\\\\u0000attributes\\":{\\"amount\\":10000,\\"amount_due\\":10000,\\"amount_paid\\":0,\\"attempts\\":0,\\"created_at\\":1773657146,\\"currency\\":\\"INR\\",\\"entity\\":\\"order\\",\\"id\\":\\"order_SRrhvRrr8qKPCA\\",\\"notes\\":{},\\"offer_id\\":null,\\"receipt\\":\\"d055jr875t2y5plh\\",\\"status\\":\\"created\\"}}\', \'2026-03-16 10:32:27\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `tbl_order` (`tickets`, `user_id`, `custom_user_id`, `total_price`, `paid_type`, `paid_status`, `transaction_id`, `razorpay_order_id`, `razorpay_order_response`, `createdDtm`) VALUES (:tickets:, :user_id:, :custom_user_id:, :total_price:, :paid_type:, :paid_status:, :transaction_id:, :razorpay_order_id:, :razorpay_order_response:, :createdDtm:)', [...], false)
+ 5 APPPATH\Models\WebModel.php(308): CodeIgniter\Database\BaseBuilder->insert([...])
+ 6 APPPATH\Controllers\Api.php(547): App\Models\WebModel->insert_order([...])
+ 7 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Api->payment_create()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Api))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-16 10:39:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 12:02:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 12:02:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 12:02:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 12:02:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 12:02:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 12:02:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-16 12:02:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

@@ -1,0 +1,778 @@
+DEBUG - 2026-03-15 10:37:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 10:37:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 10:37:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 10:37:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 11:04:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 11:04:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 11:05:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 11:05:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 11:07:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-15 11:07:02 --> ErrorException: Undefined property: CodeIgniter\View\View::$session
+[Method: GET, Route: login]
+in APPPATH\Views\frontend\header.php on line 45.
+ 1 APPPATH\Views\frontend\header.php(45): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: CodeIgniter\\View\\View::$session', 'C:\\xampp2\\htdocs\\itanagar\\app\\Views\\frontend\\header.php', 45)
+ 2 SYSTEMPATH\View\View.php(238): include('C:\\xampp2\\htdocs\\itanagar\\app\\Views\\frontend\\header.php')
+ 3 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('frontend/header', [], true)
+ 5 APPPATH\Controllers\Login.php(30): view('frontend/header')
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Login->index()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-15 11:07:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 11:07:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 11:08:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-15 11:08:26 --> ErrorException: Undefined property: CodeIgniter\View\View::$session
+[Method: GET, Route: login]
+in APPPATH\Views\frontend\header.php on line 45.
+ 1 APPPATH\Views\frontend\header.php(45): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: CodeIgniter\\View\\View::$session', 'C:\\xampp2\\htdocs\\itanagar\\app\\Views\\frontend\\header.php', 45)
+ 2 SYSTEMPATH\View\View.php(238): include('C:\\xampp2\\htdocs\\itanagar\\app\\Views\\frontend\\header.php')
+ 3 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('frontend/header', [], true)
+ 5 APPPATH\Controllers\Login.php(30): view('frontend/header')
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Login->index()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-15 11:08:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-15 11:08:27 --> ErrorException: Undefined property: CodeIgniter\View\View::$session
+[Method: GET, Route: login]
+in APPPATH\Views\frontend\header.php on line 45.
+ 1 APPPATH\Views\frontend\header.php(45): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: CodeIgniter\\View\\View::$session', 'C:\\xampp2\\htdocs\\itanagar\\app\\Views\\frontend\\header.php', 45)
+ 2 SYSTEMPATH\View\View.php(238): include('C:\\xampp2\\htdocs\\itanagar\\app\\Views\\frontend\\header.php')
+ 3 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('frontend/header', [], true)
+ 5 APPPATH\Controllers\Login.php(30): view('frontend/header')
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Login->index()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-15 11:08:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 11:08:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 11:10:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-15 11:10:13 --> ErrorException: Undefined property: CodeIgniter\View\View::$session
+[Method: GET, Route: login]
+in APPPATH\Views\frontend\header.php on line 45.
+ 1 APPPATH\Views\frontend\header.php(45): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: CodeIgniter\\View\\View::$session', 'C:\\xampp2\\htdocs\\itanagar\\app\\Views\\frontend\\header.php', 45)
+ 2 SYSTEMPATH\View\View.php(238): include('C:\\xampp2\\htdocs\\itanagar\\app\\Views\\frontend\\header.php')
+ 3 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('frontend/header', [], true)
+ 5 APPPATH\Controllers\Login.php(30): view('frontend/header')
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Login->index()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-15 11:10:13 --> ErrorException: Uncaught Error: Undefined constant "BASEPATH" in C:\xampp2\htdocs\itanagar\app\Views\errors\html\error_exception.php:19
+Stack trace:
+#0 C:\xampp2\htdocs\itanagar\vendor\codeigniter4\framework\system\Debug\BaseExceptionHandler.php(270): include()
+#1 C:\xampp2\htdocs\itanagar\vendor\codeigniter4\framework\system\Debug\BaseExceptionHandler.php(273): CodeIgniter\Debug\BaseExceptionHandler->CodeIgniter\Debug\{closure}()
+#2 C:\xampp2\htdocs\itanagar\vendor\codeigniter4\framework\system\Debug\ExceptionHandler.php(126): CodeIgniter\Debug\BaseExceptionHandler->render(Object(ErrorException), 500, 'C:\\xampp2\\htdoc...')
+#3 C:\xampp2\htdocs\itanagar\vendor\codeigniter4\framework\system\Debug\Exceptions.php(151): CodeIgniter\Debug\ExceptionHandler->handle(Object(ErrorException), Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), 500, 1)
+#4 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#5 {main}
+  thrown
+【Previous Exception】
+ErrorException
+Undefined property: CodeIgniter\View\View::$session
+#0 C:\xampp2\htdocs\itanagar\app\Views\frontend\header.php(45): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined prope...', 'C:\\xampp2\\htdoc...', 45)
+#1 C:\xampp2\htdocs\itanagar\vendor\codeigniter4\framework\system\View\View.php(238): include('C:\\xampp2\\htdoc...')
+#2 C:\xampp2\htdocs\itanagar\vendor\codeigniter4\framework\system\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp2\htdocs\itanagar\vendor\codeigniter4\framework\system\Common.php(1250): CodeIgniter\View\View->render('frontend/header', Array, true)
+#4 C:\xampp2\htdocs\itanagar\app\Controllers\Login.php(30): view('frontend/header')
+#5 C:\xampp2\htdocs\itanagar\vendor\codeigniter4\framework\system\CodeIgniter.php(951): App\Controllers\Login->index()
+#6 C:\xampp2\htdocs\itanagar\vendor\codeigniter4\framework\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+#7 C:\xampp2\htdocs\itanagar\vendor\codeigniter4\framework\system\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp2\htdocs\itanagar\vendor\codeigniter4\framework\system\Boot.php(417): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp2\htdocs\itanagar\vendor\codeigniter4\framework\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp2\htdocs\itanagar\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+[Method: GET, Route: login]
+in APPPATH\Views\errors\html\error_exception.php on line 19.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+DEBUG - 2026-03-15 11:14:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-15 11:14:21 --> ErrorException: Undefined property: CodeIgniter\View\View::$load
+[Method: GET, Route: login]
+in APPPATH\Views\login.php on line 12.
+ 1 APPPATH\Views\login.php(12): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: CodeIgniter\\View\\View::$load', 'C:\\xampp2\\htdocs\\itanagar\\app\\Views\\login.php', 12)
+ 2 SYSTEMPATH\View\View.php(238): include('C:\\xampp2\\htdocs\\itanagar\\app\\Views\\login.php')
+ 3 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('login', [], true)
+ 5 APPPATH\Controllers\Login.php(30): view('login')
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Login->index()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-15 11:31:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-15 11:31:29 --> Error: Call to undefined function validation_errors()
+[Method: GET, Route: login]
+in APPPATH\Views\login.php on line 14.
+ 1 SYSTEMPATH\View\View.php(238): include()
+ 2 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('login', [], true)
+ 4 APPPATH\Controllers\Login.php(30): view('login')
+ 5 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Login->index()
+ 6 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+ 7 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-15 11:31:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-15 11:31:30 --> Error: Call to undefined function validation_errors()
+[Method: GET, Route: login]
+in APPPATH\Views\login.php on line 14.
+ 1 SYSTEMPATH\View\View.php(238): include()
+ 2 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('login', [], true)
+ 4 APPPATH\Controllers\Login.php(30): view('login')
+ 5 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Login->index()
+ 6 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+ 7 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-15 11:32:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 11:33:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:33:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:35:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:36:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:36:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:37:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:38:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-15 13:38:02 --> ErrorException: Undefined variable $faq
+[Method: GET, Route: faq]
+in APPPATH\Views\frontend\faq.php on line 10.
+ 1 APPPATH\Views\frontend\faq.php(10): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $faq', 'C:\\xampp2\\htdocs\\itanagar\\app\\Views\\frontend\\faq.php', 10)
+ 2 SYSTEMPATH\View\View.php(238): include('C:\\xampp2\\htdocs\\itanagar\\app\\Views\\frontend\\faq.php')
+ 3 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('frontend/faq', [], true)
+ 5 APPPATH\Controllers\Page.php(28): view('frontend/faq', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Page->faq()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Page))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-15 13:39:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:40:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:41:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:42:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-15 13:42:06 --> ErrorException: Undefined variable $u_cs_id
+[Method: GET, Route: login]
+in APPPATH\Views\frontend\header.php on line 74.
+ 1 APPPATH\Views\frontend\header.php(74): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $u_cs_id', 'C:\\xampp2\\htdocs\\itanagar\\app\\Views\\frontend\\header.php', 74)
+ 2 SYSTEMPATH\View\View.php(238): include('C:\\xampp2\\htdocs\\itanagar\\app\\Views\\frontend\\header.php')
+ 3 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('frontend/header', [], true)
+ 5 APPPATH\Controllers\Login.php(30): view('frontend/header')
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Login->index()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-15 13:42:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-15 13:42:07 --> ErrorException: Undefined variable $u_cs_id
+[Method: GET, Route: login]
+in APPPATH\Views\frontend\header.php on line 74.
+ 1 APPPATH\Views\frontend\header.php(74): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $u_cs_id', 'C:\\xampp2\\htdocs\\itanagar\\app\\Views\\frontend\\header.php', 74)
+ 2 SYSTEMPATH\View\View.php(238): include('C:\\xampp2\\htdocs\\itanagar\\app\\Views\\frontend\\header.php')
+ 3 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('frontend/header', [], true)
+ 5 APPPATH\Controllers\Login.php(30): view('frontend/header')
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Login->index()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-15 13:42:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:43:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-15 13:43:08 --> Error: Call to a member function isBrowser() on null
+[Method: POST, Route: loginMe]
+in APPPATH\Helpers\cias_helper.php on line 64.
+ 1 APPPATH\Controllers\Login.php(77): getBrowserAgent()
+ 2 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Login->loginMe()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+ 4 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-15 13:43:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:43:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:43:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:43:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:44:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:44:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-15 13:47:29 --> ErrorException: Namespace declaration statement has to be the very first statement or after any declare call in the script
+[Method: GET, Route: login]
+in APPPATH\Controllers\Login.php on line 3.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-03-15 13:47:31 --> ErrorException: Namespace declaration statement has to be the very first statement or after any declare call in the script
+[Method: GET, Route: login]
+in APPPATH\Controllers\Login.php on line 3.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-03-15 13:47:32 --> ErrorException: Namespace declaration statement has to be the very first statement or after any declare call in the script
+[Method: GET, Route: login]
+in APPPATH\Controllers\Login.php on line 3.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+DEBUG - 2026-03-15 13:48:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:48:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:48:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:48:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:49:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:49:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:49:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:49:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:49:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:49:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-03-15 13:50:03 --> Unknown column 'tbl_order.web_id' in 'on clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 300.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(300): mysqli->query('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = \'PAID\'
+ORDER BY `tbl_order`.`id` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = \'PAID\'
+ORDER BY `tbl_order`.`id` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = \'PAID\'
+ORDER BY `tbl_order`.`id` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = :paid_status:
+ORDER BY `tbl_order`.`id` DESC', [...], false)
+ 5 APPPATH\Models\WebModel.php(441): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Api.php(201): App\Models\WebModel->result_list(null, null)
+ 7 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Api->results()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Api))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 ROOTPATH\index.php(26): require('C:\\xampp2\\htdocs\\itanagar\\public\\index.php')
+CRITICAL - 2026-03-15 13:50:03 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'tbl_order.web_id' in 'on clause'
+[Method: GET, Route: api/results]
+in SYSTEMPATH\Database\BaseConnection.php on line 724.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = :paid_status:
+ORDER BY `tbl_order`.`id` DESC', [...], false)
+ 2 APPPATH\Models\WebModel.php(441): CodeIgniter\Database\BaseBuilder->get()
+ 3 APPPATH\Controllers\Api.php(201): App\Models\WebModel->result_list(null, null)
+ 4 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Api->results()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Api))
+ 6 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+10 ROOTPATH\index.php(26): require('C:\\xampp2\\htdocs\\itanagar\\public\\index.php')
+CRITICAL - 2026-03-15 13:50:03 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'tbl_order.web_id' in 'on clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 310.
+ 1 SYSTEMPATH\Database\BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = \'PAID\'
+ORDER BY `tbl_order`.`id` DESC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = \'PAID\'
+ORDER BY `tbl_order`.`id` DESC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = :paid_status:
+ORDER BY `tbl_order`.`id` DESC', [...], false)
+ 4 APPPATH\Models\WebModel.php(441): CodeIgniter\Database\BaseBuilder->get()
+ 5 APPPATH\Controllers\Api.php(201): App\Models\WebModel->result_list(null, null)
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Api->results()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Api))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 ROOTPATH\index.php(26): require('C:\\xampp2\\htdocs\\itanagar\\public\\index.php')
+CRITICAL - 2026-03-15 13:50:03 --> [Caused by] mysqli_sql_exception: Unknown column 'tbl_order.web_id' in 'on clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 300.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(300): mysqli->query('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = \'PAID\'
+ORDER BY `tbl_order`.`id` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = \'PAID\'
+ORDER BY `tbl_order`.`id` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = \'PAID\'
+ORDER BY `tbl_order`.`id` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = :paid_status:
+ORDER BY `tbl_order`.`id` DESC', [...], false)
+ 5 APPPATH\Models\WebModel.php(441): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Api.php(201): App\Models\WebModel->result_list(null, null)
+ 7 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Api->results()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Api))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 ROOTPATH\index.php(26): require('C:\\xampp2\\htdocs\\itanagar\\public\\index.php')
+ERROR - 2026-03-15 13:50:09 --> Unknown column 'tbl_order.web_id' in 'where clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 300.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(300): mysqli->query('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = \'PAID\'
+AND `tbl_order`.`web_id` = 11
+ORDER BY `tbl_order`.`id` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = \'PAID\'
+AND `tbl_order`.`web_id` = 11
+ORDER BY `tbl_order`.`id` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = \'PAID\'
+AND `tbl_order`.`web_id` = 11
+ORDER BY `tbl_order`.`id` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = :paid_status:
+AND `tbl_order`.`web_id` = :tbl_order.web_id:
+ORDER BY `tbl_order`.`id` DESC', [...], false)
+ 5 APPPATH\Models\WebModel.php(441): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Api.php(201): App\Models\WebModel->result_list(11, null)
+ 7 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Api->results()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Api))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 ROOTPATH\index.php(26): require('C:\\xampp2\\htdocs\\itanagar\\public\\index.php')
+CRITICAL - 2026-03-15 13:50:09 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'tbl_order.web_id' in 'where clause'
+[Method: GET, Route: api/results]
+in SYSTEMPATH\Database\BaseConnection.php on line 724.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = :paid_status:
+AND `tbl_order`.`web_id` = :tbl_order.web_id:
+ORDER BY `tbl_order`.`id` DESC', [...], false)
+ 2 APPPATH\Models\WebModel.php(441): CodeIgniter\Database\BaseBuilder->get()
+ 3 APPPATH\Controllers\Api.php(201): App\Models\WebModel->result_list(11, null)
+ 4 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Api->results()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Api))
+ 6 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+10 ROOTPATH\index.php(26): require('C:\\xampp2\\htdocs\\itanagar\\public\\index.php')
+CRITICAL - 2026-03-15 13:50:09 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'tbl_order.web_id' in 'where clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 310.
+ 1 SYSTEMPATH\Database\BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = \'PAID\'
+AND `tbl_order`.`web_id` = 11
+ORDER BY `tbl_order`.`id` DESC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = \'PAID\'
+AND `tbl_order`.`web_id` = 11
+ORDER BY `tbl_order`.`id` DESC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = :paid_status:
+AND `tbl_order`.`web_id` = :tbl_order.web_id:
+ORDER BY `tbl_order`.`id` DESC', [...], false)
+ 4 APPPATH\Models\WebModel.php(441): CodeIgniter\Database\BaseBuilder->get()
+ 5 APPPATH\Controllers\Api.php(201): App\Models\WebModel->result_list(11, null)
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Api->results()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Api))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 ROOTPATH\index.php(26): require('C:\\xampp2\\htdocs\\itanagar\\public\\index.php')
+CRITICAL - 2026-03-15 13:50:09 --> [Caused by] mysqli_sql_exception: Unknown column 'tbl_order.web_id' in 'where clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 300.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(300): mysqli->query('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = \'PAID\'
+AND `tbl_order`.`web_id` = 11
+ORDER BY `tbl_order`.`id` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = \'PAID\'
+AND `tbl_order`.`web_id` = 11
+ORDER BY `tbl_order`.`id` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = \'PAID\'
+AND `tbl_order`.`web_id` = 11
+ORDER BY `tbl_order`.`id` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `tbl_order`.*, `tbl_webs`.`name`
+FROM `tbl_order`
+JOIN `tbl_webs` ON `tbl_webs`.`id` = `tbl_order`.`web_id`
+WHERE `paid_status` = :paid_status:
+AND `tbl_order`.`web_id` = :tbl_order.web_id:
+ORDER BY `tbl_order`.`id` DESC', [...], false)
+ 5 APPPATH\Models\WebModel.php(441): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Api.php(201): App\Models\WebModel->result_list(11, null)
+ 7 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Api->results()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Api))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 ROOTPATH\index.php(26): require('C:\\xampp2\\htdocs\\itanagar\\public\\index.php')
+DEBUG - 2026-03-15 13:50:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:50:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:50:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:50:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-15 13:50:37 --> ErrorException: Trying to access array offset on value of type int
+[Method: GET, Route: dashboard]
+in APPPATH\Views\dashboard.php on line 15.
+ 1 APPPATH\Views\dashboard.php(15): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type int', 'C:\\xampp2\\htdocs\\itanagar\\app\\Views\\dashboard.php', 15)
+ 2 SYSTEMPATH\View\View.php(238): include('C:\\xampp2\\htdocs\\itanagar\\app\\Views\\dashboard.php')
+ 3 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('dashboard', [], true)
+ 5 APPPATH\Controllers\BaseController.php(66): view('dashboard', [...])
+ 6 APPPATH\Controllers\User.php(36): App\Controllers\BaseController->loadViews('dashboard', [...], [...], null)
+ 7 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\User->index()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-15 13:51:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:51:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:51:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:51:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:53:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 13:53:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-03-15 13:53:25 --> Unknown column 'u.bank' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 300.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(300): mysqli->query('SELECT `u`.`userId`, `u`.`name`, `u`.`email`, `u`.`mobile`, `u`.`roleId`, `u`.`bank`, `u`.`paypal`, `u`.`phonecode`, `r`.`role`
+FROM `tbl_users` as `u`
+LEFT JOIN `tbl_roles` as `r` ON `r`.`roleId` = `u`.`roleId`
+WHERE `u`.`userId` = 1', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `u`.`userId`, `u`.`name`, `u`.`email`, `u`.`mobile`, `u`.`roleId`, `u`.`bank`, `u`.`paypal`, `u`.`phonecode`, `r`.`role`
+FROM `tbl_users` as `u`
+LEFT JOIN `tbl_roles` as `r` ON `r`.`roleId` = `u`.`roleId`
+WHERE `u`.`userId` = 1')
+ 3 SYSTEMPATH\Database\BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `u`.`userId`, `u`.`name`, `u`.`email`, `u`.`mobile`, `u`.`roleId`, `u`.`bank`, `u`.`paypal`, `u`.`phonecode`, `r`.`role`
+FROM `tbl_users` as `u`
+LEFT JOIN `tbl_roles` as `r` ON `r`.`roleId` = `u`.`roleId`
+WHERE `u`.`userId` = 1')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `u`.`userId`, `u`.`name`, `u`.`email`, `u`.`mobile`, `u`.`roleId`, `u`.`bank`, `u`.`paypal`, `u`.`phonecode`, `r`.`role`
+FROM `tbl_users` as `u`
+LEFT JOIN `tbl_roles` as `r` ON `r`.`roleId` = `u`.`roleId`
+WHERE `u`.`userId` = :u.userId:', [...], false)
+ 5 APPPATH\Models\UserModel.php(100): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\User.php(249): App\Models\UserModel->getUserInfoWithRole(1)
+ 7 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\User->profile()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-15 13:53:25 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'u.bank' in 'field list'
+[Method: GET, Route: profile]
+in SYSTEMPATH\Database\BaseConnection.php on line 724.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `u`.`userId`, `u`.`name`, `u`.`email`, `u`.`mobile`, `u`.`roleId`, `u`.`bank`, `u`.`paypal`, `u`.`phonecode`, `r`.`role`
+FROM `tbl_users` as `u`
+LEFT JOIN `tbl_roles` as `r` ON `r`.`roleId` = `u`.`roleId`
+WHERE `u`.`userId` = :u.userId:', [...], false)
+ 2 APPPATH\Models\UserModel.php(100): CodeIgniter\Database\BaseBuilder->get()
+ 3 APPPATH\Controllers\User.php(249): App\Models\UserModel->getUserInfoWithRole(1)
+ 4 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\User->profile()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 6 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-15 13:53:25 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'u.bank' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 310.
+ 1 SYSTEMPATH\Database\BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `u`.`userId`, `u`.`name`, `u`.`email`, `u`.`mobile`, `u`.`roleId`, `u`.`bank`, `u`.`paypal`, `u`.`phonecode`, `r`.`role`
+FROM `tbl_users` as `u`
+LEFT JOIN `tbl_roles` as `r` ON `r`.`roleId` = `u`.`roleId`
+WHERE `u`.`userId` = 1')
+ 2 SYSTEMPATH\Database\BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `u`.`userId`, `u`.`name`, `u`.`email`, `u`.`mobile`, `u`.`roleId`, `u`.`bank`, `u`.`paypal`, `u`.`phonecode`, `r`.`role`
+FROM `tbl_users` as `u`
+LEFT JOIN `tbl_roles` as `r` ON `r`.`roleId` = `u`.`roleId`
+WHERE `u`.`userId` = 1')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `u`.`userId`, `u`.`name`, `u`.`email`, `u`.`mobile`, `u`.`roleId`, `u`.`bank`, `u`.`paypal`, `u`.`phonecode`, `r`.`role`
+FROM `tbl_users` as `u`
+LEFT JOIN `tbl_roles` as `r` ON `r`.`roleId` = `u`.`roleId`
+WHERE `u`.`userId` = :u.userId:', [...], false)
+ 4 APPPATH\Models\UserModel.php(100): CodeIgniter\Database\BaseBuilder->get()
+ 5 APPPATH\Controllers\User.php(249): App\Models\UserModel->getUserInfoWithRole(1)
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\User->profile()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-15 13:53:25 --> [Caused by] mysqli_sql_exception: Unknown column 'u.bank' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 300.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(300): mysqli->query('SELECT `u`.`userId`, `u`.`name`, `u`.`email`, `u`.`mobile`, `u`.`roleId`, `u`.`bank`, `u`.`paypal`, `u`.`phonecode`, `r`.`role`
+FROM `tbl_users` as `u`
+LEFT JOIN `tbl_roles` as `r` ON `r`.`roleId` = `u`.`roleId`
+WHERE `u`.`userId` = 1', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `u`.`userId`, `u`.`name`, `u`.`email`, `u`.`mobile`, `u`.`roleId`, `u`.`bank`, `u`.`paypal`, `u`.`phonecode`, `r`.`role`
+FROM `tbl_users` as `u`
+LEFT JOIN `tbl_roles` as `r` ON `r`.`roleId` = `u`.`roleId`
+WHERE `u`.`userId` = 1')
+ 3 SYSTEMPATH\Database\BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `u`.`userId`, `u`.`name`, `u`.`email`, `u`.`mobile`, `u`.`roleId`, `u`.`bank`, `u`.`paypal`, `u`.`phonecode`, `r`.`role`
+FROM `tbl_users` as `u`
+LEFT JOIN `tbl_roles` as `r` ON `r`.`roleId` = `u`.`roleId`
+WHERE `u`.`userId` = 1')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `u`.`userId`, `u`.`name`, `u`.`email`, `u`.`mobile`, `u`.`roleId`, `u`.`bank`, `u`.`paypal`, `u`.`phonecode`, `r`.`role`
+FROM `tbl_users` as `u`
+LEFT JOIN `tbl_roles` as `r` ON `r`.`roleId` = `u`.`roleId`
+WHERE `u`.`userId` = :u.userId:', [...], false)
+ 5 APPPATH\Models\UserModel.php(100): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\User.php(249): App\Models\UserModel->getUserInfoWithRole(1)
+ 7 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\User->profile()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-15 14:00:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-15 14:00:21 --> Error: Call to undefined function set_value()
+[Method: GET, Route: profile]
+in APPPATH\Views\profile.php on line 61.
+ 1 SYSTEMPATH\View\View.php(238): include()
+ 2 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('profile', [], true)
+ 4 APPPATH\Controllers\BaseController.php(66): view('profile', [...])
+ 5 APPPATH\Controllers\User.php(253): App\Controllers\BaseController->loadViews('profile', [...], [...], null)
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\User->profile()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-15 14:00:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-15 14:00:23 --> Error: Call to undefined function set_value()
+[Method: GET, Route: profile]
+in APPPATH\Views\profile.php on line 61.
+ 1 SYSTEMPATH\View\View.php(238): include()
+ 2 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('profile', [], true)
+ 4 APPPATH\Controllers\BaseController.php(66): view('profile', [...])
+ 5 APPPATH\Controllers\User.php(253): App\Controllers\BaseController->loadViews('profile', [...], [...], null)
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\User->profile()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-15 14:00:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-15 14:00:23 --> Error: Call to undefined function set_value()
+[Method: GET, Route: profile]
+in APPPATH\Views\profile.php on line 61.
+ 1 SYSTEMPATH\View\View.php(238): include()
+ 2 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('profile', [], true)
+ 4 APPPATH\Controllers\BaseController.php(66): view('profile', [...])
+ 5 APPPATH\Controllers\User.php(253): App\Controllers\BaseController->loadViews('profile', [...], [...], null)
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\User->profile()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-15 14:00:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-15 14:00:24 --> Error: Call to undefined function set_value()
+[Method: GET, Route: profile]
+in APPPATH\Views\profile.php on line 61.
+ 1 SYSTEMPATH\View\View.php(238): include()
+ 2 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('profile', [], true)
+ 4 APPPATH\Controllers\BaseController.php(66): view('profile', [...])
+ 5 APPPATH\Controllers\User.php(253): App\Controllers\BaseController->loadViews('profile', [...], [...], null)
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\User->profile()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-15 14:05:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:08:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:08:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:08:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:08:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:08:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:08:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:08:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:10:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:10:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:10:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:14:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-15 14:14:38 --> Error: Cannot access protected property CodeIgniter\HTTP\IncomingRequest::$uri
+[Method: GET, Route: web/order]
+in APPPATH\Controllers\BaseController.php on line 88.
+ 1 APPPATH\Controllers\Web.php(432): App\Controllers\BaseController->paginationCompress('web/order/', 148, 10, 3)
+ 2 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Web->order()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Web))
+ 4 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-15 14:15:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:15:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:15:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-15 14:15:54 --> CodeIgniter\HTTP\Exceptions\HTTPException: Request URI segment is out of range: "0"
+[Method: GET, Route: userListing]
+in SYSTEMPATH\HTTP\URI.php on line 571.
+ 1 SYSTEMPATH\HTTP\URI.php(571): CodeIgniter\HTTP\Exceptions\HTTPException::forURISegmentOutOfRange(0)
+ 2 APPPATH\Controllers\BaseController.php(88): CodeIgniter\HTTP\URI->getSegment(0)
+ 3 APPPATH\Controllers\User.php(55): App\Controllers\BaseController->paginationCompress('ci/userListing/', 56, 10)
+ 4 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\User->userListing()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 6 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-15 14:16:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:16:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:22:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:23:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:28:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:28:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:28:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:28:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-15 14:28:19 --> ErrorException: Undefined property: stdClass::$phonecode
+[Method: GET, Route: userListing]
+in APPPATH\Views\users.php on line 53.
+ 1 APPPATH\Views\users.php(53): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$phonecode', 'C:\\xampp2\\htdocs\\itanagar\\app\\Views\\users.php', 53)
+ 2 SYSTEMPATH\View\View.php(238): include('C:\\xampp2\\htdocs\\itanagar\\app\\Views\\users.php')
+ 3 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('users', [], true)
+ 5 APPPATH\Controllers\BaseController.php(66): view('users', [...])
+ 6 APPPATH\Controllers\User.php(63): App\Controllers\BaseController->loadViews('users', [...], [...], null)
+ 7 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\User->userListing()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-15 14:33:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:33:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:33:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:33:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-15 14:33:16 --> ErrorException: Undefined property: stdClass::$phonecode
+[Method: GET, Route: editOld/89]
+in APPPATH\Views\editOld.php on line 75.
+ 1 APPPATH\Views\editOld.php(75): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$phonecode', 'C:\\xampp2\\htdocs\\itanagar\\app\\Views\\editOld.php', 75)
+ 2 SYSTEMPATH\View\View.php(238): include('C:\\xampp2\\htdocs\\itanagar\\app\\Views\\editOld.php')
+ 3 SYSTEMPATH\View\View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('editOld', [], true)
+ 5 APPPATH\Controllers\BaseController.php(66): view('editOld', [...])
+ 6 APPPATH\Controllers\User.php(148): App\Controllers\BaseController->loadViews('editOld', [...], [...], null)
+ 7 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\User->editOld(89)
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-15 14:57:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:58:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:58:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:58:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:58:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:58:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:58:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:58:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 14:58:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:00:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:08:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:08:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:08:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:09:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:09:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:09:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:09:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:09:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:09:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:11:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:11:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:11:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:11:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:12:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:12:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:12:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:12:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:26:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:26:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:26:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:28:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:28:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:28:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:46:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:46:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:46:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:50:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:50:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:50:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:53:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:53:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:53:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:53:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:53:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:53:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:54:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:54:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 15:54:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 16:06:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 16:06:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 16:06:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 16:06:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 16:06:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 16:06:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 16:08:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 16:08:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 16:08:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 16:08:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 16:08:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 16:08:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 16:09:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 16:09:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 16:09:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 16:48:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 16:48:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-15 16:48:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
