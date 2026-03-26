@@ -1,174 +1,98 @@
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+﻿<style>
+.numberdegits { margin: 0; padding: 0; display: inline-flex; gap: 5px; list-style: none; }
+.numberdegits li { display: inline-flex; align-items: center; justify-content: center; background: #01B623; color: #fff; width: 38px; height: 38px; border-radius: 50%; font-weight: 600; font-size: .8rem; }
+.numberdegits li.mega { background: #ffc107; color: #000; }
+</style>
 
-
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-
-  <style>
-
-.numberdegits {
-    margin: 0;
-    padding: 0;
-    display: inline-flex;
-}
-.numberdegits li {
-    display: inline-block;
-    margin-right: 5px;
-    background: #01B623;
-    color: #fff;
-    width: 40px;
-    height: 40px;
-    text-align: center;
-    line-height: 40px;
-    border-radius: 50%;
-    font-weight: 500;
-}
-  </style>
-
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        <i class="fa fa-users"></i> Winner History
-      </h1>
-    </section>
-    
-    <section class="content">
-    
-
-        <div class="row">
-            <div class="col-xs-12">
-              <div class="box">
-
-
-              <div class="box-header">
-                    <h3 class="box-title">Winner Amount - $ <?php echo $amount->sum; ?></h3>
-                    <div class="box-tools">
-                        <form action="<?php echo base_url() ?>web/winner" method="POST" id="searchList">
-                            <div class="input-group">
-                              <input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search by User"/>
-                              <div class="input-group-btn">
-                                <button class="btn btn-sm btn-default searchList"><i class="fa fa-search"></i></button>
-                              </div>
-                            </div>
-                        </form>
-                    </div>
-                </div><!-- /.box-header -->
-
-
-                <div class="box-body table-responsive no-padding">
-                <?php if(!empty($userRecords))
-                    { ?>
-                  <table class="table table-hover">
-                    <tr>
-                          <th>Order No.</th>
-                          <th>User</th>
-                          <th>Lottery Date</th>
-                          <th>Game</th>
-                          <th width="20%">Ball Combination</th>
-                          <th>Price</th>
-                          <th>Payment Type</th>
-                          <th>Winning Prize</th>
-                          
-                          <th>Trancaction Id</th>
-                          <th>Confirm Date</th>
-
-
-                    </tr>
-                    <?php
-                    
-                        
-                      $c = 1;
-                        foreach($userRecords as $ms)
-                        {
-                    ?>
-                    <tr>
-                      
-                    <td><?= $ms->id ?></td>
-                    <td><?= $ms->uname?></a></td>
-                          <td><?= date("M d, Y",strtotime($ms->date));?></td>
-                          <td><?= $ms->name?></td>
-                          
-                          <td>
-                          <ul class="numberdegits">
-                            <li><?php echo $ms->white1; ?></li>
-                            <li ><?php echo $ms->white2; ?></li>
-                            <li><?php echo $ms->white3; ?></li>
-                            <li><?php echo $ms->white4; ?></li>
-                            <li><?php echo $ms->white5; ?></li>
-                            <?php
-                            if($ms->white6!=""){
-                              ?>
-                            <li><?php echo $ms->white6; ?></li>
-                              <?php
-                            }
-                            ?>
-                            <li style="background:yellow;color:black"><?php echo $ms->yellow1; ?></li>
-
-                            <?php
-                            if($ms->yellow2!=""){
-                              ?>
-                            <li style="background:yellow;color:black"><?php echo $ms->yellow2; ?></li>
-                              <?php
-                            }
-                            ?>
-                          </ul></td>
-                          
-                          <td><?= $ms->total_price?></td>
-                          
-                          
-                          <td><?php echo ($ms->paid_type=="0") ? "Wallet" :  $ms->paid_type ;?></td>
-
-
-                          <td><?= $ms->prize; ?></td>
-                          <td><?= $ms->transaction_id; ?></td>
-                          
-                          
-                          
-                          <td><?= date("M d, Y h:i a",strtotime($ms->createdAt));?></td>
-
-                        
-                    </tr>
-                    <?php
-                    $c++;
-                        }
-                    
-                    ?>
-                  </table>
-                  <?php 
-                    }
-                    else{
-                        ?>
-                        <div class="box-footer clearfix">
-                    No Date Availables
-                </div>
-                        <?php
-                    }
-                  ?>
-                </div><!-- /.box-body -->
-                <div class="box-footer clearfix">
-                    <?php echo $pager->links(); ?>
-                </div>
-              </div><!-- /.box -->
-            </div>
-        </div>
-
-
-
-</section>
+<div class="page-heading">
+    <h3><i class="bi bi-trophy-fill me-2"></i> Winner History</h3>
 </div>
 
+<section class="section">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">
+                Winner History
+                <span class="badge bg-success ms-2">Total Prize: &#8377;<?= $amount->sum ?></span>
+            </h4>
+            <div class="card-header-action d-flex">
+                <form action="<?= base_url() ?>web/winner" method="POST" id="searchList" class="d-flex">
+                    <div class="input-group">
+                        <input type="text" name="searchText" value="<?= $searchText ?>" class="form-control" placeholder="Search by user...">
+                        <button class="btn btn-primary searchList" type="submit"><i class="bi bi-search"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <?php if (!empty($userRecords)): ?>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Order No.</th>
+                            <th>User</th>
+                            <th>Lottery Date</th>
+                            <th>Game</th>
+                            <th>Ball Combination</th>
+                            <th>Price</th>
+                            <th>Payment Type</th>
+                            <th>Winning Prize</th>
+                            <th>Transaction ID</th>
+                            <th>Confirm Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($userRecords as $ms): ?>
+                        <tr>
+                            <td><strong>#<?= $ms->id ?></strong></td>
+                            <td><?= esc($ms->uname) ?></td>
+                            <td><?= date("M d, Y", strtotime($ms->date)) ?></td>
+                            <td><?= esc($ms->name) ?></td>
+                            <td>
+                                <ul class="numberdegits">
+                                    <li><?= $ms->white1 ?></li>
+                                    <li><?= $ms->white2 ?></li>
+                                    <li><?= $ms->white3 ?></li>
+                                    <li><?= $ms->white4 ?></li>
+                                    <li><?= $ms->white5 ?></li>
+                                    <?php if ($ms->white6 != ""): ?>
+                                        <li><?= $ms->white6 ?></li>
+                                    <?php endif; ?>
+                                    <li class="mega"><?= $ms->yellow1 ?></li>
+                                    <?php if ($ms->yellow2 != ""): ?>
+                                        <li class="mega"><?= $ms->yellow2 ?></li>
+                                    <?php endif; ?>
+                                </ul>
+                            </td>
+                            <td>&#8377;<?= $ms->total_price ?></td>
+                            <td><?= $ms->paid_type == "0" ? "Wallet" : esc($ms->paid_type) ?></td>
+                            <td><strong class="text-success">&#8377;<?= $ms->prize ?></strong></td>
+                            <td><small><?= esc($ms->transaction_id) ?></small></td>
+                            <td><?= date("M d, Y h:i a", strtotime($ms->createdAt)) ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?php else: ?>
+                    <p class="text-center text-muted py-4">No winner records found.</p>
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class="card-footer">
+            <?= $pager->links() ?>
+        </div>
+    </div>
+</section>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>public/admin/js/common.js" charset="utf-8"></script>
-<script type="text/javascript">
-    jQuery(document).ready(function(){
-        jQuery('ul.pagination li a').click(function (e) {
-            e.preventDefault();            
-            var link = jQuery(this).get(0).href;            
-            var value = link.substring(link.lastIndexOf('/') + 1);
-            // alert(link+value );
-            jQuery("#searchList").attr("action", baseURL + "web/winner/" + value);
-            jQuery("#searchList").submit();
-        });
+<script src="<?= base_url() ?>public/admin/js/common.js"></script>
+<script>
+jQuery(document).ready(function () {
+    jQuery('ul.pagination li a').click(function (e) {
+        e.preventDefault();
+        var link = jQuery(this).get(0).href, value = link.substring(link.lastIndexOf('/') + 1);
+        jQuery("#searchList").attr("action", baseURL + "web/winner/" + value);
+        jQuery("#searchList").submit();
     });
+});
 </script>

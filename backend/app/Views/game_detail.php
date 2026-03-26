@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?php echo base_url(); ?>public/css/owl.carousel.min.css">
+﻿<link rel="stylesheet" href="<?php echo base_url(); ?>public/css/owl.carousel.min.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>public/css/owl.theme.default.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>/css/flipimage.css">
 
@@ -40,7 +40,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
+        <div class="col-sm-4 col-md-4 col-lg-4 col-4">
           <div class="card">
             <div class="card-header">
               <h5 class="card-title">Event</h5>
@@ -70,7 +70,7 @@
           </div>
           <!-- <input type="submit" value="Add To Cart" id="addclickcart" class="btn btn-warning btn-block"> -->
         </div>
-        <div class="col-sm-8 col-xs-8">
+        <div class="col-sm-8 col-8">
           <div class="card">
             <div class="card-header">
               <h5 class="card-title">Event Ticket Series</h5>

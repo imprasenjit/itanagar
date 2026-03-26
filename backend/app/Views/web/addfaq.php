@@ -1,80 +1,45 @@
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            <i class="fa fa-users"></i>Announcement Management
-            <small>Add / Edit</small>
-        </h1>
-    </section>
+﻿<div class="page-heading">
+    <h3><i class="bi bi-megaphone-fill me-2"></i> Announcement Management <small>Add New</small></h3>
+</div>
+<section class="section">
+    <div class="row">
+        <div class="col-md-8">
+            <?php $error = session()->getFlashdata('error'); if ($error): ?>
+            <div class="alert alert-danger alert-dismissible fade show">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <?= $error ?>
+            </div>
+            <?php endif; ?>
+            <?php $success = session()->getFlashdata('success'); if ($success): ?>
+            <div class="alert alert-success alert-dismissible fade show">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <?= $success ?>
+            </div>
+            <?php endif; ?>
 
-    <section class="content">
-
-        <div class="row">
-            <!-- left column -->
-            <div class="col-md-8">
-                <!-- general form elements -->
-
-
-
-                <div class="box box-primary">
-                    <div class="box-header">
-                        <h3 class="box-title">Enter Announcement Details</h3>
-                    </div><!-- /.box-header -->
-                    <!-- form start -->
-                    <form role="form" action="<?php echo base_url() ?>web/addNewfaq" method="post" role="form">
-                        <div class="box-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="question">Title</label>
-                                        <input type="text" class="form-control required" value="<?php echo set_value('question'); ?>" id="question" name="question">
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label for="answer">Announcement</label>
-                                        <textarea style="height:300px;" class="form-control required" id="answer" name="answer"><?php echo set_value('answer'); ?></textarea>
-                                    </div>
-
-                                </div>
-                            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Enter Announcement Details</h4>
+                </div>
+                <div class="card-body">
+                    <form action="<?= base_url() ?>web/addNewfaq" method="post">
+                        <div class="form-group">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-control required" name="question" placeholder="Announcement title" maxlength="255">
                         </div>
-
-
-                        <div class="box-footer">
-                            <input type="submit" class="btn btn-primary" value="Submit" />
-                            <input type="reset" class="btn btn-default" value="Reset" />
+                        <div class="form-group">
+                            <label class="form-label">Announcement Content</label>
+                            <textarea class="form-control required" name="answer" rows="8" placeholder="Announcement details..."></textarea>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary me-1">Submit</button>
+                                <button type="reset" class="btn btn-secondary">Reset</button>
+                            </div>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="col-md-4">
-                <?php
-                $error = session()->getFlashdata('error');
-                if ($error) {
-                ?>
-                    <div class="alert alert-danger alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <?php echo session()->getFlashdata('error'); ?>
-                    </div>
-                <?php } ?>
-                <?php
-                $success = session()->getFlashdata('success');
-                if ($success) {
-                ?>
-                    <div class="alert alert-success alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <?php echo session()->getFlashdata('success'); ?>
-                    </div>
-                <?php } ?>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?>
-                    </div>
-                </div>
-            </div>
         </div>
-    </section>
-
-</div>
+    </div>
+</section>

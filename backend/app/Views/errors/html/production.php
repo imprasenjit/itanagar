@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -14,7 +14,7 @@
 
     <div class="container text-center">
 
-        <h1 class="headline"><?= lang('Errors.whoops') ?></h1>
+        <h3 class="headline"><?= lang('Errors.whoops') ?></h3>
 
         <p class="lead"><?= lang('Errors.weHitASnag') ?></p>
 

@@ -1,56 +1,38 @@
-<div class="login-box">
-      
-      <div class="login-box-body" style="background:#dcd7d7">
-        <p class="login-box-msg">Reset Password</p>
-        <div class="row">
-            <div class="col-md-12">
-                <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?>
-            </div>
-        </div>
-        <?php
-        $error = session()->getFlashdata('error');
-        if($error)
-        {
-            ?>
-            <div class="alert alert-danger alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <?php echo session()->getFlashdata('error'); ?>                    
-            </div>
-        <?php } ?>
-        
-        <form action="<?php echo base_url(); ?>createPasswordUser" method="post">
-          <div class="form-group has-feedback">
-            <input type="email" class="form-control" placeholder="Email" name="email" value="<?php echo $email; ?>" readonly required />
-            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-            <input type="hidden" name="activation_code"  value="<?php echo $activation_code; ?>" required />
-          </div>
-          <hr>
-          <div class="form-group has-feedback">
-            <input type="password" class="form-control" placeholder="Password" name="password" required />
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-          </div>
-          <div class="form-group has-feedback">
-            <input type="password" class="form-control" placeholder="Confirm Password" name="cpassword" required />
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-          </div>
-          <div class="row">
-            <div class="col-xs-8">    
-              <!-- <div class="checkbox icheck">
-                <label>
-                  <input type="checkbox"> Remember Me
-                </label>
-              </div>  -->                       
-            </div><!-- /.col -->
-            <div class="col-xs-4">
-              <input type="submit" class="btn btn-primary btn-block btn-flat" value="Submit" />
-            </div><!-- /.col -->
-          </div>
-        </form>
-        
-      </div><!-- /.login-box-body -->
-    </div><!-- /.login-box -->
+﻿<div class="mb-4">
+  <a href="<?= base_url() ?>" class="text-decoration-none">
+    <h3 class="fw-bold"><?= APP_NAME ?></h3>
+  </a>
+</div>
+<h1 class="auth-title">Reset Password</h1>
+<p class="auth-subtitle mb-4">Create a new secure password for your account.</p>
 
-    <script src="<?php echo base_url(); ?>public/admin/bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="<?php echo base_url(); ?>public/admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  
-  
+<?= validation_errors('<div class="alert alert-danger alert-dismissible"><button type="button" class="btn-close float-end" data-bs-dismiss="alert"></button>', '</div>') ?>
+<?php if ($error = session()->getFlashdata('error')): ?>
+  <div class="alert alert-danger alert-dismissible">
+    <button type="button" class="btn-close float-end" data-bs-dismiss="alert"></button>
+    <?= esc($error) ?>
+  </div>
+<?php endif; ?>
+
+<form action="<?= base_url('createPasswordUser') ?>" method="post">
+  <div class="form-group position-relative has-icon-left mb-4">
+    <input type="email" class="form-control form-control-xl" name="email"
+      value="<?= esc($email) ?>" readonly required>
+    <div class="form-control-icon"><i class="bi bi-envelope"></i></div>
+  </div>
+  <input type="hidden" name="activation_code" value="<?= esc($activation_code) ?>">
+
+  <div class="form-group position-relative has-icon-left mb-4">
+    <input type="password" class="form-control form-control-xl" name="password"
+      placeholder="New password" required>
+    <div class="form-control-icon"><i class="bi bi-lock"></i></div>
+  </div>
+
+  <div class="form-group position-relative has-icon-left mb-4">
+    <input type="password" class="form-control form-control-xl" name="cpassword"
+      placeholder="Confirm new password" required>
+    <div class="form-control-icon"><i class="bi bi-lock-fill"></i></div>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg">Set New Password</button>
+</form>

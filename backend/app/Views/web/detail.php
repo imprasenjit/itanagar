@@ -1,229 +1,149 @@
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+﻿<link rel="stylesheet" href="<?= base_url() ?>public/assets/extensions/flatpickr/flatpickr.min.css">
 
-
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            <i class="fa fa-users"></i> <?php echo $WebInfo->name; ?>
-        </h1>
-    </section>
-
-    <section class="content">
-
-        <div class="row">
-            <!-- left column -->
-            <div class="col-md-8">
-                <!-- general form elements -->
-
-
-
-                <div class="box box-primary">
-                    <!-- form start -->
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <h3><b>Range Details</b></h2>
-                                </div><!-- /.box-header -->
-                                <div class="form-group">
-
-                                    <h4><span style="color:green;">Heading - </span> <?php echo $RangeInfo->heading; ?></h4>
-                                    <br>
-
-
-                                    <h4 style="color:green;">White Ball Range</h4>
-                                    <br>
-
-                                    <span><strong>Maximum Selection - </strong> <?php echo $RangeInfo->white_ball; ?></span>
-                                    <br>
-                                    <span><strong>From - </strong> <?php echo $RangeInfo->white_from; ?> &nbsp; &nbsp; <strong>To - </strong> <?php echo $RangeInfo->white_to; ?></span>
-                                </div>
-
-                                <div class="form-group">
-                                    <h4 style="color:green;">Yellow Ball Range</h4>
-
-                                    <br>
-                                    <span><strong>Maximum Selection - </strong> <?php echo $RangeInfo->yellow_ball; ?></span>
-                                    <br>
-                                    <span><strong>From - </strong> <?php echo $RangeInfo->yellow_from; ?> &nbsp; &nbsp; <strong>To - </strong> <?php echo $RangeInfo->yellow_to; ?></span>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <h4 style="color:green;">Logo</h4>
-
-                                    <br>
-                                    <img style="height:100px;" src="<?php echo base_url('imglogo') . "/" . $RangeInfo->logo; ?>">
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <h3><b>Lottery Price</b> - $<?php echo $RangeInfo->price; ?></h3>
-                                </div><!-- /.box-header -->
-
-
-                                <div class="form-group">
-                                    <h3><b>Jackpot Price</b> - <?php echo $RangeInfo->jackpot; ?></h3>
-                                </div><!-- /.box-header -->
-
-
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="box-footer">
-                        <a href="<?php echo base_url('web/rangeEdit') . "/" . $WebInfo->id; ?>" class="btn btn-primary">Edit</a>
-
-                        <a href="<?php echo base_url('web/addtwoWebdate') . "/" . $WebInfo->id; ?>" class="btn btn-primary">Add Next Ten Date</a>
-
-                        <a href="<?php echo base_url('web/descriptionEdit') . "/" . $WebInfo->id; ?>" class="btn btn-primary">Edit Play Description</a>
-
-                        <a href="<?php echo base_url('web/tier') . "/" . $WebInfo->id; ?>" class="btn btn-primary">Tier</a>
-
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-md-4">
-                <?php
-                $error = session()->getFlashdata('error');
-                if ($error) {
-                ?>
-                    <div class="alert alert-danger alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <?php echo session()->getFlashdata('error'); ?>
-                    </div>
-                <?php } ?>
-                <?php
-                $success = session()->getFlashdata('success');
-                if ($success) {
-                ?>
-                    <div class="alert alert-success alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <?php echo session()->getFlashdata('success'); ?>
-                    </div>
-                <?php } ?>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">All Result Dates</h3>
-                        <div class="box-tools">
-                            <form action="<?php echo base_url('web/addNewWebdate/' . $WebInfo->id); ?>" method="POST" id="searchList">
-                                <div class="input-group">
-                                    <input type="text" name="date" value="" class="form-control input-sm pull-right datepicker" autocomplete="off" required style="width: 150px;" placeholder="Add Date" />
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-success searchList">Add Date</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div><!-- /.box-header -->
-                    <div class="box-body table-responsive no-padding">
-                        <?php if (!empty($userRecords)) { ?>
-                            <table class="table table-hover">
-                                <tr>
-                                    <th>Sr. No.</th>
-                                    <th>Date</th>
-                                    <th>Created On</th>
-                                    <th class="text-center">Actions</th>
-                                </tr>
-                                <?php
-
-                                $sr = 1;
-                                foreach ($userRecords as $record) {
-                                ?>
-                                    <tr>
-                                        <td><?php echo $sr;
-                                            $sr++; ?></td>
-                                        <td><?php echo date("M d, Y", strtotime($record->date)); ?></td>
-                                        <td><?php echo date("M d, Y", strtotime($record->createdAt)) ?></td>
-                                        <td class="text-center">
-                                            <a class="btn btn-sm btn-danger deleteWebDate" href="#" data-userid="<?php echo $record->id; ?>" title="Delete"><i class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                <?php
-                                }
-
-                                ?>
-                            </table>
-                        <?php
-                        } else {
-                        ?>
-                            <div class="box-footer clearfix">
-                                No Date Availables
-                            </div>
-                        <?php
-                        }
-                        ?>
-                    </div><!-- /.box-body -->
-                    <div class="box-footer clearfix">
-                        <?php echo $pager->links(); ?>
-                    </div>
-                </div><!-- /.box -->
-            </div>
-        </div>
-
-
-
-    </section>
+<div class="page-heading">
+    <h3><i class="bi bi-grid-3x3-gap-fill me-2"></i> <?= esc($WebInfo->name) ?></h3>
 </div>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>public/admin/js/common.js" charset="utf-8"></script>
-<script type="text/javascript">
-    jQuery(document).ready(function() {
-        jQuery('ul.pagination li a').click(function(e) {
-            e.preventDefault();
-            var link = jQuery(this).get(0).href;
-            window.location.href = link;
-        });
-    });
+<section class="section">
+    <?php $error = session()->getFlashdata('error'); if ($error): ?>
+    <div class="alert alert-danger alert-dismissible fade show">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <?= $error ?>
+    </div>
+    <?php endif; ?>
+    <?php $success = session()->getFlashdata('success'); if ($success): ?>
+    <div class="alert alert-success alert-dismissible fade show">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <?= $success ?>
+    </div>
+    <?php endif; ?>
 
-    jQuery(document).on("click", ".deleteWebDate", function(e) {
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4 class="card-title">Range &amp; Game Details</h4>
+        </div>
+        <div class="card-body">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <h5 class="text-primary fw-bold"><?= esc($RangeInfo->heading) ?></h5>
+                    <hr>
+                    <h6 class="text-success">White Ball Range</h6>
+                    <p class="mb-1"><strong>Max Selection:</strong> <?= $RangeInfo->white_ball ?></p>
+                    <p class="mb-1"><strong>Range:</strong> <?= $RangeInfo->white_from ?> &mdash; <?= $RangeInfo->white_to ?></p>
+                    <hr>
+                    <h6 class="text-warning">Yellow Ball Range</h6>
+                    <p class="mb-1"><strong>Max Selection:</strong> <?= $RangeInfo->yellow_ball ?></p>
+                    <p class="mb-1"><strong>Range:</strong> <?= $RangeInfo->yellow_from ?> &mdash; <?= $RangeInfo->yellow_to ?></p>
+                    <hr>
+                    <h6 class="text-muted">Logo</h6>
+                    <img style="height: 80px;" src="<?= base_url('imglogo') . '/' . $RangeInfo->logo ?>" alt="Logo" class="rounded">
+                </div>
+                <div class="col-md-6">
+                    <div class="card bg-light mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title text-muted">Lottery Price</h5>
+                            <h3 class="text-primary fw-bold">&#8377;<?= $RangeInfo->price ?></h3>
+                        </div>
+                    </div>
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title text-muted">Jackpot Price</h5>
+                            <h3 class="text-warning fw-bold"><?= $RangeInfo->jackpot ?></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer d-flex gap-2 flex-wrap">
+            <a href="<?= base_url('web/rangeEdit') . '/' . $WebInfo->id ?>" class="btn btn-primary">
+                <i class="bi bi-pencil me-1"></i> Edit Range
+            </a>
+            <a href="<?= base_url('web/addtwoWebdate') . '/' . $WebInfo->id ?>" class="btn btn-secondary">
+                <i class="bi bi-calendar-plus me-1"></i> Add Next 10 Dates
+            </a>
+            <a href="<?= base_url('web/descriptionEdit') . '/' . $WebInfo->id ?>" class="btn btn-info">
+                <i class="bi bi-file-text me-1"></i> Edit Description
+            </a>
+            <a href="<?= base_url('web/tier') . '/' . $WebInfo->id ?>" class="btn btn-warning">
+                <i class="bi bi-layers me-1"></i> Prize Tiers
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">All Result Dates</h4>
+            <div class="card-header-action">
+                <form action="<?= base_url('web/addNewWebdate/' . $WebInfo->id) ?>" method="POST" id="addDateForm" class="d-flex">
+                    <div class="input-group" style="width: 260px;">
+                        <input type="text" name="date" class="form-control datepicker" autocomplete="off" required placeholder="Pick a date (dd-mm-yyyy)">
+                        <button class="btn btn-success" type="submit">
+                            <i class="bi bi-plus-lg me-1"></i> Add Date
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <?php if (!empty($userRecords)): ?>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Date</th>
+                            <th>Created On</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $sr = 1; foreach ($userRecords as $record): ?>
+                        <tr>
+                            <td><?= $sr++ ?></td>
+                            <td><?= date("M d, Y", strtotime($record->date)) ?></td>
+                            <td><?= date("M d, Y", strtotime($record->createdAt)) ?></td>
+                            <td class="text-center">
+                                <a class="btn btn-sm btn-danger deleteWebDate" href="#!" data-userid="<?= $record->id ?>" title="Delete">
+                                    <i class="bi bi-trash3-fill"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?php else: ?>
+                    <p class="text-center text-muted py-4">No result dates added yet.</p>
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class="card-footer">
+            <?= $pager->links() ?>
+        </div>
+    </div>
+</section>
+
+<script src="<?= base_url() ?>public/assets/extensions/flatpickr/flatpickr.js"></script>
+<script src="<?= base_url() ?>public/admin/js/common.js"></script>
+<script>
+flatpickr(".datepicker", { minDate: "today", dateFormat: "d-m-Y" });
+
+jQuery(document).ready(function () {
+    jQuery('ul.pagination li a').click(function (e) {
         e.preventDefault();
-        var userId = $(this).data("userid"),
-            hitURL = baseURL + "web/deleteWebDate",
-            currentRow = $(this);
-        var confirmation = confirm("Are you sure to delete this Date?");
+        window.location.href = jQuery(this).attr('href');
+    });
+});
 
-        if (confirmation) {
-            jQuery.ajax({
-                type: "POST",
-                dataType: "json",
-                url: hitURL,
-                data: {
-                    userId: userId
-                }
-            }).done(function(data) {
-                console.log(data);
-                currentRow.parents('tr').remove();
-                if (data.status = true) {
-                    alert("Date successfully deleted");
-                } else if (data.status = false) {
-                    alert("Date deletion failed");
-                } else {
-                    alert("Access denied..!");
-                }
+jQuery(document).on("click", ".deleteWebDate", function (e) {
+    e.preventDefault();
+    var userId = $(this).data("userid"), hitURL = baseURL + "web/deleteWebDate", currentRow = $(this);
+    if (confirm("Are you sure you want to delete this date?")) {
+        jQuery.ajax({ type: "POST", dataType: "json", url: hitURL, data: { userId: userId } })
+            .done(function (data) {
+                currentRow.closest('tr').remove();
+                if (data.status) { alert("Date successfully deleted."); }
+                else { alert("Date deletion failed."); }
             });
-        }
-    });
-
-    $(".datepicker").datepicker({
-        minDate: 0
-    });
+    }
+});
 </script>

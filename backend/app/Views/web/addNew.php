@@ -1,75 +1,44 @@
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        <i class="fa fa-users"></i> Lottery Games Management
-        <small>Add / Edit Website</small>
-      </h1>
-    </section>
-    
-    <section class="content">
-    
-        <div class="row">
-            <!-- left column -->
-            <div class="col-md-8">
-              <!-- general form elements -->
-                
-                
-                
-                <div class="box box-primary">
-                    <div class="box-header">
-                        <h3 class="box-title">Enter Lottery Games Details</h3>
-                    </div><!-- /.box-header -->
-                    <!-- form start -->
-                    <form role="form" action="<?php echo base_url() ?>web/addNewWeb" method="post" role="form">
-                        <div class="box-body">
-                            <div class="row">
-                                <div class="col-md-12"> 
-                                    <div class="form-group">
-                                        <label for="name">Name</label>
-                                        <input type="text" class="form-control required" value="<?php echo set_value('name'); ?>" id="name" name="name" maxlength="128">
-                                    </div>
-                                </div>
-                            </div>
+﻿<div class="page-heading">
+    <h3><i class="bi bi-dice-5-fill me-2"></i> Lottery Games Management <small>Add New Game</small></h3>
+</div>
+<section class="section">
+    <div class="row">
+        <div class="col-md-7">
+            <?php $error = session()->getFlashdata('error'); if ($error): ?>
+            <div class="alert alert-danger alert-dismissible fade show">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <?= $error ?>
+            </div>
+            <?php endif; ?>
+            <?php $success = session()->getFlashdata('success'); if ($success): ?>
+            <div class="alert alert-success alert-dismissible fade show">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <?= $success ?>
+            </div>
+            <?php endif; ?>
+            <?php if (function_exists('validation_errors')): ?>
+                <?= validation_errors('<div class="alert alert-danger alert-dismissible fade show"><button type="button" class="btn-close" data-bs-dismiss="alert"></button>', '</div>') ?>
+            <?php endif; ?>
+
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Enter Lottery Game Details</h4>
+                </div>
+                <div class="card-body">
+                    <form action="<?= base_url() ?>web/addNewWeb" method="post">
+                        <div class="form-group">
+                            <label class="form-label">Game Name</label>
+                            <input type="text" class="form-control required" value="<?= set_value('name') ?>" name="name" maxlength="128" placeholder="Enter lottery game name">
                         </div>
-
-
-                        <div class="box-footer">
-                            <input type="submit" class="btn btn-primary" value="Submit" />
-                            <input type="reset" class="btn btn-default" value="Reset" />
+                        <div class="row mt-3">
+                            <div class="col-12 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary me-1">Submit</button>
+                                <button type="reset" class="btn btn-secondary">Reset</button>
+                            </div>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="col-md-4">
-                <?php
-                    $error = session()->getFlashdata('error');
-                    if($error)
-                    {
-                ?>
-                <div class="alert alert-danger alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo session()->getFlashdata('error'); ?>                    
-                </div>
-                <?php } ?>
-                <?php  
-                    $success = session()->getFlashdata('success');
-                    if($success)
-                    {
-                ?>
-                <div class="alert alert-success alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo session()->getFlashdata('success'); ?>
-                </div>
-                <?php } ?>
-                
-                <div class="row">
-                    <div class="col-md-12">
-                        <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?>
-                    </div>
-                </div>
-            </div>
-        </div>    
-    </section>
-    
-</div>
+        </div>
+    </div>
+</section>

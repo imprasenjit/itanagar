@@ -1,171 +1,121 @@
-<?php
+﻿<?php
 $userId = $userInfo->userId;
-$name = $userInfo->name;
-$email = $userInfo->email;
+$name   = $userInfo->name;
+$email  = $userInfo->email;
 $mobile = $userInfo->mobile;
 $roleId = $userInfo->roleId;
-$role = $userInfo->role;
+$role   = $userInfo->role;
 ?>
+<div class="page-heading">
+    <h3><i class="bi bi-person-circle me-2"></i> My Profile <small>View or modify your information</small></h3>
+</div>
+<section class="section">
+    <?php $error = session()->getFlashdata('error'); if ($error): ?>
+    <div class="alert alert-danger alert-dismissible fade show">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <?= $error ?>
+    </div>
+    <?php endif; ?>
+    <?php $success = session()->getFlashdata('success'); if ($success): ?>
+    <div class="alert alert-success alert-dismissible fade show">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <?= $success ?>
+    </div>
+    <?php endif; ?>
+    <?php $noMatch = session()->getFlashdata('nomatch'); if ($noMatch): ?>
+    <div class="alert alert-warning alert-dismissible fade show">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <?= $noMatch ?>
+    </div>
+    <?php endif; ?>
 
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        <i class="fa fa-user-circle"></i> My Profile
-        <small>View or modify information</small>
-      </h1>
-    </section>
-    
-    <section class="content">
-    
-        <div class="row">
-            <!-- left column -->
-            <div class="col-md-3">
-              <!-- general form elements -->
-
-
-                <div class="box box-warning">
-                    <div class="box-body box-profile">
-                        <img class="profile-user-img img-responsive img-circle" src="<?php echo base_url(); ?>public/admin/dist/img/avatar.png" alt="User profile picture">
-                        <h3 class="profile-username text-center"><?= $name ?></h3>
-
-                        <p class="text-muted text-center"><?= $role ?></p>
-
-                        <ul class="list-group list-group-unbordered">
-                            <li class="list-group-item">
-                                <b>Email</b> <a class="pull-right"><?= $email ?></a>
-                            </li>
-                            <li class="list-group-item">
-                                <b>Mobile</b> <a class="pull-right"><?= $mobile ?></a>
-                            </li>
-                        </ul>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body py-4">
+                    <div class="avatar avatar-xl mb-3">
+                        <img src="<?= base_url() ?>public/admin/dist/img/avatar.png" alt="Avatar" class="rounded-circle" style="width:80px;height:80px;object-fit:cover;">
                     </div>
-                </div>
-
-            </div>
-
-            <div class="col-md-5">
-                <div class="nav-tabs-custom">
-                    <ul class="nav nav-tabs">
-                        <li class="<?= ($active == "details")? "active" : "" ?>"><a href="#details" data-toggle="tab">Details</a></li>
-                        <li class="<?= ($active == "changepass")? "active" : "" ?>"><a href="#changepass" data-toggle="tab">Change Password</a></li>                        
+                    <h5 class="mb-1"><?= esc($name) ?></h5>
+                    <p class="text-muted mb-3"><?= esc($role) ?></p>
+                    <ul class="list-group list-group-flush text-start">
+                        <li class="list-group-item d-flex justify-content-between">
+                            <strong>Email</strong>
+                            <span class="text-muted"><?= esc($email) ?></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <strong>Mobile</strong>
+                            <span class="text-muted"><?= esc($mobile) ?></span>
+                        </li>
                     </ul>
-                    <div class="tab-content">
-                        <div class="<?= ($active == "details")? "active" : "" ?> tab-pane" id="details">
-                            <form action="<?php echo base_url() ?>profileUpdate" method="post" id="editProfile" role="form">
-                                <div class="box-body">
-                                    <div class="row">
-                                        <div class="col-md-12">                                
-                                            <div class="form-group">
-                                                <label for="fname">Full Name</label>
-                                                <input type="text" class="form-control" id="fname" name="fname" placeholder="<?php echo $name; ?>" value="<?php echo set_value('fname', $name); ?>" maxlength="128" />
-                                                <input type="hidden" value="<?php echo $userId; ?>" name="userId" id="userId" />    
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="mobile">Mobile Number</label>
-                                                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="<?php echo $mobile; ?>" value="<?php echo set_value('mobile', $mobile); ?>" maxlength="10">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="email">Email</label>
-                                                <input type="text" class="form-control" id="email" name="email" placeholder="<?php echo $email; ?>" value="<?php echo set_value('email', $email); ?>">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div><!-- /.box-body -->
-                                <div class="box-footer">
-                                    <input type="submit" class="btn btn-primary" value="Submit" />
-                                    <input type="reset" class="btn btn-default" value="Reset" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs" id="profileTab">
+                        <li class="nav-item">
+                            <a class="nav-link <?= ($active == 'details') ? 'active' : '' ?>" data-bs-toggle="tab" href="#details">
+                                <i class="bi bi-person-fill me-1"></i> Details
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?= ($active == 'changepass') ? 'active' : '' ?>" data-bs-toggle="tab" href="#changepass">
+                                <i class="bi bi-key-fill me-1"></i> Change Password
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content pt-2">
+                        <div class="tab-pane <?= ($active == 'details') ? 'active' : '' ?>" id="details">
+                            <form action="<?= base_url() ?>profileUpdate" method="post" id="editProfile">
+                                <input type="hidden" name="userId" value="<?= $userId ?>">
+                                <div class="form-group">
+                                    <label class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" name="fname" value="<?= set_value('fname', $name) ?>" maxlength="128">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Mobile Number</label>
+                                    <input type="text" class="form-control" name="mobile" value="<?= set_value('mobile', $mobile) ?>" maxlength="10">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Email</label>
+                                    <input type="text" class="form-control" name="email" value="<?= set_value('email', $email) ?>">
+                                </div>
+                                <div class="d-flex justify-content-end mt-3">
+                                    <button type="submit" class="btn btn-primary me-1">Save Changes</button>
+                                    <button type="reset" class="btn btn-secondary">Reset</button>
                                 </div>
                             </form>
                         </div>
-                        <div class="<?= ($active == "changepass")? "active" : "" ?> tab-pane" id="changepass">
-                            <form role="form" action="<?php echo base_url() ?>changePassword" method="post">
-                                <div class="box-body">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="inputPassword1">Old Password</label>
-                                                <input type="password" class="form-control" id="inputOldPassword" placeholder="Old password" name="oldPassword" maxlength="20" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="inputPassword1">New Password</label>
-                                                <input type="password" class="form-control" id="inputPassword1" placeholder="New password" name="newPassword" maxlength="20" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="inputPassword2">Confirm New Password</label>
-                                                <input type="password" class="form-control" id="inputPassword2" placeholder="Confirm new password" name="cNewPassword" maxlength="20" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div><!-- /.box-body -->
-            
-                                <div class="box-footer">
-                                    <input type="submit" class="btn btn-primary" value="Submit" />
-                                    <input type="reset" class="btn btn-default" value="Reset" />
+                        <div class="tab-pane <?= ($active == 'changepass') ? 'active' : '' ?>" id="changepass">
+                            <form action="<?= base_url() ?>changePassword" method="post">
+                                <div class="form-group">
+                                    <label class="form-label">Old Password</label>
+                                    <input type="password" class="form-control" name="oldPassword" placeholder="Old password" maxlength="20" required>
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <label class="form-label">New Password</label>
+                                    <input type="password" class="form-control" id="inputPassword1" name="newPassword" placeholder="New password" maxlength="20" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Confirm New Password</label>
+                                    <input type="password" class="form-control" id="inputPassword2" name="cNewPassword" placeholder="Confirm new password" maxlength="20" required>
+                                </div>
+                                <div class="d-flex justify-content-end mt-3">
+                                    <button type="submit" class="btn btn-primary me-1">Change Password</button>
+                                    <button type="reset" class="btn btn-secondary">Reset</button>
                                 </div>
                             </form>
-                        </div>                        
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <?php
-                    $error = session()->getFlashdata('error');
-                    if($error)
-                    {
-                ?>
-                <div class="alert alert-danger alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo session()->getFlashdata('error'); ?>                    
-                </div>
-                <?php } ?>
-                <?php  
-                    $success = session()->getFlashdata('success');
-                    if($success)
-                    {
-                ?>
-                <div class="alert alert-success alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo session()->getFlashdata('success'); ?>
-                </div>
-                <?php } ?>
-
-                <?php  
-                    $noMatch = session()->getFlashdata('nomatch');
-                    if($noMatch)
-                    {
-                ?>
-                <div class="alert alert-warning alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo session()->getFlashdata('nomatch'); ?>
-                </div>
-                <?php } ?>
-                
-                <div class="row">
-                    <div class="col-md-12">
-                        <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?>
-                    </div>
-                </div>
-            </div>
-        </div>    
-    </section>
-</div>
-
-<script src="<?php echo base_url(); ?>public/admin/js/editUser.js" type="text/javascript"></script>
+        </div>
+    </div>
+</section>
+<script src="<?= base_url() ?>public/admin/js/editUser.js" type="text/javascript"></script>

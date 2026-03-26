@@ -1,190 +1,111 @@
-
-
-
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        <i class="fa fa-users"></i> <?php echo $WebInfo->name ?> Prize Tier
-        
-      </h1>
-    </section>
-    
-    <section class="content">
-    
-        <div class="row">
-            <!-- left column -->
-            <div class="col-md-8">
-              <!-- general form elements -->
-                
-                
-                
-                <div class="box box-primary">
-                    <div class="box-header">
-                        <h3 class="box-title">Pattern</h3>
-                    </div><!-- /.box-header -->
-                    <!-- form start -->
-                    
-
-                    <div class="box-body table-responsive no-padding">
-                                  <table class="table table-hover">
-                    <tbody>
-                    <tr>
-                        <th>White Ball</th>
-                        <th>Mega Ball</th>
-                        <th>Percentage</th>
-                        <th class="text-center">Action</th>
-                    </tr>
-
-
-
-                    <tr>
-                        <form role="form" action="<?php echo base_url() ?>web/addtier" method="post" id="editUser" role="form">
-                        <td>
-
-
-                    <input type="hidden" value="<?php echo $WebInfo->id; ?>" name="web_id" id="id" /> 
-
-
-                            <select required name="white" class="form-control">
-                                <option value="">Select Number</option>
-                                <?php
-                                    for($i=0;$i<7;$i++){
-                                        echo "<option value='".$i."'>".$i."</option>";
-                                    }
-                                ?>
-                            </select>
-                        </td>
-                        <td>
-                            <select required name="yellow" class="form-control">
-                                <option value="">Select Number</option>
-                                <?php
-                                    for($i=0;$i<3;$i++){
-                                        echo "<option value='".$i."'>".$i."</option>";
-                                    }
-                                ?>
-                            </select>
-                        </td>
-
-                        <td>
-                            <input required type="text" name="per" class="form-control" placeholder="e.g. 10">
-                        </td>
-                        
-                        <td class="text-center">
-                            <input type="submit" name="type" class="btn btn-primary" value="Add">
-                        </td>
-
-                        </form>
-                    </tr>
-                    
-                    <?php
-                        if(count($tier)>0){
-                            foreach($tier as $t){
-                                ?>
-
-
-                    <tr>
-                        <form role="form" action="<?php echo base_url() ?>web/addtier" method="post" id="editUser" role="form">
-                        <td>
-
-
-                    <input type="hidden" value="<?php echo $WebInfo->id; ?>" name="web_id"/> 
-
-
-                    <input type="hidden" value="<?php echo $t->id; ?>" name="id"/> 
-
-
-                            <select required name="white" class="form-control">
-                                <option value="">Select Number</option>
-                                <?php
-                                    for($i=0;$i<7;$i++){
-
-                                        if($t->white==$i){
-
-                                            echo "<option selected value='".$i."'>".$i."</option>";
-                                        }
-                                        else{
-                                            echo "<option value='".$i."'>".$i."</option>";
-
-                                        }
-                                    }
-                                ?>
-                            </select>
-                        </td>
-                        <td>
-                            <select required name="yellow" class="form-control">
-                                <option value="">Select Number</option>
-                                <?php
-                                    for($i=0;$i<3;$i++){
-                                        
-                                        if($t->mega==$i){
-
-                                            echo "<option selected value='".$i."'>".$i."</option>";
-                                        }
-                                        else{
-                                            echo "<option value='".$i."'>".$i."</option>";
-
-                                        }
-                                    }
-                                ?>
-                            </select>
-                        </td>
-
-                        <td>
-                            <input required type="text" name="per" class="form-control" value="<?php echo $t->per; ?>" placeholder="e.g. 10">
-                        </td>
-                        
-                        <td class="text-center">
-                            <input type="submit" name="type" class="btn btn-primary" value="Update">
-                        </td>
-
-                        </form>
-                    </tr>
-
-
-                                <?php
-                            }
-                        }
-                    ?>
-
-
-                    </tbody>
-                                      
-                    </table>
-                </div>
-    
-    
-                </div>
-            </div>
-            <div class="col-md-4">
-                <?php
-                    $error = session()->getFlashdata('error');
-                    if($error)
-                    {
-                ?>
-                <div class="alert alert-danger alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo session()->getFlashdata('error'); ?>                    
-                </div>
-                <?php } ?>
-                <?php  
-                    $success = session()->getFlashdata('success');
-                    if($success)
-                    {
-                ?>
-                <div class="alert alert-success alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo session()->getFlashdata('success'); ?>
-                </div>
-                <?php } ?>
-                
-                <div class="row">
-                    <div class="col-md-12">
-                        <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?>
-                    </div>
-                </div>
-            </div>
-        </div>    
-    </section>
+﻿<div class="page-heading">
+    <h3><i class="bi bi-layers-fill me-2"></i> <?= esc($WebInfo->name) ?> &mdash; Prize Tier</h3>
 </div>
 
+<section class="section">
+    <?php $error = session()->getFlashdata('error'); if ($error): ?>
+    <div class="alert alert-danger alert-dismissible fade show">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <?= $error ?>
+    </div>
+    <?php endif; ?>
+    <?php $success = session()->getFlashdata('success'); if ($success): ?>
+    <div class="alert alert-success alert-dismissible fade show">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <?= $success ?>
+    </div>
+    <?php endif; ?>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Prize Tier Patterns</h4>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-striped mb-0">
+                            <thead>
+                                <tr>
+                                    <th>White Balls</th>
+                                    <th>Mega Ball</th>
+                                    <th>Prize (%)</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <form action="<?= base_url() ?>web/addtier" method="post">
+                                        <input type="hidden" name="web_id" value="<?= $WebInfo->id ?>">
+                                        <td>
+                                            <select name="white" class="form-select form-select-sm" required>
+                                                <option value="">Select</option>
+                                                <?php for ($i = 0; $i < 7; $i++): ?>
+                                                <option value="<?= $i ?>"><?= $i ?></option>
+                                                <?php endfor; ?>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="yellow" class="form-select form-select-sm" required>
+                                                <option value="">Select</option>
+                                                <?php for ($i = 0; $i < 3; $i++): ?>
+                                                <option value="<?= $i ?>"><?= $i ?></option>
+                                                <?php endfor; ?>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="per" class="form-control form-control-sm" required placeholder="e.g. 10">
+                                        </td>
+                                        <td class="text-center">
+                                            <button type="submit" name="type" value="Add" class="btn btn-sm btn-success">
+                                                <i class="bi bi-plus-lg"></i> Add
+                                            </button>
+                                        </td>
+                                    </form>
+                                </tr>
+
+                                <?php if (count($tier) > 0): foreach ($tier as $t): ?>
+                                <tr>
+                                    <form action="<?= base_url() ?>web/addtier" method="post">
+                                        <input type="hidden" name="web_id" value="<?= $WebInfo->id ?>">
+                                        <input type="hidden" name="id" value="<?= $t->id ?>">
+                                        <td>
+                                            <select name="white" class="form-select form-select-sm" required>
+                                                <option value="">Select</option>
+                                                <?php for ($i = 0; $i < 7; $i++): ?>
+                                                <option value="<?= $i ?>" <?= $t->white == $i ? 'selected' : '' ?>><?= $i ?></option>
+                                                <?php endfor; ?>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="yellow" class="form-select form-select-sm" required>
+                                                <option value="">Select</option>
+                                                <?php for ($i = 0; $i < 3; $i++): ?>
+                                                <option value="<?= $i ?>" <?= $t->mega == $i ? 'selected' : '' ?>><?= $i ?></option>
+                                                <?php endfor; ?>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="per" class="form-control form-control-sm" required value="<?= $t->per ?>" placeholder="e.g. 10">
+                                        </td>
+                                        <td class="text-center">
+                                            <button type="submit" name="type" value="Update" class="btn btn-sm btn-primary">
+                                                <i class="bi bi-check-lg"></i> Update
+                                            </button>
+                                        </td>
+                                    </form>
+                                </tr>
+                                <?php endforeach; endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="<?= base_url('web/rangeEdit') . '/' . $WebInfo->id ?>" class="btn btn-secondary btn-sm">
+                        <i class="bi bi-arrow-left me-1"></i> Back to Details
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

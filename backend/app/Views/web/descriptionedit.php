@@ -1,91 +1,47 @@
+﻿<div class="page-heading">
+    <h3><i class="bi bi-text-paragraph me-2"></i> <?= esc($WebInfo->name) ?> Management <small>Edit Description</small></h3>
+</div>
+<section class="section">
+    <div class="row">
+        <div class="col-md-9">
+            <?php $error = session()->getFlashdata('error'); if ($error): ?>
+            <div class="alert alert-danger alert-dismissible fade show">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <?= $error ?>
+            </div>
+            <?php endif; ?>
+            <?php $success = session()->getFlashdata('success'); if ($success): ?>
+            <div class="alert alert-success alert-dismissible fade show">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <?= $success ?>
+            </div>
+            <?php endif; ?>
 
-
-
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        <i class="fa fa-users"></i> <?php echo $WebInfo->name ?> Management
-        <small>Edit Description</small>
-      </h1>
-    </section>
-    
-    <section class="content">
-    
-        <div class="row">
-            <!-- left column -->
-            <div class="col-md-8">
-              <!-- general form elements -->
-                
-                
-                
-                <div class="box box-primary">
-                    <div class="box-header">
-                        <h3 class="box-title">Enter Description</h3>
-                    </div><!-- /.box-header -->
-                    <!-- form start -->
-                    
-                    <form role="form" action="<?php echo base_url() ?>web/editdesc" method="post" id="editUser" role="form">
-
-                    <input type="hidden" value="<?php echo $rangeInfo->id; ?>" name="id" id="id" /> 
-
-                    <input type="hidden" value="<?php echo $rangeInfo->web_id; ?>" name="web_id" id="id" /> 
-                        <div class="box-body">
-                            <div class="row">
-                                <div class="col-md-12">   
-                                    
-                                    <div class="form-group">
-                                        <label for="fname">How To Play</label>
-                                        <textarea required class="form-control" name="play_description" style="height:300px;"><?php echo $rangeInfo->play_description; ?></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="fname">When Play</label>
-                                        <textarea required class="form-control" name="when_play" style="height:300px;"><?php echo $rangeInfo->when_play; ?></textarea>
-                                    </div>
-
-
-                                    
-                                </div>
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Edit Play Description</h4>
+                </div>
+                <div class="card-body">
+                    <form action="<?= base_url() ?>web/editdesc" method="post">
+                        <input type="hidden" name="id" value="<?= $rangeInfo->id ?>">
+                        <input type="hidden" name="web_id" value="<?= $rangeInfo->web_id ?>">
+                        <div class="form-group">
+                            <label class="form-label">How To Play</label>
+                            <textarea required class="form-control" name="play_description" rows="10"><?= esc($rangeInfo->play_description) ?></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">When To Play</label>
+                            <textarea required class="form-control" name="when_play" rows="10"><?= esc($rangeInfo->when_play) ?></textarea>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary me-1">Save Description</button>
+                                <button type="reset" class="btn btn-secondary">Reset</button>
                             </div>
-                            
-                        </div><!-- /.box-body -->
-    
-                        <div class="box-footer">
-                            <input type="submit" class="btn btn-primary" value="Submit" />
-                            <input type="reset" class="btn btn-default" value="Reset" />
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="col-md-4">
-                <?php
-                    $error = session()->getFlashdata('error');
-                    if($error)
-                    {
-                ?>
-                <div class="alert alert-danger alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo session()->getFlashdata('error'); ?>                    
-                </div>
-                <?php } ?>
-                <?php  
-                    $success = session()->getFlashdata('success');
-                    if($success)
-                    {
-                ?>
-                <div class="alert alert-success alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo session()->getFlashdata('success'); ?>
-                </div>
-                <?php } ?>
-                
-                <div class="row">
-                    <div class="col-md-12">
-                        <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?>
-                    </div>
-                </div>
-            </div>
-        </div>    
-    </section>
-</div>
-
+        </div>
+    </div>
+</section>

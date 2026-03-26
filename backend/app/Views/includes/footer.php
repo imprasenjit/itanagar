@@ -1,25 +1,47 @@
-<footer class="main-footer">
-  <div class="pull-right hidden-xs">
-    <b><?= APP_NAME ?></b> Admin System | Version 1
-  </div>
-  <strong>Copyright &copy; 2022-2023<a href="<?php echo base_url(); ?>">Lottery</a>.</strong> All rights reserved.
-</footer>
+﻿    </div><!-- /.page-content -->
 
-<script src="<?php echo base_url(); ?>admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="<?php echo base_url(); ?>admin/dist/js/adminlte.min.js" type="text/javascript"></script>
-<!-- <script src="<?php echo base_url(); ?>admin/dist/js/pages/dashboard.js" type="text/javascript"></script> -->
-<script src="<?php echo base_url(); ?>admin/js/jquery.validate.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>admin/js/validation.js" type="text/javascript"></script>
-<script type="text/javascript">
-  var windowURL = window.location.href;
-  pageURL = windowURL.substring(0, windowURL.lastIndexOf('/'));
-  var x = $('a[href="' + pageURL + '"]');
-  x.addClass('active');
-  x.parent().addClass('active');
-  var y = $('a[href="' + windowURL + '"]');
-  y.addClass('active');
-  y.parent().addClass('active');
+    <footer class="footer pt-4 pb-3">
+      <div class="footer-content">
+        <p class="foot-text text-muted text-center">
+          &copy; <?= date('Y') ?> <?= APP_NAME ?> &mdash; All rights reserved.
+        </p>
+      </div>
+    </footer>
+
+  </div><!-- /#main -->
+</div><!-- /#app -->
+
+<!-- Mazer Core JS -->
+<script src="<?= base_url('assets/js/app.js') ?>"></script>
+<script src="<?= base_url('assets/js/dark.js') ?>"></script>
+<script src="<?= base_url('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') ?>"></script>
+
+<!-- jQuery + Validation (required by admin forms) -->
+<script src="<?= base_url('assets/extensions/jquery/jquery.min.js') ?>"></script>
+<script src="<?= base_url('admin/js/jquery.validate.js') ?>"></script>
+<script src="<?= base_url('admin/js/validation.js') ?>"></script>
+
+<!-- Dark mode toggle button -->
+<script>
+  document.getElementById('dark-toggle')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    var theme = document.documentElement.getAttribute('data-bs-theme');
+    document.documentElement.setAttribute('data-bs-theme', theme === 'dark' ? 'light' : 'dark');
+    localStorage.setItem('theme', document.documentElement.getAttribute('data-bs-theme'));
+  });
 </script>
-</body>
 
+<!-- Active nav highlight -->
+<script>
+  (function() {
+    var path = window.location.pathname;
+    document.querySelectorAll('#sidebar .sidebar-link, #sidebar .submenu-link').forEach(function(link) {
+      if (link.href && path.endsWith(link.getAttribute('href').replace(baseURL.replace(/\/$/, ''), ''))) {
+        link.closest('.sidebar-item, .submenu-item')?.classList.add('active');
+      }
+    });
+  })();
+</script>
+
+</body>
 </html>

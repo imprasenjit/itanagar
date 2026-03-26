@@ -1,174 +1,104 @@
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-  
-
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        <i class="fa fa-users"></i> Refund History
-      </h1>
-    </section>
-
-
-  <div class="row">
-
-  <div class="col-md-8">
-  </div>
-    <div class="col-md-4">
-                <?php
-                    $error = session()->getFlashdata('error');
-                    if($error)
-                    {
-                ?>
-                <div class="alert alert-danger alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo session()->getFlashdata('error'); ?>                    
-                </div>
-                <?php } ?>
-                <?php  
-                    $success = session()->getFlashdata('success');
-                    if($success)
-                    {
-                ?>
-                <div class="alert alert-success alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo session()->getFlashdata('success'); ?>
-                </div>
-                <?php } ?>
-                </div>
-                </div>
-    
-    <section class="content">
-    
-
-        <div class="row">
-            <div class="col-xs-12">
-              <div class="box">
-
-
-              <div class="box-header">
-                    <h3 class="box-title"> Refund History</h3>
-                    <div class="box-tools">
-                        <form action="<?php echo base_url() ?>web/refund" method="POST" id="searchList">
-                            <div class="input-group">
-                              <input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search by User"/>
-                              <div class="input-group-btn">
-                                <button class="btn btn-sm btn-default searchList"><i class="fa fa-search"></i></button>
-                              </div>
-                            </div>
-                        </form>
-                    </div>
-                </div><!-- /.box-header -->
-
-
-                <div class="box-body table-responsive no-padding">
-                <?php if(!empty($userRecords))
-                    { ?>
-                  <table class="table table-hover">
-                    <tr>
-                          <th>Sr. No.</th>
-                          <th>User</th>
-                          <th>Money</th>
-                          <th>Reason</th>
-
-                          <th>Status</th>
-                          <th>Date</th>
-
-                          <th>Action</th>
-                    </tr>
-                    <?php
-                    
-                        
-                      $c = 1;
-                        foreach($userRecords as $ms)
-                        {
-                    ?>
-                    <tr>
-                      
-                    <td><?= $c ?></td>
-                    <td><?= $ms->uname?></a></td>
-                  
-                    <td><?= $ms->money?></td>
-                    <td><?= $ms->reason?></td>
-                          
-                          <td><?php 
-                                  if( $ms->status=="0"){
-                                    $st = "Pending";
-                                  }elseif($ms->status=="1"){
-                                    $st = "Refunded";
-                                  }
-                                  else{
-                                    $st = "Rejected";
-                                  }
-                                  echo $st;
-                                ?></td>
-
-                            <td><?= date("M d, Y h:i a",strtotime($ms->createdAt));?></td>
-
-                            <td>
-                            <?php          
-                            if( $ms->status=="0"){?>
-                              <form onsubmit="return confirm('Do you really want to submit the form?');" action="<?php echo base_url('web/refund_req')."/".$ms->user_id; ?>" method="post">
-
-                              <input type="hidden" class="form-control required" required value="<?php echo $ms->id; ?>" id="money" name="id">
-                                
-                              <input type="hidden" class="form-control required" required value="<?php echo $ms->money; ?>" id="money" name="money">
-                              
-                              <input type="submit" name="type" class="btn btn-primary" value="Refund" />
-
-                                <input type="submit" name="type" class="btn btn-warning" value="Reject" />
-                              </form>
-                            <?php }else{
-                              echo $st;
-                            } ?>
-                            </td>
-                        
-                    </tr>
-                    <?php
-                    $c++;
-                        }
-                    
-                    ?>
-                  </table>
-                  <?php
-                  
-                    }
-                    else{
-                        ?>
-                        <div class="box-footer clearfix">
-                    No Date Availables
-                </div>
-                        <?php
-                    }
-                  ?>
-                </div><!-- /.box-body -->
-                <div class="box-footer clearfix">
-                    <?php echo $pager->links(); ?>
-                </div>
-              </div><!-- /.box -->
-            </div>
-        </div>
-
-
-
-</section>
+﻿<div class="page-heading">
+    <h3><i class="bi bi-arrow-counterclockwise me-2"></i> Refund History</h3>
 </div>
 
+<section class="section">
+    <?php $error = session()->getFlashdata('error'); if ($error): ?>
+    <div class="alert alert-danger alert-dismissible fade show">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <?= $error ?>
+    </div>
+    <?php endif; ?>
+    <?php $success = session()->getFlashdata('success'); if ($success): ?>
+    <div class="alert alert-success alert-dismissible fade show">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <?= $success ?>
+    </div>
+    <?php endif; ?>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>public/admin/js/common.js" charset="utf-8"></script>
-<script type="text/javascript">
-    jQuery(document).ready(function(){
-        jQuery('ul.pagination li a').click(function (e) {
-            e.preventDefault();            
-            var link = jQuery(this).get(0).href;            
-            var value = link.substring(link.lastIndexOf('/') + 1);
-            // alert(link+value );
-            jQuery("#searchList").attr("action", baseURL + "web/refund/" + value);
-            jQuery("#searchList").submit();
-        });
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Refund Requests</h4>
+            <div class="card-header-action d-flex">
+                <form action="<?= base_url() ?>web/refund" method="POST" id="searchList" class="d-flex">
+                    <div class="input-group">
+                        <input type="text" name="searchText" value="<?= $searchText ?>" class="form-control" placeholder="Search by user...">
+                        <button class="btn btn-primary searchList" type="submit"><i class="bi bi-search"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <?php if (!empty($userRecords)): ?>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>User</th>
+                            <th>Money</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $c = 1; foreach ($userRecords as $ms):
+                            if ($ms->status == "0") $st = "Pending";
+                            elseif ($ms->status == "1") $st = "Refunded";
+                            else $st = "Rejected";
+                        ?>
+                        <tr>
+                            <td><?= $c ?></td>
+                            <td><?= esc($ms->uname) ?></td>
+                            <td><strong>&#8377;<?= $ms->money ?></strong></td>
+                            <td><?= esc($ms->reason) ?></td>
+                            <td>
+                                <span class="badge <?= $ms->status == '0' ? 'bg-warning text-dark' : ($ms->status == '1' ? 'bg-success' : 'bg-danger') ?>">
+                                    <?= $st ?>
+                                </span>
+                            </td>
+                            <td><?= date("M d, Y h:i a", strtotime($ms->createdAt)) ?></td>
+                            <td class="text-center">
+                                <?php if ($ms->status == "0"): ?>
+                                <form onsubmit="return confirm('Are you sure?');" action="<?= base_url('web/refund_req') . '/' . $ms->user_id ?>" method="post" class="d-inline-flex gap-1">
+                                    <input type="hidden" name="id" value="<?= $ms->id ?>">
+                                    <input type="hidden" name="money" value="<?= $ms->money ?>">
+                                    <button type="submit" name="type" value="Refund" class="btn btn-sm btn-success">
+                                        <i class="bi bi-check-circle"></i> Refund
+                                    </button>
+                                    <button type="submit" name="type" value="Reject" class="btn btn-sm btn-danger">
+                                        <i class="bi bi-x-circle"></i> Reject
+                                    </button>
+                                </form>
+                                <?php else: ?>
+                                    <span class="badge <?= $ms->status == '1' ? 'bg-success' : 'bg-danger' ?>"><?= $st ?></span>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <?php $c++; endforeach; ?>
+                    </tbody>
+                </table>
+                <?php else: ?>
+                    <p class="text-center text-muted py-4">No refund records found.</p>
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class="card-footer">
+            <?= $pager->links() ?>
+        </div>
+    </div>
+</section>
+
+<script src="<?= base_url() ?>public/admin/js/common.js"></script>
+<script>
+jQuery(document).ready(function () {
+    jQuery('ul.pagination li a').click(function (e) {
+        e.preventDefault();
+        var link = jQuery(this).get(0).href, value = link.substring(link.lastIndexOf('/') + 1);
+        jQuery("#searchList").attr("action", baseURL + "web/refund/" + value);
+        jQuery("#searchList").submit();
     });
+});
 </script>

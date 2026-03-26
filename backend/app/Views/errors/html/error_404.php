@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 defined('SYSTEMPATH') OR exit('No direct script access allowed');
 ?><!DOCTYPE html>
 <html lang="en">
@@ -57,7 +57,7 @@ p {
 </head>
 <body>
 	<div id="container">
-		<h1><?php echo $heading ?? '404 Page Not Found'; ?></h1>
+		<h3><?php echo $heading ?? '404 Page Not Found'; ?></h3>
 		<?php echo $message ?? 'The page you requested was not found.'; ?>
 	</div>
 </body>

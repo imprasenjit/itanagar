@@ -1,92 +1,48 @@
-<?php
-$id = $userInfo->id;
-$name = $userInfo->title;
-$descripiotn = $userInfo->description;
-
+﻿<?php
+$id          = $userInfo->id;
+$title       = $userInfo->title;
+$description = $userInfo->description;
 ?>
+<div class="page-heading">
+    <h3><i class="bi bi-file-earmark-text-fill me-2"></i> Page Management <small>Edit</small></h3>
+</div>
+<section class="section">
+    <div class="row">
+        <div class="col-md-9">
+            <?php $error = session()->getFlashdata('error'); if ($error): ?>
+            <div class="alert alert-danger alert-dismissible fade show">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <?= $error ?>
+            </div>
+            <?php endif; ?>
+            <?php $success = session()->getFlashdata('success'); if ($success): ?>
+            <div class="alert alert-success alert-dismissible fade show">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <?= $success ?>
+            </div>
+            <?php endif; ?>
 
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        <i class="fa fa-users"></i> Page Management
-
-      </h1>
-    </section>
-    
-    <section class="content">
-    
-        <div class="row">
-            <!-- left column -->
-            <div class="col-md-8">
-              <!-- general form elements -->
-                
-                
-                
-                <div class="box box-primary">
-                    <div class="box-header">
-                        <h3 class="box-title">Enter Page Details</h3>
-                    </div><!-- /.box-header -->
-                    <!-- form start -->
-                    
-                    <form role="form" action="<?php echo base_url() ?>web/editUpadtePage" method="post" id="editUpadtePage" role="form">
-                        <div class="box-body">
-                            <div class="row">
-                                <div class="col-md-12">                                
-                                    <div class="form-group">
-                                        <label for="fname">Title - <?php echo $name ?></label>
-                                        <input type="hidden" class="form-control" id="name" placeholder="Name" name="name" value="<?php echo $name; ?>" maxlength="128">
-                                        <input type="hidden" value="<?php echo $id; ?>" name="id" id="id" />    
-                                    </div>
-                                    
-                                </div>
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Edit Page: <span class="text-muted fw-normal"><?= esc($title) ?></span></h4>
+                </div>
+                <div class="card-body">
+                    <form action="<?= base_url() ?>web/editUpadtePage" method="post">
+                        <input type="hidden" name="name" value="<?= esc($title) ?>">
+                        <input type="hidden" name="id" value="<?= $id ?>">
+                        <div class="form-group">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" name="description" rows="14"><?= $description ?></textarea>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary me-1">Save Page</button>
+                                <button type="reset" class="btn btn-secondary">Reset</button>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="role">Description</label>
-                                        <textarea style="height:400px" class="form-control" name="description"><?php echo $descripiotn; ?></textarea>
-                                    </div>
-                                </div>    
-                            </div>
-                        </div><!-- /.box-body -->
-    
-                        <div class="box-footer">
-                            <input type="submit" class="btn btn-primary" value="Submit" />
-                            <input type="reset" class="btn btn-default" value="Reset" />
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="col-md-4">
-                <?php
-                    $error = session()->getFlashdata('error');
-                    if($error)
-                    {
-                ?>
-                <div class="alert alert-danger alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo session()->getFlashdata('error'); ?>                    
-                </div>
-                <?php } ?>
-                <?php  
-                    $success = session()->getFlashdata('success');
-                    if($success)
-                    {
-                ?>
-                <div class="alert alert-success alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo session()->getFlashdata('success'); ?>
-                </div>
-                <?php } ?>
-                
-                <div class="row">
-                    <div class="col-md-12">
-                        <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?>
-                    </div>
-                </div>
-            </div>
-        </div>    
-    </section>
-</div>
-
+        </div>
+    </div>
+</section>

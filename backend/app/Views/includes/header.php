@@ -1,252 +1,215 @@
-<!DOCTYPE html>
-<html>
+﻿<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title><?php // echo $pageTitle; 
-          ?>Lottery Games</title>
-  <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-  <!-- Bootstrap 3.3.4 -->
-  <link href="<?php echo base_url(); ?>admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-  <!-- FontAwesome 4.3.0 -->
-  <link href="<?php echo base_url(); ?>admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-  <!-- Ionicons 2.0.0 -->
-  <link href="<?php echo base_url(); ?>admin/bower_components/Ionicons/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-  <!-- Theme style -->
-  <link href="<?php echo base_url(); ?>admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-  <!-- AdminLTE Skins. Choose a skin from the css/skins 
-    folder instead of downloading all of them to reduce the load. -->
-  <link href="<?php echo base_url(); ?>admin/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-  <style>
-    .error {
-      color: red;
-      font-weight: normal;
-    }
-  </style>
-  <script src="<?php echo base_url(); ?>admin/bower_components/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript">
-    var baseURL = "<?php echo base_url(); ?>";
-  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?= isset($pageTitle) ? esc($pageTitle) : APP_NAME ?> | Admin</title>
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link rel="stylesheet" href="<?= base_url('assets/css/app.css') ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/css/app-dark.css') ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/css/iconly.css') ?>">
+  <!-- Font Awesome 6 (for existing view icons) -->
+  <link rel="stylesheet" href="<?= base_url('assets/extensions/@fortawesome/fontawesome-free/css/all.min.css') ?>">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .error { color: #dc3545; font-weight: normal; font-size: 0.85rem; }
+    /* Page heading */
+    .page-heading { margin: 1.5rem 1.5rem 0.5rem; }
+    .page-heading h3 { font-size: 1.3rem; font-weight: 600; color: var(--bs-heading-color); }
+    /* Compat shims for old view wrappers */
+    .app-content-header h1, .app-content-header h3 { font-size: 1.3rem; font-weight: 600; }
+  </style>
+
+  <script src="<?= base_url('assets/js/init-theme.js') ?>"></script>
+  <script>var baseURL = "<?= base_url() ?>";</script>
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini">
-  <div class="wrapper">
+<body>
+<div id="app">
 
-    <header class="main-header">
-      <!-- Logo -->
-      <a href="<?php echo base_url(); ?>" class="logo">
-        <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><?= APP_NAME ?></span>
-        <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><?= APP_NAME ?></span>
-      </a>
-      <!-- Header Navbar: style can be found in header.less -->
-      <nav class="navbar navbar-static-top" role="navigation">
-        <!-- Sidebar toggle button-->
-        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-          <span class="sr-only">Toggle navigation</span>
-        </a>
-        <div class="navbar-custom-menu">
-          <ul class="nav navbar-nav">
-            <li class="dropdown tasks-menu">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                <i class="fa fa-history"></i>
-              </a>
-              <ul class="dropdown-menu">
-                <li class="header"> Last Login : <i class="fa fa-clock-o"></i> <?= empty($last_login) ? "First Time Login" : $last_login; ?></li>
-              </ul>
-            </li>
-            <!-- User Account: style can be found in dropdown.less -->
-            <li class="dropdown user user-menu">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <img src="<?php echo base_url(); ?>admin/dist/img/avatar.png" class="user-image" alt="User Image" />
-                <span class="hidden-xs"><?php echo $name; ?></span>
-              </a>
-              <ul class="dropdown-menu">
-                <!-- User image -->
-                <li class="user-header">
+  <!-- ====== SIDEBAR ====== -->
+  <div id="sidebar">
+    <div class="sidebar-wrapper active">
 
-                  <img src="<?php echo base_url(); ?>admin/dist/img/avatar.png" class="img-circle" alt="User Image" />
-                  <p>
-                    <?php echo $name; ?>
-                    <small><?php echo $role_text; ?></small>
-                  </p>
-
-                </li>
-                <!-- Menu Footer-->
-                <li class="user-footer">
-                  <div class="pull-left">
-                    <a href="<?php echo base_url(); ?>profile" class="btn btn-warning btn-flat"><i class="fa fa-user-circle"></i> Profile</a>
-                  </div>
-                  <div class="pull-right">
-                    <a href="<?php echo base_url(); ?>logout" class="btn btn-default btn-flat"><i class="fa fa-sign-out"></i> Sign out</a>
-                  </div>
-                </li>
-              </ul>
-            </li>
-          </ul>
+      <div class="sidebar-header position-relative">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="logo">
+            <a href="<?= base_url('dashboard') ?>" class="fw-bold fs-5 text-decoration-none">
+              <?= APP_NAME ?>
+            </a>
+          </div>
+          <div class="sidebar-toggler x">
+            <a href="#" class="sidebar-hide d-xl-none d-block">
+              <i class="bi bi-x bi-middle"></i>
+            </a>
+          </div>
         </div>
-      </nav>
-    </header>
-    <!-- Left side column. contains the logo and sidebar -->
-    <aside class="main-sidebar">
-      <!-- sidebar: style can be found in sidebar.less -->
-      <section class="sidebar">
-        <!-- sidebar menu: : style can be found in sidebar.less -->
-        <ul class="sidebar-menu" data-widget="tree">
+      </div>
 
-          <li>
-            <a href="<?php echo base_url(); ?>dashboard">
-              <i class="fa fa-dashboard"></i> <span>Dashboard</span></i>
-            </a>
-          </li>
-          <!-- <li>
-              <a href="#" >
-                <i class="fa fa-plane"></i>
-                <span>New Task</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" >
-                <i class="fa fa-ticket"></i>
-                <span>My Tasks</span>
-              </a>
-            </li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-share"></i> <span>Multilevel</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-                <li class="treeview">
-                  <a href="#"><i class="fa fa-circle-o"></i> Level One
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                    <li class="treeview">
-                      <a href="#"><i class="fa fa-circle-o"></i> Level Two
-                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                      </a>
-                      <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-              </ul>
-            </li>
-          --> <?php
+      <div class="sidebar-menu">
+        <ul class="menu">
+          <li class="sidebar-title">Navigation</li>
 
-
-              if ($role == ROLE_ADMIN) {
-              ?>
-            <li>
-              <a href="<?php echo base_url(); ?>userListing">
-                <i class="fa fa-users"></i>
-                <span>Users</span>
-              </a>
-            </li>
-
-
-
-            <li>
-              <a href="<?php echo base_url(); ?>web/common">
-                <i class="fa fa-cog"></i>
-                <span>Common Settings</span>
-              </a>
-            </li>
-
-
-            <li>
-              <a href="<?php echo base_url(); ?>web">
-                <i class="fa fa-plus"></i>
-                <span>Lottery Games</span>
-              </a>
-            </li>
-
-            <?php
-                $web = (new \App\Models\WebModel())->get_allweb();
-                foreach ($web as $w) {
-                  if ($w->status == 0) {
-            ?>
-                <li>
-                  <a href="<?php echo base_url(); ?>web/view/<?= $w->id; ?>">
-                    <i class="fa fa-circle-o"></i>
-                    <span><?= $w->name ?></span>
-                  </a>
-                </li>
-          <?php
-                  }
-                }
-              }
-          ?>
-
-          <li>
-            <a href="<?php echo base_url('web/page'); ?>">
-              <i class="fa fa-file"></i>
-              <span>Pages</span>
+          <li class="sidebar-item <?= (uri_string() === 'dashboard') ? 'active' : '' ?>">
+            <a href="<?= base_url('dashboard') ?>" class="sidebar-link">
+              <i class="bi bi-grid-fill"></i>
+              <span>Dashboard</span>
             </a>
           </li>
 
-          <li>
-            <a href="<?php echo base_url('web/faq'); ?>">
-              <i class="fa fa-file"></i>
-              <span>Announcements</span>
-            </a>
-          </li>
+          <?php if ($role == ROLE_ADMIN): ?>
 
+          <li class="sidebar-title">Management</li>
 
-          <li>
-            <a href="<?php echo base_url(); ?>web/contact_list">
-              <i class="fa fa-user"></i>
-              <span>Contact Request</span>
-            </a>
-          </li>
-
-          <li>
-            <a href="<?php echo base_url('web/order'); ?>">
-              <i class="fa fa-history"></i>
-              <span>Orders</span>
-            </a>
-          </li>
-
-          <li>
-            <a href="<?php echo base_url('web'); ?>">
-              <i class="fa fa-history"></i>
-              <span>Games</span>
-            </a>
-          </li>
-
-
-          <li>
-            <a href="<?php echo base_url('userListing'); ?>">
-              <i class="fa fa-history"></i>
+          <li class="sidebar-item <?= (strpos(uri_string(), 'userListing') !== false) ? 'active' : '' ?>">
+            <a href="<?= base_url('userListing') ?>" class="sidebar-link">
+              <i class="bi bi-people-fill"></i>
               <span>Users</span>
             </a>
           </li>
 
+          <li class="sidebar-item <?= (strpos(uri_string(), 'web') !== false && strpos(uri_string(), 'order') === false) ? 'active' : '' ?> has-sub">
+            <a href="#" class="sidebar-link">
+              <i class="bi bi-ticket-perforated-fill"></i>
+              <span>Lottery Games</span>
+            </a>
+            <ul class="submenu">
+              <li class="submenu-item <?= (uri_string() === 'web') ? 'active' : '' ?>">
+                <a href="<?= base_url('web') ?>" class="submenu-link">All Games</a>
+              </li>
+              <li class="submenu-item <?= (uri_string() === 'web/addNew') ? 'active' : '' ?>">
+                <a href="<?= base_url('web/addNew') ?>" class="submenu-link">Add New Game</a>
+              </li>
+              <?php
+                $web = (new \App\Models\WebModel())->get_allweb();
+                foreach ($web as $w):
+                  if ($w->status == 0):
+              ?>
+              <li class="submenu-item">
+                <a href="<?= base_url('web/view/' . $w->id) ?>" class="submenu-link">
+                  &bull; <?= esc($w->name) ?>
+                </a>
+              </li>
+              <?php
+                  endif;
+                endforeach;
+              ?>
+            </ul>
+          </li>
 
+          <li class="sidebar-item <?= (uri_string() === 'web/common') ? 'active' : '' ?>">
+            <a href="<?= base_url('web/common') ?>" class="sidebar-link">
+              <i class="bi bi-gear-fill"></i>
+              <span>Common Settings</span>
+            </a>
+          </li>
+
+          <?php endif; ?>
+
+          <li class="sidebar-title">Orders & Finance</li>
+
+          <li class="sidebar-item <?= (strpos(uri_string(), 'order') !== false) ? 'active' : '' ?>">
+            <a href="<?= base_url('web/order') ?>" class="sidebar-link">
+              <i class="bi bi-receipt"></i>
+              <span>Orders</span>
+            </a>
+          </li>
+
+          <li class="sidebar-title">Content</li>
+
+          <li class="sidebar-item <?= (strpos(uri_string(), 'contact') !== false) ? 'active' : '' ?>">
+            <a href="<?= base_url('web/contact_list') ?>" class="sidebar-link">
+              <i class="bi bi-envelope-fill"></i>
+              <span>Contact Requests</span>
+            </a>
+          </li>
+
+          <li class="sidebar-item <?= (strpos(uri_string(), 'faq') !== false) ? 'active' : '' ?>">
+            <a href="<?= base_url('web/faq') ?>" class="sidebar-link">
+              <i class="bi bi-megaphone-fill"></i>
+              <span>Announcements</span>
+            </a>
+          </li>
+
+          <li class="sidebar-item <?= (strpos(uri_string(), 'page') !== false) ? 'active' : '' ?>">
+            <a href="<?= base_url('web/page') ?>" class="sidebar-link">
+              <i class="bi bi-file-earmark-text-fill"></i>
+              <span>Pages</span>
+            </a>
+          </li>
 
         </ul>
-      </section>
-      <!-- /.sidebar -->
-    </aside>
+      </div>
+    </div>
+  </div>
+  <!-- ====== END SIDEBAR ====== -->
+
+  <div id="main">
+
+    <!-- ====== TOP NAVBAR ====== -->
+    <header class="mb-3">
+      <nav class="navbar navbar-expand px-3 border-bottom">
+        <button class="btn burger-btn d-xl-none" type="button">
+          <i class="bi bi-justify fs-3"></i>
+        </button>
+
+        <div class="navbar-nav ms-auto">
+
+          <!-- Dark mode toggle -->
+          <div class="nav-item dropdown me-2 d-flex align-items-center">
+            <a href="#" class="nav-link" id="dark-toggle" title="Toggle dark mode">
+              <i class="bi bi-moon-stars-fill fs-5"></i>
+            </a>
+          </div>
+
+          <!-- Last login -->
+          <div class="nav-item dropdown me-2">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+              <i class="bi bi-clock-history fs-5"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end shadow px-3 py-2">
+              <small class="text-muted">
+                Last Login: <?= empty($last_login) ? 'First Login' : esc($last_login) ?>
+              </small>
+            </div>
+          </div>
+
+          <!-- User dropdown -->
+          <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+              <div class="avatar me-2 bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width:32px;height:32px;">
+                <i class="bi bi-person-fill text-primary"></i>
+              </div>
+              <span class="d-none d-md-inline fw-semibold"><?= esc($name) ?></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+              <li class="dropdown-header px-3 py-2">
+                <strong><?= esc($name) ?></strong>
+                <small class="d-block text-muted"><?= esc($role_text) ?></small>
+              </li>
+              <li><hr class="dropdown-divider m-0"></li>
+              <li>
+                <a href="<?= base_url('profile') ?>" class="dropdown-item">
+                  <i class="bi bi-person-circle me-2 text-warning"></i> Profile
+                </a>
+              </li>
+              <li>
+                <a href="<?= base_url('logout') ?>" class="dropdown-item">
+                  <i class="bi bi-box-arrow-right me-2 text-secondary"></i> Sign Out
+                </a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </nav>
+    </header>
+    <!-- ====== END TOP NAVBAR ====== -->
+
+    <div class="page-content">

@@ -1,59 +1,36 @@
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        <i class="fa fa-users"></i> Pages Management
-        <small>Edit</small>
-      </h1>
-    </section>
-    <section class="content">
-        <div class="row">
-            <div class="col-xs-12">
-              <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">Pages List</h3>
-                    <div class="box-tools">
-                        
-                    </div>
-                </div><!-- /.box-header -->
-
-
-                
-
-                <div class="box-body table-responsive no-padding">
-                  <table class="table table-hover">
-                    <tr>
-                        <th>Title</th> 
-                        <th>Descripiton</th>
-                        <th class="text-center">Actions</th>
-                    </tr>
-                    <?php
-                    if(!empty($page))
-                    {
-                      foreach($page as $record)
-                      {
-                        ?>
+﻿<div class="page-heading">
+    <h3><i class="bi bi-file-earmark-text-fill me-2"></i> Pages Management <small>Edit</small></h3>
+</div>
+<section class="section">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Pages List</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
                         <tr>
-                            <td><?php echo $record->title ?></td> 
-                            <td><?php echo $record->description ?></td> 
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($page)) foreach ($page as $record): ?>
+                        <tr>
+                            <td><?= $record->title ?></td>
+                            <td><?= substr(strip_tags($record->description), 0, 80) ?>...</td>
                             <td class="text-center">
-                                <a class="btn btn-sm btn-info" href="<?php echo base_url().'web/pageedit/'.$record->id; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
+                                <a class="btn btn-sm btn-primary" href="<?= base_url('web/pageedit/' . $record->id) ?>" title="Edit">
+                                    <i class="bi bi-pencil-fill"></i> Edit
+                                </a>
                             </td>
                         </tr>
-                        <?php
-                      }
-                    }
-                    ?>
-                  </table>
-                  
-                </div>
-
-
-              </div><!-- /.box -->
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
             </div>
         </div>
-    </section>
-</div>
-
-
-<script type="text/javascript" src="<?php echo base_url(); ?>public/admin/js/common.js" charset="utf-8"></script>
+    </div>
+</section>

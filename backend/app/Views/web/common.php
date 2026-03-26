@@ -1,129 +1,93 @@
+﻿<div class="page-heading">
+    <h3><i class="bi bi-sliders me-2"></i> Common Settings</h3>
+</div>
+<section class="section">
+    <div class="row">
+        <div class="col-md-8">
+            <?php $error = session()->getFlashdata('error'); if ($error): ?>
+            <div class="alert alert-danger alert-dismissible fade show">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <?= $error ?>
+            </div>
+            <?php endif; ?>
+            <?php $success = session()->getFlashdata('success'); if ($success): ?>
+            <div class="alert alert-success alert-dismissible fade show">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <?= $success ?>
+            </div>
+            <?php endif; ?>
 
-
-
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        <i class="fa fa-users"></i> Common Setting
-      </h1>
-    </section>
-    
-    <section class="content">
-    
-        <div class="row">
-            <!-- left column -->
-            <div class="col-md-8">
-              <!-- general form elements -->
-                
-                
-                
-                <div class="box box-primary">
-                    <div class="box-header">
-                        <h3 class="box-title">Enter Range</h3>
-                    </div><!-- /.box-header -->
-                    <!-- form start -->
-                    
-                   
-                   
-                   
-                   
-                    <form role="form" action="<?php echo base_url() ?>web/editCommon" method="post" id="editUser" role="form" enctype="multipart/form-data">
-
-
-                        <div class="box-body">
-                            <div class="row">
-                                <div class="col-md-12">   
-                                    
-
-
-                                    <div class="form-group">
-                                        <label for="fname">Wallet Minimum($)</label>
-                                        <input class="form-control" type="number" required name="wallet_min" min="0" value="<?php echo $WebInfo->wallet_min; ?>">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="fname">Wallet Maximum($)</label>
-                                        <input class="form-control" type="number" required name="wallet_max" min="0" value="<?php echo $WebInfo->wallet_max; ?>">
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label for="fname">Refund Minimum($)</label>
-                                        <input class="form-control" type="number" required name="refund_min"  min="0" value="<?php echo $WebInfo->refund_min; ?>">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="fname">Refund Maximum($)</label>
-                                        <input class="form-control" type="number" required name="refund_max" min="0" value="<?php echo $WebInfo->refund_max; ?>">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="fname">Transfer Minimum($)</label>
-                                        <input class="form-control" type="number" required name="transfer_min" min="0" value="<?php echo $WebInfo->transfer_min; ?>">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="fname">Transfer Maximum($)</label>
-                                        <input class="form-control" type="number" required name="transfer_max" min="0" value="<?php echo $WebInfo->transfer_max; ?>">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="fname">Withdrawl Minimum($)</label>
-                                        <input class="form-control" type="number" required name="withdrawl_min" min="0" value="<?php echo $WebInfo->withdrawl_min; ?>">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="fname">Withdrawl Maximum($)</label>
-                                        <input class="form-control" type="number" required name="withdrawl_max" min="0" value="<?php echo $WebInfo->withdrawl_max; ?>">
-                                    </div>
-
-
-
-
-
-                                    
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Transaction Limits Configuration</h4>
+                </div>
+                <div class="card-body">
+                    <form action="<?= base_url() ?>web/editCommon" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Wallet Minimum ($)</label>
+                                    <input class="form-control" type="number" required name="wallet_min" min="0" value="<?= $WebInfo->wallet_min ?>">
                                 </div>
                             </div>
-                            
-                        </div><!-- /.box-body -->
-    
-                        <div class="box-footer">
-                            <input type="submit" class="btn btn-primary" value="Submit" />
-                            <input type="reset" class="btn btn-default" value="Reset" />
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Wallet Maximum ($)</label>
+                                    <input class="form-control" type="number" required name="wallet_max" min="0" value="<?= $WebInfo->wallet_max ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Refund Minimum ($)</label>
+                                    <input class="form-control" type="number" required name="refund_min" min="0" value="<?= $WebInfo->refund_min ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Refund Maximum ($)</label>
+                                    <input class="form-control" type="number" required name="refund_max" min="0" value="<?= $WebInfo->refund_max ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Transfer Minimum ($)</label>
+                                    <input class="form-control" type="number" required name="transfer_min" min="0" value="<?= $WebInfo->transfer_min ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Transfer Maximum ($)</label>
+                                    <input class="form-control" type="number" required name="transfer_max" min="0" value="<?= $WebInfo->transfer_max ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Withdrawal Minimum ($)</label>
+                                    <input class="form-control" type="number" required name="withdrawl_min" min="0" value="<?= $WebInfo->withdrawl_min ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Withdrawal Maximum ($)</label>
+                                    <input class="form-control" type="number" required name="withdrawl_max" min="0" value="<?= $WebInfo->withdrawl_max ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary me-1">Save Settings</button>
+                                <button type="reset" class="btn btn-secondary">Reset</button>
+                            </div>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="col-md-4">
-                <?php
-                    $error = session()->getFlashdata('error');
-                    if($error)
-                    {
-                ?>
-                <div class="alert alert-danger alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo session()->getFlashdata('error'); ?>                    
-                </div>
-                <?php } ?>
-                <?php  
-                    $success = session()->getFlashdata('success');
-                    if($success)
-                    {
-                ?>
-                <div class="alert alert-success alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo session()->getFlashdata('success'); ?>
-                </div>
-                <?php } ?>
-                
-                <div class="row">
-                    <div class="col-md-12">
-                        <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?>
-                    </div>
-                </div>
-            </div>
-        </div>    
-    </section>
-</div>
-
+        </div>
+    </div>
+</section>

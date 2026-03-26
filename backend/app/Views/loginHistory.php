@@ -1,101 +1,89 @@
-<link rel="stylesheet" href="<?php echo base_url(); ?>public/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css" />
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        <i class="fa fa-users"></i> Login History
-        <small>track login history</small>
-      </h1>
-    </section>
-    <section class="content">
-        <div class="row">
-          <form action="<?php echo base_url() ?>login-history" method="POST" id="searchList">
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 form-group">
-              <div class="input-group">
-                <input id="fromDate" type="text" name="fromDate" value="<?php echo $fromDate; ?>" class="form-control datepicker" placeholder="From Date" autocomplete="off" />
-                <span class="input-group-addon"><label for="fromDate"><i class="fa fa-calendar"></i></label></span>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 form-group">
-              <div class="input-group">
-                <input id="toDate" type="text" name="toDate" value="<?php echo $toDate; ?>" class="form-control datepicker" placeholder="To Date" autocomplete="off" />
-                <span class="input-group-addon"><label for="toDate"><i class="fa fa-calendar"></i></label></span>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
-              <input id="searchText" type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control" placeholder="Search Text"/>
-            </div>
-            <div class="col-lg-1 col-md-1 col-sm-6 col-xs-6 form-group">
-              <button type="submit" class="btn btn-md btn-primary btn-block searchList pull-right"><i class="fa fa-search" aria-hidden="true"></i></button> 
-            </div>
-            <div class="col-lg-1 col-md-1 col-sm-6 col-xs-6 form-group">
-              <button class="btn btn-md btn-default btn-block pull-right resetFilters"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-            </div>
-          </form>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-              <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title"><?= !empty($userInfo) ? $userInfo->name." : ".$userInfo->email : "All users" ?></h3>
-                    <div class="box-tools">
-                    </div>
-                </div><!-- /.box-header -->
-                <div class="box-body table-responsive no-padding">
-                  <table class="table table-hover">
-                    <tr>
-                      <th>Session Data</th>
-                      <th>IP Address</th>
-                      <th>User Agent</th>
-                      <th>Agent Full String</th>
-                      <th>Platform</th>
-                      <th>Date-Time</th>
-                    </tr>
-                    <?php
-                    if(!empty($userRecords))
-                    {
-                        foreach($userRecords as $record)
-                        {
-                    ?>
-                    <tr>
-                      <td><?php echo $record->sessionData ?></td>
-                      <td><?php echo $record->machineIp ?></td>
-                      <td><?php echo $record->userAgent ?></td>
-                      <td><?php echo $record->agentString ?></td>
-                      <td><?php echo $record->platform ?></td>
-                      <td><?php echo $record->createdDtm ?></td>
-                    </tr>
-                    <?php
-                        }
-                    }
-                    ?>
-                  </table>
-                  
-                </div><!-- /.box-body -->
-                <div class="box-footer clearfix">
-                    <?php echo $pager->links(); ?>
-                </div>
-              </div><!-- /.box -->
-            </div>
-        </div>
-    </section>
+﻿<link rel="stylesheet" href="<?= base_url('assets/extensions/flatpickr/flatpickr.min.css') ?>">
+<div class="page-heading">
+    <h3><i class="bi bi-clock-history me-2"></i> Login History <small>Track login history</small></h3>
 </div>
-<script src="<?php echo base_url(); ?>public/admin/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<script type="text/javascript">
-    jQuery(document).ready(function(){
-        jQuery('ul.pagination li a').click(function (e) {
-            e.preventDefault();            
-            var link = jQuery(this).get(0).href;
-            jQuery("#searchList").attr("action", link);
-            jQuery("#searchList").submit();
-        });
+<section class="section">
+    <div class="card mb-3">
+        <div class="card-body">
+            <form action="<?php echo base_url() ?>login-history" method="POST" id="searchList">
+                <div class="row g-2 align-items-end">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <label class="form-label mb-1">From Date</label>
+                        <div class="input-group">
+                            <input id="fromDate" type="text" name="fromDate" value="<?= $fromDate ?>" class="form-control datepicker" placeholder="From Date" autocomplete="off">
+                            <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <label class="form-label mb-1">To Date</label>
+                        <div class="input-group">
+                            <input id="toDate" type="text" name="toDate" value="<?= $toDate ?>" class="form-control datepicker" placeholder="To Date" autocomplete="off">
+                            <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <label class="form-label mb-1">Search</label>
+                        <input type="text" name="searchText" value="<?= $searchText ?>" class="form-control" placeholder="Search by name or email...">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary searchList"><i class="bi bi-search"></i> Search</button>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-secondary resetFilters"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
-        jQuery('.datepicker').datepicker({
-          autoclose: true,
-          format : "dd-mm-yyyy"
-        });
-        jQuery('.resetFilters').click(function(){
-          $(this).closest('form').find("input[type=text]").val("");
-        })
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title"><?= !empty($userInfo) ? esc($userInfo->name) . " — " . esc($userInfo->email) : "All Users" ?></h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Session</th>
+                            <th>IP Address</th>
+                            <th>User Agent</th>
+                            <th>Agent String</th>
+                            <th>Platform</th>
+                            <th>Date &amp; Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($userRecords)) foreach ($userRecords as $record): ?>
+                        <tr>
+                            <td><?= $record->sessionData ?></td>
+                            <td><?= $record->machineIp ?></td>
+                            <td><?= $record->userAgent ?></td>
+                            <td><?= $record->agentString ?></td>
+                            <td><?= $record->platform ?></td>
+                            <td><?= $record->createdDtm ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <?= $pager->links() ?>
+        </div>
+    </div>
+</section>
+<script src="<?= base_url('assets/extensions/flatpickr/flatpickr.min.js') ?>"></script>
+<script>
+jQuery(document).ready(function () {
+    jQuery('ul.pagination li a').click(function (e) {
+        e.preventDefault();
+        jQuery("#searchList").attr("action", jQuery(this).attr("href"));
+        jQuery("#searchList").submit();
     });
+    flatpickr('.datepicker', { dateFormat: 'd-m-Y', allowInput: true });
+    jQuery('.resetFilters').click(function () {
+        $(this).closest('form').find("input[type=text]").val("");
+    });
+});
 </script>
