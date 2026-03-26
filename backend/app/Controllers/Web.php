@@ -27,8 +27,8 @@ class Web extends BaseController
         $searchText         = esc($this->request->getPost('searchText') ?? '');
         $data['searchText'] = $searchText;
         $data['web']        = $this->webModel->get_allweb($searchText);
-        $this->global['pageTitle'] = 'Lottery : Web Listing';
-        return $this->loadViews('weblist', $this->global, $data, null);
+        $this->global['pageTitle'] = 'event : Web Listing';
+        return $this->loadViews('pages/weblist', $this->global, $data, null);
     }
 
     // ── Add Game ──────────────────────────────────────────────────────────────
@@ -38,8 +38,8 @@ class Web extends BaseController
         if ($this->isAdmin() === false) {
             return $this->loadThis();
         }
-        $this->global['pageTitle'] = 'Lottery : Add New Web';
-        return $this->loadViews('web/addNew', $this->global, null, null);
+        $this->global['pageTitle'] = 'event : Add New Web';
+        return $this->loadViews('pages/web/addNew', $this->global, null, null);
     }
 
     public function addNewWeb()
@@ -75,8 +75,8 @@ class Web extends BaseController
             return redirect()->to('web');
         }
         $data['userInfo'] = $this->webModel->getWebInfo($id);
-        $this->global['pageTitle'] = 'Lottery : Edit Game';
-        return $this->loadViews('web/editOld', $this->global, $data, null);
+        $this->global['pageTitle'] = 'event : Edit Game';
+        return $this->loadViews('pages/web/editOld', $this->global, $data, null);
     }
 
     public function editWeb()
@@ -132,8 +132,8 @@ class Web extends BaseController
 
         $data['userRecords'] = $this->webModel->list_date($id, $pgData['page'], $pgData['segment']);
         $data['pager']       = $pgData['pager'];
-        $this->global['pageTitle'] = 'Lottery : Game View';
-        return $this->loadViews('web/detail', $this->global, $data, null);
+        $this->global['pageTitle'] = 'event : Game View';
+        return $this->loadViews('pages/web/detail', $this->global, $data, null);
     }
 
     // ── Range Edit ────────────────────────────────────────────────────────────
@@ -158,8 +158,8 @@ class Web extends BaseController
             return redirect()->to('web');
         }
 
-        $this->global['pageTitle'] = 'Lottery : Edit Lottery Details';
-        return $this->loadViews('web/rangeedit', $this->global, $data, null);
+        $this->global['pageTitle'] = 'event : Edit event Details';
+        return $this->loadViews('pages/web/rangeedit', $this->global, $data, null);
     }
 
     public function editRange()
@@ -208,8 +208,8 @@ class Web extends BaseController
             return $this->loadThis();
         }
         $data['WebInfo'] = $this->webModel->getcommon();
-        $this->global['pageTitle'] = 'Lottery : Edit Common Setting';
-        return $this->loadViews('web/common', $this->global, $data, null);
+        $this->global['pageTitle'] = 'event : Edit Common Setting';
+        return $this->loadViews('pages/web/common', $this->global, $data, null);
     }
 
     public function editCommon()
@@ -251,8 +251,8 @@ class Web extends BaseController
             return redirect()->to('web');
         }
 
-        $this->global['pageTitle'] = 'Lottery : Edit Range Game';
-        return $this->loadViews('web/descriptionedit', $this->global, $data, null);
+        $this->global['pageTitle'] = 'event : Edit Range Game';
+        return $this->loadViews('pages/web/descriptionedit', $this->global, $data, null);
     }
 
     public function editdesc()
@@ -287,8 +287,8 @@ class Web extends BaseController
             'WebInfo' => $this->webModel->getWebInfo($id),
             'tier'    => $this->webModel->getTierInfo($id),
         ];
-        $this->global['pageTitle'] = 'Lottery : Edit Tier Game';
-        return $this->loadViews('web/tier', $this->global, $data, null);
+        $this->global['pageTitle'] = 'event : Edit Tier Game';
+        return $this->loadViews('pages/web/tier', $this->global, $data, null);
     }
 
     public function addtier()
@@ -384,8 +384,8 @@ class Web extends BaseController
     public function page()
     {
         $data['page'] = $this->webModel->page_list();
-        $this->global['pageTitle'] = 'Lottery : Page Listing';
-        return $this->loadViews('pagelist', $this->global, $data, null);
+        $this->global['pageTitle'] = 'event : Page Listing';
+        return $this->loadViews('pages/pagelist', $this->global, $data, null);
     }
 
     public function pageedit(int $id = 0)
@@ -397,8 +397,8 @@ class Web extends BaseController
             return redirect()->to('web');
         }
         $data['userInfo'] = $this->webModel->getallWebInfo('tbl_pages', $id);
-        $this->global['pageTitle'] = 'Lottery : Edit Page';
-        return $this->loadViews('web/pageedit', $this->global, $data, null);
+        $this->global['pageTitle'] = 'event : Edit Page';
+        return $this->loadViews('pages/web/pageedit', $this->global, $data, null);
     }
 
     public function editUpadtePage()
@@ -425,8 +425,8 @@ class Web extends BaseController
         $searchText         = esc($this->request->getPost('searchText') ?? '');
         $data['searchText'] = $searchText;
         $data['web']        = $this->webModel->get_allfaq($searchText);
-        $this->global['pageTitle'] = 'Lottery : Announcements';
-        return $this->loadViews('faq', $this->global, $data, null);
+        $this->global['pageTitle'] = 'event : Announcements';
+        return $this->loadViews('pages/faq', $this->global, $data, null);
     }
 
     public function addfaq()
@@ -434,8 +434,8 @@ class Web extends BaseController
         if ($this->isAdmin() === false) {
             return $this->loadThis();
         }
-        $this->global['pageTitle'] = 'Lottery : Add Announcement';
-        return $this->loadViews('web/addfaq', $this->global, null, null);
+        $this->global['pageTitle'] = 'event : Add Announcement';
+        return $this->loadViews('pages/web/addfaq', $this->global, null, null);
     }
 
     public function addNewfaq()
@@ -465,8 +465,8 @@ class Web extends BaseController
             return redirect()->to('web/faq');
         }
         $data['userInfo'] = $this->webModel->getfaq($id);
-        $this->global['pageTitle'] = 'Lottery : Edit Announcement';
-        return $this->loadViews('web/editfaq', $this->global, $data, null);
+        $this->global['pageTitle'] = 'event : Edit Announcement';
+        return $this->loadViews('pages/web/editfaq', $this->global, $data, null);
     }
 
     public function faqupdate()
@@ -508,8 +508,8 @@ class Web extends BaseController
             'userRecords' => $this->webModel->contact_ls($pgData['page'], $pgData['segment']),
             'pager'       => $pgData['pager'],
         ];
-        $this->global['pageTitle'] = 'Lottery : Contact List';
-        return $this->loadViews('web/contact', $this->global, $data, null);
+        $this->global['pageTitle'] = 'event : Contact List';
+        return $this->loadViews('pages/web/contact', $this->global, $data, null);
     }
 
     // ── Admin Order Listing ───────────────────────────────────────────────────
@@ -529,8 +529,8 @@ class Web extends BaseController
             'orders'     => $this->webModel->order_list($searchText, $pgData['page'], $pgData['segment']),
             'pager'      => $pgData['pager'],
         ];
-        $this->global['pageTitle'] = 'Lottery : Order History';
-        return $this->loadViews('web/order', $this->global, $data, null);
+        $this->global['pageTitle'] = 'event : Order History';
+        return $this->loadViews('pages/web/order', $this->global, $data, null);
     }
 
     // ── Admin Order Management ────────────────────────────────────────────────
@@ -572,7 +572,365 @@ class Web extends BaseController
         return $this->response->setJSON(['status' => (bool)$cleared]);
     }
 
+    // ── Transactions ──────────────────────────────────────────────────────────
+
+    // ── Dashboard Recent Transactions (DataTables AJAX source) ────────────────
+
+    public function dashboard_txn_data()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['data' => []]);
+        }
+
+        $draw   = (int) ($this->request->getGet('draw') ?? 1);
+        $start  = (int) ($this->request->getGet('start') ?? 0);
+        $length = (int) ($this->request->getGet('length') ?? 10);
+        $search = $this->request->getGet('search')['value'] ?? '';
+
+        $total    = $this->webModel->txn_count(null, null, null, 'PAID', $search);
+        $filtered = $total;
+        $rows     = $this->webModel->txn_list(null, null, null, 'PAID', $search, $length, $start);
+
+        $data = [];
+        foreach ($rows as $txn) {
+            $data[] = [
+                'id'       => '<a href="' . base_url('web/tickets') . '">#' . $txn->id . '</a>',
+                'user'     => '<div class="fw-semibold">' . esc($txn->user_name ?? '—') . '</div><small class="text-muted">' . esc($txn->user_email ?? '') . '</small>',
+                'event'    => esc($txn->web_name ?? '—'),
+                'amount'   => '₹' . number_format((float)$txn->total_price, 2),
+                'date'     => date('d M Y', strtotime($txn->createdAt)),
+            ];
+        }
+
+        return $this->response->setJSON([
+            'draw'            => $draw,
+            'recordsTotal'    => $total,
+            'recordsFiltered' => $filtered,
+            'data'            => $data,
+        ]);
+    }
+
+    public function transactions()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->loadThis();
+        }
+
+        $webId    = $this->request->getGet('web_id') ? (int) $this->request->getGet('web_id') : null;
+        $dateFrom = esc($this->request->getGet('date_from') ?? '');
+        $dateTo   = esc($this->request->getGet('date_to') ?? '');
+        $status   = $this->request->getGet('status') ?? '';
+        $search   = esc($this->request->getGet('search') ?? '');
+
+        $count  = $this->webModel->txn_count($webId, $dateFrom ?: null, $dateTo ?: null, $status !== '' ? $status : null, $search);
+        $pgData = $this->paginationCompress('web/transactions/', $count, 20, 3);
+
+        $data = [
+            'transactions' => $this->webModel->txn_list($webId, $dateFrom ?: null, $dateTo ?: null, $status !== '' ? $status : null, $search, $pgData['page'], $pgData['segment']),
+            'pager'        => $pgData['pager'],
+            'games'        => $this->webModel->get_allweb(),
+            'filters'      => compact('webId', 'dateFrom', 'dateTo', 'status', 'search'),
+            'total'        => $count,
+        ];
+        $this->global['pageTitle'] = 'event : Transactions';
+        return $this->loadViews('pages/web/transactions', $this->global, $data, null);
+    }
+
+    // ── Tickets Management ────────────────────────────────────────────────────
+
+    public function tickets()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->loadThis();
+        }
+
+        $search = esc($this->request->getGet('search') ?? '');
+        $status = $this->request->getGet('status') ?? '';
+
+        $count  = $this->webModel->ticket_list_count($search, $status !== '' ? $status : null);
+        $pgData = $this->paginationCompress('web/tickets/', $count, 20, 3);
+
+        $data = [
+            'tickets'  => $this->webModel->ticket_list($search, $status !== '' ? $status : null, $pgData['page'], $pgData['segment']),
+            'pager'    => $pgData['pager'],
+            'filters'  => compact('search', 'status'),
+            'total'    => $count,
+        ];
+        $this->global['pageTitle'] = 'event : Ticket Management';
+        return $this->loadViews('pages/web/tickets', $this->global, $data, null);
+    }
+
+    public function ticket_cancel()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['status' => 'access']);
+        }
+        $orderId = (int) $this->request->getPost('order_id');
+        $this->webModel->cancel_ticket($orderId);
+        return $this->response->setJSON(['status' => true, 'message' => 'Ticket cancelled successfully']);
+    }
+
+    public function ticket_resend()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['status' => 'access']);
+        }
+
+        $orderId = (int) $this->request->getPost('order_id');
+        $order   = $this->webModel->get_order_by_id($orderId);
+
+        if (!$order) {
+            return $this->response->setJSON(['status' => false, 'message' => 'Order not found']);
+        }
+
+        $userModel = new \App\Models\UserModel();
+        $user      = $userModel->getUserInfoById((int) $order->user_id);
+
+        if (!$user) {
+            return $this->response->setJSON(['status' => false, 'message' => 'User not found']);
+        }
+
+        helper('email_helper');
+        $tickets = json_decode($order->tickets ?? '[]', true);
+        $emailData = [
+            'name'           => $user->name,
+            'email'          => $user->email,
+            'order_id'       => $order->id,
+            'transaction_id' => $order->transaction_id,
+            'total_price'    => $order->total_price,
+            'tickets'        => $tickets,
+        ];
+
+        $sent = sendmail($user->email, 'Your Ticket Confirmation', view('email/contact', $emailData, true));
+        return $this->response->setJSON(['status' => (bool) $sent, 'message' => $sent ? 'Ticket resent successfully' : 'Failed to resend ticket']);
+    }
+
+    public function ticket_verify()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['status' => 'access']);
+        }
+
+        $ticketRef = esc($this->request->getPost('ticket_ref') ?? '');
+        if (empty($ticketRef)) {
+            return $this->response->setJSON(['status' => false, 'message' => 'Ticket reference required']);
+        }
+
+        // Search by order ID or transaction ID
+        $order = null;
+        if (is_numeric($ticketRef)) {
+            $order = $this->webModel->get_order_by_id((int) $ticketRef);
+        }
+        if (!$order) {
+            $order = $this->webModel->get_order_by_orderId($ticketRef);
+        }
+
+        if (!$order) {
+            return $this->response->setJSON(['status' => false, 'message' => 'No ticket found for this reference']);
+        }
+
+        $userModel = new \App\Models\UserModel();
+        $user      = $userModel->getUserInfoById((int) $order->user_id);
+        $tickets   = json_decode($order->tickets ?? '[]', true);
+
+        return $this->response->setJSON([
+            'status'  => true,
+            'valid'   => $order->paid_status === 'PAID',
+            'order'   => [
+                'id'             => $order->id,
+                'paid_status'    => $order->paid_status,
+                'total_price'    => $order->total_price,
+                'transaction_id' => $order->transaction_id,
+                'createdAt'      => $order->createdAt,
+            ],
+            'user'    => $user ? ['name' => $user->name, 'email' => $user->email] : null,
+            'tickets' => $tickets,
+        ]);
+    }
+
+    // ── Reports ────────────────────────────────────────────────────────────────
+
+    public function reports()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->loadThis();
+        }
+        $data['games'] = $this->webModel->get_allweb();
+        $this->global['pageTitle'] = 'event : Reports';
+        return $this->loadViews('pages/web/reports', $this->global, $data, null);
+    }
+
+    public function report_download()
+    {
+        if ($this->isAdmin() === false) {
+            return redirect()->to('dashboard');
+        }
+
+        $type  = $this->request->getGet('type') ?? 'daily';
+        $date  = $this->request->getGet('date') ?? date('Y-m-d');
+        $webId = $this->request->getGet('web_id') ? (int) $this->request->getGet('web_id') : null;
+        $year  = (int) ($this->request->getGet('year') ?? date('Y'));
+        $month = (int) ($this->request->getGet('month') ?? date('n'));
+
+        switch ($type) {
+            case 'event':
+                $rows     = $webId ? $this->webModel->report_event($webId) : [];
+                $filename = 'report_event_' . $webId . '_' . date('Ymd') . '.csv';
+                break;
+            case 'monthly':
+                $rows     = $this->webModel->report_monthly($year, $month);
+                $filename = 'report_monthly_' . $year . '_' . str_pad($month, 2, '0', STR_PAD_LEFT) . '.csv';
+                break;
+            default:
+                $rows     = $this->webModel->report_daily($date);
+                $filename = 'report_daily_' . $date . '.csv';
+                break;
+        }
+
+        $totalRevenue = array_sum(array_column((array) $rows, 'total_price'));
+
+        $output  = "Order ID,Date,Event,User Name,User Email,Transaction ID,Amount,Status\n";
+        foreach ($rows as $row) {
+            $output .= implode(',', [
+                '#' . $row->id,
+                date('d-m-Y H:i', strtotime($row->createdAt)),
+                '"' . str_replace('"', '""', $row->web_name ?? '') . '"',
+                '"' . str_replace('"', '""', $row->user_name ?? '') . '"',
+                $row->user_email ?? '',
+                $row->transaction_id ?? '',
+                $row->total_price,
+                $row->paid_status,
+            ]) . "\n";
+        }
+        $output .= "\nTotal Revenue,," . $totalRevenue . "\n";
+
+        return $this->response
+            ->setHeader('Content-Type', 'text/csv; charset=utf-8')
+            ->setHeader('Content-Disposition', 'attachment; filename="' . $filename . '"')
+            ->setBody("\xEF\xBB\xBF" . $output); // BOM for Excel UTF-8
+    }
+
     // ── Private helpers ───────────────────────────────────────────────────────
+
+    // ── Admin Wallet History ───────────────────────────────────────────────────
+
+    public function wallet()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->loadThis();
+        }
+        $searchText = esc($this->request->getPost('searchText') ?? '');
+        $count  = $this->webModel->admin_wallet_count($searchText);
+        $pgData = $this->paginationCompress('web/wallet/', $count, 20, 3);
+        $data = [
+            'searchText'  => $searchText,
+            'userRecords' => $this->webModel->admin_wallet_list($searchText, $pgData['page'], $pgData['segment']),
+            'pager'       => $pgData['pager'],
+        ];
+        $this->global['pageTitle'] = 'event : Wallet History';
+        return $this->loadViews('pages/web/wallet', $this->global, $data, null);
+    }
+
+    // ── Admin Winners ──────────────────────────────────────────────────────────
+
+    public function winner()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->loadThis();
+        }
+        $searchText = esc($this->request->getPost('searchText') ?? '');
+        $count  = $this->webModel->admin_winner_count($searchText);
+        $pgData = $this->paginationCompress('web/winner/', $count, 20, 3);
+        $data = [
+            'searchText'  => $searchText,
+            'amount'      => $this->webModel->admin_winner_total(),
+            'userRecords' => $this->webModel->admin_winner_list($searchText, $pgData['page'], $pgData['segment']),
+            'pager'       => $pgData['pager'],
+        ];
+        $this->global['pageTitle'] = 'event : Winner History';
+        return $this->loadViews('pages/web/winner', $this->global, $data, null);
+    }
+
+    // ── Admin Refund ───────────────────────────────────────────────────────────
+
+    public function refund()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->loadThis();
+        }
+        $searchText = esc($this->request->getPost('searchText') ?? '');
+        $count  = $this->webModel->admin_refund_count($searchText);
+        $pgData = $this->paginationCompress('web/refund/', $count, 20, 3);
+        $data = [
+            'searchText'  => $searchText,
+            'userRecords' => $this->webModel->admin_refund_list($searchText, $pgData['page'], $pgData['segment']),
+            'pager'       => $pgData['pager'],
+        ];
+        $this->global['pageTitle'] = 'event : Refund Requests';
+        return $this->loadViews('pages/web/refund', $this->global, $data, null);
+    }
+
+    public function refund_req(int $userId = 0)
+    {
+        if ($this->isAdmin() === false) {
+            return redirect()->to('dashboard');
+        }
+        $id    = (int) $this->request->getPost('id');
+        $money = (float) $this->request->getPost('money');
+        $type  = $this->request->getPost('type');
+        $this->webModel->refund_process($id, $type, $userId, $money);
+        return redirect()->to('web/refund')
+            ->with('success', $type === 'Refund' ? 'Refund processed successfully.' : 'Refund request rejected.');
+    }
+
+    // ── Admin Withdrawal ───────────────────────────────────────────────────────
+
+    public function withdrawl()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->loadThis();
+        }
+        $searchText = esc($this->request->getPost('searchText') ?? '');
+        $count  = $this->webModel->admin_withdrawl_count($searchText);
+        $pgData = $this->paginationCompress('web/withdrawl/', $count, 20, 3);
+        $data = [
+            'searchText'  => $searchText,
+            'userRecords' => $this->webModel->admin_withdrawl_list($searchText, $pgData['page'], $pgData['segment']),
+            'pager'       => $pgData['pager'],
+        ];
+        $this->global['pageTitle'] = 'event : Withdrawal Requests';
+        return $this->loadViews('pages/web/withdrawl', $this->global, $data, null);
+    }
+
+    public function with_req(int $userId = 0)
+    {
+        if ($this->isAdmin() === false) {
+            return redirect()->to('dashboard');
+        }
+        $id   = (int) $this->request->getPost('id');
+        $type = $this->request->getPost('type');
+        $this->webModel->withdrawl_process($id, $type);
+        return redirect()->back()->with('success', $type === 'Reject' ? 'Request rejected.' : 'Request processed successfully.');
+    }
+
+    // ── Admin PayPal Transfer ──────────────────────────────────────────────────
+
+    public function transfer()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->loadThis();
+        }
+        $searchText = esc($this->request->getPost('searchText') ?? '');
+        $count  = $this->webModel->admin_transfer_count($searchText);
+        $pgData = $this->paginationCompress('web/transfer/', $count, 20, 3);
+        $data = [
+            'searchText'  => $searchText,
+            'userRecords' => $this->webModel->admin_transfer_list($searchText, $pgData['page'], $pgData['segment']),
+            'pager'       => $pgData['pager'],
+        ];
+        $this->global['pageTitle'] = 'event : PayPal Transfer Requests';
+        return $this->loadViews('pages/web/transfer', $this->global, $data, null);
+    }
 
     private function _datearray(int $webId): array
     {

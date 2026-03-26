@@ -77,6 +77,46 @@ $routes->post('web/order/(:num)',    'Web::order');
 $routes->post('web/confirm_order_by_admin','Web::confirm_order_by_admin');
 $routes->post('web/release_order_by_admin','Web::release_order_by_admin');
 
+// ── Transactions ──────────────────────────────────────────────────────────────
+$routes->get('web/transactions',        'Web::transactions');
+$routes->get('web/transactions/(:num)', 'Web::transactions');
+$routes->get('web/dashboard_txn_data',  'Web::dashboard_txn_data');
+
+// ── Tickets ───────────────────────────────────────────────────────────────────
+$routes->get('web/tickets',             'Web::tickets');
+$routes->get('web/tickets/(:num)',      'Web::tickets');
+$routes->post('web/ticket_cancel',      'Web::ticket_cancel');
+$routes->post('web/ticket_resend',      'Web::ticket_resend');
+$routes->post('web/ticket_verify',      'Web::ticket_verify');
+
+// ── Reports ───────────────────────────────────────────────────────────────────
+$routes->get('web/reports',             'Web::reports');
+$routes->get('web/report_download',     'Web::report_download');
+
+// ── Wallet / Winners / Refunds / Withdrawals / Transfers ──────────────────────
+$routes->get('web/wallet',              'Web::wallet');
+$routes->get('web/wallet/(:num)',       'Web::wallet');
+$routes->post('web/wallet',             'Web::wallet');
+$routes->post('web/wallet/(:num)',      'Web::wallet');
+$routes->get('web/winner',             'Web::winner');
+$routes->get('web/winner/(:num)',      'Web::winner');
+$routes->post('web/winner',            'Web::winner');
+$routes->post('web/winner/(:num)',     'Web::winner');
+$routes->get('web/refund',             'Web::refund');
+$routes->get('web/refund/(:num)',      'Web::refund');
+$routes->post('web/refund',            'Web::refund');
+$routes->post('web/refund/(:num)',     'Web::refund');
+$routes->post('web/refund_req/(:num)', 'Web::refund_req/$1');
+$routes->get('web/withdrawl',          'Web::withdrawl');
+$routes->get('web/withdrawl/(:num)',   'Web::withdrawl');
+$routes->post('web/withdrawl',         'Web::withdrawl');
+$routes->post('web/withdrawl/(:num)',  'Web::withdrawl');
+$routes->post('web/with_req/(:num)',   'Web::with_req/$1');
+$routes->get('web/transfer',           'Web::transfer');
+$routes->get('web/transfer/(:num)',    'Web::transfer');
+$routes->post('web/transfer',          'Web::transfer');
+$routes->post('web/transfer/(:num)',   'Web::transfer');
+
 // ── Order ──────────────────────────────────────────────────────────────────────
 $routes->post('order/release_order','Order::release_order');
 

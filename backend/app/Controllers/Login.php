@@ -27,7 +27,7 @@ class Login extends BaseController
         if (session()->get('isLoggedIn') === true) {
             return redirect()->to('dashboard');
         }
-        return view('auth_header') . view('login') . view('auth_footer');
+        return view('templates/auth_header') . view('auth/sign-in') . view('templates/auth_footer');
     }
 
     public function loginMe()
@@ -91,7 +91,7 @@ class Login extends BaseController
         if (session()->get('isLoggedIn') === true) {
             return redirect()->to('dashboard');
         }
-        return view('auth_header') . view('forgotPassword') . view('auth_footer');
+        return view('templates/auth_header') . view('auth/forgot-password') . view('templates/auth_footer');
     }
 
     public function resetPasswordUser()
@@ -150,7 +150,7 @@ class Login extends BaseController
         }
 
         $data = ['email' => $email, 'activation_code' => $activation_id];
-        return view('auth_header') . view('newPassword', $data) . view('auth_footer');
+        return view('templates/auth_header') . view('auth/reset-password', $data) . view('templates/auth_footer');
     }
 
     public function createPasswordUser()

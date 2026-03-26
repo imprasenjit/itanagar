@@ -13,7 +13,7 @@
                 <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border: 1px solid #cccccc; border-collapse: collapse;">
                     <tr>
                         <td align="center" bgcolor="#8e9648" style=" color: #153643; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;">
-                            <img src="<?php echo base_url('email_image/logo.png'); ?>" alt="LOTTERY GAMES" width="300" style="display: block;" />
+                            <img src="<?php echo base_url('email_image/logo.png'); ?>" alt="event GAMES" width="300" style="display: block;" />
                         </td>
                     </tr>
                     <tr>

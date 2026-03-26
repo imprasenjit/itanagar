@@ -53,18 +53,18 @@ abstract class BaseController extends Controller
     protected function loadThis(): string
     {
         $this->global['pageTitle'] = 'Itanagarchoice : Access Denied';
-        return view('includes/header', $this->global)
-             . view('access')
-             . view('includes/footer');
+        return view('templates/header', $this->global)
+             . view('error/403')
+             . view('templates/footer');
     }
 
     // ── View loader ───────────────────────────────────────────────────────────
 
     protected function loadViews(string $viewName, array $headerInfo = [], ?array $pageInfo = null, ?array $footerInfo = null): string
     {
-        $out  = view('includes/header', $headerInfo);
+        $out  = view('templates/header', $headerInfo);
         $out .= view($viewName, $pageInfo ?? []);
-        $out .= view('includes/footer', $footerInfo ?? []);
+        $out .= view('templates/footer', $footerInfo ?? []);
         return $out;
     }
 

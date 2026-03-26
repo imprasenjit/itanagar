@@ -29,11 +29,17 @@ class User extends BaseController
         }
 
         $data = [
-            'totalweb'  => $this->userModel->count_record('tbl_webs'),
-            'totaluser' => $this->userModel->count_record('tbl_users'),
+            'totalweb'          => $this->userModel->count_record('tbl_webs'),
+            'totaluser'         => $this->userModel->count_record('tbl_users'),
+            'totalTicketsSold'  => $this->webModel->total_tickets_sold(),
+            'totalRevenue'      => $this->webModel->total_revenue(),
+            'todayRevenue'      => $this->webModel->today_revenue(),
+            'todayOrders'       => $this->webModel->today_orders(),
+            'recentTransactions'=> $this->webModel->recent_transactions(8),
+            'upcomingEvents'    => $this->webModel->upcoming_events(5),
         ];
-        $this->global['pageTitle'] = 'Lottery : Dashboard';
-        return $this->loadViews('dashboard', $this->global, $data, null);
+        $this->global['pageTitle'] = 'event : Dashboard';
+        return $this->loadViews('pages/dashboard', $this->global, $data, null);
     }
 
     public function logout()
@@ -59,8 +65,8 @@ class User extends BaseController
             'userRecords' => $this->userModel->userListing($searchText, $pgData['page'], $pgData['segment']),
             'pager'       => $pgData['pager'],
         ];
-        $this->global['pageTitle'] = 'Lottery : User Listing';
-        return $this->loadViews('users', $this->global, $data, null);
+        $this->global['pageTitle'] = 'event : User Listing';
+        return $this->loadViews('pages/users', $this->global, $data, null);
     }
 
     // ── Add New User ──────────────────────────────────────────────────────────
@@ -75,8 +81,8 @@ class User extends BaseController
             'country' => $this->webModel->getallcountry(),
             'roles'   => $this->userModel->getUserRoles(),
         ];
-        $this->global['pageTitle'] = 'Lottery : Add New User';
-        return $this->loadViews('addNew', $this->global, $data, null);
+        $this->global['pageTitle'] = 'event : Add New User';
+        return $this->loadViews('pages/addNew', $this->global, $data, null);
     }
 
     public function checkEmailExists()
@@ -144,8 +150,8 @@ class User extends BaseController
             'roles'    => $this->userModel->getUserRoles(),
             'userInfo' => $this->userModel->getUserInfo($userId),
         ];
-        $this->global['pageTitle'] = 'Lottery : Edit User';
-        return $this->loadViews('editOld', $this->global, $data, null);
+        $this->global['pageTitle'] = 'event : Edit User';
+        return $this->loadViews('pages/editOld', $this->global, $data, null);
     }
 
     public function editUser()
@@ -237,8 +243,8 @@ class User extends BaseController
             'userRecords' => $this->userModel->loginHistory($userId, $searchText, $fromDate, $toDate, $pgData['page'], $pgData['segment']),
             'pager'       => $pgData['pager'],
         ];
-        $this->global['pageTitle'] = 'Lottery : User Login History';
-        return $this->loadViews('loginHistory', $this->global, $data, null);
+        $this->global['pageTitle'] = 'event : User Login History';
+        return $this->loadViews('pages/loginHistory', $this->global, $data, null);
     }
 
     // ── Admin Profile ────────────────────────────────────────────────────────
@@ -249,8 +255,8 @@ class User extends BaseController
             'userInfo' => $this->userModel->getUserInfoWithRole($this->vendorId),
             'active'   => $active,
         ];
-        $this->global['pageTitle'] = $active === 'details' ? 'Lottery : My Profile' : 'Lottery : Change Password';
-        return $this->loadViews('profile', $this->global, $data, null);
+        $this->global['pageTitle'] = $active === 'details' ? 'event : My Profile' : 'event : Change Password';
+        return $this->loadViews('pages/profile', $this->global, $data, null);
     }
 
     public function profileUpdate(string $active = 'details')
@@ -323,7 +329,7 @@ class User extends BaseController
 
     public function pageNotFound()
     {
-        $this->global['pageTitle'] = 'Lottery : 404 - Page Not Found';
-        return $this->loadViews('404', $this->global, null, null);
+        $this->global['pageTitle'] = 'event : 404 - Page Not Found';
+        return $this->loadViews('error/404', $this->global, null, null);
     }
 }
