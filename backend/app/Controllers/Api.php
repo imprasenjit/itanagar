@@ -22,6 +22,10 @@ class Api extends BaseController
 
     protected $helpers = ['url', 'cias_helper', 'email_helper'];
 
+    /**
+     * Bootstraps the controller, instantiates models, and applies CORS headers.
+     * Called automatically by CodeIgniter before any method is invoked.
+     */
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger): void
     {
         parent::initController($request, $response, $logger);
@@ -33,6 +37,10 @@ class Api extends BaseController
 
     // ── Helpers ──────────────────────────────────────────────────────────────
 
+    /**
+     * Sets CORS response headers for the React frontend origins.
+     * Immediately responds with 200 and exits on OPTIONS preflight requests.
+     */
     private function _cors(): void
     {
         $origin  = $this->request->getHeaderLine('Origin');
@@ -50,6 +58,14 @@ class Api extends BaseController
         }
     }
 
+    /**
+     * Returns a standardised JSON response: { status, data, message }.
+     *
+     * @param array  $data    Payload to include under the "data" key.
+     * @param bool   $status  Operation success flag.
+     * @param string $message Human-readable result message.
+     * @param int    $code    HTTP status code (default 200).
+     */
     private function json(array $data = [], bool $status = true, string $message = '', int $code = 200)
     {
         return $this->response
@@ -58,22 +74,41 @@ class Api extends BaseController
             ->setJSON(['status' => $status, 'data' => $data, 'message' => $message]);
     }
 
+    /**
+     * Returns a standardised JSON error response with status=false.
+     *
+     * @param string $message Error description sent to the client.
+     * @param int    $code    HTTP status code (default 400).
+     * @param array  $data    Optional extra payload.
+     */
     private function error(string $message = 'An error occurred', int $code = 400, array $data = [])
     {
         return $this->json($data, false, $message, $code);
     }
 
+    /**
+     * Decodes the raw JSON request body and returns it as an associative array.
+     * Returns an empty array when the body is absent or not valid JSON.
+     */
     private function getBody(): array
     {
         $raw = $this->request->getBody();
         return $raw ? (json_decode($raw, true) ?? []) : [];
     }
 
+    /**
+     * Returns the authenticated user's ID from the session, or null for guests.
+     */
     private function getUserId(): ?int
     {
         return session()->get('isLoggedIn') === true ? (int) session()->get('userId') : null;
     }
 
+    /**
+     * Returns the user ID to use as the cart owner.
+     * For logged-in users this is their real userId; for guests a random
+     * integer is generated and persisted in the session as custom_userId.
+     */
     private function getCartUserId(): int
     {
         if (session()->get('isLoggedIn') === true) {
@@ -85,6 +120,11 @@ class Api extends BaseController
         return (int) session()->get('custom_userId');
     }
 
+    /**
+     * Guards an endpoint against unauthenticated access.
+     * Returns a 401 JSON error response when the user is not logged in,
+     * or null when the session is valid (caller must check for non-null).
+     */
     private function requireAuth()
     {
         if (session()->get('isLoggedIn') !== true) {
@@ -92,6 +132,12 @@ class Api extends BaseController
         }
     }
 
+    /**
+     * Generates a cryptographically random alphanumeric string.
+     * Used for Razorpay receipt IDs and transaction identifiers.
+     *
+     * @param int $length Number of characters to generate (default 16).
+     */
     private function getRandomString(int $length = 16): string
     {
         $chars  = '0123456789abcdefghijklmnopqrstuvwxyz';
@@ -103,11 +149,24 @@ class Api extends BaseController
         return implode('', $pieces);
     }
 
+    /**
+     * Returns true when the given ticket number is available (not in cart or sold) for a game.
+     *
+     * @param int $ticket  Ticket number to check.
+     * @param int $web_id  Game (tbl_webs) ID.
+     */
     private function getTicketAvailability(int $ticket, int $web_id): bool
     {
         return count($this->webModel->get_ticket_availability($ticket, $web_id)) === 0;
     }
 
+    /**
+     * Parses the comma-separated range string from a tbl_ranges row
+     * and returns a flat array of range boundary integers [start, end, ...].
+     *
+     * @param object|null $range A range row from tbl_ranges (expects rangeStart property).
+     * @return int[] Flat list of start/end boundary values.
+     */
     private function _getFirstAvailableTickets($range): array
     {
         if (!$range || empty($range->rangeStart)) {
@@ -126,6 +185,10 @@ class Api extends BaseController
 
     // ── Public: Home & Games ─────────────────────────────────────────────────
 
+    /**
+     * GET /api/home
+     * Returns homepage data: featured games, one FAQ, recent results, and platform stats.
+     */
     public function home()
     {
         return $this->json([
@@ -139,11 +202,21 @@ class Api extends BaseController
         ]);
     }
 
+    /**
+     * GET /api/games
+     * Returns all active lottery games.
+     */
     public function games()
     {
         return $this->json(['games' => $this->webModel->home_web()]);
     }
 
+    /**
+     * GET /api/game/{id}
+     * Returns a single game's details along with its ticket range configuration.
+     *
+     * @param int $id Game ID (tbl_webs.id).
+     */
     public function game_detail(int $id)
     {
         $website = $this->webModel->getallWebInfo('tbl_webs', $id);
@@ -158,6 +231,14 @@ class Api extends BaseController
         ]);
     }
 
+    /**
+     * GET /api/game/{web_id}/tickets/{start}/{end}
+     * Returns all available (unsold, not in cart) ticket numbers in the given range.
+     *
+     * @param int $web_id Game ID.
+     * @param int $start  First ticket number to check (inclusive).
+     * @param int $end    Last ticket number to check (inclusive).
+     */
     public function game_tickets(int $web_id, int $start, int $end)
     {
         $available = [];
@@ -169,6 +250,14 @@ class Api extends BaseController
         return $this->json(['tickets' => $available]);
     }
 
+    /**
+     * POST /api/game/{web_id}/ticket-search
+     * Checks whether a specific ticket number is within the game's valid range
+     * and is still available for purchase.
+     * Body: { search: int }
+     *
+     * @param int $web_id Game ID.
+     */
     public function ticket_search(int $web_id)
     {
         $body   = $this->getBody();
@@ -185,11 +274,21 @@ class Api extends BaseController
 
     // ── Public: FAQ, Pages, Results, Contact ─────────────────────────────────
 
+    /**
+     * GET /api/faq
+     * Returns all FAQ entries ordered by most recent.
+     */
     public function faq()
     {
         return $this->json(['faqs' => $this->webModel->faq()]);
     }
 
+    /**
+     * GET /api/page/{type}
+     * Returns a CMS page (tbl_pages) by its type slug, e.g. "about", "terms".
+     *
+     * @param string $type Page type slug.
+     */
     public function page(string $type)
     {
         $page = $this->webModel->page_detail($type);
@@ -199,6 +298,11 @@ class Api extends BaseController
         return $this->json(['page' => $page]);
     }
 
+    /**
+     * GET /api/results?web_id=&date=
+     * Returns draw results, optionally filtered by game ID and/or date.
+     * Also returns the full games list for filter dropdowns.
+     */
     public function results()
     {
         $webId   = $this->request->getGet('web_id');
@@ -208,6 +312,11 @@ class Api extends BaseController
         return $this->json(['results' => $results, 'games' => $games]);
     }
 
+    /**
+     * POST /api/contact
+     * Saves a contact form submission to tbl_contact.
+     * Body: { name, email, mobile?, message }
+     */
     public function contact()
     {
         $body    = $this->getBody();
@@ -232,6 +341,11 @@ class Api extends BaseController
 
     // ── Auth ──────────────────────────────────────────────────────────────────
 
+    /**
+     * GET /api/me
+     * Returns the current user's session data and cart item count.
+     * Returns isLoggedIn=false for unauthenticated requests (no error).
+     */
     public function me()
     {
         if (session()->get('isLoggedIn') !== true) {
@@ -254,6 +368,12 @@ class Api extends BaseController
         ]);
     }
 
+    /**
+     * POST /api/login
+     * Authenticates a user by email and password, starts a session,
+     * and merges any guest cart items into the user's cart.
+     * Body: { email, password }
+     */
     public function login()
     {
         $body     = $this->getBody();
@@ -311,12 +431,21 @@ class Api extends BaseController
         ], true, 'Login successful');
     }
 
+    /**
+     * POST /api/logout
+     * Destroys the current session and logs the user out.
+     */
     public function logout()
     {
         session()->destroy();
         return $this->json([], true, 'Logged out');
     }
 
+    /**
+     * POST /api/register
+     * Creates a new user account with role 2 (regular user).
+     * Body: { name, email, password, mobile? }
+     */
     public function register()
     {
         $body   = $this->getBody();
@@ -346,6 +475,12 @@ class Api extends BaseController
         return $this->json(['userId' => $userId], true, 'Registered successfully');
     }
 
+    /**
+     * POST /api/forgot-password
+     * Generates a password reset token, persists it in tbl_reset_password,
+     * and sends the reset link via email.
+     * Body: { email }
+     */
     public function forgot_password()
     {
         helper('email_helper');
@@ -380,6 +515,11 @@ class Api extends BaseController
         return $this->json([], true, 'Reset link sent to your email');
     }
 
+    /**
+     * POST /api/reset-password
+     * Validates the activation code and updates the user's password.
+     * Body: { email, activation_code, password, password_confirmation }
+     */
     public function reset_password()
     {
         $body            = $this->getBody();
@@ -407,6 +547,10 @@ class Api extends BaseController
 
     // ── Cart ──────────────────────────────────────────────────────────────────
 
+    /**
+     * GET /api/cart
+     * Returns the current user's (or guest's) cart items and the total price.
+     */
     public function cart()
     {
         $userId = $this->getCartUserId();
@@ -415,6 +559,12 @@ class Api extends BaseController
         return $this->json(['cart' => $cart, 'total' => $total]);
     }
 
+    /**
+     * POST /api/cart/add
+     * Adds one or more ticket numbers to the cart for a given game.
+     * Skips tickets that are already sold or in another cart.
+     * Body: { web_id: int, tickets: int[] }
+     */
     public function cart_add()
     {
         $body   = $this->getBody();
@@ -454,6 +604,12 @@ class Api extends BaseController
         return $this->json(['added' => count($toAdd), 'errors' => $errors], true, '');
     }
 
+    /**
+     * DELETE /api/cart/{cartId}
+     * Removes a single cart row belonging to the current user/guest.
+     *
+     * @param int $cartId Primary key of the tbl_cart row to remove.
+     */
     public function cart_remove(int $cartId)
     {
         $userId = $this->getCartUserId();
@@ -463,6 +619,13 @@ class Api extends BaseController
 
     // ── Payment ───────────────────────────────────────────────────────────────
 
+    /**
+     * POST /api/payment/create
+     * Creates a Razorpay order for the current cart.
+     * Handles both logged-in users and guests (auto-registers guests by mobile).
+     * Marks cart rows as paid_status=1 and stores the order in tbl_order.
+     * Returns Razorpay order details needed by the frontend payment widget.
+     */
     public function payment_create()
     {
         $body         = $this->getBody();
@@ -577,6 +740,13 @@ class Api extends BaseController
         ]);
     }
 
+    /**
+     * POST /api/payment/confirm
+     * Verifies the Razorpay payment signature and marks the order as PAID.
+     * Also handles wallet top-up confirmations when type=="wallet".
+     * Sends the ticket confirmation email on success.
+     * Body: { razorpay_order_id, razorpay_payment_id, razorpay_signature, type? }
+     */
     public function payment_confirm()
     {
         helper('email_helper');
@@ -657,6 +827,11 @@ class Api extends BaseController
         }
     }
 
+    /**
+     * POST /api/payment/cancel
+     * Marks a Razorpay order as cancelled (order_status=2).
+     * Body: { order_id: string }
+     */
     public function payment_cancel()
     {
         $body    = $this->getBody();
@@ -671,6 +846,11 @@ class Api extends BaseController
         return $this->json([], true, 'Order cancelled');
     }
 
+    /**
+     * GET /api/order/confirm
+     * Returns the authenticated user's current cart for pre-checkout review.
+     * Requires login (401 if unauthenticated).
+     */
     public function order_confirm()
     {
         $auth = $this->requireAuth();
@@ -685,6 +865,10 @@ class Api extends BaseController
 
     // ── Account ───────────────────────────────────────────────────────────────
 
+    /**
+     * GET /api/account/profile
+     * Returns the authenticated user's profile data from tbl_users.
+     */
     public function account_profile()
     {
         $auth = $this->requireAuth();
@@ -694,6 +878,12 @@ class Api extends BaseController
         return $this->json($user ? (array) $user : []);
     }
 
+    /**
+     * POST /api/account/profile
+     * Updates the authenticated user's name and mobile number.
+     * Also syncs the session values immediately.
+     * Body: { name, mobile? }
+     */
     public function account_profile_update()
     {
         $auth = $this->requireAuth();
@@ -715,6 +905,11 @@ class Api extends BaseController
         return $this->json([], true, 'Profile updated');
     }
 
+    /**
+     * POST /api/account/password
+     * Changes the authenticated user's password after verifying the old one.
+     * Body: { old_password, new_password }
+     */
     public function account_password()
     {
         $auth = $this->requireAuth();
@@ -739,6 +934,10 @@ class Api extends BaseController
         return $this->json([], true, 'Password updated');
     }
 
+    /**
+     * GET /api/account/wallet
+     * Returns the authenticated user's wallet balance and full transaction history.
+     */
     public function account_wallet()
     {
         $auth = $this->requireAuth();
@@ -752,6 +951,12 @@ class Api extends BaseController
         ]);
     }
 
+    /**
+     * POST /api/account/wallet/topup
+     * Creates a Razorpay order to add funds to the user's wallet.
+     * The actual credit is applied in payment_confirm() when type=="wallet".
+     * Body: { amount: float }
+     */
     public function account_wallet_topup()
     {
         $auth = $this->requireAuth();
@@ -789,6 +994,10 @@ class Api extends BaseController
         ]);
     }
 
+    /**
+     * GET /api/account/orders
+     * Returns all past orders (tbl_order) for the authenticated user.
+     */
     public function account_orders()
     {
         $auth = $this->requireAuth();
@@ -797,6 +1006,10 @@ class Api extends BaseController
         return $this->json(['orders' => $this->webModel->order_history($userId)]);
     }
 
+    /**
+     * GET /api/account/refunds
+     * Returns the authenticated user's refund request history from tbl_refund.
+     */
     public function account_refunds()
     {
         $auth = $this->requireAuth();
@@ -805,6 +1018,11 @@ class Api extends BaseController
         return $this->json($this->webModel->refund_history($userId));
     }
 
+    /**
+     * POST /api/account/refunds
+     * Submits a new refund request for a given order.
+     * Body: { order_id: string, reason: string }
+     */
     public function account_refund_create()
     {
         $auth = $this->requireAuth();
@@ -826,6 +1044,10 @@ class Api extends BaseController
         return $this->json([], true, 'Refund request submitted');
     }
 
+    /**
+     * GET /api/account/withdrawals
+     * Returns the authenticated user's withdrawal request history from tbl_withdrawl.
+     */
     public function account_withdrawals()
     {
         $auth = $this->requireAuth();
@@ -834,6 +1056,11 @@ class Api extends BaseController
         return $this->json($this->webModel->withdrawl_history($userId));
     }
 
+    /**
+     * POST /api/account/withdrawals
+     * Submits a withdrawal request (bank transfer) for a specified amount.
+     * Body: { amount, account_number, ifsc, account_name }
+     */
     public function account_withdrawal_create()
     {
         $auth = $this->requireAuth();
@@ -859,6 +1086,10 @@ class Api extends BaseController
         return $this->json([], true, 'Withdrawal request submitted');
     }
 
+    /**
+     * GET /api/account/transfers
+     * Returns the authenticated user's wallet-to-wallet transfer history.
+     */
     public function account_transfers()
     {
         $auth = $this->requireAuth();
@@ -867,6 +1098,12 @@ class Api extends BaseController
         return $this->json($this->webModel->transfer_history($userId));
     }
 
+    /**
+     * POST /api/account/transfers
+     * Transfers funds from the authenticated user's wallet to another user.
+     * Accepts either a userId (numeric) or an email address as the recipient identifier.
+     * Body: { to_user: string|int, amount: float, note?: string }
+     */
     public function account_transfer_create()
     {
         $auth = $this->requireAuth();
@@ -912,6 +1149,10 @@ class Api extends BaseController
         return $this->json([], true, 'Transfer successful');
     }
 
+    /**
+     * GET /api/account/winners
+     * Returns the authenticated user's winning history from tbl_winner_history.
+     */
     public function account_winners()
     {
         $auth = $this->requireAuth();

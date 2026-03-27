@@ -454,7 +454,7 @@ class WebModel extends Model
     public function order_list(string $searchText, int $limit, int $offset)
     {
         return $this->_orderListBuilder($searchText)
-            ->select('tbl_order.*')
+            ->select('tbl_order.*, tbl_users.name as uname, tbl_users.email')
             ->orderBy('tbl_order.id', 'DESC')
             ->limit($limit, $offset)
             ->get()->getResult();

@@ -519,18 +519,75 @@ class Web extends BaseController
         if ($this->isAdmin() === false) {
             return $this->loadThis();
         }
-
-        $searchText = esc($this->request->getPost('searchText') ?? '');
-        $count      = $this->webModel->order_list_count($searchText);
-        $pgData     = $this->paginationCompress('web/order/', $count, 10, 3);
-
-        $data = [
-            'searchText' => $searchText,
-            'orders'     => $this->webModel->order_list($searchText, $pgData['page'], $pgData['segment']),
-            'pager'      => $pgData['pager'],
-        ];
         $this->global['pageTitle'] = 'event : Order History';
-        return $this->loadViews('pages/web/order', $this->global, $data, null);
+        return $this->loadViews('pages/web/order', $this->global, [], null);
+    }
+
+    public function order_data()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['error' => 'access']);
+        }
+
+        $draw   = (int)($this->request->getGet('draw') ?? 1);
+        $start  = (int)($this->request->getGet('start') ?? 0);
+        $length = (int)($this->request->getGet('length') ?? 10);
+        $search = trim($this->request->getGet('search')['value'] ?? '');
+
+        $total    = $this->webModel->order_list_count('');
+        $filtered = $this->webModel->order_list_count($search);
+        $orders   = $this->webModel->order_list($search, $length, $start);
+
+        $webCache = [];
+        $data     = [];
+
+        foreach ($orders as $o) {
+            $rawTickets = json_decode($o->tickets ?? '[]', true) ?: [];
+            $enriched   = [];
+            foreach ($rawTickets as $t) {
+                $webId = (int)($t['web_id'] ?? 0);
+                if (!isset($webCache[$webId])) {
+                    $webInfo          = $this->webModel->getWebInfo($webId);
+                    $webCache[$webId] = $webInfo ? esc($webInfo->name) : 'Unknown';
+                }
+                $enriched[] = [
+                    'game'      => $webCache[$webId],
+                    'ticket_no' => esc($t['ticket_no'] ?? ''),
+                ];
+            }
+
+            $count = count($enriched);
+            if ($o->order_status == '1') {
+                $badge = '<span class="badge bg-success">Confirmed</span>';
+            } elseif ((string)$o->paid_status === '0') {
+                $badge = '<span class="badge bg-warning text-dark">Pending</span>';
+            } else {
+                $badge = '<span class="badge bg-danger">Failed</span>';
+            }
+
+            $data[] = [
+                'DT_RowId'     => 'order-' . $o->id,
+                'raw_id'       => $o->id,
+                'paid_status'  => $o->paid_status,
+                'order_status' => $o->order_status,
+                'order_no'     => '<strong>#' . $o->id . '</strong>',
+                'user'         => '<div>' . esc($o->uname ?? '') . '</div><small class="text-muted">' . esc($o->email ?? '') . '</small>',
+                'ticket_info'  => '<button class="btn btn-sm btn-outline-primary expand-tickets" type="button"><i class="bi bi-ticket-perforated me-1"></i>' . $count . ' ticket' . ($count !== 1 ? 's' : '') . '</button>',
+                'tickets'      => $enriched,
+                'amount'       => '₹' . number_format((float)$o->total_price, 2),
+                'payment'      => 'UPI',
+                'order_id'     => '<small class="text-muted">' . esc($o->razorpay_order_id ?? '') . '</small>',
+                'date'         => date('M d, Y h:i a', strtotime($o->createdAt)),
+                'status'       => $badge,
+            ];
+        }
+
+        return $this->response->setJSON([
+            'draw'            => $draw,
+            'recordsTotal'    => $total,
+            'recordsFiltered' => $filtered,
+            'data'            => $data,
+        ]);
     }
 
     // ── Admin Order Management ────────────────────────────────────────────────
@@ -610,27 +667,86 @@ class Web extends BaseController
         ]);
     }
 
+    public function transactions_data()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['error' => 'access']);
+        }
+
+        $draw   = (int)($this->request->getGet('draw') ?? 1);
+        $start  = (int)($this->request->getGet('start') ?? 0);
+        $length = (int)($this->request->getGet('length') ?? 20);
+        $search = trim($this->request->getGet('search')['value'] ?? '');
+
+        $webId    = $this->request->getGet('web_id')    ? (int)$this->request->getGet('web_id') : null;
+        $dateFrom = $this->request->getGet('date_from') ?? '';
+        $dateTo   = $this->request->getGet('date_to')   ?? '';
+        $status   = $this->request->getGet('status')    ?? '';
+
+        $total    = $this->webModel->txn_count(null, null, null, null, '');
+        $filtered = $this->webModel->txn_count($webId, $dateFrom ?: null, $dateTo ?: null, $status !== '' ? $status : null, $search);
+        $rows     = $this->webModel->txn_list($webId, $dateFrom ?: null, $dateTo ?: null, $status !== '' ? $status : null, $search, $length, $start);
+
+        $statusMap = [
+            'PAID'      => ['success', 'Paid'],
+            'RELEASED'  => ['info',    'Released'],
+            'CANCELLED' => ['danger',  'Cancelled'],
+            '0'         => ['warning', 'Unpaid'],
+            '1'         => ['success', 'Paid'],
+            '2'         => ['danger',  'Failed'],
+        ];
+
+        $data = [];
+        foreach ($rows as $txn) {
+            $tickets   = json_decode($txn->tickets ?? '[]', true) ?: [];
+            $ticketNos = array_column($tickets, 'ticket_no');
+            if (!empty($ticketNos)) {
+                $shown      = array_slice($ticketNos, 0, 3);
+                $rest       = count($ticketNos) - 3;
+                $ticketHtml = esc(implode(', ', $shown));
+                if ($rest > 0) {
+                    $ticketHtml .= ' <span class="text-muted">+' . $rest . ' more</span>';
+                }
+            } else {
+                $ticketHtml = esc($txn->transaction_id ?? '—');
+            }
+
+            [$badgeColor, $statusLabel] = $statusMap[(string)$txn->paid_status] ?? ['secondary', esc($txn->paid_status)];
+
+            $data[] = [
+                'order_no' => '<strong>#' . $txn->id . '</strong>',
+                'date'     => '<small>' . date('d M Y, H:i', strtotime($txn->createdAt)) . '</small>',
+                'event'    => esc($txn->web_name ?? '—'),
+                'user'     => '<div>' . esc($txn->user_name ?? '—') . '</div><small class="text-muted">' . esc($txn->user_email ?? '') . '</small>',
+                'tickets'  => '<small class="text-muted">' . $ticketHtml . '</small>',
+                'amount'   => '₹' . number_format((float)$txn->total_price, 2),
+                'status'   => '<span class="badge bg-' . $badgeColor . '">' . $statusLabel . '</span>',
+            ];
+        }
+
+        return $this->response->setJSON([
+            'draw'            => $draw,
+            'recordsTotal'    => $total,
+            'recordsFiltered' => $filtered,
+            'data'            => $data,
+        ]);
+    }
+
     public function transactions()
     {
         if ($this->isAdmin() === false) {
             return $this->loadThis();
         }
 
-        $webId    = $this->request->getGet('web_id') ? (int) $this->request->getGet('web_id') : null;
+        $webId    = $this->request->getGet('web_id') ? (int)$this->request->getGet('web_id') : null;
         $dateFrom = esc($this->request->getGet('date_from') ?? '');
-        $dateTo   = esc($this->request->getGet('date_to') ?? '');
+        $dateTo   = esc($this->request->getGet('date_to')   ?? '');
         $status   = $this->request->getGet('status') ?? '';
         $search   = esc($this->request->getGet('search') ?? '');
 
-        $count  = $this->webModel->txn_count($webId, $dateFrom ?: null, $dateTo ?: null, $status !== '' ? $status : null, $search);
-        $pgData = $this->paginationCompress('web/transactions/', $count, 20, 3);
-
         $data = [
-            'transactions' => $this->webModel->txn_list($webId, $dateFrom ?: null, $dateTo ?: null, $status !== '' ? $status : null, $search, $pgData['page'], $pgData['segment']),
-            'pager'        => $pgData['pager'],
-            'games'        => $this->webModel->get_allweb(),
-            'filters'      => compact('webId', 'dateFrom', 'dateTo', 'status', 'search'),
-            'total'        => $count,
+            'games'   => $this->webModel->get_allweb(),
+            'filters' => compact('webId', 'dateFrom', 'dateTo', 'status', 'search'),
         ];
         $this->global['pageTitle'] = 'event : Transactions';
         return $this->loadViews('pages/web/transactions', $this->global, $data, null);

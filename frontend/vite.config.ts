@@ -19,6 +19,11 @@ export default defineConfig({
         target: 'http://localhost/itanagar/backend/public',
         changeOrigin: true,
       },
+      // Proxy imglogo/* to CI4 backend public folder
+      '/imglogo': {
+        target: 'http://localhost/itanagar/backend/public',
+        changeOrigin: true,
+      },
     },
   },
 })

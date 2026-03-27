@@ -70,6 +70,7 @@ $routes->get('web/pageedit/(:num)', 'Web::pageedit/$1');
 $routes->post('web/editUpadtePage','Web::editUpadtePage');
 $routes->get('web/contact_list', 'Web::contact_list');
 $routes->get('web/contact_list/(:num)', 'Web::contact_list');
+$routes->get('web/order_data',       'Web::order_data');
 $routes->get('web/order',            'Web::order');
 $routes->post('web/order',           'Web::order');
 $routes->get('web/order/(:num)',     'Web::order');
@@ -78,6 +79,7 @@ $routes->post('web/confirm_order_by_admin','Web::confirm_order_by_admin');
 $routes->post('web/release_order_by_admin','Web::release_order_by_admin');
 
 // ── Transactions ──────────────────────────────────────────────────────────────
+$routes->get('web/transactions_data',   'Web::transactions_data');
 $routes->get('web/transactions',        'Web::transactions');
 $routes->get('web/transactions/(:num)', 'Web::transactions');
 $routes->get('web/dashboard_txn_data',  'Web::dashboard_txn_data');

@@ -1,11 +1,7 @@
-﻿<style>
-.numberdegits { margin: 0; padding: 0; display: inline-flex; gap: 4px; }
-.numberdegits li { display: inline-flex; align-items: center; justify-content: center; background: #01B623; color: #fff; width: 34px; height: 34px; border-radius: 50%; font-weight: 600; font-size: .8rem; list-style: none; }
-.numberdegits li.mega { background: #ffc107; color: #000; }
-</style>
-<div class="page-heading">
+﻿<div class="page-heading">
     <h3><i class="bi bi-bag-fill me-2"></i> Order History</h3>
 </div>
+
 <section class="section">
     <?php $success_message = session()->getFlashdata('success_message'); if ($success_message): ?>
     <div class="alert alert-success alert-dismissible fade show">
@@ -16,109 +12,128 @@
 
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">All Orders</h4>
-            <div class="card-header-action d-flex gap-2">
-                <form action="<?= base_url() ?>web/order" method="POST" id="searchList" class="d-flex">
-                    <div class="input-group">
-                        <input type="text" name="searchText" value="<?= $searchText ?>" class="form-control" placeholder="Search by user...">
-                        <button class="btn btn-primary searchList" type="submit"><i class="bi bi-search"></i></button>
-                    </div>
-                </form>
-                <a class="btn btn-success ms-2" href="<?= base_url('order/release_order') ?>">
-                    <i class="bi bi-send-fill me-1"></i> Release Orders
-                </a>
-            </div>
+            <h4 class="card-title mb-0">All Orders</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <?php if (count($orders) > 0): ?>
-                <table class="table table-striped">
+                <table id="orderTable" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
                             <th>Order No.</th>
                             <th>User</th>
                             <th>Tickets</th>
                             <th>Amount</th>
-                            <th>Payment Type</th>
+                            <th>Payment</th>
                             <th>Order ID</th>
                             <th>Date</th>
-                            <th class="text-center">Status</th>
+                            <th>Status</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php foreach ($orders as $order):
-                            $userDetails = (new \App\Models\UserModel())->getUserInfoById($order->user_id);
-                            $tickets = json_decode($order->tickets);
-                        ?>
-                        <tr>
-                            <td><strong>#<?= $order->id ?></strong></td>
-                            <td>
-                                <div><?= esc($userDetails->name) ?></div>
-                                <small class="text-muted"><?= esc($userDetails->email ?? '') ?></small>
-                            </td>
-                            <td>
-                                <table class="table table-bordered table-sm mb-0">
-                                    <thead><tr><th>Game</th><th>Ticket No.</th></tr></thead>
-                                    <tbody>
-                                        <?php foreach ($tickets as $value):
-                                            $web_details = (new \App\Models\WebModel())->getWebInfo($value->web_id); ?>
-                                        <tr>
-                                            <td><?= esc($web_details->name) ?></td>
-                                            <td><code><?= esc($value->ticket_no) ?></code></td>
-                                        </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td><strong>₹<?= $order->total_price ?></strong></td>
-                            <td>UPI</td>
-                            <td><small><?= esc($order->razorpay_order_id) ?></small></td>
-                            <td><?= date("M d, Y h:i a", strtotime($order->createdAt)) ?></td>
-                            <td class="text-center">
-                                <?php if ($order->order_status == '1'): ?>
-                                    <span class="badge bg-success">Confirmed</span>
-                                <?php elseif ($order->paid_status == '0'): ?>
-                                    <span class="badge bg-warning text-dark">Pending</span>
-                                <?php else: ?>
-                                    <span class="badge bg-danger">Failed</span>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
-                <?php else: ?>
-                <p class="text-center text-muted py-4">No orders found.</p>
-                <?php endif; ?>
             </div>
-        </div>
-        <div class="card-footer">
-            <?= $pager->links() ?>
         </div>
     </div>
 </section>
-<script src="<?= base_url() ?>public/admin/js/common.js"></script>
+
+<style>
+tr.dt-hasChild td { background: #f0f7ff !important; }
+.ticket-child-row { padding: .5rem 1rem 1rem 1rem; }
+.ticket-child-table { max-width: 520px; }
+</style>
+
 <script>
-jQuery(document).ready(function () {
-    jQuery('ul.pagination li a').click(function (e) {
-        e.preventDefault();
-        var link = jQuery(this).attr('href');
-        var pageMatch = link.match(/[?&]page=(\d+)/);
-        var value = pageMatch ? pageMatch[1] : '1';
-        jQuery("#searchList").attr("action", baseURL + "web/order/" + value);
-        jQuery("#searchList").submit();
+document.addEventListener('DOMContentLoaded', function () {
+    var jQuery = window.jQuery;
+    var $ = jQuery;
+
+    function formatTickets(tickets) {
+        if (!tickets || tickets.length === 0) {
+            return '<div class="ticket-child-row"><p class="text-muted mb-0">No tickets found.</p></div>';
+        }
+        var html = '<div class="ticket-child-row">';
+        html += '<table class="table table-bordered table-sm ticket-child-table mb-0">';
+        html += '<thead><tr><th>#</th><th>Game</th><th>Ticket No.</th></tr></thead><tbody>';
+        tickets.forEach(function (t, i) {
+            html += '<tr><td>' + (i + 1) + '</td><td>' + t.game + '</td><td><code>' + t.ticket_no + '</code></td></tr>';
+        });
+        html += '</tbody></table></div>';
+        return html;
+    }
+
+    var table = $('#orderTable').DataTable({
+        serverSide: true,
+        processing: true,
+        ajax: {
+            url: baseURL + 'web/order_data',
+            type: 'GET'
+        },
+        columns: [
+            { data: 'order_no' },
+            { data: 'user', orderable: false },
+            { data: 'ticket_info', orderable: false, searchable: false },
+            { data: 'amount', orderable: false },
+            { data: 'payment', orderable: false, searchable: false },
+            { data: 'order_id', orderable: false },
+            { data: 'date', orderable: false },
+            { data: 'status', orderable: false, searchable: false },
+            {
+                data: null, orderable: false, searchable: false,
+                render: function (data) {
+                    var ps = data.paid_status;
+                    if (ps === 'PAID' || ps === 1 || ps === '1') {
+                        return '<button class="btn btn-sm btn-warning release-order" data-id="' + data.raw_id + '" title="Release Order"><i class="bi bi-send-fill"></i> Release</button>';
+                    }
+                    return '<span class="text-muted">—</span>';
+                }
+            },
+            { data: 'tickets', visible: false, searchable: false, render: function () { return ''; } }
+        ],
+        pageLength: 10,
+        order: [[0, 'desc']],
+        language: { search: 'Search orders:' }
     });
-    jQuery(document).on("click", ".confirmOrder", function () {
-        var orderid = $(this).data("orderid"), hitURL = baseURL + "/web/confirm_order_by_admin", currentRow = $(this);
-        if (confirm("Are you sure to confirm this order?")) {
-            jQuery.ajax({ type: "POST", dataType: "json", url: hitURL, data: { orderid: orderid } })
-                .done(function (data) {
-                    if (data.status) {
-                        currentRow.replaceWith('<span class="badge bg-success">Confirmed</span>');
-                        alert("Order confirmed successfully.");
-                    } else { alert("Confirmation failed."); }
-                });
+
+    // Release order
+    $('#orderTable tbody').on('click', '.release-order', function () {
+        var btn = $(this);
+        var orderId = btn.data('id');
+        if (!confirm('Release order #' + orderId + '? This will mark it as RELEASED and clear the cart.')) return;
+        btn.prop('disabled', true).html('<i class="bi bi-hourglass-split"></i> Releasing...');
+        $.ajax({
+            type: 'POST',
+            url: baseURL + 'web/release_order_by_admin',
+            data: { orderid: orderId },
+            dataType: 'json'
+        }).done(function (res) {
+            if (res.status === true) {
+                table.ajax.reload(null, false);
+            } else {
+                alert('Release failed. Please try again.');
+                btn.prop('disabled', false).html('<i class="bi bi-send-fill"></i> Release');
+            }
+        }).fail(function () {
+            alert('Request failed.');
+            btn.prop('disabled', false).html('<i class="bi bi-send-fill"></i> Release');
+        });
+    });
+
+    // Expand/collapse ticket child row on button click
+    $('#orderTable tbody').on('click', '.expand-tickets', function (e) {
+        e.stopPropagation();
+        var tr  = $(this).closest('tr');
+        var row = table.row(tr);
+        if (row.child.isShown()) {
+            row.child.hide();
+            tr.removeClass('dt-hasChild');
+            $(this).removeClass('btn-primary').addClass('btn-outline-primary');
+        } else {
+            row.child(formatTickets(row.data().tickets)).show();
+            tr.addClass('dt-hasChild');
+            $(this).removeClass('btn-outline-primary').addClass('btn-primary');
         }
     });
 });
 </script>
+
