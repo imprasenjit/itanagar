@@ -134,7 +134,9 @@ class ApiBaseController extends BaseController
             $ticketRanges[] = $r['end'];
         }
         return $ticketRanges;
-    }────────
+    }
+
+    // ── String helpers ────────────────────────────────────────────────────────
 
     protected function getRandomString(int $length = 16): string
     {
