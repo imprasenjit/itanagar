@@ -210,7 +210,7 @@ class PaymentController extends ApiBaseController
                 ];
             }
 
-            $emailBody = view('frontend/email_ticket', [
+            $emailBody = view('emails/email_ticket', [
                 'ticket_details' => $ticketDetails,
                 'status'         => 'Payment Successful',
                 'details'        => [

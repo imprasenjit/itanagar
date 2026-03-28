@@ -825,7 +825,7 @@ class Api extends BaseController
                 ];
             }
 
-            $emailBody = view('frontend/email_ticket', [
+            $emailBody = view('emails/email_ticket', [
                 'ticket_details' => $ticketDetails,
                 'status'         => 'Payment Successful',
                 'details'        => ['razorpay_order_id' => $razorpayOrderId, 'razorpay_payment_id' => $razorpayPayId],
