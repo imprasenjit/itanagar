@@ -67,3 +67,126 @@ Additionally, make sure that the following extensions are enabled in your PHP:
 - json (enabled by default - don't turn it off)
 - [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
 - [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+
+
+Admin Panel Requirement – Itanagar Choice (Initial Stage)
+
+Since the company currently has three members (Founder + 2 Co-founders), there will be three admin accounts. All three admins should have full operational access, but one account will be designated as Super Admin with final control over the system.
+
+1. Admin Login
+
+- Create a secure admin login page: "/admin"
+- Login fields: Email/Username and Password
+- Allow creation of three admin accounts.
+
+2. Admin Accounts
+Create three admin users:
+
+- Admin 1 – Super Admin (Founder)
+- Admin 2 – Admin (Co-Founder)
+- Admin 3 – Admin (Co-Founder)
+
+3. Access Permissions
+
+- All three admins can access the admin panel and perform daily operations.
+- All three admins can:
+  - Create and edit events
+  - View transactions
+  - Manage tickets
+  - View users
+  - Access reports
+
+4. Super Admin Control
+The Super Admin should have additional authority to:
+
+- Add or remove admin accounts
+- Reset admin passwords
+- Modify admin permissions
+- Configure payment gateway settings
+- Access complete system settings
+- Override or approve sensitive actions if required
+
+5. Admin Dashboard
+Dashboard should display:
+
+- Total events
+- Total tickets sold
+- Total revenue
+- Today’s sales
+- Recent transactions
+- Upcoming events
+
+6. Event Management
+Admin should be able to:
+
+- Add new events
+- Edit or delete events
+- Upload event posters
+- Set event date, time, and venue
+- Set ticket categories and pricing
+- Define total ticket capacity
+
+7. Transaction Management
+Admin panel must display all ticket purchase transactions.
+
+Transaction table should include:
+
+- Date
+- Event name
+- User name
+- Ticket ID
+- Amount
+- Payment status
+
+Features:
+
+- Event-wise transaction filtering
+- Date-wise filtering
+- Payment status filtering
+
+8. Ticket Management
+Admin should be able to:
+
+- View issued tickets
+- Cancel tickets
+- Resend tickets to users
+- Verify ticket QR code for entry
+
+9. User Management
+Admin should be able to:
+
+- View registered users
+- View user contact details
+- View booking history of users
+
+10. Reports
+System should generate downloadable reports:
+
+- Daily sales report
+- Event revenue report
+- Monthly revenue report
+
+11. Payment Gateway Integration
+Integrate payment gateway such as Razorpay.
+
+Admin panel should show:
+
+- Successful payments
+- Failed payments
+- Settlement records
+
+12. Activity Log
+System must record admin activities including:
+
+- Admin name
+- Action performed
+- Date and time
+
+Examples:
+
+- Event created
+- Ticket price updated
+- Refund processed
+
+Note for Future Development
+In later stages, detailed role-based permissions can be implemented when more staff members are added.

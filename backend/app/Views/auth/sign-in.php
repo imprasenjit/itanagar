@@ -46,9 +46,9 @@
 </form>
 
 <hr class="my-4">
-<p class="text-center text-muted">
+<!-- <p class="text-center text-muted">
   Don&apos;t have an account? <a href="<?= base_url('register') ?>" class="fw-semibold">Create one</a>
-</p>
+</p> -->
 
 <script>
 function togglePwd(id, el) {

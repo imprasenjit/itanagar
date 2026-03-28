@@ -631,6 +631,36 @@ class Web extends BaseController
 
     // ── Transactions ──────────────────────────────────────────────────────────
 
+    // ── Dashboard Stats (AJAX source for stat cards + upcoming events) ────────
+
+    public function dashboard_stats()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['status' => 'access']);
+        }
+
+        $upcoming     = $this->webModel->upcoming_events(5);
+        $upcomingData = [];
+        foreach ($upcoming as $ev) {
+            $upcomingData[] = [
+                'name'        => esc($ev->name),
+                'result_date' => $ev->result_date ? date('d M Y', strtotime($ev->result_date)) : '—',
+                'jackpot'     => number_format((float)($ev->jackpot ?? 0), 0),
+            ];
+        }
+
+        return $this->response->setJSON([
+            'status'           => 'ok',
+            'totalweb'         => $this->userModel->count_record('tbl_webs'),
+            'totaluser'        => $this->userModel->count_record('tbl_users'),
+            'totalTicketsSold' => $this->webModel->total_tickets_sold(),
+            'totalRevenue'     => number_format($this->webModel->total_revenue(), 2),
+            'todayRevenue'     => number_format($this->webModel->today_revenue(), 2),
+            'todayOrders'      => $this->webModel->today_orders(),
+            'upcomingEvents'   => $upcomingData,
+        ]);
+    }
+
     // ── Dashboard Recent Transactions (DataTables AJAX source) ────────────────
 
     public function dashboard_txn_data()

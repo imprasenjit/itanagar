@@ -28,18 +28,8 @@ class User extends BaseController
             return redirect()->to('home');
         }
 
-        $data = [
-            'totalweb'          => $this->userModel->count_record('tbl_webs'),
-            'totaluser'         => $this->userModel->count_record('tbl_users'),
-            'totalTicketsSold'  => $this->webModel->total_tickets_sold(),
-            'totalRevenue'      => $this->webModel->total_revenue(),
-            'todayRevenue'      => $this->webModel->today_revenue(),
-            'todayOrders'       => $this->webModel->today_orders(),
-            'recentTransactions'=> $this->webModel->recent_transactions(8),
-            'upcomingEvents'    => $this->webModel->upcoming_events(5),
-        ];
         $this->global['pageTitle'] = 'event : Dashboard';
-        return $this->loadViews('pages/dashboard', $this->global, $data, null);
+        return $this->loadViews('pages/dashboard', $this->global, [], null);
     }
 
     public function logout()

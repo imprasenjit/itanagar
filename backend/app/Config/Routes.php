@@ -82,6 +82,7 @@ $routes->post('web/release_order_by_admin','Web::release_order_by_admin');
 $routes->get('web/transactions_data',   'Web::transactions_data');
 $routes->get('web/transactions',        'Web::transactions');
 $routes->get('web/transactions/(:num)', 'Web::transactions');
+$routes->get('web/dashboard_stats',     'Web::dashboard_stats');
 $routes->get('web/dashboard_txn_data',  'Web::dashboard_txn_data');
 
 // ── Tickets ───────────────────────────────────────────────────────────────────
