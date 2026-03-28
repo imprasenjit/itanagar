@@ -42,12 +42,22 @@ class GameModel extends Model
 
     public function home_web(string $limit = '')
     {
-        $sub     = '(SELECT date FROM `tbl_dates` WHERE web_id=tbl_webs.id AND date_con > "' . date('Y-m-d ') . '" ORDER BY date ASC LIMIT 1)';
-        $soldSub = '(SELECT COUNT(*) FROM `tbl_cart` WHERE `tbl_cart`.`web_id` = `tbl_webs`.`id` AND `tbl_cart`.`paid_status` = 1)';
+        // Derived-table aggregates (run once each) replace correlated subqueries
+        // (run once-per-row). Significantly faster when there are many games.
+        $dateSub = '(SELECT web_id, MIN(date) AS date FROM tbl_dates'
+            . ' WHERE date_con > "' . date('Y-m-d ') . '" GROUP BY web_id) nxt';
+        $soldSub = '(SELECT web_id, COUNT(*) AS soldTickets FROM tbl_cart'
+            . ' WHERE paid_status = 1 GROUP BY web_id) sold';
+
         $builder = $this->db->table('tbl_webs')
-            ->select("tbl_webs.*, tbl_ranges.result_date, tbl_ranges.price, tbl_ranges.heading, tbl_ranges.logo, tbl_ranges.logo2, tbl_ranges.jackpot, tbl_ranges.quantity as totalTickets, $soldSub as soldTickets, $sub as date")
+            ->select('tbl_webs.*, tbl_ranges.result_date, tbl_ranges.price,'
+                . ' tbl_ranges.heading, tbl_ranges.logo, tbl_ranges.logo2,'
+                . ' tbl_ranges.jackpot, tbl_ranges.quantity as totalTickets,'
+                . ' IFNULL(sold.soldTickets, 0) as soldTickets, nxt.date as date')
             ->join('tbl_ranges', 'tbl_ranges.web_id = tbl_webs.id')
-            ->where('status', 'Active')
+            ->join($soldSub, 'sold.web_id = tbl_webs.id', 'left')
+            ->join($dateSub, 'nxt.web_id = tbl_webs.id', 'left')
+            ->where('tbl_webs.status', 'Active')
             ->orderBy('tbl_ranges.priority');
         if (!empty($limit)) {
             $builder->limit((int)$limit);
@@ -65,13 +75,21 @@ class GameModel extends Model
 
     public function upcoming_games_paged(int $limit = 10, int $offset = 0): array
     {
-        $dateSub = '(SELECT date FROM `tbl_dates` WHERE web_id=tbl_webs.id AND date_con > "' . date('Y-m-d ') . '" ORDER BY date ASC LIMIT 1)';
-        $soldSub = '(SELECT COUNT(*) FROM `tbl_cart` WHERE `tbl_cart`.`web_id` = `tbl_webs`.`id` AND `tbl_cart`.`paid_status` = 1)';
+        $dateSub = '(SELECT web_id, MIN(date) AS date FROM tbl_dates'
+            . ' WHERE date_con > "' . date('Y-m-d ') . '" GROUP BY web_id) nxt';
+        $soldSub = '(SELECT web_id, COUNT(*) AS soldTickets FROM tbl_cart'
+            . ' WHERE paid_status = 1 GROUP BY web_id) sold';
+
         return $this->db->table('tbl_webs')
-            ->select("tbl_webs.*, tbl_ranges.result_date, tbl_ranges.price, tbl_ranges.heading, tbl_ranges.logo, tbl_ranges.logo2, tbl_ranges.jackpot, tbl_ranges.quantity as totalTickets, $soldSub as soldTickets, $dateSub as date")
+            ->select('tbl_webs.*, tbl_ranges.result_date, tbl_ranges.price,'
+                . ' tbl_ranges.heading, tbl_ranges.logo, tbl_ranges.logo2,'
+                . ' tbl_ranges.jackpot, tbl_ranges.quantity as totalTickets,'
+                . ' IFNULL(sold.soldTickets, 0) as soldTickets, nxt.date as date')
             ->join('tbl_ranges', 'tbl_ranges.web_id = tbl_webs.id')
+            ->join($soldSub, 'sold.web_id = tbl_webs.id', 'left')
+            ->join($dateSub, 'nxt.web_id = tbl_webs.id', 'left')
             ->where('tbl_webs.status', 'Active')
-            ->orderBy('ISNULL(`date`) ASC, `date` ASC', '', false)
+            ->orderBy('ISNULL(nxt.date) ASC, nxt.date ASC', '', false)
             ->limit($limit, $offset)
             ->get()
             ->getResult();

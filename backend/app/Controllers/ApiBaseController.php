@@ -14,18 +14,34 @@ use App\Models\LoginModel;
  * ApiBaseController — shared infrastructure for all Api sub-controllers.
  * Provides: json(), error(), getBody(), requireAuth(), getCartUserId(),
  *           getTicketAvailability(), _getFirstAvailableTickets(), getRandomString().
+ *
+ * Models are lazy-loaded on first access via __get() so each request only
+ * instantiates the models it actually uses.
  */
 class ApiBaseController extends BaseController
 {
-    protected GameModel      $gameModel;
-    protected CartOrderModel $cartOrderModel;
-    protected WalletModel    $walletModel;
-    protected WinnerModel    $winnerModel;
-    protected ContentModel   $contentModel;
-    protected UserModel      $userModel;
-    protected LoginModel     $loginModel;
+    // email_helper is only needed in PaymentController — loaded there, not globally.
+    protected $helpers = ['url', 'cias_helper'];
 
-    protected $helpers = ['url', 'cias_helper', 'email_helper'];
+    /** Lazy-load model instances on first property access. */
+    public function __get(string $name): mixed
+    {
+        $map = [
+            'gameModel'      => GameModel::class,
+            'cartOrderModel' => CartOrderModel::class,
+            'walletModel'    => WalletModel::class,
+            'winnerModel'    => WinnerModel::class,
+            'contentModel'   => ContentModel::class,
+            'userModel'      => UserModel::class,
+            'loginModel'     => LoginModel::class,
+        ];
+        if (isset($map[$name])) {
+            $class       = $map[$name];
+            $this->$name = new $class();
+            return $this->$name;
+        }
+        return parent::__get($name);
+    }
 
     public function initController(
         \CodeIgniter\HTTP\RequestInterface  $request,
@@ -33,13 +49,7 @@ class ApiBaseController extends BaseController
         \Psr\Log\LoggerInterface            $logger
     ): void {
         parent::initController($request, $response, $logger);
-        $this->gameModel      = new GameModel();
-        $this->cartOrderModel = new CartOrderModel();
-        $this->walletModel    = new WalletModel();
-        $this->winnerModel    = new WinnerModel();
-        $this->contentModel   = new ContentModel();
-        $this->userModel      = new UserModel();
-        $this->loginModel     = new LoginModel();
+        // Models are NOT instantiated here — they are lazy-loaded on first use.
         $this->_cors();
     }
 

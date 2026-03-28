@@ -8,10 +8,35 @@ class GamesController extends ApiBaseController
 {
     // ── Public: Home & Games ─────────────────────────────────────────────────
 
+    // Cache TTL in seconds
+    private const HOME_TTL  = 120;
+    private const GAMES_TTL = 120;
+
+    /**
+     * Bust all public game-listing cache keys.
+     * Call this whenever an admin saves or deletes a game/range/date.
+     */
+    public static function bustCache(): void
+    {
+        $cache = \Config\Services::cache();
+        $cache->delete('api_home_v1');
+        // Bust paged cache keys for the first 20 pages (covers 200 games).
+        for ($o = 0; $o <= 190; $o += 10) {
+            $cache->delete('api_games_10_' . $o);
+        }
+    }
+
     public function home()
     {
+        $cache    = \Config\Services::cache();
+        $cacheKey = 'api_home_v1';
+
+        if (($cached = $cache->get($cacheKey)) !== null) {
+            return $this->json($cached);
+        }
+
         $total = $this->gameModel->upcoming_games_count();
-        return $this->json([
+        $data  = [
             'games'   => $this->gameModel->upcoming_games_paged(10, 0),
             'total'   => $total,
             'faq'     => $this->contentModel->faq(1),
@@ -20,21 +45,33 @@ class GamesController extends ApiBaseController
                 'games' => $total,
                 'users' => $this->userModel->userListingCount(''),
             ],
-        ]);
+        ];
+        $cache->save($cacheKey, $data, self::HOME_TTL);
+        return $this->json($data);
     }
 
     public function upcoming_games()
     {
         $limit  = (int) ($this->request->getGet('limit')  ?? 10);
         $offset = (int) ($this->request->getGet('offset') ?? 0);
-        $limit  = max(1, min($limit, 50)); // clamp to prevent abuse
-        $total  = $this->gameModel->upcoming_games_count();
-        return $this->json([
+        $limit  = max(1, min($limit, 50));
+
+        $cache    = \Config\Services::cache();
+        $cacheKey = 'api_games_' . $limit . '_' . $offset;
+
+        if (($cached = $cache->get($cacheKey)) !== null) {
+            return $this->json($cached);
+        }
+
+        $total = $this->gameModel->upcoming_games_count();
+        $data  = [
             'games'  => $this->gameModel->upcoming_games_paged($limit, $offset),
             'total'  => $total,
             'offset' => $offset,
             'limit'  => $limit,
-        ]);
+        ];
+        $cache->save($cacheKey, $data, self::GAMES_TTL);
+        return $this->json($data);
     }
 
     public function games()

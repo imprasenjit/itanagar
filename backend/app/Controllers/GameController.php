@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Controllers\Api\GamesController;
 use App\Models\GameModel;
 
 /**
@@ -47,6 +48,7 @@ class GameController extends BaseController
 
         if ($result > 0) {
             $this->gameModel->insert_date('tbl_ranges', ['web_id' => $result]);
+            GamesController::bustCache();
             session()->setFlashdata('success', 'New Event created successfully');
         } else {
             session()->setFlashdata('error', 'Event creation failed');
@@ -86,6 +88,7 @@ class GameController extends BaseController
             'updatedDtm' => date('Y-m-d H:i:s'),
         ], $id);
 
+        GamesController::bustCache();
         session()->setFlashdata($result ? 'success' : 'error', $result ? 'Event updated successfully' : 'Event updation failed');
         return redirect()->to("web/edit/$id");
     }
@@ -97,6 +100,9 @@ class GameController extends BaseController
         }
         $userId = (int) $this->request->getPost('userId');
         $result = $this->gameModel->deleteWeb('tbl_webs', $userId);
+        if ($result > 0) {
+            GamesController::bustCache();
+        }
         return $this->response->setJSON(['status' => $result > 0]);
     }
 
@@ -185,6 +191,7 @@ class GameController extends BaseController
         }
 
         $result = $this->gameModel->editWeb_all('tbl_ranges', $rangeInfo, $id);
+        GamesController::bustCache();
         session()->setFlashdata($result ? 'success' : 'error', $result ? 'Range updated successfully' : 'Range updation failed');
         return redirect()->to("web/rangeEdit/$webId");
     }
@@ -229,6 +236,7 @@ class GameController extends BaseController
             'when_play'        => $this->request->getPost('when_play'),
         ], $id);
 
+        GamesController::bustCache();
         session()->setFlashdata($result ? 'success' : 'error', $result ? 'Description updated successfully' : 'Description updation failed');
         return redirect()->to("web/descriptionEdit/$webId");
     }
@@ -302,6 +310,7 @@ class GameController extends BaseController
                 'date_con' => $dap . ' ' . TIMEVAL,
                 'web_id'   => $webId,
             ]);
+            GamesController::bustCache();
             session()->setFlashdata('success', 'New Date added successfully');
         }
         return redirect()->to("web/view/$webId");
@@ -325,6 +334,7 @@ class GameController extends BaseController
                 $added++;
             }
         }
+        GamesController::bustCache();
         session()->setFlashdata('success', "$added dates added successfully");
         return redirect()->to("web/view/$webId");
     }
@@ -336,6 +346,9 @@ class GameController extends BaseController
         }
         $userId = (int) $this->request->getPost('userId');
         $result = $this->gameModel->deleteWeb('tbl_dates', $userId);
+        if ($result > 0) {
+            GamesController::bustCache();
+        }
         return $this->response->setJSON(['status' => $result > 0]);
     }
 
