@@ -38,92 +38,101 @@ $routes->get('login-history/(:num)/(:num)', 'User::loginHistoy/$1/$2');
 $routes->get('resetUserPassword','User::resetUserPassword');
 $routes->get('pageNotFound',     'User::pageNotFound');
 
-// ── Web / Admin game management ───────────────────────────────────────────────
+// ── Web / Admin game listing ──────────────────────────────────────────────────
 $routes->get('web',              'Web::index');
 $routes->get('web/weblist_data', 'Web::weblist_data');
-$routes->get('web/addNew',       'Web::addNew');
-$routes->post('web/addNewWeb',   'Web::addNewWeb');
-$routes->get('web/edit/(:num)',  'Web::edit/$1');
-$routes->post('web/editWeb',     'Web::editWeb');
-$routes->post('web/deleteWeb',   'Web::deleteWeb');
-$routes->get('web/view/(:num)',  'Web::view/$1');
-$routes->get('web/view/(:num)/(:num)', 'Web::view/$1');
-$routes->get('web/rangeEdit/(:num)', 'Web::rangeEdit/$1');
-$routes->post('web/editRange',   'Web::editRange');
-$routes->get('web/common',       'Web::common');
-$routes->post('web/editCommon',  'Web::editCommon');
-$routes->get('web/descriptionEdit/(:num)', 'Web::descriptionEdit/$1');
-$routes->post('web/editdesc',    'Web::editdesc');
-$routes->get('web/tier/(:num)',  'Web::tier/$1');
-$routes->post('web/addtier',     'Web::addtier');
-$routes->post('web/addNewWebdate/(:num)', 'Web::addNewWebdate/$1');
-$routes->get('web/addtwoWebdate/(:num)', 'Web::addtwoWebdate/$1');
-$routes->post('web/deleteWebDate','Web::deleteWebDate');
-$routes->get('web/faq',             'Web::faq');
-$routes->post('web/faq',            'Web::faq');
-$routes->get('web/addfaq',          'Web::addfaq');
-$routes->post('web/addNewfaq',      'Web::addNewfaq');
-$routes->get('web/faqedit/(:num)',  'Web::faqedit/$1');
-$routes->post('web/faqupdate',      'Web::faqupdate');
-$routes->post('web/deletefaq',      'Web::deletefaq');
-$routes->get('web/page',         'Web::page');
-$routes->get('web/pageedit/(:num)', 'Web::pageedit/$1');
-$routes->post('web/editUpadtePage','Web::editUpadtePage');
-$routes->get('web/contact_list', 'Web::contact_list');
-$routes->get('web/contact_list/(:num)', 'Web::contact_list');
-$routes->get('web/order_data',       'Web::order_data');
-$routes->get('web/order',            'Web::order');
-$routes->post('web/order',           'Web::order');
-$routes->get('web/order/(:num)',     'Web::order');
-$routes->post('web/order/(:num)',    'Web::order');
-$routes->post('web/confirm_order_by_admin','Web::confirm_order_by_admin');
-$routes->post('web/release_order_by_admin','Web::release_order_by_admin');
 
-// ── Transactions ──────────────────────────────────────────────────────────────
-$routes->get('web/transactions_data',   'Web::transactions_data');
-$routes->get('web/transactions',        'Web::transactions');
-$routes->get('web/transactions/(:num)', 'Web::transactions');
-$routes->get('web/dashboard_stats',     'Web::dashboard_stats');
-$routes->get('web/dashboard_txn_data',  'Web::dashboard_txn_data');
-$routes->get('web/migrations',          'Web::migrations');
-$routes->post('web/runMigrations',      'Web::runMigrations');
-$routes->get('web/rbac',                'Web::rbac');
-$routes->post('web/rbacSave',           'Web::rbacSave');
+// ── GameController — game CRUD, ranges, tiers, draw dates ────────────────────
+$routes->get('web/addNew',       'GameController::addNew');
+$routes->post('web/addNewWeb',   'GameController::addNewWeb');
+$routes->get('web/edit/(:num)',  'GameController::edit/$1');
+$routes->post('web/editWeb',     'GameController::editWeb');
+$routes->post('web/deleteWeb',   'GameController::deleteWeb');
+$routes->get('web/view/(:num)',  'GameController::view/$1');
+$routes->get('web/view/(:num)/(:num)', 'GameController::view/$1');
+$routes->get('web/rangeEdit/(:num)', 'GameController::rangeEdit/$1');
+$routes->post('web/editRange',   'GameController::editRange');
+$routes->get('web/descriptionEdit/(:num)', 'GameController::descriptionEdit/$1');
+$routes->post('web/editdesc',    'GameController::editdesc');
+$routes->get('web/tier/(:num)',  'GameController::tier/$1');
+$routes->post('web/addtier',     'GameController::addtier');
+$routes->post('web/addNewWebdate/(:num)', 'GameController::addNewWebdate/$1');
+$routes->get('web/addtwoWebdate/(:num)', 'GameController::addtwoWebdate/$1');
+$routes->post('web/deleteWebDate','GameController::deleteWebDate');
 
-// ── Tickets ───────────────────────────────────────────────────────────────────
-$routes->get('web/tickets',             'Web::tickets');
-$routes->get('web/tickets/(:num)',      'Web::tickets');
-$routes->post('web/ticket_cancel',      'Web::ticket_cancel');
-$routes->post('web/ticket_resend',      'Web::ticket_resend');
-$routes->post('web/ticket_verify',      'Web::ticket_verify');
+// ── SettingsController — common settings, reports, dashboard
+$routes->get('web/common',               'SettingsController::common');
+$routes->post('web/editCommon',          'SettingsController::editCommon');
+$routes->get('web/reports',              'SettingsController::reports');
+$routes->get('web/report_download',      'SettingsController::report_download');
+$routes->get('web/dashboard_stats',      'SettingsController::dashboard_stats');
+$routes->get('web/dashboard_txn_data',   'SettingsController::dashboard_txn_data');
 
-// ── Reports ───────────────────────────────────────────────────────────────────
-$routes->get('web/reports',             'Web::reports');
-$routes->get('web/report_download',     'Web::report_download');
+// ── MigrationController — migration tracker
+$routes->get('web/migrations',           'MigrationController::migrations');
+$routes->post('web/runMigrations',       'MigrationController::runMigrations');
 
-// ── Wallet / Winners / Refunds / Withdrawals / Transfers ──────────────────────
-$routes->get('web/wallet',              'Web::wallet');
-$routes->get('web/wallet/(:num)',       'Web::wallet');
-$routes->post('web/wallet',             'Web::wallet');
-$routes->post('web/wallet/(:num)',      'Web::wallet');
-$routes->get('web/winner',             'Web::winner');
-$routes->get('web/winner/(:num)',      'Web::winner');
-$routes->post('web/winner',            'Web::winner');
-$routes->post('web/winner/(:num)',     'Web::winner');
-$routes->get('web/refund',             'Web::refund');
-$routes->get('web/refund/(:num)',      'Web::refund');
-$routes->post('web/refund',            'Web::refund');
-$routes->post('web/refund/(:num)',     'Web::refund');
-$routes->post('web/refund_req/(:num)', 'Web::refund_req/$1');
-$routes->get('web/withdrawl',          'Web::withdrawl');
-$routes->get('web/withdrawl/(:num)',   'Web::withdrawl');
-$routes->post('web/withdrawl',         'Web::withdrawl');
-$routes->post('web/withdrawl/(:num)',  'Web::withdrawl');
-$routes->post('web/with_req/(:num)',   'Web::with_req/$1');
-$routes->get('web/transfer',           'Web::transfer');
-$routes->get('web/transfer/(:num)',    'Web::transfer');
-$routes->post('web/transfer',          'Web::transfer');
-$routes->post('web/transfer/(:num)',   'Web::transfer');
+// ── RoleController — role CRUD and RBAC permission assignment
+$routes->get('web/rbac',                 'RoleController::rbac');
+$routes->post('web/rbacSave',            'RoleController::rbacSave');
+$routes->get('web/roles',                'RoleController::roles');
+$routes->post('web/addRole',             'RoleController::addRole');
+$routes->get('web/editRole/(:num)',       'RoleController::editRole/$1');
+$routes->post('web/updateRole',          'RoleController::updateRole');
+$routes->post('web/deleteRole',          'RoleController::deleteRole');
+
+// ── ContentController — FAQ, CMS pages, contact ───────────────────────────────
+$routes->get('web/faq',             'ContentController::faq');
+$routes->post('web/faq',            'ContentController::faq');
+$routes->get('web/addfaq',          'ContentController::addfaq');
+$routes->post('web/addNewfaq',      'ContentController::addNewfaq');
+$routes->get('web/faqedit/(:num)',  'ContentController::faqedit/$1');
+$routes->post('web/faqupdate',      'ContentController::faqupdate');
+$routes->post('web/deletefaq',      'ContentController::deletefaq');
+$routes->get('web/page',            'ContentController::page');
+$routes->get('web/pageedit/(:num)', 'ContentController::pageedit/$1');
+$routes->post('web/editUpadtePage', 'ContentController::editUpadtePage');
+$routes->get('web/contact_list',    'ContentController::contact_list');
+$routes->get('web/contact_list/(:num)', 'ContentController::contact_list');
+
+// ── FinanceController — orders, tickets, transactions, wallet, winners ────────
+$routes->get('web/order_data',               'FinanceController::order_data');
+$routes->get('web/order',                    'FinanceController::order');
+$routes->post('web/order',                   'FinanceController::order');
+$routes->get('web/order/(:num)',             'FinanceController::order');
+$routes->post('web/order/(:num)',            'FinanceController::order');
+$routes->post('web/confirm_order_by_admin',  'FinanceController::confirm_order_by_admin');
+$routes->post('web/release_order_by_admin',  'FinanceController::release_order_by_admin');
+$routes->get('web/tickets',                  'FinanceController::tickets');
+$routes->get('web/tickets/(:num)',           'FinanceController::tickets');
+$routes->post('web/ticket_cancel',           'FinanceController::ticket_cancel');
+$routes->post('web/ticket_resend',           'FinanceController::ticket_resend');
+$routes->post('web/ticket_verify',           'FinanceController::ticket_verify');
+$routes->get('web/transactions_data',        'FinanceController::transactions_data');
+$routes->get('web/transactions',             'FinanceController::transactions');
+$routes->get('web/transactions/(:num)',      'FinanceController::transactions');
+$routes->get('web/wallet',                   'FinanceController::wallet');
+$routes->get('web/wallet/(:num)',            'FinanceController::wallet');
+$routes->post('web/wallet',                  'FinanceController::wallet');
+$routes->post('web/wallet/(:num)',           'FinanceController::wallet');
+$routes->get('web/winner',                   'FinanceController::winner');
+$routes->get('web/winner/(:num)',            'FinanceController::winner');
+$routes->post('web/winner',                  'FinanceController::winner');
+$routes->post('web/winner/(:num)',           'FinanceController::winner');
+$routes->get('web/refund',                   'FinanceController::refund');
+$routes->get('web/refund/(:num)',            'FinanceController::refund');
+$routes->post('web/refund',                  'FinanceController::refund');
+$routes->post('web/refund/(:num)',           'FinanceController::refund');
+$routes->post('web/refund_req/(:num)',       'FinanceController::refund_req/$1');
+$routes->get('web/withdrawl',               'FinanceController::withdrawl');
+$routes->get('web/withdrawl/(:num)',        'FinanceController::withdrawl');
+$routes->post('web/withdrawl',              'FinanceController::withdrawl');
+$routes->post('web/withdrawl/(:num)',       'FinanceController::withdrawl');
+$routes->post('web/with_req/(:num)',        'FinanceController::with_req/$1');
+$routes->get('web/transfer',               'FinanceController::transfer');
+$routes->get('web/transfer/(:num)',        'FinanceController::transfer');
+$routes->post('web/transfer',             'FinanceController::transfer');
+$routes->post('web/transfer/(:num)',      'FinanceController::transfer');
 
 // ── Order ──────────────────────────────────────────────────────────────────────
 $routes->post('order/release_order','Order::release_order');

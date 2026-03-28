@@ -63,4 +63,28 @@ class RolePermissionModel extends Model
     {
         return $this->db->table('tbl_roles')->orderBy('roleId')->get()->getResult();
     }
+
+    public function getRoleById(int $id)
+    {
+        return $this->db->table('tbl_roles')->where('roleId', $id)->get()->getRow();
+    }
+
+    public function addRole(string $name): bool
+    {
+        return $this->db->table('tbl_roles')->insert(['role' => $name]);
+    }
+
+    public function updateRole(int $id, string $name): bool
+    {
+        return $this->db->table('tbl_roles')->where('roleId', $id)->update(['role' => $name]);
+    }
+
+    public function deleteRole(int $id): bool
+    {
+        if ($id === 1) {
+            return false;
+        }
+        $this->db->table('tbl_role_permissions')->where('role_id', $id)->delete();
+        return $this->db->table('tbl_roles')->where('roleId', $id)->delete();
+    }
 }

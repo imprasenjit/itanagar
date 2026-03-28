@@ -202,6 +202,12 @@
 
           <?php if ($showSettings): ?>
           <li class="sidebar-title">Settings</li>
+          <li class="sidebar-item <?= (uri_string() === 'web/roles' || strpos(uri_string(), 'web/editRole') !== false) ? 'active' : '' ?>">
+            <a href="<?= base_url('web/roles') ?>" class="sidebar-link">
+              <i class="bi bi-people-fill"></i>
+              <span>Roles</span>
+            </a>
+          </li>
           <li class="sidebar-item <?= (uri_string() === 'web/rbac') ? 'active' : '' ?>">
             <a href="<?= base_url('web/rbac') ?>" class="sidebar-link">
               <i class="bi bi-shield-lock-fill"></i>
