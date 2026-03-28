@@ -6,11 +6,11 @@ import LoadingSpinner from './LoadingSpinner';
 const links = [
   { to: '/account/profile',     icon: '👤', label: 'Profile' },
   { to: '/account/orders',      icon: '📋', label: 'My Orders' },
-  { to: '/account/wallet',      icon: '💳', label: 'Wallet' },
+  // { to: '/account/wallet',      icon: '💳', label: 'Wallet' },
   { to: '/account/winners',     icon: '🏆', label: 'Winners' },
-  { to: '/account/refunds',     icon: '↩️', label: 'Refunds' },
-  { to: '/account/withdrawals', icon: '💸', label: 'Withdrawals' },
-  { to: '/account/transfers',   icon: '🔄', label: 'Transfers' },
+  // { to: '/account/refunds',     icon: '↩️', label: 'Refunds' },
+  // { to: '/account/withdrawals', icon: '💸', label: 'Withdrawals' },
+  // { to: '/account/transfers',   icon: '🔄', label: 'Transfers' },
 ];
 
 export default function AccountLayout({ children }: { children: ReactNode }) {
@@ -20,7 +20,7 @@ export default function AccountLayout({ children }: { children: ReactNode }) {
   if (!user)   return <Navigate to="/login" replace />;
 
   return (
-    <div className="min-h-screen pt-24 pb-16">
+    <div className="min-h-screen pt-4 pb-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Sidebar */}

@@ -21,7 +21,7 @@ export default function PaymentSuccess() {
   };
 
   return (
-    <div className="min-h-screen px-4 pt-24 pb-20 bg-gray-50">
+    <div className="min-h-screen px-4 pt-4 pb-20 bg-gray-50">
       <div className="max-w-2xl mx-auto">
         {/* Success header */}
         <div className="card p-8 text-center mb-6">

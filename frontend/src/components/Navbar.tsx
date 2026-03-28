@@ -32,14 +32,13 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-1">
-            <img src={logo} alt="ItanagarChoice" className="h-10 w-auto object-contain" />
-            <div className="flex flex-col leading-tight">
-              <span className="text-base font-extrabold tracking-tight uppercase" style={{ color: '#800000' }}>
-                <span style={{ fontSize: '0.9em', fontFamily: 'Georgia, "Times New Roman", serif',   color: '#5c0000', textShadow: '1px 1px 0px rgba(0,0,0,0.2)' }}>ITANAGARCHOICE
+          <Link to="/" className="flex items-center gap-1 min-w-0 shrink">
+            <img src={logo} alt="ItanagarChoice" className="h-10 w-auto object-contain shrink-0" />
+            <div className="flex flex-col leading-tight min-w-0 overflow-hidden">
+              <span className="text-base font-extrabold tracking-tight uppercase truncate" style={{ color: '#800000' }}>
+                <span style={{ fontSize: '0.9em', fontFamily: 'Georgia, "Times New Roman", serif', color: '#5c0000', textShadow: '1px 1px 0px rgba(0,0,0,0.2)' }}>ITANAGARCHOICE</span>
               </span>
-              </span>
-              <span className="text-xs text-gray-500 font-medium">Your ticketing partner</span>
+              <span className="text-xs text-gray-500 font-medium hidden sm:block">Your ticketing partner</span>
             </div>
           </Link>
 
