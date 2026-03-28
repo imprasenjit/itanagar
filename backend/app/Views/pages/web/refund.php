@@ -31,7 +31,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <?php if (!empty($userRecords)): ?>
-                <table class="table table-striped">
+                <table id="refundTable" class="table table-striped">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -101,4 +101,5 @@ jQuery(document).ready(function () {
         jQuery("#searchList").submit();
     });
 });
+$(function () { $('#refundTable').DataTable({ paging: false, searching: false, info: false, columnDefs: [{ orderable: false, targets: -1 }] }); });
 </script>

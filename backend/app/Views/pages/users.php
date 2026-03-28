@@ -19,7 +19,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table id="usersTable" class="table table-striped">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -68,4 +68,5 @@ jQuery(document).ready(function () {
         jQuery("#searchList").submit();
     });
 });
+$(function () { $('#usersTable').DataTable({ paging: false, searching: false, info: false, columnDefs: [{ orderable: false, targets: -1 }] }); });
 </script>

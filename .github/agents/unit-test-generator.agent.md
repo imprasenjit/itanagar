@@ -2,7 +2,7 @@
 name: Unit Test Generator
 description: Writes unit and integration tests for existing code. Handles mocking, edge cases, and assertions. Powered by GPT-4.1 Mini.
 argument-hint: Point to the file or function to test (e.g. "write tests for the login() method in Api.php").
-model: gpt-4.1-mini
+model: GPT-5.1-Codex-Mini (Preview) (copilot)
 tools: ['codebase', 'editFiles', 'runCommands', 'problems', 'search']
 ---
 

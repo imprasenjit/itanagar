@@ -2,11 +2,11 @@
 
 namespace App\Controllers;
 
-use App\Models\WebModel;
+use App\Models\CartOrderModel;
 
 class Order extends BaseController
 {
-    protected WebModel $webModel;
+    protected CartOrderModel $cartOrderModel;
 
     protected $helpers = ['url', 'cias_helper'];
 
@@ -14,7 +14,7 @@ class Order extends BaseController
     {
         parent::initController($request, $response, $logger);
         $this->isLoggedIn();
-        $this->webModel = new WebModel();
+        $this->cartOrderModel = new CartOrderModel();
     }
 
     /**
@@ -28,21 +28,21 @@ class Order extends BaseController
         }
 
         $orderId = $this->request->getPost('orderid');
-        $result  = $this->webModel->get_order_by_id((int)$orderId);
+        $result  = $this->cartOrderModel->get_order_by_id((int)$orderId);
 
         if (!$result) {
             return $this->response->setJSON(['status' => false]);
         }
 
         $tickets = json_decode($result->tickets);
-        $this->webModel->update_order((int)$orderId, [
+        $this->cartOrderModel->update_order((int)$orderId, [
             'order_status' => 0,
             'paid_status'  => 'RELEASED',
         ]);
 
         $cleared = false;
         foreach ($tickets as $ticket) {
-            $cleared = $this->webModel->clear_cart_data(
+            $cleared = $this->cartOrderModel->clear_cart_data(
                 (int)$result->user_id,
                 $ticket->ticket_no,
                 $ticket->web_id

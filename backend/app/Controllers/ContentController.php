@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\WebModel;
+use App\Models\ContentModel;
 
 /**
  * ContentController — admin management of CMS pages, FAQs/announcements, and contact submissions.
@@ -10,7 +10,7 @@ use App\Models\WebModel;
  */
 class ContentController extends BaseController
 {
-    protected WebModel $webModel;
+    protected ContentModel $contentModel;
 
     protected $helpers = ['url', 'cias_helper'];
 
@@ -18,14 +18,14 @@ class ContentController extends BaseController
     {
         parent::initController($request, $response, $logger);
         $this->isLoggedIn();
-        $this->webModel = new WebModel();
+        $this->contentModel = new ContentModel();
     }
 
     // ── CMS Pages ─────────────────────────────────────────────────────────────
 
     public function page()
     {
-        $data['page'] = $this->webModel->page_list();
+        $data['page'] = $this->contentModel->page_list();
         $this->global['pageTitle'] = 'event : Page Listing';
         return $this->loadViews('pages/pagelist', $this->global, $data, null);
     }
@@ -38,7 +38,7 @@ class ContentController extends BaseController
         if ($id === 0) {
             return redirect()->to('web');
         }
-        $data['userInfo'] = $this->webModel->getallWebInfo('tbl_pages', $id);
+        $data['userInfo'] = $this->contentModel->getallWebInfo('tbl_pages', $id);
         $this->global['pageTitle'] = 'event : Edit Page';
         return $this->loadViews('pages/web/pageedit', $this->global, $data, null);
     }
@@ -50,7 +50,7 @@ class ContentController extends BaseController
         }
 
         $id     = (int) $this->request->getPost('id');
-        $result = $this->webModel->editWeb_all('tbl_pages', [
+        $result = $this->contentModel->editWeb_all('tbl_pages', [
             'description' => $this->request->getPost('description'),
         ], $id);
 
@@ -67,7 +67,7 @@ class ContentController extends BaseController
         }
         $searchText         = esc($this->request->getPost('searchText') ?? '');
         $data['searchText'] = $searchText;
-        $data['web']        = $this->webModel->get_allfaq($searchText);
+        $data['web']        = $this->contentModel->get_allfaq($searchText);
         $this->global['pageTitle'] = 'event : Announcements';
         return $this->loadViews('pages/faq', $this->global, $data, null);
     }
@@ -91,7 +91,7 @@ class ContentController extends BaseController
             return $this->addfaq();
         }
 
-        $this->webModel->insert_date('tbl_faqs', [
+        $this->contentModel->insert_date('tbl_faqs', [
             'question' => esc($this->request->getPost('question')),
             'answer'   => $this->request->getPost('answer'),
         ]);
@@ -107,7 +107,7 @@ class ContentController extends BaseController
         if ($id === 0) {
             return redirect()->to('web/faq');
         }
-        $data['userInfo'] = $this->webModel->getfaq($id);
+        $data['userInfo'] = $this->contentModel->getfaq($id);
         $this->global['pageTitle'] = 'event : Edit Announcement';
         return $this->loadViews('pages/web/editfaq', $this->global, $data, null);
     }
@@ -119,7 +119,7 @@ class ContentController extends BaseController
         }
 
         $id = (int) $this->request->getPost('id');
-        $this->webModel->editWeb_all('tbl_faqs', [
+        $this->contentModel->editWeb_all('tbl_faqs', [
             'question' => esc($this->request->getPost('question')),
             'answer'   => $this->request->getPost('answer'),
         ], $id);
@@ -133,7 +133,7 @@ class ContentController extends BaseController
             return $this->response->setJSON(['status' => 'access']);
         }
         $id     = (int) $this->request->getPost('userId');
-        $result = $this->webModel->deleteWeb('tbl_faqs', $id);
+        $result = $this->contentModel->deleteWeb('tbl_faqs', $id);
         return $this->response->setJSON(['status' => $result > 0]);
     }
 
@@ -145,11 +145,11 @@ class ContentController extends BaseController
             return $this->loadThis();
         }
 
-        $count  = $this->webModel->count_contact();
+        $count  = $this->contentModel->count_contact();
         $pgData = $this->paginationCompress('web/contact_list/', $count, 10, 3);
 
         $data = [
-            'userRecords' => $this->webModel->contact_ls($pgData['page'], $pgData['segment']),
+            'userRecords' => $this->contentModel->contact_ls($pgData['page'], $pgData['segment']),
             'pager'       => $pgData['pager'],
         ];
         $this->global['pageTitle'] = 'event : Contact List';

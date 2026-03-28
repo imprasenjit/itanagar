@@ -8,7 +8,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table id="contactTable" class="table table-striped">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -48,4 +48,5 @@ jQuery(document).ready(function () {
         window.location.href = jQuery(this).attr('href');
     });
 });
+$(function () { $('#contactTable').DataTable({ paging: false, searching: false, info: false }); });
 </script>

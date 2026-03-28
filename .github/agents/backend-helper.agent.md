@@ -2,7 +2,7 @@
 name: Backend Helper
 description: Implements server-side features — CodeIgniter 4 controllers, models, API endpoints, DB queries, auth. Powered by GPT-4.1.
 argument-hint: Describe the backend feature (e.g. "add a wallet transfer endpoint with validation").
-model: gpt-4.1
+model: GPT-5.1-Codex-Mini (Preview) (copilot)
 tools: ['codebase', 'editFiles', 'runCommands', 'search', 'problems']
 ---
 

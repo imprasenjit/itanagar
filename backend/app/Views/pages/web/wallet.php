@@ -18,7 +18,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <?php if (!empty($userRecords)): ?>
-                <table class="table table-striped">
+                <table id="walletTable" class="table table-striped">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -63,4 +63,5 @@ jQuery(document).ready(function () {
         jQuery("#searchList").submit();
     });
 });
+$(function () { $('#walletTable').DataTable({ paging: false, searching: false, info: false }); });
 </script>

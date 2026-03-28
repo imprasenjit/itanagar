@@ -2,7 +2,7 @@
 name: Frontend Helper
 description: Builds and edits UI — React, Tailwind, HTML/CSS, components, layouts, and client-side logic. Powered by GPT-4.1.
 argument-hint: Describe the UI feature or component (e.g. "build a responsive ticket selection card with Tailwind").
-model: gpt-4.1
+model: GPT-5.1-Codex-Mini (Preview) (copilot)
 tools: ['codebase', 'editFiles', 'search', 'problems', 'web']
 ---
 

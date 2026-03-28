@@ -9,7 +9,7 @@ class CartController extends ApiBaseController
     public function cart()
     {
         $userId = $this->getCartUserId();
-        $cart   = $this->webModel->cart_data($userId);
+        $cart   = $this->cartOrderModel->cart_data($userId);
         $total  = array_reduce($cart, fn($c, $r) => $c + $r->total_price, 0);
         return $this->json(['cart' => $cart, 'total' => $total]);
     }
@@ -26,7 +26,7 @@ class CartController extends ApiBaseController
         }
 
         // Fix: null-check range before accessing ->price
-        $range = $this->webModel->getrangeInfo($webId);
+        $range = $this->gameModel->getrangeInfo($webId);
         if (!$range) {
             return $this->error('Game range not found', 404);
         }
@@ -46,13 +46,13 @@ class CartController extends ApiBaseController
                 'ticket_no'   => $ticketNo,
                 'total_price' => $range->price,
             ];
-            if (!$this->webModel->checkIfTicketAlreadyPresent($cartRow)) {
+            if (!$this->cartOrderModel->checkIfTicketAlreadyPresent($cartRow)) {
                 $toAdd[] = $cartRow;
             }
         }
 
         if (!empty($toAdd)) {
-            $this->webModel->insert_cart($toAdd);
+            $this->cartOrderModel->insert_cart($toAdd);
         }
 
         return $this->json(['added' => count($toAdd), 'errors' => $errors], true, '');
@@ -61,7 +61,7 @@ class CartController extends ApiBaseController
     public function cart_remove(int $cartId)
     {
         $userId = $this->getCartUserId();
-        $this->webModel->delete_cart_item($cartId, $userId);
+        $this->cartOrderModel->delete_cart_item($cartId, $userId);
         return $this->json([], true, 'Removed');
     }
 
@@ -69,8 +69,9 @@ class CartController extends ApiBaseController
     {
         if ($r = $this->requireAuth()) return $r;
         $userId = (int) session()->get('userId');
-        $cart   = $this->webModel->order_data($userId);
+        $cart   = $this->cartOrderModel->order_data($userId);
         $total  = array_reduce($cart, fn($c, $r) => $c + $r->total_price, 0);
         return $this->json(['cart' => $cart, 'total' => $total, 'isGuest' => false]);
     }
 }
+

@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
-use App\Models\WebModel;
+use App\Models\GameModel;
 
 /**
  * Web — admin games list page and its DataTables AJAX source.
@@ -15,7 +15,7 @@ use App\Models\WebModel;
  */
 class Web extends BaseController
 {
-    protected WebModel  $webModel;
+    protected GameModel $gameModel;
     protected UserModel $userModel;
 
     protected $helpers = ['url', 'cias_helper'];
@@ -24,7 +24,7 @@ class Web extends BaseController
     {
         parent::initController($request, $response, $logger);
         $this->isLoggedIn();
-        $this->webModel  = new WebModel();
+        $this->gameModel  = new GameModel();
         $this->userModel = new UserModel();
     }
 
@@ -49,9 +49,9 @@ class Web extends BaseController
         $length = (int)($this->request->getGet('length') ?? 10);
         $search = trim($this->request->getGet('search')['value'] ?? '');
 
-        $total    = $this->webModel->weblist_count();
-        $filtered = $this->webModel->weblist_count($search);
-        $rows     = $this->webModel->weblist_data($search, $length, $start);
+        $total    = $this->gameModel->weblist_count();
+        $filtered = $this->gameModel->weblist_count($search);
+        $rows     = $this->gameModel->weblist_data($search, $length, $start);
 
         $data = [];
         foreach ($rows as $row) {

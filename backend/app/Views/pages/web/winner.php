@@ -27,12 +27,12 @@
         <div class="card-body">
             <div class="table-responsive">
                 <?php if (!empty($userRecords)): ?>
-                <table class="table table-striped">
+                <table id="winnerTable" class="table table-striped">
                     <thead>
                         <tr>
                             <th>Order No.</th>
                             <th>User</th>
-                            <th>Game</th>
+                            <th>Event</th>
                             <th>Tickets</th>
                             <th>Price</th>
                             <th>Payment Type</th>
@@ -77,6 +77,7 @@
         </div>
     </div>
 </section>
+<script>$(function () { $('#winnerTable').DataTable({ paging: false, searching: false, info: false }); });</script>
 
 <script src="<?= base_url() ?>public/admin/js/common.js"></script>
 <script>

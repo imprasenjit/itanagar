@@ -8,7 +8,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table id="pagelistTable" class="table table-striped">
                     <thead>
                         <tr>
                             <th>Title</th>
@@ -34,3 +34,4 @@
         </div>
     </div>
 </section>
+<script>$(function () { $('#pagelistTable').DataTable({ paging: false, columnDefs: [{ orderable: false, targets: -1 }] }); });</script>

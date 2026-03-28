@@ -54,7 +54,7 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table table-striped table-hover">
+              <table id="rolesTable" class="table table-striped table-hover">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -121,4 +121,5 @@ document.querySelectorAll('.btn-delete-role').forEach(btn => {
     });
   });
 });
+$(function () { $('#rolesTable').DataTable({ paging: false, columnDefs: [{ orderable: false, targets: -1 }] }); });
 </script>

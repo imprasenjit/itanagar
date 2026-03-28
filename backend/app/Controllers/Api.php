@@ -9,6 +9,11 @@ use Razorpay\Api\Errors\SignatureVerificationError as PaymentError;
 use App\Models\WebModel;
 use App\Models\UserModel;
 use App\Models\LoginModel;
+use App\Models\GameModel;
+use App\Models\CartOrderModel;
+use App\Models\WalletModel;
+use App\Models\WinnerModel;
+use App\Models\ContentModel;
 
 /**
  * Api Controller — JSON API for the React frontend.
@@ -16,9 +21,14 @@ use App\Models\LoginModel;
  */
 class Api extends BaseController
 {
-    protected WebModel   $webModel;
-    protected UserModel  $userModel;
-    protected LoginModel $loginModel;
+    protected WebModel       $webModel;
+    protected UserModel      $userModel;
+    protected LoginModel     $loginModel;
+    protected GameModel      $gameModel;
+    protected CartOrderModel $cartOrderModel;
+    protected WalletModel    $walletModel;
+    protected WinnerModel    $winnerModel;
+    protected ContentModel   $contentModel;
 
     protected $helpers = ['url', 'cias_helper', 'email_helper'];
 
@@ -29,9 +39,14 @@ class Api extends BaseController
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger): void
     {
         parent::initController($request, $response, $logger);
-        $this->webModel   = new WebModel();
-        $this->userModel  = new UserModel();
-        $this->loginModel = new LoginModel();
+        $this->webModel       = new WebModel();
+        $this->userModel      = new UserModel();
+        $this->loginModel     = new LoginModel();
+        $this->gameModel      = new GameModel();
+        $this->cartOrderModel = new CartOrderModel();
+        $this->walletModel    = new WalletModel();
+        $this->winnerModel    = new WinnerModel();
+        $this->contentModel   = new ContentModel();
         $this->_cors();
     }
 
@@ -157,7 +172,7 @@ class Api extends BaseController
      */
     private function getTicketAvailability(int $ticket, int $web_id): bool
     {
-        return count($this->webModel->get_ticket_availability($ticket, $web_id)) === 0;
+        return count($this->cartOrderModel->get_ticket_availability($ticket, $web_id)) === 0;
     }
 
     /**
@@ -192,11 +207,11 @@ class Api extends BaseController
     public function home()
     {
         return $this->json([
-            'games'   => $this->webModel->home_web(6),
-            'faq'     => $this->webModel->faq(1),
-            'results' => $this->webModel->result_list(null, null, 5),
+            'games'   => $this->gameModel->home_web(6),
+            'faq'     => $this->contentModel->faq(1),
+            'results' => $this->cartOrderModel->result_list(null, null, 5),
             'stats'   => [
-                'games' => count($this->webModel->home_web()),
+                'games' => count($this->gameModel->home_web()),
                 'users' => $this->userModel->userListingCount(''),
             ],
         ]);
@@ -208,7 +223,7 @@ class Api extends BaseController
      */
     public function games()
     {
-        return $this->json(['games' => $this->webModel->home_web()]);
+        return $this->json(['games' => $this->gameModel->home_web()]);
     }
 
     /**
@@ -219,11 +234,11 @@ class Api extends BaseController
      */
     public function game_detail(int $id)
     {
-        $website = $this->webModel->getallWebInfo('tbl_webs', $id);
+        $website = $this->gameModel->getallWebInfo('tbl_webs', $id);
         if (!$website) {
             return $this->error('Game not found', 404);
         }
-        $range = $this->webModel->getrangeInfo($id);
+        $range = $this->gameModel->getrangeInfo($id);
         return $this->json([
             'website'     => $website,
             'range'       => $range,
@@ -263,11 +278,11 @@ class Api extends BaseController
         $body   = $this->getBody();
         $search = isset($body['search']) ? (int) $body['search'] : 0;
 
-        $range = $this->webModel->getrangeInfo($web_id);
+        $range = $this->gameModel->getrangeInfo($web_id);
         if (!$range) {
             return $this->error('Game not found', 404);
         }
-        $checkRange = $this->webModel->getRangeAvailability($search, $web_id);
+        $checkRange = $this->gameModel->getRangeAvailability($search, $web_id);
         $available  = count($checkRange) > 0 && $this->getTicketAvailability($search, $web_id);
         return $this->json(['available' => $available, 'ticket' => $search]);
     }
@@ -280,7 +295,7 @@ class Api extends BaseController
      */
     public function faq()
     {
-        return $this->json(['faqs' => $this->webModel->faq()]);
+        return $this->json(['faqs' => $this->contentModel->faq()]);
     }
 
     /**
@@ -291,7 +306,7 @@ class Api extends BaseController
      */
     public function page(string $type)
     {
-        $page = $this->webModel->page_detail($type);
+        $page = $this->contentModel->page_detail($type);
         if (!$page) {
             return $this->error('Page not found', 404);
         }
@@ -307,8 +322,8 @@ class Api extends BaseController
     {
         $webId   = $this->request->getGet('web_id');
         $date    = $this->request->getGet('date');
-        $results = $this->webModel->result_list($webId ? (int)$webId : null, $date ?: null);
-        $games   = $this->webModel->home_web();
+        $results = $this->cartOrderModel->result_list($webId ? (int)$webId : null, $date ?: null);
+        $games   = $this->gameModel->home_web();
         return $this->json(['results' => $results, 'games' => $games]);
     }
 
@@ -329,7 +344,7 @@ class Api extends BaseController
             return $this->error('Name, email, and message are required');
         }
 
-        $this->webModel->insert_date('tbl_contact', [
+        $this->contentModel->insert_date('tbl_contact', [
             'name'       => $name,
             'email'      => $email,
             'mobile'     => $mobile,
@@ -352,7 +367,7 @@ class Api extends BaseController
             return $this->json(['isLoggedIn' => false, 'user' => null]);
         }
         $userId    = (int) session()->get('userId');
-        $cartCount = count($this->webModel->cart_data($userId));
+        $cartCount = count($this->cartOrderModel->cart_data($userId));
         return $this->json([
             'isLoggedIn' => true,
             'user'       => [
@@ -394,7 +409,7 @@ class Api extends BaseController
         if ($result->roleId != 1) {
             $guestId = session()->get('custom_userId');
             if ($guestId) {
-                $this->webModel->up_cart((int)$guestId, $result->userId);
+                $this->cartOrderModel->up_cart((int)$guestId, $result->userId);
             }
         }
 
@@ -554,7 +569,7 @@ class Api extends BaseController
     public function cart()
     {
         $userId = $this->getCartUserId();
-        $cart   = $this->webModel->cart_data($userId);
+        $cart   = $this->cartOrderModel->cart_data($userId);
         $total  = array_reduce($cart, fn($c, $r) => $c + $r->total_price, 0);
         return $this->json(['cart' => $cart, 'total' => $total]);
     }
@@ -576,7 +591,7 @@ class Api extends BaseController
             return $this->error('web_id and tickets are required');
         }
 
-        $range  = $this->webModel->getrangeInfo($webId);
+        $range  = $this->gameModel->getrangeInfo($webId);
         $errors = [];
         $toAdd  = [];
 
@@ -592,13 +607,13 @@ class Api extends BaseController
                 'ticket_no'   => $ticketNo,
                 'total_price' => $range->price,
             ];
-            if (!$this->webModel->checkIfTicketAlreadyPresent($cartRow)) {
+            if (!$this->cartOrderModel->checkIfTicketAlreadyPresent($cartRow)) {
                 $toAdd[] = $cartRow;
             }
         }
 
         if (!empty($toAdd)) {
-            $this->webModel->insert_cart($toAdd);
+            $this->cartOrderModel->insert_cart($toAdd);
         }
 
         return $this->json(['added' => count($toAdd), 'errors' => $errors], true, '');
@@ -613,7 +628,7 @@ class Api extends BaseController
     public function cart_remove(int $cartId)
     {
         $userId = $this->getCartUserId();
-        $this->webModel->delete_cart_item($cartId, $userId);
+        $this->cartOrderModel->delete_cart_item($cartId, $userId);
         return $this->json([], true, 'Removed');
     }
 
@@ -634,7 +649,7 @@ class Api extends BaseController
         if (session()->get('isLoggedIn') === true) {
             // ── Logged-in user ────────────────────────────────────────────────
             $userId   = (int) session()->get('userId');
-            $cart     = $this->webModel->order_data($userId);
+            $cart     = $this->cartOrderModel->order_data($userId);
             $userInfo = $this->userModel->getUserInfo($userId);
         } else {
             // ── Guest / unregistered user ─────────────────────────────────────
@@ -677,7 +692,7 @@ class Api extends BaseController
 
             // Cart was built under the guest session key
             $customUserId = session()->get('custom_userId') ? (int) session()->get('custom_userId') : null;
-            $cart         = $this->webModel->order_data($customUserId ?? $userId);
+            $cart         = $this->cartOrderModel->order_data($customUserId ?? $userId);
         }
 
         if (empty($cart)) {
@@ -707,7 +722,7 @@ class Api extends BaseController
             return $this->error('Could not create Razorpay order');
         }
 
-        $this->webModel->insert_order([
+        $this->cartOrderModel->insert_order([
             'tickets'                 => json_encode($tickets),
             'user_id'                 => $userId,
             'custom_user_id'          => $customUserId,
@@ -722,9 +737,9 @@ class Api extends BaseController
         // Mark cart rows as paid for both guest and registered user ids
         foreach ($cart as $item) {
             if ($customUserId !== null) {
-                $this->webModel->update_cart_data($customUserId, $item->web_id, $item->ticket_no, ['paid_status' => 1]);
+                $this->cartOrderModel->update_cart_data($customUserId, $item->web_id, $item->ticket_no, ['paid_status' => 1]);
             }
-            $this->webModel->update_cart_data($userId, $item->web_id, $item->ticket_no, ['paid_status' => 1]);
+            $this->cartOrderModel->update_cart_data($userId, $item->web_id, $item->ticket_no, ['paid_status' => 1]);
         }
 
         session()->set('payment_order_id', $razorpayOrder['id']);
@@ -774,13 +789,13 @@ class Api extends BaseController
             if ($type === 'wallet') {
                 $userId = (int) session()->get('userId');
                 $amount = (float) (session()->get('wallet_amount') ?? 0);
-                $wallet = $this->webModel->wallet($userId);
+                $wallet = $this->walletModel->wallet($userId);
                 if (!$wallet) {
-                    $this->webModel->insert_date('tbl_wallet', ['user_id' => $userId, 'money' => $amount]);
+                    $this->walletModel->insert_date('tbl_wallet', ['user_id' => $userId, 'money' => $amount]);
                 } else {
-                    $this->webModel->editWeb_all('tbl_wallet', ['money' => $wallet->money + $amount], $wallet->id);
+                    $this->walletModel->editWeb_all('tbl_wallet', ['money' => $wallet->money + $amount], $wallet->id);
                 }
-                $this->webModel->insert_date('tbl_wallet_history', [
+                $this->walletModel->insert_date('tbl_wallet_history', [
                     'user_id'        => $userId,
                     'money'          => $amount,
                     'trancaction_id' => $razorpayPayId,
@@ -792,20 +807,20 @@ class Api extends BaseController
                 return $this->json(['status' => 'CREDITED'], true, 'Wallet topped up');
             }
 
-            $this->webModel->update_order_by_orderId($razorpayOrderId, [
+            $this->cartOrderModel->update_order_by_orderId($razorpayOrderId, [
                 'paid_status'      => 'PAID',
                 'order_status'     => 1,
                 'payment_response' => json_encode($body),
             ]);
 
-            $orderDetails = $this->webModel->get_order_by_orderId($razorpayOrderId);
+            $orderDetails = $this->cartOrderModel->get_order_by_orderId($razorpayOrderId);
             $userInfo     = $this->userModel->getUserInfo($orderDetails->user_id);
             $tickets      = json_decode($orderDetails->tickets, true);
             $ticketDetails = [];
             foreach ($tickets as $t) {
                 $ticketDetails[] = [
-                    'webInfo'  => $this->webModel->getallWebInfo('tbl_webs', $t['web_id']),
-                    'range'    => $this->webModel->getrangeInfo($t['web_id']),
+                    'webInfo'  => $this->gameModel->getallWebInfo('tbl_webs', $t['web_id']),
+                    'range'    => $this->gameModel->getrangeInfo($t['web_id']),
                     'ticketNo' => $t['ticket_no'],
                 ];
             }
@@ -819,7 +834,7 @@ class Api extends BaseController
 
             return $this->json(['status' => 'PAID'], true, 'Payment verified');
         } catch (PaymentError $e) {
-            $this->webModel->update_order_by_orderId($razorpayOrderId, [
+            $this->cartOrderModel->update_order_by_orderId($razorpayOrderId, [
                 'order_status'     => 2,
                 'payment_response' => json_encode($body),
             ]);
@@ -839,7 +854,7 @@ class Api extends BaseController
         if (empty($orderId)) {
             return $this->error('order_id required');
         }
-        $this->webModel->update_order_by_orderId($orderId, [
+        $this->cartOrderModel->update_order_by_orderId($orderId, [
             'order_status'     => 2,
             'payment_response' => json_encode($body),
         ]);
@@ -858,7 +873,7 @@ class Api extends BaseController
             return $auth;
         }
         $userId = (int) session()->get('userId');
-        $cart   = $this->webModel->order_data($userId);
+        $cart   = $this->cartOrderModel->order_data($userId);
         $total  = array_reduce($cart, fn($c, $r) => $c + $r->total_price, 0);
         return $this->json(['cart' => $cart, 'total' => $total, 'isGuest' => false]);
     }
@@ -943,8 +958,8 @@ class Api extends BaseController
         $auth = $this->requireAuth();
         if ($auth !== null) return $auth;
         $userId  = (int) session()->get('userId');
-        $wallet  = $this->webModel->wallet($userId);
-        $history = $this->webModel->wallet_history($userId);
+        $wallet  = $this->walletModel->wallet($userId);
+        $history = $this->walletModel->wallet_history($userId);
         return $this->json([
             'balance' => $wallet ? (float) $wallet->money : 0.0,
             'history' => $history,
@@ -1003,7 +1018,7 @@ class Api extends BaseController
         $auth = $this->requireAuth();
         if ($auth !== null) return $auth;
         $userId = (int) session()->get('userId');
-        return $this->json(['orders' => $this->webModel->order_history($userId)]);
+        return $this->json(['orders' => $this->cartOrderModel->order_history($userId)]);
     }
 
     /**
@@ -1015,7 +1030,7 @@ class Api extends BaseController
         $auth = $this->requireAuth();
         if ($auth !== null) return $auth;
         $userId = (int) session()->get('userId');
-        return $this->json($this->webModel->refund_history($userId));
+        return $this->json($this->walletModel->refund_history($userId));
     }
 
     /**
@@ -1034,7 +1049,7 @@ class Api extends BaseController
         if (empty($orderId) || empty($reason)) {
             return $this->error('Order ID and reason are required');
         }
-        $this->webModel->insert_date('tbl_refund', [
+        $this->walletModel->insert_date('tbl_refund', [
             'user_id'    => $userId,
             'order_id'   => $orderId,
             'reason'     => $reason,
@@ -1053,7 +1068,7 @@ class Api extends BaseController
         $auth = $this->requireAuth();
         if ($auth !== null) return $auth;
         $userId = (int) session()->get('userId');
-        return $this->json($this->webModel->withdrawl_history($userId));
+        return $this->json($this->walletModel->withdrawl_history($userId));
     }
 
     /**
@@ -1074,7 +1089,7 @@ class Api extends BaseController
         if ($amount < 1 || empty($accountNumber) || empty($ifsc) || empty($accountName)) {
             return $this->error('All fields are required');
         }
-        $this->webModel->insert_date('tbl_withdrawl', [
+        $this->walletModel->insert_date('tbl_withdrawl', [
             'user_id'        => $userId,
             'amount'         => $amount,
             'account_number' => $accountNumber,
@@ -1095,7 +1110,7 @@ class Api extends BaseController
         $auth = $this->requireAuth();
         if ($auth !== null) return $auth;
         $userId = (int) session()->get('userId');
-        return $this->json($this->webModel->transfer_history($userId));
+        return $this->json($this->walletModel->transfer_history($userId));
     }
 
     /**
@@ -1122,24 +1137,24 @@ class Api extends BaseController
         if (!$recipient) {
             return $this->error('Recipient not found', 404);
         }
-        $wallet = $this->webModel->wallet($userId);
+        $wallet = $this->walletModel->wallet($userId);
         if (!$wallet || (float) $wallet->money < $amount) {
             return $this->error('Insufficient wallet balance');
         }
-        $this->webModel->editWeb_all('tbl_wallet', ['money' => $wallet->money - $amount], $wallet->id);
-        $this->webModel->insert_date('tbl_wallet_history', [
+        $this->walletModel->editWeb_all('tbl_wallet', ['money' => $wallet->money - $amount], $wallet->id);
+        $this->walletModel->insert_date('tbl_wallet_history', [
             'user_id' => $userId, 'money' => $amount, 'type' => 'Debit', 'p_type' => 'Transfer',
         ]);
-        $recipientWallet = $this->webModel->wallet($recipient->userId);
+        $recipientWallet = $this->walletModel->wallet($recipient->userId);
         if (!$recipientWallet) {
-            $this->webModel->insert_date('tbl_wallet', ['user_id' => $recipient->userId, 'money' => $amount]);
+            $this->walletModel->insert_date('tbl_wallet', ['user_id' => $recipient->userId, 'money' => $amount]);
         } else {
-            $this->webModel->editWeb_all('tbl_wallet', ['money' => $recipientWallet->money + $amount], $recipientWallet->id);
+            $this->walletModel->editWeb_all('tbl_wallet', ['money' => $recipientWallet->money + $amount], $recipientWallet->id);
         }
-        $this->webModel->insert_date('tbl_wallet_history', [
+        $this->walletModel->insert_date('tbl_wallet_history', [
             'user_id' => $recipient->userId, 'money' => $amount, 'type' => 'Credit', 'p_type' => 'Transfer',
         ]);
-        $this->webModel->insert_date('tbl_transfer', [
+        $this->walletModel->insert_date('tbl_transfer', [
             'user_id'    => $userId,
             'to_user_id' => $recipient->userId,
             'amount'     => $amount,
@@ -1158,6 +1173,6 @@ class Api extends BaseController
         $auth = $this->requireAuth();
         if ($auth !== null) return $auth;
         $userId = (int) session()->get('userId');
-        return $this->json($this->webModel->winner_history($userId));
+        return $this->json($this->winnerModel->winner_history($userId));
     }
 }

@@ -2,8 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Models\WebModel;
 use App\Models\UserModel;
+use App\Models\GameModel;
+use App\Models\CartOrderModel;
 
 /**
  * SettingsController — admin-only settings: common config, reports, dashboard AJAX,
@@ -12,8 +13,9 @@ use App\Models\UserModel;
  */
 class SettingsController extends BaseController
 {
-    protected WebModel  $webModel;
-    protected UserModel $userModel;
+    protected GameModel      $gameModel;
+    protected CartOrderModel $cartOrderModel;
+    protected UserModel      $userModel;
 
     protected $helpers = ['url', 'cias_helper'];
 
@@ -21,37 +23,9 @@ class SettingsController extends BaseController
     {
         parent::initController($request, $response, $logger);
         $this->isLoggedIn();
-        $this->webModel  = new WebModel();
-        $this->userModel = new UserModel();
-    }
-
-    // ── Common Settings ───────────────────────────────────────────────────────
-
-    public function common()
-    {
-        if ($this->isAdmin() === false) {
-            return $this->loadThis();
-        }
-        $data['WebInfo'] = $this->webModel->getcommon();
-        $this->global['pageTitle'] = 'event : Edit Common Setting';
-        return $this->loadViews('pages/web/common', $this->global, $data, null);
-    }
-
-    public function editCommon()
-    {
-        if ($this->isAdmin() === false) {
-            return $this->loadThis();
-        }
-
-        $fields   = ['wallet_min', 'wallet_max', 'refund_min', 'refund_max', 'transfer_min', 'transfer_max', 'withdrawl_min', 'withdrawl_max'];
-        $userInfo = [];
-        foreach ($fields as $field) {
-            $userInfo[$field] = $this->request->getPost($field);
-        }
-
-        $result = $this->webModel->editWeb_all('common', $userInfo, 1);
-        session()->setFlashdata($result ? 'success' : 'error', $result ? 'Settings updated successfully' : 'Range updation failed');
-        return redirect()->to('web/common');
+        $this->gameModel      = new GameModel();
+        $this->cartOrderModel = new CartOrderModel();
+        $this->userModel      = new UserModel();
     }
 
     // ── Reports ───────────────────────────────────────────────────────────────
@@ -61,7 +35,7 @@ class SettingsController extends BaseController
         if ($this->isAdmin() === false) {
             return $this->loadThis();
         }
-        $data['games'] = $this->webModel->get_allweb();
+        $data['games'] = $this->gameModel->get_allweb();
         $this->global['pageTitle'] = 'event : Reports';
         return $this->loadViews('pages/web/reports', $this->global, $data, null);
     }
@@ -80,15 +54,15 @@ class SettingsController extends BaseController
 
         switch ($type) {
             case 'event':
-                $rows     = $webId ? $this->webModel->report_event($webId) : [];
+                $rows     = $webId ? $this->cartOrderModel->report_event($webId) : [];
                 $filename = 'report_event_' . $webId . '_' . date('Ymd') . '.csv';
                 break;
             case 'monthly':
-                $rows     = $this->webModel->report_monthly($year, $month);
+                $rows     = $this->cartOrderModel->report_monthly($year, $month);
                 $filename = 'report_monthly_' . $year . '_' . str_pad($month, 2, '0', STR_PAD_LEFT) . '.csv';
                 break;
             default:
-                $rows     = $this->webModel->report_daily($date);
+                $rows     = $this->cartOrderModel->report_daily($date);
                 $filename = 'report_daily_' . $date . '.csv';
                 break;
         }
@@ -124,7 +98,7 @@ class SettingsController extends BaseController
             return $this->response->setJSON(['status' => 'access']);
         }
 
-        $upcoming     = $this->webModel->upcoming_events(5);
+        $upcoming     = $this->gameModel->upcoming_events(5);
         $upcomingData = [];
         foreach ($upcoming as $ev) {
             $upcomingData[] = [
@@ -138,10 +112,10 @@ class SettingsController extends BaseController
             'status'           => 'ok',
             'totalweb'         => $this->userModel->count_record('tbl_webs'),
             'totaluser'        => $this->userModel->count_record('tbl_users'),
-            'totalTicketsSold' => $this->webModel->total_tickets_sold(),
-            'totalRevenue'     => number_format($this->webModel->total_revenue(), 2),
-            'todayRevenue'     => number_format($this->webModel->today_revenue(), 2),
-            'todayOrders'      => $this->webModel->today_orders(),
+            'totalTicketsSold' => $this->cartOrderModel->total_tickets_sold(),
+            'totalRevenue'     => number_format($this->cartOrderModel->total_revenue(), 2),
+            'todayRevenue'     => number_format($this->cartOrderModel->today_revenue(), 2),
+            'todayOrders'      => $this->cartOrderModel->today_orders(),
             'upcomingEvents'   => $upcomingData,
         ]);
     }
@@ -157,9 +131,9 @@ class SettingsController extends BaseController
         $length = (int) ($this->request->getGet('length') ?? 10);
         $search = $this->request->getGet('search')['value'] ?? '';
 
-        $total    = $this->webModel->txn_count(null, null, null, 'PAID', $search);
+        $total    = $this->cartOrderModel->txn_count(null, null, null, 'PAID', $search);
         $filtered = $total;
-        $rows     = $this->webModel->txn_list(null, null, null, 'PAID', $search, $length, $start);
+        $rows     = $this->cartOrderModel->txn_list(null, null, null, 'PAID', $search, $length, $start);
 
         $data = [];
         foreach ($rows as $txn) {
@@ -181,3 +155,4 @@ class SettingsController extends BaseController
     }
 
 }
+

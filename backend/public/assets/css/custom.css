@@ -1,0 +1,14 @@
+/*
+ * custom.css — Project-specific style overrides
+ * Add all custom styles here. This file is loaded after app.css,
+ * so rules here will override the Mazer theme and Bootstrap defaults.
+ */
+
+/* =============================================
+   Global Overrides
+   ============================================= */
+
+/* Add your custom styles below */
+.submenu{
+    padding-left: 0px;
+}

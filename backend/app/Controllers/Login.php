@@ -4,13 +4,13 @@ namespace App\Controllers;
 
 use App\Models\LoginModel;
 use App\Models\UserModel;
-use App\Models\WebModel;
+use App\Models\CartOrderModel;
 
 class Login extends BaseController
 {
     protected LoginModel $loginModel;
     protected UserModel  $userModel;
-    protected WebModel   $webModel;
+    protected CartOrderModel $cartOrderModel;
 
     protected $helpers = ['url', 'cias_helper', 'email_helper'];
 
@@ -19,7 +19,7 @@ class Login extends BaseController
         parent::initController($request, $response, $logger);
         $this->loginModel = new LoginModel();
         $this->userModel  = new UserModel();
-        $this->webModel   = new WebModel();
+        $this->cartOrderModel = new CartOrderModel();
     }
 
     public function index()
@@ -55,7 +55,7 @@ class Login extends BaseController
             $lastLogin = $this->loginModel->lastLoginInfo($result->userId);
             $guestId   = session()->get('custom_userId');
             if ($guestId) {
-                $this->webModel->up_cart((int)$guestId, $result->userId);
+                $this->cartOrderModel->up_cart((int)$guestId, $result->userId);
             }
         }
 
@@ -80,7 +80,7 @@ class Login extends BaseController
         ];
         $this->loginModel->lastLogin($loginInfo);
 
-        // if (count($this->webModel->order_data($result->userId)) > 0 || $result->roleId == 2) {
+        // if (count($this->cartOrderModel->order_data($result->userId)) > 0 || $result->roleId == 2) {
         //     return redirect()->to('game/confirm_order');
         // }
         return redirect()->to('dashboard');

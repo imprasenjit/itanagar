@@ -65,8 +65,8 @@ class AccountController extends ApiBaseController
     {
         if ($r = $this->requireAuth()) return $r;
         $userId  = (int) session()->get('userId');
-        $wallet  = $this->webModel->wallet($userId);
-        $history = $this->webModel->wallet_history($userId);
+        $wallet  = $this->walletModel->wallet($userId);
+        $history = $this->walletModel->wallet_history($userId);
         return $this->json([
             'balance' => $wallet ? (float) $wallet->money : 0.0,
             'history' => $history,
@@ -118,14 +118,14 @@ class AccountController extends ApiBaseController
     {
         if ($r = $this->requireAuth()) return $r;
         $userId = (int) session()->get('userId');
-        return $this->json(['orders' => $this->webModel->order_history($userId)]);
+        return $this->json(['orders' => $this->cartOrderModel->order_history($userId)]);
     }
 
     public function account_refunds()
     {
         if ($r = $this->requireAuth()) return $r;
         $userId = (int) session()->get('userId');
-        return $this->json($this->webModel->refund_history($userId));
+        return $this->json($this->walletModel->refund_history($userId));
     }
 
     public function account_refund_create()
@@ -140,12 +140,12 @@ class AccountController extends ApiBaseController
         }
 
         // Fix: verify order exists and belongs to the authenticated user
-        $order = $this->webModel->get_order_by_id($orderId);
+        $order = $this->cartOrderModel->get_order_by_id($orderId);
         if (!$order || (int) $order->user_id !== $userId) {
             return $this->error('Order not found', 404);
         }
 
-        $this->webModel->insert_date('tbl_refund', [
+        $this->walletModel->insert_date('tbl_refund', [
             'user_id'    => $userId,
             'order_id'   => $orderId,
             'reason'     => $reason,
@@ -159,7 +159,7 @@ class AccountController extends ApiBaseController
     {
         if ($r = $this->requireAuth()) return $r;
         $userId = (int) session()->get('userId');
-        return $this->json($this->webModel->withdrawl_history($userId));
+        return $this->json($this->walletModel->withdrawl_history($userId));
     }
 
     public function account_withdrawal_create()
@@ -176,12 +176,12 @@ class AccountController extends ApiBaseController
         }
 
         // Fix: verify wallet balance before accepting withdrawal request
-        $wallet = $this->webModel->wallet($userId);
+        $wallet = $this->walletModel->wallet($userId);
         if (!$wallet || (float) $wallet->money < $amount) {
             return $this->error('Insufficient wallet balance');
         }
 
-        $this->webModel->insert_date('tbl_withdrawl', [
+        $this->walletModel->insert_date('tbl_withdrawl', [
             'user_id'        => $userId,
             'amount'         => $amount,
             'account_number' => $accountNumber,
@@ -197,7 +197,7 @@ class AccountController extends ApiBaseController
     {
         if ($r = $this->requireAuth()) return $r;
         $userId = (int) session()->get('userId');
-        return $this->json($this->webModel->transfer_history($userId));
+        return $this->json($this->walletModel->transfer_history($userId));
     }
 
     public function account_transfer_create()
@@ -218,7 +218,7 @@ class AccountController extends ApiBaseController
         if (!$recipient) {
             return $this->error('Recipient not found', 404);
         }
-        $wallet = $this->webModel->wallet($userId);
+        $wallet = $this->walletModel->wallet($userId);
         if (!$wallet || (float) $wallet->money < $amount) {
             return $this->error('Insufficient wallet balance');
         }
@@ -233,7 +233,7 @@ class AccountController extends ApiBaseController
             'user_id' => $userId, 'money' => $amount, 'type' => 'Debit', 'p_type' => 'Transfer',
         ]);
 
-        $recipientWallet = $this->webModel->wallet($recipient->userId);
+        $recipientWallet = $this->walletModel->wallet($recipient->userId);
         if (!$recipientWallet) {
             $db->table('tbl_wallet')->insert(['user_id' => $recipient->userId, 'money' => $amount]);
         } else {
@@ -264,6 +264,7 @@ class AccountController extends ApiBaseController
     {
         if ($r = $this->requireAuth()) return $r;
         $userId = (int) session()->get('userId');
-        return $this->json($this->webModel->winner_history($userId));
+        return $this->json($this->winnerModel->winner_history($userId));
     }
 }
+

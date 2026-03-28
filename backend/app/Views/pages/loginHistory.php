@@ -42,7 +42,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table id="loginHistoryTable" class="table table-striped">
                     <thead>
                         <tr>
                             <th>Session</th>
@@ -86,4 +86,5 @@ jQuery(document).ready(function () {
         $(this).closest('form').find("input[type=text]").val("");
     });
 });
+$(function () { $('#loginHistoryTable').DataTable({ paging: false, searching: false, info: false }); });
 </script>

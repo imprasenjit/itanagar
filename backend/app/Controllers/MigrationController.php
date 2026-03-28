@@ -22,47 +22,54 @@ class MigrationController extends BaseController
             return $this->loadThis();
         }
 
-        $migrate  = \Config\Services::migrations();
-        $db       = \Config\Database::connect();
-        $allFiles = $migrate->findMigrations();
+        $db = \Config\Database::connect();
 
-        $history    = [];
-        $ranByClass = [];
+        // Discover all migration files on disk
+        $migrationPath = APPPATH . 'Database/Migrations/';
+        $files         = glob($migrationPath . '*.php') ?: [];
+
+        $migrationFiles = [];
+        foreach ($files as $file) {
+            $migrationFiles[] = basename($file, '.php');
+        }
+
+        // Fetch already-applied versions from the migrations table
+        $ran = [];
         if ($db->tableExists('migrations')) {
-            $rows = $db->table('migrations')->orderBy('batch', 'ASC')->orderBy('time', 'ASC')->get()->getResult();
+            $rows = $db->table('migrations')->select('version')->get()->getResultArray();
             foreach ($rows as $row) {
-                $history[]  = $row;
-                $shortKey   = preg_replace('/^.*\\\\/', '', ltrim($row->class, '\\'));
-                $ranByClass[$shortKey] = $row;
+                $ran[] = $row['version'];
             }
         }
 
-        $migrations = [];
-        foreach ($allFiles as $file) {
-            $shortClass  = ltrim(preg_replace('/^.*\\\\/', '', $file->class ?? ''), '\\');
-            $ran         = isset($ranByClass[$shortClass]);
-            $historyRow  = $ranByClass[$shortClass] ?? null;
-            $description = trim(preg_replace('/([A-Z])/', ' $1', $shortClass));
+        // Build per-migration status list
+        $migrationList = [];
+        foreach ($migrationFiles as $filename) {
+            // CI4 filename format: 2026-03-28-000001_CreatePermissionsTables
+            preg_match('/^(\d{4}-\d{2}-\d{2}-\d{6})/', $filename, $matches);
+            $version = $matches[1] ?? $filename;
 
-            $migrations[] = [
-                'file'        => $shortClass,
-                'description' => $description,
-                'ran'         => $ran,
-                'batch'       => $historyRow->batch ?? null,
-                'run_at'      => $historyRow ? date('Y-m-d H:i:s', $historyRow->time) : null,
+            $migrationList[] = [
+                'filename' => $filename,
+                'version'  => $version,
+                'status'   => in_array($version, $ran) ? 'Applied' : 'Pending',
             ];
         }
 
-        $ranCount     = count(array_filter($migrations, fn($m) => $m['ran']));
-        $pendingCount = count($migrations) - $ranCount;
+        // Sort ascending by version
+        usort($migrationList, fn($a, $b) => strcmp($a['version'], $b['version']));
+
+        $totalCount   = count($migrationList);
+        $ranCount     = count(array_filter($migrationList, fn($m) => $m['status'] === 'Applied'));
+        $pendingCount = $totalCount - $ranCount;
 
         $data = [
-            'migrations'   => $migrations,
-            'history'      => $history,
-            'totalCount'   => count($migrations),
-            'ranCount'     => $ranCount,
-            'pendingCount' => $pendingCount,
+            'migrationList' => $migrationList,
+            'totalCount'    => $totalCount,
+            'ranCount'      => $ranCount,
+            'pendingCount'  => $pendingCount,
         ];
+
         $this->global['pageTitle'] = 'Itanagarchoice : Migrations';
         return $this->loadViews('pages/migrations', $this->global, $data, null);
     }

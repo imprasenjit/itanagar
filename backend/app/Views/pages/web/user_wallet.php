@@ -55,7 +55,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <?php if (!empty($userRecords)): ?>
-                <table class="table table-striped">
+                <table id="userWalletTable" class="table table-striped">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -98,4 +98,5 @@ jQuery(document).ready(function () {
         window.location.href = baseURL + 'web/user_wallet/' + walletUserId + '/' + value;
     });
 });
+$(function () { $('#userWalletTable').DataTable({ paging: false, searching: false, info: false }); });
 </script>

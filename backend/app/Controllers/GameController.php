@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\WebModel;
+use App\Models\GameModel;
 
 /**
  * GameController — admin CRUD for lottery games, ranges, descriptions, tiers and draw dates.
@@ -10,7 +10,7 @@ use App\Models\WebModel;
  */
 class GameController extends BaseController
 {
-    protected WebModel $webModel;
+    protected GameModel $gameModel;
 
     protected $helpers = ['url', 'cias_helper'];
 
@@ -18,7 +18,7 @@ class GameController extends BaseController
     {
         parent::initController($request, $response, $logger);
         $this->isLoggedIn();
-        $this->webModel = new WebModel();
+        $this->gameModel = new GameModel();
     }
 
     // ── Add Game ──────────────────────────────────────────────────────────────
@@ -43,13 +43,13 @@ class GameController extends BaseController
         }
 
         $name   = ucwords(strtolower(esc($this->request->getPost('name'))));
-        $result = $this->webModel->addNewWeb(['name' => $name, 'createdDtm' => date('Y-m-d H:i:s')]);
+        $result = $this->gameModel->addNewWeb(['name' => $name, 'createdDtm' => date('Y-m-d H:i:s')]);
 
         if ($result > 0) {
-            $this->webModel->insert_date('tbl_ranges', ['web_id' => $result]);
-            session()->setFlashdata('success', 'New Game created successfully');
+            $this->gameModel->insert_date('tbl_ranges', ['web_id' => $result]);
+            session()->setFlashdata('success', 'New Event created successfully');
         } else {
-            session()->setFlashdata('error', 'Game creation failed');
+            session()->setFlashdata('error', 'Event creation failed');
         }
         return redirect()->to('web');
     }
@@ -64,8 +64,8 @@ class GameController extends BaseController
         if ($id === 0) {
             return redirect()->to('web');
         }
-        $data['userInfo'] = $this->webModel->getWebInfo($id);
-        $this->global['pageTitle'] = 'event : Edit Game';
+        $data['userInfo'] = $this->gameModel->getWebInfo($id);
+        $this->global['pageTitle'] = 'event : Edit Event';
         return $this->loadViews('pages/web/editOld', $this->global, $data, null);
     }
 
@@ -80,13 +80,13 @@ class GameController extends BaseController
             return $this->edit($id);
         }
 
-        $result = $this->webModel->editWebsite([
+        $result = $this->gameModel->editWebsite([
             'status'     => $this->request->getPost('status'),
             'name'       => ucwords(strtolower(esc($this->request->getPost('name')))),
             'updatedDtm' => date('Y-m-d H:i:s'),
         ], $id);
 
-        session()->setFlashdata($result ? 'success' : 'error', $result ? 'Game updated successfully' : 'Game updation failed');
+        session()->setFlashdata($result ? 'success' : 'error', $result ? 'Event updated successfully' : 'Event updation failed');
         return redirect()->to("web/edit/$id");
     }
 
@@ -96,7 +96,7 @@ class GameController extends BaseController
             return $this->response->setJSON(['status' => 'access']);
         }
         $userId = (int) $this->request->getPost('userId');
-        $result = $this->webModel->deleteWeb('tbl_webs', $userId);
+        $result = $this->gameModel->deleteWeb('tbl_webs', $userId);
         return $this->response->setJSON(['status' => $result > 0]);
     }
 
@@ -111,18 +111,18 @@ class GameController extends BaseController
             return redirect()->to('web');
         }
 
-        $data['WebInfo'] = $this->webModel->getWebInfo($id);
+        $data['WebInfo'] = $this->gameModel->getWebInfo($id);
         if (!$data['WebInfo']) {
             return redirect()->to('web');
         }
 
-        $data['RangeInfo'] = $this->webModel->getrangeInfo($id);
-        $count  = $this->webModel->count_date($id);
+        $data['RangeInfo'] = $this->gameModel->getrangeInfo($id);
+        $count  = $this->gameModel->count_date($id);
         $pgData = $this->paginationCompress("web/view/$id/", $count, 10, 4);
 
-        $data['userRecords'] = $this->webModel->list_date($id, $pgData['page'], $pgData['segment']);
+        $data['userRecords'] = $this->gameModel->list_date($id, $pgData['page'], $pgData['segment']);
         $data['pager']       = $pgData['pager'];
-        $this->global['pageTitle'] = 'event : Game View';
+        $this->global['pageTitle'] = 'event : Event View';
         return $this->loadViews('pages/web/detail', $this->global, $data, null);
     }
 
@@ -137,14 +137,14 @@ class GameController extends BaseController
             return redirect()->to('web');
         }
 
-        $data['WebInfo'] = $this->webModel->getWebInfo($id);
+        $data['WebInfo'] = $this->gameModel->getWebInfo($id);
         if (!$data['WebInfo']) {
             return redirect()->to('web');
         }
 
-        $data['rangeInfo'] = $this->webModel->getrangeInfo($id);
+        $data['rangeInfo'] = $this->gameModel->getrangeInfo($id);
         if (!$data['rangeInfo']) {
-            session()->setFlashdata('error', 'Range data not found for this game');
+            session()->setFlashdata('error', 'Range data not found for this event');
             return redirect()->to('web');
         }
 
@@ -184,7 +184,7 @@ class GameController extends BaseController
             $rangeInfo['logo2'] = $filename2;
         }
 
-        $result = $this->webModel->editWeb_all('tbl_ranges', $rangeInfo, $id);
+        $result = $this->gameModel->editWeb_all('tbl_ranges', $rangeInfo, $id);
         session()->setFlashdata($result ? 'success' : 'error', $result ? 'Range updated successfully' : 'Range updation failed');
         return redirect()->to("web/rangeEdit/$webId");
     }
@@ -200,18 +200,18 @@ class GameController extends BaseController
             return redirect()->to('web');
         }
 
-        $data['WebInfo'] = $this->webModel->getWebInfo($id);
+        $data['WebInfo'] = $this->gameModel->getWebInfo($id);
         if (!$data['WebInfo']) {
             return redirect()->to('web');
         }
 
-        $data['rangeInfo'] = $this->webModel->getrangeInfo($id);
+        $data['rangeInfo'] = $this->gameModel->getrangeInfo($id);
         if (!$data['rangeInfo']) {
-            session()->setFlashdata('error', 'Range data not found for this game');
+            session()->setFlashdata('error', 'Range data not found for this event');
             return redirect()->to('web');
         }
 
-        $this->global['pageTitle'] = 'event : Edit Range Game';
+        $this->global['pageTitle'] = 'event : Edit Range Event';
         return $this->loadViews('pages/web/descriptionedit', $this->global, $data, null);
     }
 
@@ -224,7 +224,7 @@ class GameController extends BaseController
         $id    = (int) $this->request->getPost('id');
         $webId = (int) $this->request->getPost('web_id');
 
-        $result = $this->webModel->editWeb_all('tbl_ranges', [
+        $result = $this->gameModel->editWeb_all('tbl_ranges', [
             'play_description' => $this->request->getPost('play_description'),
             'when_play'        => $this->request->getPost('when_play'),
         ], $id);
@@ -244,10 +244,10 @@ class GameController extends BaseController
             return redirect()->to('web');
         }
         $data = [
-            'WebInfo' => $this->webModel->getWebInfo($id),
-            'tier'    => $this->webModel->getTierInfo($id),
+            'WebInfo' => $this->gameModel->getWebInfo($id),
+            'tier'    => $this->gameModel->getTierInfo($id),
         ];
-        $this->global['pageTitle'] = 'event : Edit Tier Game';
+        $this->global['pageTitle'] = 'event : Edit Tier Event';
         return $this->loadViews('pages/web/tier', $this->global, $data, null);
     }
 
@@ -260,9 +260,9 @@ class GameController extends BaseController
         $webId = (int) $this->request->getPost('web_id');
         $type  = $this->request->getPost('type');
 
-        $patternExist = $this->webModel->pattern_exist();
+        $patternExist = $this->gameModel->pattern_exist();
         if ($patternExist != 0) {
-            session()->setFlashdata('error', 'This Pattern already exist in this Game');
+            session()->setFlashdata('error', 'This Pattern already exist in this Event');
         } else {
             $tierInfo = [
                 'white'  => $this->request->getPost('white'),
@@ -272,11 +272,11 @@ class GameController extends BaseController
             ];
 
             if ($type === 'Add') {
-                $this->webModel->insert_date('tbl_tier', $tierInfo);
+                $this->gameModel->insert_date('tbl_tier', $tierInfo);
                 session()->setFlashdata('success', 'Prize Tier added successfully');
             } else {
                 $id = (int) $this->request->getPost('id');
-                $this->webModel->editWeb_all('tbl_tier', $tierInfo, $id);
+                $this->gameModel->editWeb_all('tbl_tier', $tierInfo, $id);
                 session()->setFlashdata('success', 'Prize Tier updated successfully');
             }
         }
@@ -292,12 +292,12 @@ class GameController extends BaseController
         }
 
         $dap   = date('Y-m-d', strtotime($this->request->getPost('date')));
-        $count = $this->webModel->date_exist($webId, $dap);
+        $count = $this->gameModel->date_exist($webId, $dap);
 
         if ($count > 0) {
             session()->setFlashdata('error', 'This date has been already Taken.');
         } else {
-            $this->webModel->insert_date('tbl_dates', [
+            $this->gameModel->insert_date('tbl_dates', [
                 'date'     => $dap,
                 'date_con' => $dap . ' ' . TIMEVAL,
                 'web_id'   => $webId,
@@ -316,8 +316,8 @@ class GameController extends BaseController
         $dateArray = $this->_datearray($webId);
         $added     = 0;
         foreach (array_slice($dateArray, 0, 10) as $dap) {
-            if ($this->webModel->date_exist($webId, $dap) == 0) {
-                $this->webModel->insert_date('tbl_dates', [
+            if ($this->gameModel->date_exist($webId, $dap) == 0) {
+                $this->gameModel->insert_date('tbl_dates', [
                     'date'     => $dap,
                     'date_con' => $dap . ' ' . TIMEVAL,
                     'web_id'   => $webId,
@@ -335,7 +335,7 @@ class GameController extends BaseController
             return $this->response->setJSON(['status' => 'access']);
         }
         $userId = (int) $this->request->getPost('userId');
-        $result = $this->webModel->deleteWeb('tbl_dates', $userId);
+        $result = $this->gameModel->deleteWeb('tbl_dates', $userId);
         return $this->response->setJSON(['status' => $result > 0]);
     }
 

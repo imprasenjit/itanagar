@@ -60,9 +60,7 @@ $routes->post('web/addNewWebdate/(:num)', 'GameController::addNewWebdate/$1');
 $routes->get('web/addtwoWebdate/(:num)', 'GameController::addtwoWebdate/$1');
 $routes->post('web/deleteWebDate','GameController::deleteWebDate');
 
-// ── SettingsController — common settings, reports, dashboard
-$routes->get('web/common',               'SettingsController::common');
-$routes->post('web/editCommon',          'SettingsController::editCommon');
+// ── SettingsController — reports, dashboard
 $routes->get('web/reports',              'SettingsController::reports');
 $routes->get('web/report_download',      'SettingsController::report_download');
 $routes->get('web/dashboard_stats',      'SettingsController::dashboard_stats');
@@ -129,10 +127,6 @@ $routes->get('web/withdrawl/(:num)',        'FinanceController::withdrawl');
 $routes->post('web/withdrawl',              'FinanceController::withdrawl');
 $routes->post('web/withdrawl/(:num)',       'FinanceController::withdrawl');
 $routes->post('web/with_req/(:num)',        'FinanceController::with_req/$1');
-$routes->get('web/transfer',               'FinanceController::transfer');
-$routes->get('web/transfer/(:num)',        'FinanceController::transfer');
-$routes->post('web/transfer',             'FinanceController::transfer');
-$routes->post('web/transfer/(:num)',      'FinanceController::transfer');
 
 // ── Order ──────────────────────────────────────────────────────────────────────
 $routes->post('order/release_order','Order::release_order');

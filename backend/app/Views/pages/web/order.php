@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         var html = '<div class="ticket-child-row">';
         html += '<table class="table table-bordered table-sm ticket-child-table mb-0">';
-        html += '<thead><tr><th>#</th><th>Game</th><th>Ticket No.</th></tr></thead><tbody>';
+        html += '<thead><tr><th>#</th><th>Event</th><th>Ticket No.</th></tr></thead><tbody>';
         tickets.forEach(function (t, i) {
             html += '<tr><td>' + (i + 1) + '</td><td>' + t.game + '</td><td><code>' + t.ticket_no + '</code></td></tr>';
         });

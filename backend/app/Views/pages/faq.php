@@ -19,7 +19,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table id="faqTable" class="table table-striped">
                     <thead>
                         <tr>
                             <th style="width:35%">Title</th>
@@ -62,4 +62,5 @@ jQuery(document).on("click", ".deletefaq", function () {
         });
     }
 });
+$(function () { $('#faqTable').DataTable({ paging: false, searching: false, info: false, columnDefs: [{ orderable: false, targets: -1 }] }); });
 </script>

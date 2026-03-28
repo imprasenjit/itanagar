@@ -1,10 +1,10 @@
 ﻿<div class="page-heading">
-    <h3><i class="bi bi-dice-5-fill me-2"></i> event Games Management <small>Add, Edit, Delete</small></h3>
+    <h3><i class="bi bi-dice-5-fill me-2"></i> Events Management <small>Add, Edit, Delete</small></h3>
 </div>
 <section class="section">
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h4 class="card-title mb-0">event Games List</h4>
+            <h4 class="card-title mb-0">Events List</h4>
             <a class="btn btn-primary" href="<?= base_url('web/addNew') ?>">
                 <i class="bi bi-plus"></i> Add New
             </a>
@@ -46,8 +46,8 @@ document.addEventListener('DOMContentLoaded', function () {
         pageLength: 10,
         language: {
             search: '',
-            searchPlaceholder: 'Search games...',
-            emptyTable: 'No games found.',
+            searchPlaceholder: 'Search events...',
+            emptyTable: 'No events found.',
             processing: '<div class="text-center py-4"><div class="spinner-border spinner-border-sm text-primary"></div> Loading...</div>',
         }
     });
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#weblistTable').on('click', '.deleteWeb', function (e) {
         e.preventDefault();
         var id = $(this).data('userid');
-        if (!confirm('Are you sure you want to delete this game?')) return;
+        if (!confirm('Are you sure you want to delete this event?')) return;
         $.post(baseURL + 'web/deleteWeb', { id: id, [csrfTokenName]: Cookies.get(csrfCookieName) }, function (res) {
             if (res.status === 'ok' || res.status === true) {
                 $('#weblistTable').DataTable().ajax.reload(null, false);

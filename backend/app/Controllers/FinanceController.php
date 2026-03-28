@@ -2,8 +2,11 @@
 
 namespace App\Controllers;
 
-use App\Models\WebModel;
 use App\Models\UserModel;
+use App\Models\GameModel;
+use App\Models\CartOrderModel;
+use App\Models\WalletModel;
+use App\Models\WinnerModel;
 
 /**
  * FinanceController — admin management of orders, tickets, transactions,
@@ -12,8 +15,11 @@ use App\Models\UserModel;
  */
 class FinanceController extends BaseController
 {
-    protected WebModel  $webModel;
-    protected UserModel $userModel;
+    protected GameModel      $gameModel;
+    protected CartOrderModel $cartOrderModel;
+    protected WalletModel    $walletModel;
+    protected WinnerModel    $winnerModel;
+    protected UserModel      $userModel;
 
     protected $helpers = ['url', 'cias_helper'];
 
@@ -21,8 +27,11 @@ class FinanceController extends BaseController
     {
         parent::initController($request, $response, $logger);
         $this->isLoggedIn();
-        $this->webModel  = new WebModel();
-        $this->userModel = new UserModel();
+        $this->gameModel      = new GameModel();
+        $this->cartOrderModel = new CartOrderModel();
+        $this->walletModel    = new WalletModel();
+        $this->winnerModel    = new WinnerModel();
+        $this->userModel      = new UserModel();
     }
 
     // ── Orders ────────────────────────────────────────────────────────────────
@@ -47,9 +56,9 @@ class FinanceController extends BaseController
         $length = (int)($this->request->getGet('length') ?? 10);
         $search = trim($this->request->getGet('search')['value'] ?? '');
 
-        $total    = $this->webModel->order_list_count('');
-        $filtered = $this->webModel->order_list_count($search);
-        $orders   = $this->webModel->order_list($search, $length, $start);
+        $total    = $this->cartOrderModel->order_list_count('');
+        $filtered = $this->cartOrderModel->order_list_count($search);
+        $orders   = $this->cartOrderModel->order_list($search, $length, $start);
 
         $webCache = [];
         $data     = [];
@@ -60,7 +69,7 @@ class FinanceController extends BaseController
             foreach ($rawTickets as $t) {
                 $webId = (int)($t['web_id'] ?? 0);
                 if (!isset($webCache[$webId])) {
-                    $webInfo          = $this->webModel->getWebInfo($webId);
+                    $webInfo          = $this->gameModel->getWebInfo($webId);
                     $webCache[$webId] = $webInfo ? esc($webInfo->name) : 'Unknown';
                 }
                 $enriched[] = [
@@ -109,7 +118,7 @@ class FinanceController extends BaseController
             return $this->response->setJSON(['status' => 'access']);
         }
         $orderId = (int) $this->request->getPost('orderid');
-        $this->webModel->update_order($orderId, ['order_status' => 1]);
+        $this->cartOrderModel->update_order($orderId, ['order_status' => 1]);
         return $this->response->setJSON(['status' => true]);
     }
 
@@ -120,18 +129,18 @@ class FinanceController extends BaseController
         }
 
         $orderId = (int) $this->request->getPost('orderid');
-        $result  = $this->webModel->get_order_by_id($orderId);
+        $result  = $this->cartOrderModel->get_order_by_id($orderId);
 
         if (!$result) {
             return $this->response->setJSON(['status' => false]);
         }
 
         $tickets = json_decode($result->tickets);
-        $this->webModel->update_order($orderId, ['order_status' => 0, 'paid_status' => 'RELEASED']);
+        $this->cartOrderModel->update_order($orderId, ['order_status' => 0, 'paid_status' => 'RELEASED']);
 
         $cleared = false;
         foreach ($tickets as $ticket) {
-            $cleared = $this->webModel->clear_cart_data(
+            $cleared = $this->cartOrderModel->clear_cart_data(
                 (int)$result->user_id,
                 $ticket->ticket_no,
                 $ticket->web_id
@@ -151,11 +160,11 @@ class FinanceController extends BaseController
         $search = esc($this->request->getGet('search') ?? '');
         $status = $this->request->getGet('status') ?? '';
 
-        $count  = $this->webModel->ticket_list_count($search, $status !== '' ? $status : null);
+        $count  = $this->cartOrderModel->ticket_list_count($search, $status !== '' ? $status : null);
         $pgData = $this->paginationCompress('web/tickets/', $count, 20, 3);
 
         $data = [
-            'tickets'  => $this->webModel->ticket_list($search, $status !== '' ? $status : null, $pgData['page'], $pgData['segment']),
+            'tickets'  => $this->cartOrderModel->ticket_list($search, $status !== '' ? $status : null, $pgData['page'], $pgData['segment']),
             'pager'    => $pgData['pager'],
             'filters'  => compact('search', 'status'),
             'total'    => $count,
@@ -170,7 +179,7 @@ class FinanceController extends BaseController
             return $this->response->setJSON(['status' => 'access']);
         }
         $orderId = (int) $this->request->getPost('order_id');
-        $this->webModel->cancel_ticket($orderId);
+        $this->cartOrderModel->cancel_ticket($orderId);
         return $this->response->setJSON(['status' => true, 'message' => 'Ticket cancelled successfully']);
     }
 
@@ -181,7 +190,7 @@ class FinanceController extends BaseController
         }
 
         $orderId = (int) $this->request->getPost('order_id');
-        $order   = $this->webModel->get_order_by_id($orderId);
+        $order   = $this->cartOrderModel->get_order_by_id($orderId);
 
         if (!$order) {
             return $this->response->setJSON(['status' => false, 'message' => 'Order not found']);
@@ -221,10 +230,10 @@ class FinanceController extends BaseController
 
         $order = null;
         if (is_numeric($ticketRef)) {
-            $order = $this->webModel->get_order_by_id((int) $ticketRef);
+            $order = $this->cartOrderModel->get_order_by_id((int) $ticketRef);
         }
         if (!$order) {
-            $order = $this->webModel->get_order_by_orderId($ticketRef);
+            $order = $this->cartOrderModel->get_order_by_orderId($ticketRef);
         }
 
         if (!$order) {
@@ -264,7 +273,7 @@ class FinanceController extends BaseController
         $search   = esc($this->request->getGet('search') ?? '');
 
         $data = [
-            'games'   => $this->webModel->get_allweb(),
+            'games'   => $this->gameModel->get_allweb(),
             'filters' => compact('webId', 'dateFrom', 'dateTo', 'status', 'search'),
         ];
         $this->global['pageTitle'] = 'event : Transactions';
@@ -287,9 +296,9 @@ class FinanceController extends BaseController
         $dateTo   = $this->request->getGet('date_to')   ?? '';
         $status   = $this->request->getGet('status')    ?? '';
 
-        $total    = $this->webModel->txn_count(null, null, null, null, '');
-        $filtered = $this->webModel->txn_count($webId, $dateFrom ?: null, $dateTo ?: null, $status !== '' ? $status : null, $search);
-        $rows     = $this->webModel->txn_list($webId, $dateFrom ?: null, $dateTo ?: null, $status !== '' ? $status : null, $search, $length, $start);
+        $total    = $this->cartOrderModel->txn_count(null, null, null, null, '');
+        $filtered = $this->cartOrderModel->txn_count($webId, $dateFrom ?: null, $dateTo ?: null, $status !== '' ? $status : null, $search);
+        $rows     = $this->cartOrderModel->txn_list($webId, $dateFrom ?: null, $dateTo ?: null, $status !== '' ? $status : null, $search, $length, $start);
 
         $statusMap = [
             'PAID'      => ['success', 'Paid'],
@@ -344,11 +353,11 @@ class FinanceController extends BaseController
             return $this->loadThis();
         }
         $searchText = esc($this->request->getPost('searchText') ?? '');
-        $count  = $this->webModel->admin_wallet_count($searchText);
+        $count  = $this->walletModel->admin_wallet_count($searchText);
         $pgData = $this->paginationCompress('web/wallet/', $count, 20, 3);
         $data = [
             'searchText'  => $searchText,
-            'userRecords' => $this->webModel->admin_wallet_list($searchText, $pgData['page'], $pgData['segment']),
+            'userRecords' => $this->walletModel->admin_wallet_list($searchText, $pgData['page'], $pgData['segment']),
             'pager'       => $pgData['pager'],
         ];
         $this->global['pageTitle'] = 'event : Wallet History';
@@ -363,12 +372,12 @@ class FinanceController extends BaseController
             return $this->loadThis();
         }
         $searchText = esc($this->request->getPost('searchText') ?? '');
-        $count  = $this->webModel->admin_winner_count($searchText);
+        $count  = $this->winnerModel->admin_winner_count($searchText);
         $pgData = $this->paginationCompress('web/winner/', $count, 20, 3);
         $data = [
             'searchText'  => $searchText,
-            'amount'      => $this->webModel->admin_winner_total(),
-            'userRecords' => $this->webModel->admin_winner_list($searchText, $pgData['page'], $pgData['segment']),
+            'amount'      => $this->winnerModel->admin_winner_total(),
+            'userRecords' => $this->winnerModel->admin_winner_list($searchText, $pgData['page'], $pgData['segment']),
             'pager'       => $pgData['pager'],
         ];
         $this->global['pageTitle'] = 'event : Winner History';
@@ -383,11 +392,11 @@ class FinanceController extends BaseController
             return $this->loadThis();
         }
         $searchText = esc($this->request->getPost('searchText') ?? '');
-        $count  = $this->webModel->admin_refund_count($searchText);
+        $count  = $this->walletModel->admin_refund_count($searchText);
         $pgData = $this->paginationCompress('web/refund/', $count, 20, 3);
         $data = [
             'searchText'  => $searchText,
-            'userRecords' => $this->webModel->admin_refund_list($searchText, $pgData['page'], $pgData['segment']),
+            'userRecords' => $this->walletModel->admin_refund_list($searchText, $pgData['page'], $pgData['segment']),
             'pager'       => $pgData['pager'],
         ];
         $this->global['pageTitle'] = 'event : Refund Requests';
@@ -402,7 +411,7 @@ class FinanceController extends BaseController
         $id    = (int) $this->request->getPost('id');
         $money = (float) $this->request->getPost('money');
         $type  = $this->request->getPost('type');
-        $this->webModel->refund_process($id, $type, $userId, $money);
+        $this->walletModel->refund_process($id, $type, $userId, $money);
         return redirect()->to('web/refund')
             ->with('success', $type === 'Refund' ? 'Refund processed successfully.' : 'Refund request rejected.');
     }
@@ -415,11 +424,11 @@ class FinanceController extends BaseController
             return $this->loadThis();
         }
         $searchText = esc($this->request->getPost('searchText') ?? '');
-        $count  = $this->webModel->admin_withdrawl_count($searchText);
+        $count  = $this->walletModel->admin_withdrawl_count($searchText);
         $pgData = $this->paginationCompress('web/withdrawl/', $count, 20, 3);
         $data = [
             'searchText'  => $searchText,
-            'userRecords' => $this->webModel->admin_withdrawl_list($searchText, $pgData['page'], $pgData['segment']),
+            'userRecords' => $this->walletModel->admin_withdrawl_list($searchText, $pgData['page'], $pgData['segment']),
             'pager'       => $pgData['pager'],
         ];
         $this->global['pageTitle'] = 'event : Withdrawal Requests';
@@ -433,26 +442,8 @@ class FinanceController extends BaseController
         }
         $id   = (int) $this->request->getPost('id');
         $type = $this->request->getPost('type');
-        $this->webModel->withdrawl_process($id, $type);
+        $this->walletModel->withdrawl_process($id, $type);
         return redirect()->back()->with('success', $type === 'Reject' ? 'Request rejected.' : 'Request processed successfully.');
     }
-
-    // ── PayPal Transfers ──────────────────────────────────────────────────────
-
-    public function transfer()
-    {
-        if ($this->isAdmin() === false) {
-            return $this->loadThis();
-        }
-        $searchText = esc($this->request->getPost('searchText') ?? '');
-        $count  = $this->webModel->admin_transfer_count($searchText);
-        $pgData = $this->paginationCompress('web/transfer/', $count, 20, 3);
-        $data = [
-            'searchText'  => $searchText,
-            'userRecords' => $this->webModel->admin_transfer_list($searchText, $pgData['page'], $pgData['segment']),
-            'pager'       => $pgData['pager'],
-        ];
-        $this->global['pageTitle'] = 'event : PayPal Transfer Requests';
-        return $this->loadViews('pages/web/transfer', $this->global, $data, null);
-    }
 }
+

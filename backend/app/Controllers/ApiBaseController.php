@@ -2,7 +2,11 @@
 
 namespace App\Controllers;
 
-use App\Models\WebModel;
+use App\Models\GameModel;
+use App\Models\CartOrderModel;
+use App\Models\WalletModel;
+use App\Models\WinnerModel;
+use App\Models\ContentModel;
 use App\Models\UserModel;
 use App\Models\LoginModel;
 
@@ -13,9 +17,13 @@ use App\Models\LoginModel;
  */
 class ApiBaseController extends BaseController
 {
-    protected WebModel   $webModel;
-    protected UserModel  $userModel;
-    protected LoginModel $loginModel;
+    protected GameModel      $gameModel;
+    protected CartOrderModel $cartOrderModel;
+    protected WalletModel    $walletModel;
+    protected WinnerModel    $winnerModel;
+    protected ContentModel   $contentModel;
+    protected UserModel      $userModel;
+    protected LoginModel     $loginModel;
 
     protected $helpers = ['url', 'cias_helper', 'email_helper'];
 
@@ -25,9 +33,13 @@ class ApiBaseController extends BaseController
         \Psr\Log\LoggerInterface            $logger
     ): void {
         parent::initController($request, $response, $logger);
-        $this->webModel   = new WebModel();
-        $this->userModel  = new UserModel();
-        $this->loginModel = new LoginModel();
+        $this->gameModel      = new GameModel();
+        $this->cartOrderModel = new CartOrderModel();
+        $this->walletModel    = new WalletModel();
+        $this->winnerModel    = new WinnerModel();
+        $this->contentModel   = new ContentModel();
+        $this->userModel      = new UserModel();
+        $this->loginModel     = new LoginModel();
         $this->_cors();
     }
 
@@ -108,7 +120,7 @@ class ApiBaseController extends BaseController
 
     protected function getTicketAvailability(int $ticket, int $web_id): bool
     {
-        return count($this->webModel->get_ticket_availability($ticket, $web_id)) === 0;
+        return count($this->cartOrderModel->get_ticket_availability($ticket, $web_id)) === 0;
     }
 
     protected function _getFirstAvailableTickets($range): array
@@ -122,9 +134,7 @@ class ApiBaseController extends BaseController
             $ticketRanges[] = $r['end'];
         }
         return $ticketRanges;
-    }
-
-    // ── Misc helpers ──────────────────────────────────────────────────────────
+    }────────
 
     protected function getRandomString(int $length = 16): string
     {

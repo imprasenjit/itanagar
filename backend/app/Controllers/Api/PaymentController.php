@@ -19,7 +19,7 @@ class PaymentController extends ApiBaseController
         if (session()->get('isLoggedIn') === true) {
             // ── Logged-in user ────────────────────────────────────────────────
             $userId   = (int) session()->get('userId');
-            $cart     = $this->webModel->order_data($userId);
+            $cart     = $this->cartOrderModel->order_data($userId);
             $userInfo = $this->userModel->getUserInfo($userId);
         } else {
             // ── Guest checkout ────────────────────────────────────────────────
@@ -58,7 +58,7 @@ class PaymentController extends ApiBaseController
             }
 
             $customUserId = session()->get('custom_userId') ? (int) session()->get('custom_userId') : null;
-            $cart         = $this->webModel->order_data($customUserId ?? $userId);
+            $cart         = $this->cartOrderModel->order_data($customUserId ?? $userId);
         }
 
         if (empty($cart)) {
@@ -93,7 +93,7 @@ class PaymentController extends ApiBaseController
             return $this->error('Could not create Razorpay order');
         }
 
-        $this->webModel->insert_order([
+        $this->cartOrderModel->insert_order([
             'tickets'                 => json_encode($tickets),
             'user_id'                 => $userId,
             'custom_user_id'          => $customUserId,
@@ -107,9 +107,9 @@ class PaymentController extends ApiBaseController
 
         foreach ($cart as $item) {
             if ($customUserId !== null) {
-                $this->webModel->update_cart_data($customUserId, $item->web_id, $item->ticket_no, ['paid_status' => 1]);
+                $this->cartOrderModel->update_cart_data($customUserId, $item->web_id, $item->ticket_no, ['paid_status' => 1]);
             }
-            $this->webModel->update_cart_data($userId, $item->web_id, $item->ticket_no, ['paid_status' => 1]);
+            $this->cartOrderModel->update_cart_data($userId, $item->web_id, $item->ticket_no, ['paid_status' => 1]);
         }
 
         session()->set('payment_order_id', $razorpayOrder['id']);
@@ -163,13 +163,13 @@ class PaymentController extends ApiBaseController
                     return $this->error('Invalid wallet top-up session — please retry', 400);
                 }
 
-                $wallet = $this->webModel->wallet($userId);
+                $wallet = $this->walletModel->wallet($userId);
                 if (!$wallet) {
-                    $this->webModel->insert_date('tbl_wallet', ['user_id' => $userId, 'money' => $amount]);
+                    $this->walletModel->insert_date('tbl_wallet', ['user_id' => $userId, 'money' => $amount]);
                 } else {
-                    $this->webModel->editWeb_all('tbl_wallet', ['money' => $wallet->money + $amount], $wallet->id);
+                    $this->walletModel->editWeb_all('tbl_wallet', ['money' => $wallet->money + $amount], $wallet->id);
                 }
-                $this->webModel->insert_date('tbl_wallet_history', [
+                $this->walletModel->insert_date('tbl_wallet_history', [
                     'user_id'        => $userId,
                     'money'          => $amount,
                     'trancaction_id' => $razorpayPayId,
@@ -184,7 +184,7 @@ class PaymentController extends ApiBaseController
             // ── Ticket payment confirmation ────────────────────────────────────
 
             // Fix: verify order exists and belongs to the authenticated user
-            $orderDetails = $this->webModel->get_order_by_orderId($razorpayOrderId);
+            $orderDetails = $this->cartOrderModel->get_order_by_orderId($razorpayOrderId);
             if (!$orderDetails) {
                 return $this->error('Order not found', 404);
             }
@@ -193,7 +193,7 @@ class PaymentController extends ApiBaseController
                 return $this->error('You are not authorised to confirm this order', 403);
             }
 
-            $this->webModel->update_order_by_orderId($razorpayOrderId, [
+            $this->cartOrderModel->update_order_by_orderId($razorpayOrderId, [
                 'paid_status'      => 'PAID',
                 'order_status'     => 1,
                 'payment_response' => json_encode($body),
@@ -204,8 +204,8 @@ class PaymentController extends ApiBaseController
             $ticketDetails = [];
             foreach ($tickets as $t) {
                 $ticketDetails[] = [
-                    'webInfo'  => $this->webModel->getallWebInfo('tbl_webs', $t['web_id']),
-                    'range'    => $this->webModel->getrangeInfo($t['web_id']),
+                    'webInfo'  => $this->gameModel->getallWebInfo('tbl_webs', $t['web_id']),
+                    'range'    => $this->gameModel->getrangeInfo($t['web_id']),
                     'ticketNo' => $t['ticket_no'],
                 ];
             }
@@ -239,7 +239,7 @@ class PaymentController extends ApiBaseController
             ], true, 'Payment verified');
 
         } catch (PaymentError $e) {
-            $this->webModel->update_order_by_orderId($razorpayOrderId, [
+            $this->cartOrderModel->update_order_by_orderId($razorpayOrderId, [
                 'order_status'     => 2,
                 'payment_response' => json_encode($body),
             ]);
@@ -254,10 +254,11 @@ class PaymentController extends ApiBaseController
         if (empty($orderId)) {
             return $this->error('order_id required');
         }
-        $this->webModel->update_order_by_orderId($orderId, [
+        $this->cartOrderModel->update_order_by_orderId($orderId, [
             'order_status'     => 2,
             'payment_response' => json_encode($body),
         ]);
         return $this->json([], true, 'Order cancelled');
     }
 }
+

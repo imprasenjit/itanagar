@@ -13,7 +13,7 @@ class AuthController extends ApiBaseController
         }
         // Fix: use getCartUserId() so cart count is accurate even mid-session
         $userId    = $this->getCartUserId();
-        $cartCount = count($this->webModel->cart_data($userId));
+        $cartCount = count($this->cartOrderModel->cart_data($userId));
         return $this->json([
             'isLoggedIn' => true,
             'user'       => [
@@ -50,7 +50,7 @@ class AuthController extends ApiBaseController
         if ($result->roleId != 1) {
             $guestId = session()->get('custom_userId');
             if ($guestId) {
-                $this->webModel->up_cart((int) $guestId, $result->userId);
+                $this->cartOrderModel->up_cart((int) $guestId, $result->userId);
             }
         }
 
@@ -180,3 +180,4 @@ class AuthController extends ApiBaseController
         return $this->json([], true, 'Password changed successfully');
     }
 }
+

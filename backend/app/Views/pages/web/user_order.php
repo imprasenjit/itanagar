@@ -14,7 +14,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <?php if (count($orders) > 0): ?>
-                <table class="table table-striped">
+                <table id="userOrderTable" class="table table-striped">
                     <thead>
                         <tr>
                             <th>Order No.</th>
@@ -34,7 +34,7 @@
                             <td><strong>#<?= $order->id ?></strong></td>
                             <td>
                                 <table class="table table-bordered table-sm mb-0">
-                                    <thead><tr><th>Game</th><th>Ticket No.</th></tr></thead>
+                                    <thead><tr><th>Event</th><th>Ticket No.</th></tr></thead>
                                     <tbody>
                                         <?php foreach ($tickets as $value):
                                             $web_details = (new \App\Models\WebModel())->getWebInfo($value->web_id); ?>
@@ -91,4 +91,5 @@ jQuery(document).ready(function () {
         }
     });
 });
+$(function () { $('#userOrderTable').DataTable({ paging: false, searching: false, info: false, columnDefs: [{ orderable: false, targets: -1 }] }); });
 </script>

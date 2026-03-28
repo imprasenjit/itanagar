@@ -2,7 +2,7 @@
 name: Quick Completion
 description: Fast, cheap completions for small contained changes — fixes, renames, imports, one-liners. Powered by GPT-4.1 Mini.
 argument-hint: Describe the small change you need (e.g. "rename variable X to Y in this file").
-model: gpt-4.1-mini
+model: GPT-5.1-Codex-Mini (Preview) (copilot)
 tools: ['codebase', 'editFiles', 'search', 'problems']
 ---
 

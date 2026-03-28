@@ -31,7 +31,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <?php if (!empty($userRecords)): ?>
-                <table class="table table-striped">
+                <table id="withdrawlTable" class="table table-striped">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -97,6 +97,7 @@
         </div>
     </div>
 </section>
+<script>$(function () { $('#withdrawlTable').DataTable({ paging: false, searching: false, info: false, columnDefs: [{ orderable: false, targets: -1 }] }); });</script>
 
 <script src="<?= base_url() ?>public/admin/js/common.js"></script>
 <script>

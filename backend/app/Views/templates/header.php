@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="<?= base_url('assets/css/app.css') ?>">
   <link rel="stylesheet" href="<?= base_url('assets/css/app-dark.css') ?>">
   <link rel="stylesheet" href="<?= base_url('assets/css/iconly.css') ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/css/custom.css') ?>">
   <link rel="stylesheet" href="<?= base_url('assets/extensions/@fortawesome/fontawesome-free/css/all.min.css') ?>">
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
@@ -47,181 +48,234 @@
 
       <div class="sidebar-menu">
         <ul class="menu">
-          <li class="sidebar-title">Navigation</li>
 
-          <li class="sidebar-item <?= (uri_string() === 'dashboard') ? 'active' : '' ?>">
+          <?php
+            $can = $can ?? function (string $k): bool { return false; };
+            $uri = uri_string();
+
+            // Determine which section the current page belongs to
+            $isUserMgmt = strpos($uri, 'userListing') !== false
+                || strpos($uri, 'web/roles') !== false
+                || strpos($uri, 'web/editRole') !== false
+                || $uri === 'web/rbac';
+
+            $isEvents = $uri === 'web' || $uri === 'web/addNew'
+                || strpos($uri, 'web/edit') !== false
+                || strpos($uri, 'web/view') !== false
+                || strpos($uri, 'web/range') !== false
+                || strpos($uri, 'web/desc') !== false
+                || strpos($uri, 'web/tier') !== false
+                || strpos($uri, 'web/webSettings') !== false;
+
+            $isFinance = strpos($uri, 'web/order') !== false
+                || strpos($uri, 'web/transactions') !== false
+                || strpos($uri, 'web/tickets') !== false
+                || strpos($uri, 'web/wallet') !== false
+                || strpos($uri, 'web/winner') !== false
+                || strpos($uri, 'web/refund') !== false
+                || strpos($uri, 'web/withdrawl') !== false
+                || strpos($uri, 'web/reports') !== false;
+
+            $isContent = strpos($uri, 'contact') !== false
+                || strpos($uri, 'faq') !== false
+                || strpos($uri, 'web/page') !== false;
+
+            $isSettings = $uri === 'web/migrations';
+
+            $showUserMgmt = $can('users.view') || $can('rbac.manage');
+            $showEvents   = $can('games.view') || $can('games.create');
+            $showFinance  = $can('orders.view') || $can('transactions.view') || $can('tickets.view') || $can('winners.view') || $can('reports.view');
+            $showContent  = $can('contact.view') || $can('faq.view') || $can('pages.view');
+            $showSettings = $can('rbac.manage');
+          ?>
+
+          <!-- Dashboard -->
+          <li class="sidebar-item <?= $uri === 'dashboard' ? 'active' : '' ?>">
             <a href="<?= base_url('dashboard') ?>" class="sidebar-link">
               <i class="bi bi-grid-fill"></i>
               <span>Dashboard</span>
             </a>
           </li>
 
-          <?php
-            $can = $can ?? function (string $k): bool { return false; };
-            $showManagement = $can('users.view') || $can('games.view') || $can('games.create') || $can('games.settings');
-            $showOrders     = $can('orders.view') || $can('transactions.view') || $can('tickets.view') || $can('winners.view') || $can('reports.view');
-            $showContent    = $can('contact.view') || $can('faq.view') || $can('pages.view');
-            $showSettings   = $can('rbac.manage');
-          ?>
-
-          <?php if ($showManagement): ?>
-          <li class="sidebar-title">Management</li>
-          <?php endif; ?>
-
-          <?php if ($can('users.view')): ?>
-          <li class="sidebar-item <?= (strpos(uri_string(), 'userListing') !== false) ? 'active' : '' ?>">
-            <a href="<?= base_url('userListing') ?>" class="sidebar-link">
-              <i class="bi bi-people-fill"></i>
-              <span>Users</span>
-            </a>
-          </li>
-          <?php endif; ?>
-
-          <?php if ($can('games.view') || $can('games.create')): ?>
-          <li class="sidebar-item <?= (strpos(uri_string(), 'web') !== false && strpos(uri_string(), 'order') === false && strpos(uri_string(), 'wallet') === false && strpos(uri_string(), 'winner') === false && strpos(uri_string(), 'refund') === false && strpos(uri_string(), 'withdrawl') === false && strpos(uri_string(), 'transfer') === false) ? 'active' : '' ?> has-sub">
+          <!-- ── User Management ────────────────────────────────────────── -->
+          <?php if ($showUserMgmt): ?>
+          <li class="sidebar-item has-sub <?= $isUserMgmt ? 'active' : '' ?>">
             <a href="#" class="sidebar-link">
-              <i class="bi bi-ticket-perforated-fill"></i>
-              <span>event Games</span>
+              <i class="bi bi-people-fill"></i>
+              <span>User Management</span>
             </a>
             <ul class="submenu">
-              <?php if ($can('games.view')): ?>
-              <li class="submenu-item <?= (uri_string() === 'web') ? 'active' : '' ?>">
-                <a href="<?= base_url('web') ?>" class="submenu-link">All Games</a>
-              </li>
-              <?php endif; ?>
-              <?php if ($can('games.create')): ?>
-              <li class="submenu-item <?= (uri_string() === 'web/addNew') ? 'active' : '' ?>">
-                <a href="<?= base_url('web/addNew') ?>" class="submenu-link">Add New Game</a>
-              </li>
-              <?php endif; ?>
-              <?php if ($can('games.view')):
-                $web = (new \App\Models\WebModel())->get_allweb();
-                foreach ($web as $w):
-                  if ($w->status == 0):
-              ?>
-              <li class="submenu-item">
-                <a href="<?= base_url('web/view/' . $w->id) ?>" class="submenu-link">
-                  &bull; <?= esc($w->name) ?>
+              <?php if ($can('users.view')): ?>
+              <li class="submenu-item <?= strpos($uri, 'userListing') !== false ? 'active' : '' ?>">
+                <a href="<?= base_url('userListing') ?>" class="submenu-link">
+                  <i class="bi bi-people me-1"></i> Users
                 </a>
               </li>
-              <?php   endif;
-                endforeach;
-              endif; ?>
+              <?php endif; ?>
+
+              <?php if ($can('rbac.manage')): ?>
+              <li class="submenu-item <?= strpos($uri, 'web/roles') !== false || strpos($uri, 'web/editRole') !== false ? 'active' : '' ?>">
+                <a href="<?= base_url('web/roles') ?>" class="submenu-link">
+                  <i class="bi bi-person-badge me-1"></i> Roles
+                </a>
+              </li>
+              <li class="submenu-item <?= $uri === 'web/rbac' ? 'active' : '' ?>">
+                <a href="<?= base_url('web/rbac') ?>" class="submenu-link">
+                  <i class="bi bi-shield-lock me-1"></i> Role Permissions
+                </a>
+              </li>
+              <?php endif; ?>
             </ul>
           </li>
           <?php endif; ?>
 
-          <?php if ($can('games.settings')): ?>
-          <li class="sidebar-item <?= (uri_string() === 'web/common') ? 'active' : '' ?>">
-            <a href="<?= base_url('web/common') ?>" class="sidebar-link">
-              <i class="bi bi-gear-fill"></i>
-              <span>Common Settings</span>
+          <!-- ── Events ─────────────────────────────────────────────────── -->
+          <?php if ($showEvents): ?>
+          <li class="sidebar-item has-sub <?= $isEvents ? 'active' : '' ?>">
+            <a href="#" class="sidebar-link">
+              <i class="bi bi-ticket-perforated-fill"></i>
+              <span>Events</span>
             </a>
+            <ul class="submenu">
+              <?php if ($can('games.view')): ?>
+              <li class="submenu-item <?= $uri === 'web' ? 'active' : '' ?>">
+                <a href="<?= base_url('web') ?>" class="submenu-link">
+                  <i class="bi bi-ticket-perforated me-1"></i> All Events
+                </a>
+              </li>
+              <?php endif; ?>
+
+              <?php if ($can('games.create')): ?>
+              <li class="submenu-item <?= $uri === 'web/addNew' ? 'active' : '' ?>">
+                <a href="<?= base_url('web/addNew') ?>" class="submenu-link">
+                  <i class="bi bi-plus-circle me-1"></i> Add New Event
+                </a>
+              </li>
+              <?php endif; ?>
+            </ul>
           </li>
           <?php endif; ?>
 
-          <?php if ($showOrders): ?>
-          <li class="sidebar-title">Orders &amp; Finance</li>
-          <?php endif; ?>
-
-          <?php if ($can('orders.view')): ?>
-          <li class="sidebar-item <?= (strpos(uri_string(), 'web/order') !== false) ? 'active' : '' ?>">
-            <a href="<?= base_url('web/order') ?>" class="sidebar-link">
-              <i class="bi bi-receipt"></i>
-              <span>Orders</span>
+          <!-- ── Orders & Finance ───────────────────────────────────────── -->
+          <?php if ($showFinance): ?>
+          <li class="sidebar-item has-sub <?= $isFinance ? 'active' : '' ?>">
+            <a href="#" class="sidebar-link">
+              <i class="bi bi-currency-rupee"></i>
+              <span>Orders &amp; Finance</span>
             </a>
+            <ul class="submenu">
+              <?php if ($can('orders.view')): ?>
+              <li class="submenu-item <?= strpos($uri, 'web/order') !== false ? 'active' : '' ?>">
+                <a href="<?= base_url('web/order') ?>" class="submenu-link">
+                  <i class="bi bi-receipt me-1"></i> Orders
+                </a>
+              </li>
+              <?php endif; ?>
+
+              <?php if ($can('transactions.view')): ?>
+              <li class="submenu-item <?= strpos($uri, 'web/transactions') !== false ? 'active' : '' ?>">
+                <a href="<?= base_url('web/transactions') ?>" class="submenu-link">
+                  <i class="bi bi-arrow-left-right me-1"></i> Transactions
+                </a>
+              </li>
+              <?php endif; ?>
+
+              <?php if ($can('tickets.view')): ?>
+              <li class="submenu-item <?= strpos($uri, 'web/tickets') !== false ? 'active' : '' ?>">
+                <a href="<?= base_url('web/tickets') ?>" class="submenu-link">
+                  <i class="bi bi-ticket-detailed me-1"></i> Tickets
+                </a>
+              </li>
+              <?php endif; ?>
+
+              <?php if ($can('orders.view')): ?>
+              <li class="submenu-item <?= strpos($uri, 'web/wallet') !== false ? 'active' : '' ?>">
+                <a href="<?= base_url('web/wallet') ?>" class="submenu-link">
+                  <i class="bi bi-wallet2 me-1"></i> Wallet History
+                </a>
+              </li>
+              <li class="submenu-item <?= strpos($uri, 'web/refund') !== false ? 'active' : '' ?>">
+                <a href="<?= base_url('web/refund') ?>" class="submenu-link">
+                  <i class="bi bi-arrow-counterclockwise me-1"></i> Refunds
+                </a>
+              </li>
+              <li class="submenu-item <?= strpos($uri, 'web/withdrawl') !== false ? 'active' : '' ?>">
+                <a href="<?= base_url('web/withdrawl') ?>" class="submenu-link">
+                  <i class="bi bi-bank me-1"></i> Withdrawals
+                </a>
+              </li>
+              <?php endif; ?>
+
+              <?php if ($can('winners.view')): ?>
+              <li class="submenu-item <?= strpos($uri, 'web/winner') !== false ? 'active' : '' ?>">
+                <a href="<?= base_url('web/winner') ?>" class="submenu-link">
+                  <i class="bi bi-trophy me-1"></i> Winners
+                </a>
+              </li>
+              <?php endif; ?>
+
+              <?php if ($can('reports.view')): ?>
+              <li class="submenu-item <?= strpos($uri, 'web/reports') !== false ? 'active' : '' ?>">
+                <a href="<?= base_url('web/reports') ?>" class="submenu-link">
+                  <i class="bi bi-file-earmark-bar-graph me-1"></i> Reports
+                </a>
+              </li>
+              <?php endif; ?>
+            </ul>
           </li>
           <?php endif; ?>
 
-          <?php if ($can('transactions.view')): ?>
-          <li class="sidebar-item <?= (strpos(uri_string(), 'web/transactions') !== false) ? 'active' : '' ?>">
-            <a href="<?= base_url('web/transactions') ?>" class="sidebar-link">
-              <i class="bi bi-arrow-left-right"></i>
-              <span>Transactions</span>
-            </a>
-          </li>
-          <?php endif; ?>
-
-          <?php if ($can('tickets.view')): ?>
-          <li class="sidebar-item <?= (strpos(uri_string(), 'web/tickets') !== false) ? 'active' : '' ?>">
-            <a href="<?= base_url('web/tickets') ?>" class="sidebar-link">
-              <i class="bi bi-ticket-detailed-fill"></i>
-              <span>Ticket Management</span>
-            </a>
-          </li>
-          <?php endif; ?>
-
-          <?php if ($can('winners.view')): ?>
-          <li class="sidebar-item <?= (strpos(uri_string(), 'winner') !== false) ? 'active' : '' ?>">
-            <a href="<?= base_url('web/winner') ?>" class="sidebar-link">
-              <i class="bi bi-trophy-fill"></i>
-              <span>Winners</span>
-            </a>
-          </li>
-          <?php endif; ?>
-
-          <?php if ($can('reports.view')): ?>
-          <li class="sidebar-item <?= (strpos(uri_string(), 'web/reports') !== false) ? 'active' : '' ?>">
-            <a href="<?= base_url('web/reports') ?>" class="sidebar-link">
-              <i class="bi bi-file-earmark-bar-graph-fill"></i>
-              <span>Reports</span>
-            </a>
-          </li>
-          <?php endif; ?>
-
+          <!-- ── Content ────────────────────────────────────────────────── -->
           <?php if ($showContent): ?>
-          <li class="sidebar-title">Content</li>
-          <?php endif; ?>
-
-          <?php if ($can('contact.view')): ?>
-          <li class="sidebar-item <?= (strpos(uri_string(), 'contact') !== false) ? 'active' : '' ?>">
-            <a href="<?= base_url('web/contact_list') ?>" class="sidebar-link">
-              <i class="bi bi-envelope-fill"></i>
-              <span>Contact Requests</span>
+          <li class="sidebar-item has-sub <?= $isContent ? 'active' : '' ?>">
+            <a href="#" class="sidebar-link">
+              <i class="bi bi-file-earmark-richtext-fill"></i>
+              <span>Content</span>
             </a>
+            <ul class="submenu">
+              <?php if ($can('contact.view')): ?>
+              <li class="submenu-item <?= strpos($uri, 'contact') !== false ? 'active' : '' ?>">
+                <a href="<?= base_url('web/contact_list') ?>" class="submenu-link">
+                  <i class="bi bi-envelope me-1"></i> Contact Requests
+                </a>
+              </li>
+              <?php endif; ?>
+
+              <?php if ($can('faq.view')): ?>
+              <li class="submenu-item <?= strpos($uri, 'faq') !== false ? 'active' : '' ?>">
+                <a href="<?= base_url('web/faq') ?>" class="submenu-link">
+                  <i class="bi bi-megaphone me-1"></i> Announcements
+                </a>
+              </li>
+              <?php endif; ?>
+
+              <?php if ($can('pages.view')): ?>
+              <li class="submenu-item <?= strpos($uri, 'web/page') !== false ? 'active' : '' ?>">
+                <a href="<?= base_url('web/page') ?>" class="submenu-link">
+                  <i class="bi bi-file-earmark-text me-1"></i> Pages
+                </a>
+              </li>
+              <?php endif; ?>
+            </ul>
           </li>
           <?php endif; ?>
 
-          <?php if ($can('faq.view')): ?>
-          <li class="sidebar-item <?= (strpos(uri_string(), 'faq') !== false) ? 'active' : '' ?>">
-            <a href="<?= base_url('web/faq') ?>" class="sidebar-link">
-              <i class="bi bi-megaphone-fill"></i>
-              <span>Announcements</span>
-            </a>
-          </li>
-          <?php endif; ?>
-
-          <?php if ($can('pages.view')): ?>
-          <li class="sidebar-item <?= (strpos(uri_string(), 'page') !== false) ? 'active' : '' ?>">
-            <a href="<?= base_url('web/page') ?>" class="sidebar-link">
-              <i class="bi bi-file-earmark-text-fill"></i>
-              <span>Pages</span>
-            </a>
-          </li>
-          <?php endif; ?>
-
+          <!-- ── Settings ───────────────────────────────────────────────── -->
           <?php if ($showSettings): ?>
-          <li class="sidebar-title">Settings</li>
-          <li class="sidebar-item <?= (uri_string() === 'web/roles' || strpos(uri_string(), 'web/editRole') !== false) ? 'active' : '' ?>">
-            <a href="<?= base_url('web/roles') ?>" class="sidebar-link">
-              <i class="bi bi-people-fill"></i>
-              <span>Roles</span>
+          <li class="sidebar-item has-sub <?= $isSettings ? 'active' : '' ?>">
+            <a href="#" class="sidebar-link">
+              <i class="bi bi-gear-fill"></i>
+              <span>Settings</span>
             </a>
-          </li>
-          <li class="sidebar-item <?= (uri_string() === 'web/rbac') ? 'active' : '' ?>">
-            <a href="<?= base_url('web/rbac') ?>" class="sidebar-link">
-              <i class="bi bi-shield-lock-fill"></i>
-              <span>Role Permissions</span>
-            </a>
-          </li>
-          <li class="sidebar-item <?= (uri_string() === 'web/migrations') ? 'active' : '' ?>">
-            <a href="<?= base_url('web/migrations') ?>" class="sidebar-link">
-              <i class="bi bi-database-gear"></i>
-              <span>Migrations</span>
-            </a>
+            <ul class="submenu">
+              <li class="submenu-item <?= $uri === 'web/migrations' ? 'active' : '' ?>">
+                <a href="<?= base_url('web/migrations') ?>" class="submenu-link">
+                  <i class="bi bi-database-gear me-1"></i> Migrations
+                </a>
+              </li>
+            </ul>
           </li>
           <?php endif; ?>
-
 
         </ul>
       </div>

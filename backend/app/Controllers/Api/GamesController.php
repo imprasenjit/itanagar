@@ -11,11 +11,11 @@ class GamesController extends ApiBaseController
     public function home()
     {
         // Fix: call home_web() once to avoid double query
-        $allGames = $this->webModel->home_web();
+        $allGames = $this->gameModel->home_web();
         return $this->json([
             'games'   => array_slice($allGames, 0, 6),
-            'faq'     => $this->webModel->faq(1),
-            'results' => $this->webModel->result_list(null, null, 5),
+            'faq'     => $this->contentModel->faq(1),
+            'results' => $this->cartOrderModel->result_list(null, null, 5),
             'stats'   => [
                 'games' => count($allGames),
                 'users' => $this->userModel->userListingCount(''),
@@ -25,16 +25,16 @@ class GamesController extends ApiBaseController
 
     public function games()
     {
-        return $this->json(['games' => $this->webModel->home_web()]);
+        return $this->json(['games' => $this->gameModel->home_web()]);
     }
 
     public function game_detail(int $id)
     {
-        $website = $this->webModel->getallWebInfo('tbl_webs', $id);
+        $website = $this->gameModel->getallWebInfo('tbl_webs', $id);
         if (!$website) {
             return $this->error('Game not found', 404);
         }
-        $range = $this->webModel->getrangeInfo($id);
+        $range = $this->gameModel->getrangeInfo($id);
         return $this->json([
             'website'     => $website,
             'range'       => $range,
@@ -59,11 +59,11 @@ class GamesController extends ApiBaseController
         $body   = $this->getBody();
         $search = isset($body['ticket']) ? (int) $body['ticket'] : 0;
 
-        $range = $this->webModel->getrangeInfo($web_id);
+        $range = $this->gameModel->getrangeInfo($web_id);
         if (!$range) {
             return $this->error('Game not found', 404);
         }
-        $checkRange = $this->webModel->getRangeAvailability($search, $web_id);
+        $checkRange = $this->gameModel->getRangeAvailability($search, $web_id);
         $available  = $checkRange && $this->getTicketAvailability($search, $web_id);
         // return $this->json(['available' => $available, 'ticket' => $search]);
         return $this->json([
@@ -82,12 +82,12 @@ class GamesController extends ApiBaseController
 
     public function faq()
     {
-        return $this->json(['faqs' => $this->webModel->faq()]);
+        return $this->json(['faqs' => $this->contentModel->faq()]);
     }
 
     public function page(string $type)
     {
-        $page = $this->webModel->page_detail($type);
+        $page = $this->contentModel->page_detail($type);
         if (!$page) {
             return $this->error('Page not found', 404);
         }
@@ -98,8 +98,8 @@ class GamesController extends ApiBaseController
     {
         $webId   = $this->request->getGet('web_id');
         $date    = $this->request->getGet('date');
-        $results = $this->webModel->result_list($webId ? (int) $webId : null, $date ?: null);
-        $games   = $this->webModel->home_web();
+        $results = $this->cartOrderModel->result_list($webId ? (int) $webId : null, $date ?: null);
+        $games   = $this->gameModel->home_web();
         return $this->json(['results' => $results, 'games' => $games]);
     }
 
@@ -115,7 +115,7 @@ class GamesController extends ApiBaseController
             return $this->error('Name, email, and message are required');
         }
 
-        $this->webModel->insert_date('tbl_contact', [
+        $this->contentModel->insert_date('tbl_contact', [
             'name'    => $name,
             'email'   => $email,
             'mobile'  => $mobile,
@@ -124,3 +124,4 @@ class GamesController extends ApiBaseController
         return $this->json([], true, 'Message sent successfully');
     }
 }
+

@@ -20,7 +20,7 @@
 
     <div class="card mb-4">
         <div class="card-header">
-            <h4 class="card-title">Range &amp; Game Details</h4>
+            <h4 class="card-title">Range &amp; Event Details</h4>
         </div>
         <div class="card-body">
             <div class="row g-4">
@@ -87,7 +87,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <?php if (!empty($userRecords)): ?>
-                <table class="table table-striped">
+                <table id="detailTable" class="table table-striped">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -146,4 +146,5 @@ jQuery(document).on("click", ".deleteWebDate", function (e) {
             });
     }
 });
+$(function () { $('#detailTable').DataTable({ paging: false, searching: false, info: false, columnDefs: [{ orderable: false, targets: -1 }] }); });
 </script>

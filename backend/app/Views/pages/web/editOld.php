@@ -4,7 +4,7 @@ $name   = $userInfo->name;
 $status = $userInfo->status;
 ?>
 <div class="page-heading">
-    <h3><i class="bi bi-dice-5-fill me-2"></i> event Games Management <small>Edit Game</small></h3>
+    <h3><i class="bi bi-dice-5-fill me-2"></i> Events Management <small>Edit Event</small></h3>
 </div>
 <section class="section">
     <div class="row">
@@ -24,13 +24,13 @@ $status = $userInfo->status;
 
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Edit event Game</h4>
+                    <h4 class="card-title">Edit Event</h4>
                 </div>
                 <div class="card-body">
                     <form action="<?= base_url() ?>web/editWeb" method="post">
                         <input type="hidden" name="id" value="<?= $id ?>">
                         <div class="form-group">
-                            <label class="form-label">Game Name</label>
+                            <label class="form-label">Event Name</label>
                             <input type="text" class="form-control" name="name" value="<?= esc($name) ?>" maxlength="128">
                         </div>
                         <div class="form-group">

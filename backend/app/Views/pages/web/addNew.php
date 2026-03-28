@@ -1,5 +1,5 @@
 ﻿<div class="page-heading">
-    <h3><i class="bi bi-dice-5-fill me-2"></i> event Games Management <small>Add New Game</small></h3>
+    <h3><i class="bi bi-dice-5-fill me-2"></i> Events Management <small>Add New Event</small></h3>
 </div>
 <section class="section">
     <div class="row">
@@ -22,13 +22,13 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Enter event Game Details</h4>
+                    <h4 class="card-title">Enter Event Details</h4>
                 </div>
                 <div class="card-body">
                     <form action="<?= base_url() ?>web/addNewWeb" method="post">
                         <div class="form-group">
-                            <label class="form-label">Game Name</label>
-                            <input type="text" class="form-control required" value="<?= set_value('name') ?>" name="name" maxlength="128" placeholder="Enter event game name">
+                            <label class="form-label">Event Name</label>
+                            <input type="text" class="form-control required" value="<?= set_value('name') ?>" name="name" maxlength="128" placeholder="Enter event name">
                         </div>
                         <div class="row mt-3">
                             <div class="col-12 d-flex justify-content-end">

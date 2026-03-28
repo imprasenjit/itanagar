@@ -72,7 +72,7 @@
         </div>
         <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table table-hover mb-0">
+                <table id="ticketsTable" class="table table-hover mb-0">
                     <thead class="table-light">
                         <tr>
                             <th>#Order</th>
@@ -215,4 +215,5 @@ function verifyTicket() {
     })
     .catch(() => { result.innerHTML = '<div class="alert alert-danger mb-0">Network error. Please try again.</div>'; });
 }
+$(function () { $('#ticketsTable').DataTable({ paging: false, searching: false, info: false, columnDefs: [{ orderable: false, targets: -1 }] }); });
 </script>
