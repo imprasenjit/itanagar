@@ -180,6 +180,7 @@ $routes->post('api/account/password',         'Api\AccountController::account_pa
 $routes->get('api/account/wallet',            'Api\AccountController::account_wallet');
 $routes->post('api/account/wallet/topup',     'Api\AccountController::account_wallet_topup');
 $routes->get('api/account/orders',            'Api\AccountController::account_orders');
+$routes->get('api/account/orders/(:num)',      'Api\AccountController::account_order_detail/$1');
 $routes->get('api/account/refunds',           'Api\AccountController::account_refunds');
 $routes->post('api/account/refunds',          'Api\AccountController::account_refund_create');
 $routes->get('api/account/withdrawals',       'Api\AccountController::account_withdrawals');

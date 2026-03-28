@@ -44,6 +44,7 @@ export const updatePassword = (data: Record<string, string>) => api.post('/accou
 export const getWallet = () => api.get('/account/wallet');
 export const walletTopup = (data: Record<string, unknown>) => api.post('/account/wallet/topup', data);
 export const getOrders = () => api.get('/account/orders');
+export const getOrderDetail = (id: number | string) => api.get(`/account/orders/${id}`);
 export const getRefunds = () => api.get('/account/refunds');
 export const createRefund = (data: Record<string, string>) => api.post('/account/refunds', data);
 export const getWithdrawals = () => api.get('/account/withdrawals');

@@ -1,16 +1,26 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AccountLayout from '../../components/AccountLayout';
 import { getOrders } from '../../api';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
 import type { CartItem } from '../../types';
 
-const STATUS: Record<number, [string, string]> = { 0: ['Pending', 'yellow'], 1: ['Completed', 'emerald'], 2: ['Failed', 'red'], 3: ['Refunded', 'blue'] };
+const STATUS: Record<string, [string, string]> = {
+  CREATED:   ['Pending',   'yellow'],
+  PAID:      ['Completed', 'emerald'],
+  RELEASED:  ['Refunded',  'blue'],
+  CANCELLED: ['Cancelled', 'red'],
+  // legacy numeric values
+  '0': ['Pending',   'yellow'],
+  '1': ['Completed', 'emerald'],
+  '2': ['Failed',    'red'],
+};
 
 export default function OrderHistory() {
   const [orders, setOrders]   = useState<Record<string, any>[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getOrders().then(r => setOrders(r.data.data?.orders || [])).catch(() => {}).finally(() => setLoading(false));
@@ -30,23 +40,42 @@ export default function OrderHistory() {
       ) : (
         <div className="space-y-3">
           {orders.map(o => {
-            const [label, color] = STATUS[o.paid_status] || STATUS[0];
+            const [label, color] = STATUS[String(o.paid_status)] ?? STATUS['CREATED'];
+            const ticketNos: string[] = (() => {
+              try {
+                const parsed = typeof o.tickets === 'string' ? JSON.parse(o.tickets) : o.tickets;
+                return Array.isArray(parsed) ? parsed.map((t: any) => String(t.ticket_no ?? t)).filter(Boolean) : [];
+              } catch { return []; }
+            })();
+            const amount = o.total_price ?? o.amount;
             return (
-              <div key={o.id} className="card p-4">
+              <div
+                key={o.id}
+                className="card p-4 cursor-pointer hover:shadow-md transition-shadow"
+                onClick={() => navigate(`/account/orders/${o.id}`)}
+              >
                 <div className="flex items-start justify-between gap-4">
-                  <div className="min-w-0">
-                    <p className="text-sm font-semibold text-gray-900">{o.name || o.game_name || `Order #${o.id}`}</p>
-                    <p className="text-xs text-gray-500 mt-0.5">
-                      {o.tickets && <span>Tickets: {Array.isArray(o.tickets) ? o.tickets.join(', ') : o.tickets}</span>}
-                      {o.createdAt && <span> · {new Date(o.createdAt).toLocaleDateString('en-IN')}</span>}
-                    </p>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <p className="text-sm font-semibold text-gray-900">{`Order #${o.id}`}</p>
+                      {o.createdAt && (
+                        <p className="text-xs text-gray-400">{new Date(o.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                      )}
+                    </div>
+                    {ticketNos.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-1.5">
+                        {ticketNos.map((no, i) => (
+                          <span key={i} className="text-xs font-mono bg-gray-100 text-gray-600 rounded px-1.5 py-0.5">{no}</span>
+                        ))}
+                      </div>
+                    )}
                     {o.prize && Number(o.prize) > 0 && (
-                      <p className="text-xs font-semibold text-brand-600 mt-1">🏆 Won: ₹{Number(o.prize).toLocaleString('en-IN')}</p>
+                      <p className="text-xs font-semibold text-brand-600 mt-1.5">🏆 Won: ₹{Number(o.prize).toLocaleString('en-IN')}</p>
                     )}
                   </div>
                   <div className="text-right shrink-0">
                     <span className={`badge bg-${color}-500/15 text-${color}-400 border border-${color}-500/20`}>{label}</span>
-                    {o.amount && <p className="text-sm font-bold text-gray-900 mt-1.5">₹{Number(o.amount).toLocaleString('en-IN')}</p>}
+                    {amount && <p className="text-sm font-bold text-gray-900 mt-1.5">₹{Number(amount).toLocaleString('en-IN')}</p>}
                   </div>
                 </div>
               </div>

@@ -121,6 +121,43 @@ class AccountController extends ApiBaseController
         return $this->json(['orders' => $this->cartOrderModel->order_history($userId)]);
     }
 
+    public function account_order_detail(int $id)
+    {
+        if ($r = $this->requireAuth()) return $r;
+        $userId = (int) session()->get('userId');
+
+        $order = $this->cartOrderModel->get_order_by_id($id);
+        if (!$order || (int) $order->user_id !== $userId) {
+            return $this->error('Order not found', 404);
+        }
+
+        $rawTickets = json_decode($order->tickets ?? '[]', true) ?: [];
+        $tickets    = [];
+        foreach ($rawTickets as $t) {
+            $webInfo = $this->gameModel->getallWebInfo('tbl_webs', $t['web_id'] ?? 0);
+            $range   = $this->gameModel->getrangeInfo($t['web_id'] ?? 0);
+            $tickets[] = [
+                'ticketNo'   => $t['ticket_no'] ?? '',
+                'gameName'   => $webInfo->name ?? '',
+                'heading'    => $range->heading ?? '',
+                'logo'       => $range->logo ? base_url('imglogo') . '/' . $range->logo : '',
+                'resultDate' => $range->result_date ?? '',
+                'price'      => $range->price ?? '',
+            ];
+        }
+
+        return $this->json([
+            'order' => [
+                'id'          => $order->id,
+                'order_id'    => $order->razorpay_order_id,
+                'paid_status' => $order->paid_status,
+                'total_price' => $order->total_price,
+                'createdAt'   => $order->createdAt ?? $order->createdDtm ?? null,
+                'tickets'     => $tickets,
+            ],
+        ]);
+    }
+
     public function account_refunds()
     {
         if ($r = $this->requireAuth()) return $r;

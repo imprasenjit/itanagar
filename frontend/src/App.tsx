@@ -33,6 +33,7 @@ import ResetPassword  from './pages/ResetPassword';
 // Account pages
 import Profile       from './pages/account/Profile';
 import OrderHistory  from './pages/account/OrderHistory';
+import OrderDetail   from './pages/account/OrderDetail';
 import Wallet        from './pages/account/Wallet';
 import Winners       from './pages/account/Winners';
 import Refunds       from './pages/account/Refunds';
@@ -89,6 +90,7 @@ export default function App() {
       {/* Account */}
       <Route path="/account/profile"     element={<Layout><Profile/></Layout>}/>
       <Route path="/account/orders"      element={<Layout><OrderHistory/></Layout>}/>
+      <Route path="/account/orders/:id"  element={<Layout><OrderDetail/></Layout>}/>
       <Route path="/account/wallet"      element={<Layout><Wallet/></Layout>}/>
       <Route path="/account/winners"     element={<Layout><Winners/></Layout>}/>
       <Route path="/account/refunds"     element={<Layout><Refunds/></Layout>}/>
