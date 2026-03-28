@@ -127,7 +127,6 @@ class PaymentController extends ApiBaseController
 
     public function payment_confirm()
     {
-        helper('email_helper');
         $body              = $this->getBody();
         $razorpayOrderId   = esc($body['razorpay_order_id']  ?? '');
         $razorpayPayId     = esc($body['razorpay_payment_id'] ?? '');
@@ -218,7 +217,17 @@ class PaymentController extends ApiBaseController
                     'razorpay_payment_id' => $razorpayPayId,
                 ],
             ]);
-            sendmail($userInfo->email, 'Order: ' . $razorpayOrderId, $emailBody);
+
+            // Send email AFTER the response is delivered to the frontend.
+            // register_shutdown_function runs once PHP finishes sending the response.
+            $emailTo      = $userInfo->email ?? '';
+            $emailSubject = 'Order: ' . $razorpayOrderId;
+            register_shutdown_function(function () use ($emailTo, $emailSubject, $emailBody) {
+                if (!empty($emailTo)) {
+                    helper('email_helper');
+                    sendmail($emailTo, $emailSubject, $emailBody);
+                }
+            });
 
             $responseTickets = array_map(function ($t) {
                 return [

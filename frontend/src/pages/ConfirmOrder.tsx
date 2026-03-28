@@ -127,7 +127,6 @@ export default function ConfirmOrder() {
       setPaying(false);
     }
   };
-  };
 
   if (loading) return <LoadingSpinner size="lg" text="Preparing order…"/>;
 
