@@ -84,7 +84,7 @@
                 </form>
             </div>
         </div>
-        <div class="card-body">
+        <div class="card-body p-5">
             <div class="table-responsive">
                 <?php if (true): ?>
                 <table id="detailTable" class="table table-striped">
@@ -98,6 +98,7 @@
                     </thead>
                     <tbody></tbody>
                 </table>
+                <?php endif; ?>
             </div>
         </div>
     </div>

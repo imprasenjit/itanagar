@@ -70,7 +70,7 @@
         <div class="card-header">
             <h4 class="card-title mb-0">Issued Tickets</h4>
         </div>
-        <div class="card-body p-0">
+        <div class="card-body p-5">
             <div class="table-responsive">
                 <table id="ticketsTable" class="table table-hover mb-0">
                     <thead class="table-light">

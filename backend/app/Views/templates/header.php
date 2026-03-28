@@ -21,6 +21,7 @@
   </style>
 
   <script src="<?= base_url('assets/js/init-theme.js') ?>"></script>
+  <script src="<?= base_url('assets/extensions/jquery/jquery.min.js') ?>"></script>
   <script>var baseURL = "<?= base_url() ?>";</script>
 </head>
 

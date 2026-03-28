@@ -52,7 +52,7 @@
         <div class="card-header">
             <h4 class="card-title">Wallet History</h4>
         </div>
-        <div class="card-body">
+        <div class="card-body p-5">
             <div class="table-responsive">
                 <?php if (true): ?>
                 <table id="userWalletTable" class="table table-striped">
@@ -67,6 +67,7 @@
                     </thead>
                     <tbody></tbody>
                 </table>
+                <?php endif; ?>
             </div>
         </div>
     </div>

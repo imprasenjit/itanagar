@@ -52,7 +52,7 @@
           <div class="card-header d-flex justify-content-between align-items-center">
             <h4 class="card-title mb-0">All Roles</h4>
           </div>
-          <div class="card-body">
+          <div class="card-body p-5">
             <div class="table-responsive">
               <table id="rolesTable" class="table table-striped table-hover">
                 <thead>

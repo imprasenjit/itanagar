@@ -17,7 +17,6 @@
 <script src="<?= base_url('assets/js/app.js') ?>"></script>
 <script src="<?= base_url('assets/js/dark.js') ?>"></script>
 <script src="<?= base_url('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') ?>"></script>
-<script src="<?= base_url('assets/extensions/jquery/jquery.min.js') ?>"></script>
 <script src="<?= base_url('admin/js/jquery.validate.js') ?>"></script>
 <script src="<?= base_url('admin/js/validation.js') ?>"></script>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">

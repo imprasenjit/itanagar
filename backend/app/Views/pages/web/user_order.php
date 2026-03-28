@@ -11,7 +11,7 @@
         <div class="card-header">
             <h4 class="card-title">All Orders for <?= esc($userinfo->name) ?></h4>
         </div>
-        <div class="card-body">
+        <div class="card-body p-5">
             <div class="table-responsive">
                 <?php if (true): ?>
                 <table id="userOrderTable" class="table table-striped">
@@ -28,6 +28,7 @@
                     </thead>
                     <tbody></tbody>
                 </table>
+                <?php endif; ?>
             </div>
         </div>
     </div>

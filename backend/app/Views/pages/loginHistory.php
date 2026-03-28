@@ -40,7 +40,7 @@
         <div class="card-header">
             <h4 class="card-title"><?= !empty($userInfo) ? esc($userInfo->name) . " — " . esc($userInfo->email) : "All Users" ?></h4>
         </div>
-        <div class="card-body">
+        <div class="card-body p-5">
             <div class="table-responsive">
                 <table id="loginHistoryTable" class="table table-striped">
                     <thead>

@@ -9,7 +9,7 @@
             <div class="card-header-action">
             </div>
         </div>
-        <div class="card-body">
+        <div class="card-body p-5">
             <div class="table-responsive">
                 <?php if (true): ?>
                 <table id="walletTable" class="table table-striped">
@@ -25,6 +25,7 @@
                     </thead>
                     <tbody></tbody>
                 </table>
+                <?php endif; ?>
             </div>
         </div>
     </div>

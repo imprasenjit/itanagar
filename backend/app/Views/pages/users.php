@@ -11,7 +11,7 @@
                 </a>
             </div>
         </div>
-        <div class="card-body">
+        <div class="card-body p-5">
             <div class="table-responsive">
                 <table id="usersTable" class="table table-striped">
                     <thead>

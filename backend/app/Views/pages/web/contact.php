@@ -6,7 +6,7 @@
         <div class="card-header">
             <h4 class="card-title">Contact Submissions</h4>
         </div>
-        <div class="card-body">
+        <div class="card-body p-5">
             <div class="table-responsive">
                 <table id="contactTable" class="table table-striped">
                     <thead>
