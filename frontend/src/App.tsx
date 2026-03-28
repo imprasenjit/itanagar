@@ -16,6 +16,7 @@ import GameDetail    from './pages/GameDetail';
 import Cart          from './pages/Cart';
 import ConfirmOrder  from './pages/ConfirmOrder';
 import PaymentSuccess from './pages/PaymentSuccess';
+import PaymentFailed  from './pages/PaymentFailed';
 import Results       from './pages/Results';
 import FAQ           from './pages/FAQ';
 import Contact       from './pages/Contact';
@@ -77,6 +78,7 @@ export default function App() {
       <Route path="/cart"            element={<Layout><Cart/></Layout>}/>
       <Route path="/order/confirm"   element={<Layout><ConfirmOrder/></Layout>}/>
       <Route path="/payment/success" element={<Layout><PaymentSuccess/></Layout>}/>
+      <Route path="/payment/failed"  element={<Layout><PaymentFailed/></Layout>}/>
       <Route path="/results"         element={<Layout><Results/></Layout>}/>
       <Route path="/faq"             element={<Layout><FAQ/></Layout>}/>
       <Route path="/contact"         element={<Layout><Contact/></Layout>}/>

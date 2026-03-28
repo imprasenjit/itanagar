@@ -85,17 +85,32 @@ export default function ConfirmOrder() {
               addToast('Payment successful! 🎉', 'success');
               navigate('/payment/success', { state: { order: cr.data.data } });
             } else {
-              addToast(cr.data.message || 'Payment verification failed', 'error');
+              navigate('/payment/failed', {
+                state: {
+                  reason:  cr.data.message || 'Payment verification failed.',
+                  orderId: order_id,
+                },
+              });
             }
           } catch {
-            addToast('Payment confirmation failed', 'error');
+            navigate('/payment/failed', {
+              state: {
+                reason:  'An error occurred while confirming your payment.',
+                orderId: order_id,
+              },
+            });
           }
         },
         modal: {
           ondismiss: async () => {
             await cancelPayment({ order_id }).catch(() => {});
-            addToast('Payment cancelled.', 'info');
             setPaying(false);
+            navigate('/payment/failed', {
+              state: {
+                reason:  'You cancelled the payment.',
+                orderId: order_id,
+              },
+            });
           },
         },
       };
@@ -111,6 +126,7 @@ export default function ConfirmOrder() {
       addToast((e as Error).message || 'Failed to initiate payment', 'error');
       setPaying(false);
     }
+  };
   };
 
   if (loading) return <LoadingSpinner size="lg" text="Preparing order…"/>;

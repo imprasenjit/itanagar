@@ -200,6 +200,7 @@ export default function GameDetail() {
                     src={`${import.meta.env.VITE_PUBLIC_URL}/imglogo/${src}`}
                     alt={`${game.name} ${i + 1}`}
                     className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${i === slideIdx ? 'opacity-100' : 'opacity-0'}`}
+                    onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
                   />
                 ))}
                 {slideImgs.length > 1 && (
@@ -512,6 +513,7 @@ export default function GameDetail() {
             alt={game.name}
             className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl"
             onClick={e => e.stopPropagation()}
+            onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
           />
           {slideImgs.length > 1 && (
             <button

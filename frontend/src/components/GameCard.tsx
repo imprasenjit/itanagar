@@ -55,6 +55,7 @@ export default function GameCard({ game, index = 0 }: { game: Game; index?: numb
 
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
+  const [imgError, setImgError] = useState(false);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -71,8 +72,13 @@ export default function GameCard({ game, index = 0 }: { game: Game; index?: numb
       <div className={`card h-full flex flex-col overflow-hidden transition-all duration-300 ${isSoldOut ? 'opacity-80 grayscale-[30%]' : 'hover:border-brand-500/30 hover:shadow-2xl hover:shadow-brand-500/10 group-hover:-translate-y-1.5'}`}>
         {/* Image */}
         <div className="relative h-52 overflow-hidden bg-gray-100">
-          {logo ? (
-            <img src={`${import.meta.env.VITE_PUBLIC_URL}/imglogo/${logo}`} alt={name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+          {logo && !imgError ? (
+            <img
+              src={`${import.meta.env.VITE_PUBLIC_URL}/imglogo/${logo}`}
+              alt={name}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              onError={() => setImgError(true)}
+            />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
               <svg className="w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
