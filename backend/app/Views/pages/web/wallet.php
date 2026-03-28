@@ -6,18 +6,12 @@
     <div class="card">
         <div class="card-header">
             <h4 class="card-title">All Wallet Transactions</h4>
-            <div class="card-header-action d-flex">
-                <form action="<?= base_url() ?>web/wallet" method="POST" id="searchList" class="d-flex">
-                    <div class="input-group">
-                        <input type="text" name="searchText" value="<?= $searchText ?>" class="form-control" placeholder="Search by user...">
-                        <button class="btn btn-primary searchList" type="submit"><i class="bi bi-search"></i></button>
-                    </div>
-                </form>
+            <div class="card-header-action">
             </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <?php if (!empty($userRecords)): ?>
+                <?php if (true): ?>
                 <table id="walletTable" class="table table-striped">
                     <thead>
                         <tr>
@@ -29,39 +23,28 @@
                             <th>Date</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php $c = 1; foreach ($userRecords as $ms): ?>
-                        <tr>
-                            <td><?= $c ?></td>
-                            <td><?= esc($ms->uname) ?></td>
-                            <td><strong>&#8377;<?= $ms->money ?></strong></td>
-                            <td><span class="badge bg-secondary"><?= esc($ms->type) ?></span></td>
-                            <td><small><?= esc($ms->trancaction_id) ?></small></td>
-                            <td><?= date("M d, Y h:i a", strtotime($ms->createdAt)) ?></td>
-                        </tr>
-                        <?php $c++; endforeach; ?>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
-                <?php else: ?>
-                    <p class="text-center text-muted py-4">No wallet transactions found.</p>
-                <?php endif; ?>
             </div>
-        </div>
-        <div class="card-footer">
-            <?= $pager->links() ?>
         </div>
     </div>
 </section>
 
 <script src="<?= base_url() ?>public/admin/js/common.js"></script>
 <script>
-jQuery(document).ready(function () {
-    jQuery('ul.pagination li a').click(function (e) {
-        e.preventDefault();
-        var link = jQuery(this).get(0).href, value = link.substring(link.lastIndexOf('/') + 1);
-        jQuery("#searchList").attr("action", baseURL + "web/wallet/" + value);
-        jQuery("#searchList").submit();
+$(function () {
+    $('#walletTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: { url: baseURL + 'web/wallet_data', type: 'GET' },
+        columns: [
+            { data: 'sr' },
+            { data: 'user' },
+            { data: 'money' },
+            { data: 'paymentInfo', orderable: false },
+            { data: 'transactionId', orderable: false },
+            { data: 'date' }
+        ]
     });
 });
-$(function () { $('#walletTable').DataTable({ paging: false, searching: false, info: false }); });
 </script>

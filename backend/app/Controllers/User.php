@@ -322,4 +322,71 @@ class User extends BaseController
         $this->global['pageTitle'] = 'event : 404 - Page Not Found';
         return $this->loadViews('error/404', $this->global, null, null);
     }
+
+    // ── DataTables server-side endpoints ──────────────────────────────────────
+
+    public function users_data()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['error' => 'access']);
+        }
+        $draw   = (int)($this->request->getGet('draw') ?? 1);
+        $start  = (int)($this->request->getGet('start') ?? 0);
+        $length = (int)($this->request->getGet('length') ?? 10);
+        $search = trim($this->request->getGet('search')['value'] ?? '');
+
+        $total    = $this->userModel->userListingCount('');
+        $filtered = $this->userModel->userListingCount($search);
+        $rows     = $this->userModel->userListing($search, $length, $start);
+
+        $data = [];
+        foreach ($rows as $r) {
+            $phone   = $r->phonecode != '' ? '+' . esc($r->phonecode) : '';
+            $badge   = $r->role == 'Admin' ? 'bg-danger' : 'bg-primary';
+            $actions = '<a class="btn btn-sm btn-light" href="' . base_url('login-history/' . $r->userId) . '" title="Login History"><i class="bi bi-clock-history"></i></a> '
+                     . '<a class="btn btn-sm btn-info" href="' . base_url('web/user_order/' . $r->userId) . '" title="Orders"><i class="bi bi-bag-fill"></i></a> '
+                     . '<a class="btn btn-sm btn-primary" href="' . base_url('editOld/' . $r->userId) . '" title="Edit"><i class="bi bi-pencil-fill"></i></a> '
+                     . '<a class="btn btn-sm btn-danger deleteUser" href="#" data-userid="' . $r->userId . '" title="Delete"><i class="bi bi-trash3-fill"></i></a>';
+            $data[] = [
+                'name'       => esc($r->name),
+                'email'      => esc($r->email),
+                'phonecode'  => $phone,
+                'mobile'     => esc($r->mobile),
+                'role'       => '<span class="badge ' . $badge . '">' . esc($r->role) . '</span>',
+                'createdDtm' => date('d-m-Y', strtotime($r->createdDtm)),
+                'actions'    => $actions,
+            ];
+        }
+        return $this->response->setJSON(['draw' => $draw, 'recordsTotal' => $total, 'recordsFiltered' => $filtered, 'data' => $data]);
+    }
+
+    public function login_history_data(int $userId = 0)
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['error' => 'access']);
+        }
+        $draw     = (int)($this->request->getGet('draw') ?? 1);
+        $start    = (int)($this->request->getGet('start') ?? 0);
+        $length   = (int)($this->request->getGet('length') ?? 10);
+        $search   = trim($this->request->getGet('search')['value'] ?? '');
+        $fromDate = $this->request->getGet('fromDate') ?? '';
+        $toDate   = $this->request->getGet('toDate') ?? '';
+
+        $total    = $this->userModel->loginHistoryCount($userId, '', '', '');
+        $filtered = $this->userModel->loginHistoryCount($userId, $search, $fromDate, $toDate);
+        $rows     = $this->userModel->loginHistory($userId, $search, $fromDate, $toDate, $length, $start);
+
+        $data = [];
+        foreach ($rows as $r) {
+            $data[] = [
+                'session'     => esc($r->sessionData),
+                'ip'          => esc($r->machineIp),
+                'userAgent'   => esc($r->userAgent),
+                'agentString' => esc($r->agentString),
+                'platform'    => esc($r->platform),
+                'date'        => esc($r->createdDtm),
+            ];
+        }
+        return $this->response->setJSON(['draw' => $draw, 'recordsTotal' => $total, 'recordsFiltered' => $filtered, 'data' => $data]);
+    }
 }

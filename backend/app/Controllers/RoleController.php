@@ -92,6 +92,29 @@ class RoleController extends BaseController
         echo json_encode(['status' => $result]);
     }
 
+    public function roles_data()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['error' => 'access']);
+        }
+        $draw  = (int)($this->request->getGet('draw') ?? 1);
+        $model = model(\App\Models\RolePermissionModel::class);
+        $roles = $model->getAllRoles();
+        $data  = [];
+        foreach ($roles as $role) {
+            $superBadge = (int)$role->roleId === 1 ? ' <span class="badge bg-warning text-dark ms-1">Super Admin</span>' : '';
+            if ((int)$role->roleId !== 1) {
+                $actions = '<a href="' . base_url('web/editRole/' . $role->roleId) . '" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i> Edit</a> '
+                         . '<button class="btn btn-sm btn-danger btn-delete-role" data-id="' . $role->roleId . '"><i class="bi bi-trash3-fill"></i> Delete</button>';
+            } else {
+                $actions = '<span class="text-muted small">Protected</span>';
+            }
+            $data[] = ['roleId' => esc($role->roleId), 'role' => esc($role->role) . $superBadge, 'actions' => $actions];
+        }
+        $count = count($data);
+        return $this->response->setJSON(['draw' => $draw, 'recordsTotal' => $count, 'recordsFiltered' => $count, 'data' => $data]);
+    }
+
     // ── RBAC Permission Assignment ────────────────────────────────────────────
 
     public function rbac(): string

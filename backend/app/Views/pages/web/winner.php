@@ -15,18 +15,12 @@
                 Winner History
                 <span class="badge bg-success ms-2">Total Prize: &#8377;<?= $amount->sum ?></span>
             </h4>
-            <div class="card-header-action d-flex">
-                <form action="<?= base_url() ?>web/winner" method="POST" id="searchList" class="d-flex">
-                    <div class="input-group">
-                        <input type="text" name="searchText" value="<?= $searchText ?>" class="form-control" placeholder="Search by user...">
-                        <button class="btn btn-primary searchList" type="submit"><i class="bi bi-search"></i></button>
-                    </div>
-                </form>
+            <div class="card-header-action">
             </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <?php if (!empty($userRecords)): ?>
+                <?php if (true): ?>
                 <table id="winnerTable" class="table table-striped">
                     <thead>
                         <tr>
@@ -41,52 +35,29 @@
                             <th>Date</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php foreach ($userRecords as $ms):
-                            $tickets = json_decode($ms->tickets ?? '[]', true) ?: [];
-                            $ticketNos = array_column($tickets, 'ticket_no');
-                        ?>
-                        <tr>
-                            <td><strong>#<?= $ms->id ?></strong></td>
-                            <td><?= esc($ms->uname) ?></td>
-                            <td><?= esc($ms->game_name) ?></td>
-                            <td>
-                                <?php foreach (array_slice($ticketNos, 0, 5) as $tn): ?>
-                                    <code class="me-1"><?= esc($tn) ?></code>
-                                <?php endforeach; ?>
-                                <?php if (count($ticketNos) > 5): ?>
-                                    <small class="text-muted">+<?= count($ticketNos) - 5 ?> more</small>
-                                <?php endif; ?>
-                            </td>
-                            <td>&#8377;<?= $ms->total_price ?></td>
-                            <td><?= $ms->paid_type == "0" ? "Wallet" : esc($ms->paid_type) ?></td>
-                            <td><strong class="text-success">&#8377;<?= $ms->prize ?></strong></td>
-                            <td><small><?= esc($ms->transaction_id) ?></small></td>
-                            <td><?= date("M d, Y h:i a", strtotime($ms->createdAt)) ?></td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
-                <?php else: ?>
-                    <p class="text-center text-muted py-4">No winner records found.</p>
-                <?php endif; ?>
             </div>
-        </div>
-        <div class="card-footer">
-            <?= $pager->links() ?>
         </div>
     </div>
 </section>
-<script>$(function () { $('#winnerTable').DataTable({ paging: false, searching: false, info: false }); });</script>
-
-<script src="<?= base_url() ?>public/admin/js/common.js"></script>
 <script>
-jQuery(document).ready(function () {
-    jQuery('ul.pagination li a').click(function (e) {
-        e.preventDefault();
-        var link = jQuery(this).get(0).href, value = link.substring(link.lastIndexOf('/') + 1);
-        jQuery("#searchList").attr("action", baseURL + "web/winner/" + value);
-        jQuery("#searchList").submit();
+$(function () {
+    $('#winnerTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: { url: baseURL + 'web/winner_data', type: 'GET' },
+        columns: [
+            { data: 'order_no' },
+            { data: 'user' },
+            { data: 'event' },
+            { data: 'tickets', orderable: false },
+            { data: 'price' },
+            { data: 'paymentType', orderable: false },
+            { data: 'winningPrize' },
+            { data: 'transactionId', orderable: false },
+            { data: 'date' }
+        ]
     });
 });
 </script>

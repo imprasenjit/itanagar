@@ -348,6 +348,35 @@ class CartOrderModel extends Model
         $this->db->table('tbl_order')->where('id', $orderId)->update(['paid_status' => 'CANCELLED']);
     }
 
+    // ── User-specific order listing ───────────────────────────────────────────
+
+    private function _userOrderBuilder(int $userId, string $search)
+    {
+        $builder = $this->db->table('tbl_order')
+            ->where('tbl_order.user_id', $userId);
+        if (!empty($search)) {
+            $builder->groupStart()
+                ->like('CAST(tbl_order.id AS CHAR)', $search)
+                ->orLike('tbl_order.transaction_id', $search)
+                ->groupEnd();
+        }
+        return $builder;
+    }
+
+    public function user_orders_count(int $userId, string $search = ''): int
+    {
+        return $this->_userOrderBuilder($userId, $search)->select('tbl_order.id')->get()->getNumRows();
+    }
+
+    public function user_orders_list(int $userId, string $search, int $limit, int $offset)
+    {
+        return $this->_userOrderBuilder($userId, $search)
+            ->select('tbl_order.*')
+            ->orderBy('tbl_order.id', 'DESC')
+            ->limit($limit, $offset)
+            ->get()->getResult();
+    }
+
     // ── Reports ────────────────────────────────────────────────────────────
 
     public function report_daily(string $date)

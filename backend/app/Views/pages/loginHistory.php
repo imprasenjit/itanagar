@@ -53,38 +53,44 @@
                             <th>Date &amp; Time</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php if (!empty($userRecords)) foreach ($userRecords as $record): ?>
-                        <tr>
-                            <td><?= $record->sessionData ?></td>
-                            <td><?= $record->machineIp ?></td>
-                            <td><?= $record->userAgent ?></td>
-                            <td><?= $record->agentString ?></td>
-                            <td><?= $record->platform ?></td>
-                            <td><?= $record->createdDtm ?></td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
-        </div>
-        <div class="card-footer">
-            <?= $pager->links() ?>
         </div>
     </div>
 </section>
 <script src="<?= base_url('assets/extensions/flatpickr/flatpickr.min.js') ?>"></script>
 <script>
-jQuery(document).ready(function () {
-    jQuery('ul.pagination li a').click(function (e) {
-        e.preventDefault();
-        jQuery("#searchList").attr("action", jQuery(this).attr("href"));
-        jQuery("#searchList").submit();
-    });
+var lhTable;
+$(function () {
     flatpickr('.datepicker', { dateFormat: 'd-m-Y', allowInput: true });
-    jQuery('.resetFilters').click(function () {
-        $(this).closest('form').find("input[type=text]").val("");
+    lhTable = $('#loginHistoryTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: baseURL + 'login_history_data/<?= !empty($userInfo) ? $userInfo->userId : 0 ?>',
+            type: 'GET',
+            data: function (d) {
+                d.fromDate = $('#fromDate').val();
+                d.toDate   = $('#toDate').val();
+            }
+        },
+        columns: [
+            { data: 'session',     orderable: false },
+            { data: 'ip',          orderable: false },
+            { data: 'userAgent',   orderable: false },
+            { data: 'agentString', orderable: false },
+            { data: 'platform',    orderable: false },
+            { data: 'date',        orderable: false }
+        ]
+    });
+    $('.searchList').on('click', function (e) {
+        e.preventDefault();
+        lhTable.ajax.reload();
+    });
+    $('.resetFilters').on('click', function () {
+        $('#fromDate, #toDate').val('');
+        lhTable.ajax.reload();
     });
 });
-$(function () { $('#loginHistoryTable').DataTable({ paging: false, searching: false, info: false }); });
 </script>

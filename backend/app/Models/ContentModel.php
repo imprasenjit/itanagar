@@ -71,6 +71,50 @@ class ContentModel extends Model
             ->get()->getResult();
     }
 
+    public function faq_count(string $search = ''): int
+    {
+        $builder = $this->db->table('tbl_faqs');
+        if (!empty($search)) {
+            $builder->groupStart()->like('question', $search)->orLike('answer', $search)->groupEnd();
+        }
+        return $builder->countAllResults();
+    }
+
+    public function faq_list(string $search, int $limit, int $offset)
+    {
+        $builder = $this->db->table('tbl_faqs')->orderBy('id', 'DESC');
+        if (!empty($search)) {
+            $builder->groupStart()->like('question', $search)->orLike('answer', $search)->groupEnd();
+        }
+        return $builder->limit($limit, $offset)->get()->getResult();
+    }
+
+    public function contact_count(string $search = ''): int
+    {
+        $builder = $this->db->table('tbl_contact');
+        if (!empty($search)) {
+            $builder->groupStart()
+                ->like('name', $search)
+                ->orLike('email', $search)
+                ->orLike('message', $search)
+                ->groupEnd();
+        }
+        return $builder->countAllResults();
+    }
+
+    public function contact_list(string $search, int $limit, int $offset)
+    {
+        $builder = $this->db->table('tbl_contact')->orderBy('id', 'DESC');
+        if (!empty($search)) {
+            $builder->groupStart()
+                ->like('name', $search)
+                ->orLike('email', $search)
+                ->orLike('message', $search)
+                ->groupEnd();
+        }
+        return $builder->limit($limit, $offset)->get()->getResult();
+    }
+
     // ── Generic utilities (used for content-domain tables) ────────────────────
 
     public function insert_date(string $table, array $data): int

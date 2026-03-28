@@ -16,22 +16,21 @@
                             <th class="text-center">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php if (!empty($page)) foreach ($page as $record): ?>
-                        <tr>
-                            <td><?= $record->title ?></td>
-                            <td><?= substr(strip_tags($record->description), 0, 80) ?>...</td>
-                            <td class="text-center">
-                                <a class="btn btn-sm btn-primary" href="<?= base_url('web/pageedit/' . $record->id) ?>" title="Edit">
-                                    <i class="bi bi-pencil-fill"></i> Edit
-                                </a>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>
     </div>
 </section>
-<script>$(function () { $('#pagelistTable').DataTable({ paging: false, columnDefs: [{ orderable: false, targets: -1 }] }); });</script>
+<script>$(function () {
+    $('#pagelistTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: { url: baseURL + 'web/page_data', type: 'GET' },
+        columns: [
+            { data: 'title' },
+            { data: 'description' },
+            { data: 'actions', orderable: false, className: 'text-center' }
+        ]
+    });
+});</script>

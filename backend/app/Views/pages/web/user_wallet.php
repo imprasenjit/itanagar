@@ -54,7 +54,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <?php if (!empty($userRecords)): ?>
+                <?php if (true): ?>
                 <table id="userWalletTable" class="table table-striped">
                     <thead>
                         <tr>
@@ -65,38 +65,27 @@
                             <th>Date</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php $c = 1; foreach ($userRecords as $ms): ?>
-                        <tr>
-                            <td><?= $c ?></td>
-                            <td><?= esc($ms->uname) ?></td>
-                            <td><?= $ms->money ?></td>
-                            <td><span class="badge bg-secondary"><?= esc($ms->type) ?></span></td>
-                            <td><?= date("M d, Y h:i a", strtotime($ms->createdAt)) ?></td>
-                        </tr>
-                        <?php $c++; endforeach; ?>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
-                <?php else: ?>
-                    <p class="text-center text-muted py-4">No wallet history found.</p>
-                <?php endif; ?>
             </div>
-        </div>
-        <div class="card-footer">
-            <?= $pager->links() ?>
         </div>
     </div>
 </section>
 
 <script src="<?= base_url() ?>public/admin/js/common.js"></script>
 <script>
-var walletUserId = '<?= $userinfo->userId ?>';
-jQuery(document).ready(function () {
-    jQuery('ul.pagination li a').click(function (e) {
-        e.preventDefault();
-        var link = jQuery(this).get(0).href, value = link.substring(link.lastIndexOf('/') + 1);
-        window.location.href = baseURL + 'web/user_wallet/' + walletUserId + '/' + value;
+$(function () {
+    $('#userWalletTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: { url: baseURL + 'web/user_wallet_data/<?= $userinfo->userId ?>', type: 'GET' },
+        columns: [
+            { data: 'sr' },
+            { data: 'user' },
+            { data: 'money' },
+            { data: 'paymentInfo', orderable: false },
+            { data: 'date' }
+        ]
     });
 });
-$(function () { $('#userWalletTable').DataTable({ paging: false, searching: false, info: false }); });
 </script>

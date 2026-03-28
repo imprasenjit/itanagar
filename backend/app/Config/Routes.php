@@ -79,6 +79,23 @@ $routes->get('web/editRole/(:num)',       'RoleController::editRole/$1');
 $routes->post('web/updateRole',          'RoleController::updateRole');
 $routes->post('web/deleteRole',          'RoleController::deleteRole');
 
+// ── DataTables server-side data endpoints ─────────────────────────────────────
+$routes->get('users_data',                          'User::users_data');
+$routes->get('login_history_data',                  'User::login_history_data');
+$routes->get('login_history_data/(:num)',            'User::login_history_data/$1');
+$routes->get('web/faq_data',                        'ContentController::faq_data');
+$routes->get('web/page_data',                       'ContentController::page_data');
+$routes->get('web/contact_data',                    'ContentController::contact_data');
+$routes->get('web/roles_data',                      'RoleController::roles_data');
+$routes->get('web/wallet_data',                     'FinanceController::wallet_data');
+$routes->get('web/winner_data',                     'FinanceController::winner_data');
+$routes->get('web/withdrawl_data',                  'FinanceController::withdrawl_data');
+$routes->get('web/tickets_data',                    'FinanceController::tickets_data');
+$routes->get('web/refund_data',                     'FinanceController::refund_data');
+$routes->get('web/user_wallet_data/(:num)',          'FinanceController::user_wallet_data/$1');
+$routes->get('web/user_order_data/(:num)',           'FinanceController::user_order_data/$1');
+$routes->get('web/detail_data/(:num)',               'GameController::detail_data/$1');
+
 // ── ContentController — FAQ, CMS pages, contact ───────────────────────────────
 $routes->get('web/faq',             'ContentController::faq');
 $routes->post('web/faq',            'ContentController::faq');

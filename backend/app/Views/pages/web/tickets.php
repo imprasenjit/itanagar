@@ -45,8 +45,8 @@
                     </select>
                 </div>
                 <div class="col-md-2 d-flex gap-1">
-                    <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-funnel-fill"></i> Filter</button>
-                    <a href="<?= base_url('web/tickets') ?>" class="btn btn-outline-secondary btn-sm" title="Reset"><i class="bi bi-x-lg"></i></a>
+                    <button type="button" class="btn btn-primary btn-sm applyFilter"><i class="bi bi-funnel-fill"></i> Filter</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm resetFilter" title="Reset"><i class="bi bi-x-lg"></i></button>
                 </div>
                 <div class="col-md-2 text-end">
                     <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#verifyModal">
@@ -68,7 +68,7 @@
     <!-- ── Table ─────────────────────────────────────────────────────────── -->
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title mb-0">Issued Tickets <span class="badge bg-secondary ms-2"><?= $total ?></span></h4>
+            <h4 class="card-title mb-0">Issued Tickets</h4>
         </div>
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -85,66 +85,10 @@
                             <th class="text-center">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    <?php if (!empty($tickets)): foreach ($tickets as $ticket):
-                        $tData = json_decode($ticket->tickets ?? '[]', true);
-                        $ticketNos = array_column($tData, 'ticket_no');
-                        $webName = $ticket->web_name ?? (isset($tData[0]['web_name']) ? $tData[0]['web_name'] : '—');
-                        $statusMap = [
-                            'PAID'      => ['success', 'Paid'],
-                            'RELEASED'  => ['info',    'Released'],
-                            'CANCELLED' => ['danger',  'Cancelled'],
-                            '0'         => ['warning', 'Unpaid'],
-                            '2'         => ['danger',  'Failed'],
-                        ];
-                        [$badgeColor, $statusLabel] = $statusMap[$ticket->paid_status] ?? ['secondary', $ticket->paid_status];
-                        $canCancel = in_array($ticket->paid_status, ['PAID', '1']);
-                        $canResend = in_array($ticket->paid_status, ['PAID', '1']);
-                    ?>
-                    <tr>
-                        <td><strong>#<?= $ticket->id ?></strong></td>
-                        <td><?= esc($webName) ?></td>
-                        <td>
-                            <div><?= esc($ticket->user_name ?? '—') ?></div>
-                            <small class="text-muted"><?= esc($ticket->user_email ?? '') ?></small>
-                        </td>
-                        <td>
-                            <?php if (!empty($ticketNos)): ?>
-                            <small class="text-muted"><?= implode(', ', array_slice($ticketNos, 0, 3)) ?><?= count($ticketNos) > 3 ? '<br><span class="text-muted">+' . (count($ticketNos)-3) . ' more</span>' : '' ?></small>
-                            <?php else: ?>
-                            <small class="text-muted">—</small>
-                            <?php endif; ?>
-                        </td>
-                        <td class="text-end fw-semibold">₹<?= number_format($ticket->total_price, 2) ?></td>
-                        <td><small><?= date('d M Y', strtotime($ticket->createdAt)) ?></small></td>
-                        <td class="text-center"><span class="badge bg-<?= $badgeColor ?>"><?= $statusLabel ?></span></td>
-                        <td class="text-center">
-                            <div class="d-flex justify-content-center gap-1">
-                                <?php if ($canResend): ?>
-                                <button class="btn btn-xs btn-outline-primary" title="Resend Ticket" onclick="resendTicket(<?= $ticket->id ?>)">
-                                    <i class="bi bi-envelope-arrow-up-fill"></i>
-                                </button>
-                                <?php endif; ?>
-                                <?php if ($canCancel): ?>
-                                <button class="btn btn-xs btn-outline-danger" title="Cancel Ticket" onclick="cancelTicket(<?= $ticket->id ?>)">
-                                    <i class="bi bi-x-circle-fill"></i>
-                                </button>
-                                <?php endif; ?>
-                            </div>
-                        </td>
-                    </tr>
-                    <?php endforeach; else: ?>
-                    <tr><td colspan="8" class="text-center text-muted py-5">No tickets found.</td></tr>
-                    <?php endif; ?>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>
-        <?php if (isset($pager)): ?>
-        <div class="card-footer">
-            <?= $pager->links('default', 'default_full') ?>
-        </div>
-        <?php endif; ?>
     </div>
 
 </section>
@@ -215,5 +159,34 @@ function verifyTicket() {
     })
     .catch(() => { result.innerHTML = '<div class="alert alert-danger mb-0">Network error. Please try again.</div>'; });
 }
-$(function () { $('#ticketsTable').DataTable({ paging: false, searching: false, info: false, columnDefs: [{ orderable: false, targets: -1 }] }); });
+$(function () {
+    var tickTable = $('#ticketsTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: baseURL + 'web/tickets_data',
+            type: 'GET',
+            data: function (d) {
+                d.status = $('[name=status]').val();
+                d.search.value = $('[name=search]').val();
+            }
+        },
+        columns: [
+            { data: 'order' },
+            { data: 'event' },
+            { data: 'user',    orderable: false },
+            { data: 'tickets', orderable: false },
+            { data: 'amount',  className: 'text-end' },
+            { data: 'date' },
+            { data: 'status',  orderable: false, className: 'text-center' },
+            { data: 'actions', orderable: false, className: 'text-center' }
+        ]
+    });
+    $('.applyFilter').on('click', function () { tickTable.ajax.reload(); });
+    $('.resetFilter').on('click', function () {
+        $('[name=search]').val('');
+        $('[name=status]').val('');
+        tickTable.ajax.reload();
+    });
+});
 </script>

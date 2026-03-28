@@ -339,6 +339,32 @@ class GameController extends BaseController
         return $this->response->setJSON(['status' => $result > 0]);
     }
 
+    public function detail_data(int $id = 0)
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['error' => 'access']);
+        }
+        $draw   = (int)($this->request->getGet('draw') ?? 1);
+        $start  = (int)($this->request->getGet('start') ?? 0);
+        $length = (int)($this->request->getGet('length') ?? 20);
+
+        $total    = $this->gameModel->count_date($id);
+        $filtered = $total;
+        $rows     = $this->gameModel->list_date($id, $length, $start);
+
+        $data = [];
+        $sr = $start + 1;
+        foreach ($rows as $r) {
+            $data[] = [
+                'sr'        => $sr++,
+                'date'      => date('M d, Y', strtotime($r->date)),
+                'createdOn' => date('M d, Y', strtotime($r->createdAt)),
+                'actions'   => '<a class="btn btn-sm btn-danger deleteWebDate" href="#!" data-userid="' . $r->id . '" title="Delete"><i class="bi bi-trash3-fill"></i></a>',
+            ];
+        }
+        return $this->response->setJSON(['draw' => $draw, 'recordsTotal' => $total, 'recordsFiltered' => $filtered, 'data' => $data]);
+    }
+
     // ── Private helpers ───────────────────────────────────────────────────────
 
     private function _datearray(int $webId): array

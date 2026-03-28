@@ -86,7 +86,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <?php if (!empty($userRecords)): ?>
+                <?php if (true): ?>
                 <table id="detailTable" class="table table-striped">
                     <thead>
                         <tr>
@@ -96,28 +96,9 @@
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php $sr = 1; foreach ($userRecords as $record): ?>
-                        <tr>
-                            <td><?= $sr++ ?></td>
-                            <td><?= date("M d, Y", strtotime($record->date)) ?></td>
-                            <td><?= date("M d, Y", strtotime($record->createdAt)) ?></td>
-                            <td class="text-center">
-                                <a class="btn btn-sm btn-danger deleteWebDate" href="#!" data-userid="<?= $record->id ?>" title="Delete">
-                                    <i class="bi bi-trash3-fill"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
-                <?php else: ?>
-                    <p class="text-center text-muted py-4">No result dates added yet.</p>
-                <?php endif; ?>
             </div>
-        </div>
-        <div class="card-footer">
-            <?= $pager->links() ?>
         </div>
     </div>
 </section>
@@ -125,26 +106,31 @@
 <script src="<?= base_url() ?>public/assets/extensions/flatpickr/flatpickr.js"></script>
 <script src="<?= base_url() ?>public/admin/js/common.js"></script>
 <script>
-flatpickr(".datepicker", { minDate: "today", dateFormat: "d-m-Y" });
+flatpickr('.datepicker', { minDate: 'today', dateFormat: 'd-m-Y' });
 
-jQuery(document).ready(function () {
-    jQuery('ul.pagination li a').click(function (e) {
-        e.preventDefault();
-        window.location.href = jQuery(this).attr('href');
-    });
-});
-
-jQuery(document).on("click", ".deleteWebDate", function (e) {
+jQuery(document).on('click', '.deleteWebDate', function (e) {
     e.preventDefault();
-    var userId = $(this).data("userid"), hitURL = baseURL + "web/deleteWebDate", currentRow = $(this);
-    if (confirm("Are you sure you want to delete this date?")) {
-        jQuery.ajax({ type: "POST", dataType: "json", url: hitURL, data: { userId: userId } })
+    var userId = $(this).data('userid'), hitURL = baseURL + 'web/deleteWebDate', currentRow = $(this);
+    if (confirm('Are you sure you want to delete this date?')) {
+        jQuery.ajax({ type: 'POST', dataType: 'json', url: hitURL, data: { userId: userId } })
             .done(function (data) {
-                currentRow.closest('tr').remove();
-                if (data.status) { alert("Date successfully deleted."); }
-                else { alert("Date deletion failed."); }
+                if (data.status) { currentRow.closest('tr').remove(); alert('Date successfully deleted.'); }
+                else { alert('Date deletion failed.'); }
             });
     }
 });
-$(function () { $('#detailTable').DataTable({ paging: false, searching: false, info: false, columnDefs: [{ orderable: false, targets: -1 }] }); });
+
+$(function () {
+    $('#detailTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: { url: baseURL + 'web/detail_data/<?= $WebInfo->id ?>', type: 'GET' },
+        columns: [
+            { data: 'sr' },
+            { data: 'date' },
+            { data: 'createdOn' },
+            { data: 'actions', orderable: false, className: 'text-center' }
+        ]
+    });
+});
 </script>

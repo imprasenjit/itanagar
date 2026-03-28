@@ -18,35 +18,25 @@
                             <th>Date</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php if (!empty($userRecords)):
-                            $sr = 1;
-                            foreach ($userRecords as $record): ?>
-                        <tr>
-                            <td><?= $sr++ ?></td>
-                            <td><?= esc($record->name) ?></td>
-                            <td><?= esc($record->email) ?></td>
-                            <td><?= esc($record->message) ?></td>
-                            <td><?= date("M d, Y", strtotime($record->createdAt)) ?></td>
-                        </tr>
-                        <?php endforeach; else: ?>
-                        <tr><td colspan="5" class="text-center text-muted py-4">No contact submissions yet.</td></tr>
-                        <?php endif; ?>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
-        </div>
-        <div class="card-footer">
-            <?= $pager->links() ?>
         </div>
     </div>
 </section>
 <script>
-jQuery(document).ready(function () {
-    jQuery('ul.pagination li a').click(function (e) {
-        e.preventDefault();
-        window.location.href = jQuery(this).attr('href');
+$(function () {
+    $('#contactTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: { url: baseURL + 'web/contact_data', type: 'GET' },
+        columns: [
+            { data: 'sr' },
+            { data: 'name' },
+            { data: 'email' },
+            { data: 'message', orderable: false },
+            { data: 'date' }
+        ]
     });
 });
-$(function () { $('#contactTable').DataTable({ paging: false, searching: false, info: false }); });
 </script>

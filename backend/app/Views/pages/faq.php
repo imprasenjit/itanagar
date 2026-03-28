@@ -5,14 +5,8 @@
     <div class="card">
         <div class="card-header">
             <h4 class="card-title">Announcements List</h4>
-            <div class="card-header-action d-flex gap-2">
-                <form action="<?php echo base_url() ?>web/faq" method="POST" id="searchList" class="d-flex">
-                    <div class="input-group">
-                        <input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control" placeholder="Search...">
-                        <button class="btn btn-primary searchList" type="submit"><i class="bi bi-search"></i></button>
-                    </div>
-                </form>
-                <a class="btn btn-primary ms-2" href="<?php echo base_url(); ?>web/addfaq">
+            <div class="card-header-action">
+                <a class="btn btn-primary" href="<?php echo base_url(); ?>web/addfaq">
                     <i class="bi bi-plus"></i> Add New
                 </a>
             </div>
@@ -28,19 +22,7 @@
                             <th class="text-center">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php if (!empty($web)) foreach ($web as $record): ?>
-                        <tr>
-                            <td><?= $record->question ?></td>
-                            <td><?= $record->answer ?></td>
-                            <td><?= date("d-m-Y", strtotime($record->createdat)) ?></td>
-                            <td class="text-center">
-                                <a class="btn btn-sm btn-primary" href="<?= base_url('web/faqedit/' . $record->id) ?>" title="Edit"><i class="bi bi-pencil-fill"></i></a>
-                                <a class="btn btn-sm btn-danger deletefaq" href="#" data-userid="<?= $record->id ?>" title="Delete"><i class="bi bi-trash3-fill"></i></a>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>
@@ -62,5 +44,17 @@ jQuery(document).on("click", ".deletefaq", function () {
         });
     }
 });
-$(function () { $('#faqTable').DataTable({ paging: false, searching: false, info: false, columnDefs: [{ orderable: false, targets: -1 }] }); });
+$(function () {
+    $('#faqTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: { url: baseURL + 'web/faq_data', type: 'GET' },
+        columns: [
+            { data: 'title' },
+            { data: 'content' },
+            { data: 'created' },
+            { data: 'actions', orderable: false, className: 'text-center' }
+        ]
+    });
+});
 </script>

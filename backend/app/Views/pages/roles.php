@@ -62,35 +62,7 @@
                     <th>Actions</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <?php if (empty($roles)): ?>
-                  <tr><td colspan="3" class="text-center text-muted">No roles found.</td></tr>
-                  <?php else: ?>
-                  <?php foreach ($roles as $role): ?>
-                  <tr>
-                    <td><?= esc($role->roleId) ?></td>
-                    <td>
-                      <?= esc($role->role) ?>
-                      <?php if ((int) $role->roleId === 1): ?>
-                        <span class="badge bg-warning text-dark ms-1">Super Admin</span>
-                      <?php endif; ?>
-                    </td>
-                    <td>
-                      <?php if ((int) $role->roleId !== 1): ?>
-                      <a href="<?= base_url('web/editRole/' . $role->roleId) ?>" class="btn btn-sm btn-primary" title="Edit">
-                        <i class="bi bi-pencil-fill"></i> Edit
-                      </a>
-                      <button class="btn btn-sm btn-danger btn-delete-role" data-id="<?= $role->roleId ?>" title="Delete">
-                        <i class="bi bi-trash3-fill"></i> Delete
-                      </button>
-                      <?php else: ?>
-                      <span class="text-muted small">Protected</span>
-                      <?php endif; ?>
-                    </td>
-                  </tr>
-                  <?php endforeach; ?>
-                  <?php endif; ?>
-                </tbody>
+                <tbody></tbody>
               </table>
             </div>
           </div>
@@ -121,5 +93,16 @@ document.querySelectorAll('.btn-delete-role').forEach(btn => {
     });
   });
 });
-$(function () { $('#rolesTable').DataTable({ paging: false, columnDefs: [{ orderable: false, targets: -1 }] }); });
+$(function () {
+    $('#rolesTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: { url: baseURL + 'web/roles_data', type: 'GET' },
+        columns: [
+            { data: 'roleId' },
+            { data: 'role' },
+            { data: 'actions', orderable: false }
+        ]
+    });
+});
 </script>

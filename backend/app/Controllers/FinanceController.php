@@ -445,5 +445,298 @@ class FinanceController extends BaseController
         $this->walletModel->withdrawl_process($id, $type);
         return redirect()->back()->with('success', $type === 'Reject' ? 'Request rejected.' : 'Request processed successfully.');
     }
+
+    // ── DataTables server-side endpoints ──────────────────────────────────────
+
+    public function wallet_data()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['error' => 'access']);
+        }
+        $draw   = (int)($this->request->getGet('draw') ?? 1);
+        $start  = (int)($this->request->getGet('start') ?? 0);
+        $length = (int)($this->request->getGet('length') ?? 20);
+        $search = trim($this->request->getGet('search')['value'] ?? '');
+
+        $total    = $this->walletModel->admin_wallet_count('');
+        $filtered = $this->walletModel->admin_wallet_count($search);
+        $rows     = $this->walletModel->admin_wallet_list($search, $length, $start);
+
+        $data = [];
+        $sr = $start + 1;
+        foreach ($rows as $ms) {
+            $data[] = [
+                'sr'            => $sr++,
+                'user'          => esc($ms->uname),
+                'money'         => '<strong>&#8377;' . esc($ms->money) . '</strong>',
+                'paymentInfo'   => '<span class="badge bg-secondary">' . esc($ms->type) . '</span>',
+                'transactionId' => '<small>' . esc($ms->trancaction_id) . '</small>',
+                'date'          => date('M d, Y h:i a', strtotime($ms->createdAt)),
+            ];
+        }
+        return $this->response->setJSON(['draw' => $draw, 'recordsTotal' => $total, 'recordsFiltered' => $filtered, 'data' => $data]);
+    }
+
+    public function winner_data()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['error' => 'access']);
+        }
+        $draw   = (int)($this->request->getGet('draw') ?? 1);
+        $start  = (int)($this->request->getGet('start') ?? 0);
+        $length = (int)($this->request->getGet('length') ?? 20);
+        $search = trim($this->request->getGet('search')['value'] ?? '');
+
+        $total    = $this->winnerModel->admin_winner_count('');
+        $filtered = $this->winnerModel->admin_winner_count($search);
+        $rows     = $this->winnerModel->admin_winner_list($search, $length, $start);
+
+        $data = [];
+        foreach ($rows as $ms) {
+            $tickets   = json_decode($ms->tickets ?? '[]', true) ?: [];
+            $ticketNos = array_column($tickets, 'ticket_no');
+            $ticketHtml = '';
+            foreach (array_slice($ticketNos, 0, 5) as $tn) {
+                $ticketHtml .= '<code class="me-1">' . esc($tn) . '</code>';
+            }
+            if (count($ticketNos) > 5) {
+                $ticketHtml .= '<small class="text-muted">+' . (count($ticketNos) - 5) . ' more</small>';
+            }
+            $data[] = [
+                'order_no'       => '<strong>#' . $ms->id . '</strong>',
+                'user'           => esc($ms->uname),
+                'event'          => esc($ms->game_name),
+                'tickets'        => $ticketHtml,
+                'price'          => '&#8377;' . esc($ms->total_price),
+                'paymentType'    => $ms->paid_type == '0' ? 'Wallet' : esc($ms->paid_type),
+                'winningPrize'   => '<strong class="text-success">&#8377;' . esc($ms->prize) . '</strong>',
+                'transactionId'  => '<small>' . esc($ms->transaction_id) . '</small>',
+                'date'           => date('M d, Y h:i a', strtotime($ms->createdAt)),
+            ];
+        }
+        return $this->response->setJSON(['draw' => $draw, 'recordsTotal' => $total, 'recordsFiltered' => $filtered, 'data' => $data]);
+    }
+
+    public function withdrawl_data()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['error' => 'access']);
+        }
+        $draw   = (int)($this->request->getGet('draw') ?? 1);
+        $start  = (int)($this->request->getGet('start') ?? 0);
+        $length = (int)($this->request->getGet('length') ?? 20);
+        $search = trim($this->request->getGet('search')['value'] ?? '');
+
+        $total    = $this->walletModel->admin_withdrawl_count('');
+        $filtered = $this->walletModel->admin_withdrawl_count($search);
+        $rows     = $this->walletModel->admin_withdrawl_list($search, $length, $start);
+
+        $data = [];
+        $sr = $start + 1;
+        foreach ($rows as $ms) {
+            if ($ms->status == '0') { $st = 'Pending'; }
+            elseif ($ms->status == '1') { $st = 'Processed'; }
+            else { $st = 'Rejected'; }
+
+            $typeBadge = '<span class="badge ' . ($ms->type == 1 ? 'bg-primary' : 'bg-info') . '">' . ($ms->type == 1 ? 'Bank' : 'PayPal') . '</span>';
+            $statusBadge = '<span class="badge ' . ($ms->status == '0' ? 'bg-warning text-dark' : ($ms->status == '1' ? 'bg-success' : 'bg-danger')) . '">' . $st . '</span>';
+
+            if ($ms->status == '0') {
+                $btnSend = $ms->type == 1 ? 'Send Via Bank' : 'Send Via PayPal';
+                $actions = '<form onsubmit="return confirm(\'Are you sure?\');" action="' . base_url('web/with_req/' . $ms->user_id) . '" method="post" class="d-inline-flex gap-1">'
+                         . '<input type="hidden" name="id" value="' . $ms->id . '">'
+                         . '<input type="hidden" name="p_email" value="' . esc($ms->paypal_email) . '">'
+                         . '<input type="hidden" name="money" value="' . $ms->money . '">'
+                         . '<button type="submit" name="type" value="' . $btnSend . '" class="btn btn-sm btn-success"><i class="bi bi-send"></i> ' . $btnSend . '</button>'
+                         . '<button type="submit" name="type" value="Reject" class="btn btn-sm btn-danger"><i class="bi bi-x-circle"></i> Reject</button>'
+                         . '</form>';
+            } else {
+                $actions = '<span class="badge ' . ($ms->status == '1' ? 'bg-success' : 'bg-danger') . '">' . $st . '</span>';
+            }
+
+            $data[] = [
+                'sr'          => $sr++,
+                'user'        => esc($ms->uname),
+                'type'        => $typeBadge,
+                'paypalEmail' => '<small>' . esc($ms->paypal_email) . '</small>',
+                'money'       => '<strong>&#8377;' . esc($ms->money) . '</strong>',
+                'status'      => $statusBadge,
+                'date'        => date('M d, Y h:i a', strtotime($ms->createdAt)),
+                'actions'     => $actions,
+            ];
+        }
+        return $this->response->setJSON(['draw' => $draw, 'recordsTotal' => $total, 'recordsFiltered' => $filtered, 'data' => $data]);
+    }
+
+    public function tickets_data()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['error' => 'access']);
+        }
+        $draw   = (int)($this->request->getGet('draw') ?? 1);
+        $start  = (int)($this->request->getGet('start') ?? 0);
+        $length = (int)($this->request->getGet('length') ?? 20);
+        $search = trim($this->request->getGet('search')['value'] ?? '');
+        $status = $this->request->getGet('status') ?? '';
+
+        $total    = $this->cartOrderModel->ticket_list_count('', null);
+        $filtered = $this->cartOrderModel->ticket_list_count($search, $status !== '' ? $status : null);
+        $rows     = $this->cartOrderModel->ticket_list($search, $status !== '' ? $status : null, $length, $start);
+
+        $statusMap = ['PAID' => ['success', 'Paid'], 'RELEASED' => ['info', 'Released'], 'CANCELLED' => ['danger', 'Cancelled'], '0' => ['warning', 'Unpaid'], '2' => ['danger', 'Failed']];
+
+        $data = [];
+        foreach ($rows as $ticket) {
+            $tData     = json_decode($ticket->tickets ?? '[]', true);
+            $ticketNos = array_column($tData, 'ticket_no');
+            $webName   = $ticket->web_name ?? (isset($tData[0]['web_name']) ? $tData[0]['web_name'] : '—');
+            [$badgeColor, $statusLabel] = $statusMap[$ticket->paid_status] ?? ['secondary', $ticket->paid_status];
+            $canCancel = in_array($ticket->paid_status, ['PAID', '1']);
+            $canResend = in_array($ticket->paid_status, ['PAID', '1']);
+
+            $ticketHtml = !empty($ticketNos)
+                ? '<small class="text-muted">' . implode(', ', array_slice($ticketNos, 0, 3)) . (count($ticketNos) > 3 ? ' <span class="text-muted">+' . (count($ticketNos)-3) . ' more</span>' : '') . '</small>'
+                : '<small class="text-muted">—</small>';
+
+            $userHtml = '<div>' . esc($ticket->user_name ?? '—') . '</div><small class="text-muted">' . esc($ticket->user_email ?? '') . '</small>';
+
+            $actBtns = '<div class="d-flex justify-content-center gap-1">';
+            if ($canResend) $actBtns .= '<button class="btn btn-xs btn-outline-primary" title="Resend Ticket" onclick="resendTicket(' . $ticket->id . ')"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
+            if ($canCancel) $actBtns .= '<button class="btn btn-xs btn-outline-danger" title="Cancel Ticket" onclick="cancelTicket(' . $ticket->id . ')"><i class="bi bi-x-circle-fill"></i></button>';
+            $actBtns .= '</div>';
+
+            $data[] = [
+                'order'   => '<strong>#' . $ticket->id . '</strong>',
+                'event'   => esc($webName),
+                'user'    => $userHtml,
+                'tickets' => $ticketHtml,
+                'amount'  => '&#8377;' . number_format((float)$ticket->total_price, 2),
+                'date'    => '<small>' . date('d M Y', strtotime($ticket->createdAt)) . '</small>',
+                'status'  => '<span class="badge bg-' . $badgeColor . '">' . $statusLabel . '</span>',
+                'actions' => $actBtns,
+            ];
+        }
+        return $this->response->setJSON(['draw' => $draw, 'recordsTotal' => $total, 'recordsFiltered' => $filtered, 'data' => $data]);
+    }
+
+    public function refund_data()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['error' => 'access']);
+        }
+        $draw   = (int)($this->request->getGet('draw') ?? 1);
+        $start  = (int)($this->request->getGet('start') ?? 0);
+        $length = (int)($this->request->getGet('length') ?? 20);
+        $search = trim($this->request->getGet('search')['value'] ?? '');
+
+        $total    = $this->walletModel->admin_refund_count('');
+        $filtered = $this->walletModel->admin_refund_count($search);
+        $rows     = $this->walletModel->admin_refund_list($search, $length, $start);
+
+        $data = [];
+        $sr = $start + 1;
+        foreach ($rows as $ms) {
+            if ($ms->status == '0') { $st = 'Pending'; }
+            elseif ($ms->status == '1') { $st = 'Refunded'; }
+            else { $st = 'Rejected'; }
+
+            $statusBadge = '<span class="badge ' . ($ms->status == '0' ? 'bg-warning text-dark' : ($ms->status == '1' ? 'bg-success' : 'bg-danger')) . '">' . $st . '</span>';
+
+            if ($ms->status == '0') {
+                $actions = '<form onsubmit="return confirm(\'Are you sure?\');" action="' . base_url('web/refund_req/' . $ms->user_id) . '" method="post" class="d-inline-flex gap-1">'
+                         . '<input type="hidden" name="id" value="' . $ms->id . '">'
+                         . '<input type="hidden" name="money" value="' . $ms->money . '">'
+                         . '<button type="submit" name="type" value="Refund" class="btn btn-sm btn-success"><i class="bi bi-check-circle"></i> Refund</button>'
+                         . '<button type="submit" name="type" value="Reject" class="btn btn-sm btn-danger"><i class="bi bi-x-circle"></i> Reject</button>'
+                         . '</form>';
+            } else {
+                $actions = '<span class="badge ' . ($ms->status == '1' ? 'bg-success' : 'bg-danger') . '">' . $st . '</span>';
+            }
+
+            $data[] = [
+                'sr'      => $sr++,
+                'user'    => esc($ms->uname),
+                'money'   => '<strong>&#8377;' . esc($ms->money) . '</strong>',
+                'reason'  => esc($ms->reason),
+                'status'  => $statusBadge,
+                'date'    => date('M d, Y h:i a', strtotime($ms->createdAt)),
+                'actions' => $actions,
+            ];
+        }
+        return $this->response->setJSON(['draw' => $draw, 'recordsTotal' => $total, 'recordsFiltered' => $filtered, 'data' => $data]);
+    }
+
+    public function user_wallet_data(int $userId = 0)
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['error' => 'access']);
+        }
+        $draw   = (int)($this->request->getGet('draw') ?? 1);
+        $start  = (int)($this->request->getGet('start') ?? 0);
+        $length = (int)($this->request->getGet('length') ?? 20);
+
+        $total    = $this->walletModel->user_wallet_count($userId);
+        $filtered = $total;
+        $rows     = $this->walletModel->user_wallet_list($userId, $length, $start);
+
+        $data = [];
+        $sr = $start + 1;
+        foreach ($rows as $ms) {
+            $data[] = [
+                'sr'          => $sr++,
+                'user'        => esc($ms->uname),
+                'money'       => esc($ms->money),
+                'paymentInfo' => '<span class="badge bg-secondary">' . esc($ms->type) . '</span>',
+                'date'        => date('M d, Y h:i a', strtotime($ms->createdAt)),
+            ];
+        }
+        return $this->response->setJSON(['draw' => $draw, 'recordsTotal' => $total, 'recordsFiltered' => $filtered, 'data' => $data]);
+    }
+
+    public function user_order_data(int $userId = 0)
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['error' => 'access']);
+        }
+        $draw   = (int)($this->request->getGet('draw') ?? 1);
+        $start  = (int)($this->request->getGet('start') ?? 0);
+        $length = (int)($this->request->getGet('length') ?? 20);
+        $search = trim($this->request->getGet('search')['value'] ?? '');
+
+        $total    = $this->cartOrderModel->user_orders_count($userId, '');
+        $filtered = $this->cartOrderModel->user_orders_count($userId, $search);
+        $orders   = $this->cartOrderModel->user_orders_list($userId, $search, $length, $start);
+
+        $webCache = [];
+        $data     = [];
+        foreach ($orders as $order) {
+            $tickets = json_decode($order->tickets ?? '[]', true) ?: [];
+            $ticketHtml = '<table class="table table-bordered table-sm mb-0"><thead><tr><th>Event</th><th>Ticket No.</th></tr></thead><tbody>';
+            foreach ($tickets as $t) {
+                $webId = (int)($t['web_id'] ?? 0);
+                if (!isset($webCache[$webId])) {
+                    $info = $this->gameModel->getWebInfo($webId);
+                    $webCache[$webId] = $info ? esc($info->name) : 'Unknown';
+                }
+                $ticketHtml .= '<tr><td>' . $webCache[$webId] . '</td><td><code>' . esc($t['ticket_no'] ?? '') . '</code></td></tr>';
+            }
+            $ticketHtml .= '</tbody></table>';
+
+            $actionBtn = $order->order_status == 0
+                ? '<a class="btn btn-sm btn-warning confirmOrder" href="#!" data-orderid="' . $order->id . '"><i class="bi bi-check-circle-fill me-1"></i> Confirm</a>'
+                : '<span class="badge bg-success">Confirmed</span>';
+
+            $data[] = [
+                'order_no'      => '<strong>#' . $order->id . '</strong>',
+                'tickets'       => $ticketHtml,
+                'price'         => '<strong>&#8377;' . esc($order->total_price) . '</strong>',
+                'paymentType'   => 'UPI',
+                'transactionId' => '<small>' . esc($order->transaction_id) . '</small>',
+                'date'          => date('M d, Y h:i a', strtotime($order->createdAt)),
+                'actions'       => $actionBtn,
+            ];
+        }
+        return $this->response->setJSON(['draw' => $draw, 'recordsTotal' => $total, 'recordsFiltered' => $filtered, 'data' => $data]);
+    }
 }
 

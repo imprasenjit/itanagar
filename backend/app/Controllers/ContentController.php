@@ -155,4 +155,81 @@ class ContentController extends BaseController
         $this->global['pageTitle'] = 'event : Contact List';
         return $this->loadViews('pages/web/contact', $this->global, $data, null);
     }
+
+    // ── DataTables server-side endpoints ──────────────────────────────────────
+
+    public function faq_data()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['error' => 'access']);
+        }
+        $draw   = (int)($this->request->getGet('draw') ?? 1);
+        $start  = (int)($this->request->getGet('start') ?? 0);
+        $length = (int)($this->request->getGet('length') ?? 10);
+        $search = trim($this->request->getGet('search')['value'] ?? '');
+
+        $total    = $this->contentModel->faq_count('');
+        $filtered = $this->contentModel->faq_count($search);
+        $rows     = $this->contentModel->faq_list($search, $length, $start);
+
+        $data = [];
+        foreach ($rows as $r) {
+            $actions = '<a class="btn btn-sm btn-primary" href="' . base_url('web/faqedit/' . $r->id) . '" title="Edit"><i class="bi bi-pencil-fill"></i></a> '
+                     . '<a class="btn btn-sm btn-danger deletefaq" href="#" data-userid="' . $r->id . '" title="Delete"><i class="bi bi-trash3-fill"></i></a>';
+            $data[] = [
+                'title'   => esc($r->question),
+                'content' => esc($r->answer),
+                'created' => date('d-m-Y', strtotime($r->createdat)),
+                'actions' => $actions,
+            ];
+        }
+        return $this->response->setJSON(['draw' => $draw, 'recordsTotal' => $total, 'recordsFiltered' => $filtered, 'data' => $data]);
+    }
+
+    public function page_data()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['error' => 'access']);
+        }
+        $draw = (int)($this->request->getGet('draw') ?? 1);
+        $rows = $this->contentModel->page_list();
+        $data = [];
+        foreach ($rows as $r) {
+            $data[] = [
+                'title'       => esc($r->title),
+                'description' => esc(substr(strip_tags($r->description), 0, 80)) . '...',
+                'actions'     => '<a class="btn btn-sm btn-primary" href="' . base_url('web/pageedit/' . $r->id) . '" title="Edit"><i class="bi bi-pencil-fill"></i> Edit</a>',
+            ];
+        }
+        $count = count($data);
+        return $this->response->setJSON(['draw' => $draw, 'recordsTotal' => $count, 'recordsFiltered' => $count, 'data' => $data]);
+    }
+
+    public function contact_data()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['error' => 'access']);
+        }
+        $draw   = (int)($this->request->getGet('draw') ?? 1);
+        $start  = (int)($this->request->getGet('start') ?? 0);
+        $length = (int)($this->request->getGet('length') ?? 10);
+        $search = trim($this->request->getGet('search')['value'] ?? '');
+
+        $total    = $this->contentModel->contact_count('');
+        $filtered = $this->contentModel->contact_count($search);
+        $rows     = $this->contentModel->contact_list($search, $length, $start);
+
+        $data = [];
+        $sr = $start + 1;
+        foreach ($rows as $r) {
+            $data[] = [
+                'sr'      => $sr++,
+                'name'    => esc($r->name),
+                'email'   => esc($r->email),
+                'message' => esc($r->message),
+                'date'    => date('M d, Y', strtotime($r->createdAt)),
+            ];
+        }
+        return $this->response->setJSON(['draw' => $draw, 'recordsTotal' => $total, 'recordsFiltered' => $filtered, 'data' => $data]);
+    }
 }

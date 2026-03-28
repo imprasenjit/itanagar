@@ -169,6 +169,29 @@ class WalletModel extends Model
         $this->db->table('tbl_withdrawl')->where('id', $id)->update(['status' => $status]);
     }
 
+    // ── User Wallet History (paginated) ──────────────────────────────────────
+
+    private function _userWalletBuilder(int $userId)
+    {
+        return $this->db->table('tbl_wallet_history')
+            ->join('tbl_users', 'tbl_users.userId = tbl_wallet_history.user_id', 'left')
+            ->select('tbl_wallet_history.*, tbl_users.name as uname')
+            ->where('tbl_wallet_history.user_id', $userId);
+    }
+
+    public function user_wallet_count(int $userId): int
+    {
+        return $this->_userWalletBuilder($userId)->get()->getNumRows();
+    }
+
+    public function user_wallet_list(int $userId, int $limit, int $offset)
+    {
+        return $this->_userWalletBuilder($userId)
+            ->orderBy('tbl_wallet_history.id', 'DESC')
+            ->limit($limit, $offset)
+            ->get()->getResult();
+    }
+
     // ── Generic utilities (used for wallet-domain tables) ────────────────────
 
     public function insert_date(string $table, array $data): int

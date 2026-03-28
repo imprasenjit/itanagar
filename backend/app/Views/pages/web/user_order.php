@@ -13,7 +13,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <?php if (count($orders) > 0): ?>
+                <?php if (true): ?>
                 <table id="userOrderTable" class="table table-striped">
                     <thead>
                         <tr>
@@ -26,70 +26,38 @@
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php foreach ($orders as $order):
-                            $tickets = json_decode($order->tickets);
-                        ?>
-                        <tr>
-                            <td><strong>#<?= $order->id ?></strong></td>
-                            <td>
-                                <table class="table table-bordered table-sm mb-0">
-                                    <thead><tr><th>Event</th><th>Ticket No.</th></tr></thead>
-                                    <tbody>
-                                        <?php foreach ($tickets as $value):
-                                            $web_details = (new \App\Models\WebModel())->getWebInfo($value->web_id); ?>
-                                        <tr>
-                                            <td><?= esc($web_details->name) ?></td>
-                                            <td><code><?= esc($value->ticket_no) ?></code></td>
-                                        </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td><strong>₹<?= $order->total_price ?></strong></td>
-                            <td>UPI</td>
-                            <td><small><?= esc($order->transaction_id) ?></small></td>
-                            <td><?= date("M d, Y h:i a", strtotime($order->createdAt)) ?></td>
-                            <td class="text-center">
-                                <?php if ($order->order_status == 0): ?>
-                                    <a class="btn btn-sm btn-warning confirmOrder" href="#!" data-orderid="<?= $order->id ?>">
-                                        <i class="bi bi-check-circle-fill me-1"></i> Confirm
-                                    </a>
-                                <?php else: ?>
-                                    <span class="badge bg-success">Confirmed</span>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
-                <?php else: ?>
-                <p class="text-center text-muted py-4">No orders yet for this user.</p>
-                <?php endif; ?>
             </div>
-        </div>
-        <div class="card-footer">
-            <?= $pager->links() ?>
         </div>
     </div>
 </section>
 <script src="<?= base_url() ?>public/admin/js/common.js"></script>
 <script>
-jQuery(document).ready(function () {
-    jQuery('ul.pagination li a').click(function (e) {
-        e.preventDefault();
-        window.location.href = jQuery(this).attr('href');
-    });
-    jQuery(document).on("click", ".confirmOrder", function () {
-        var orderid = $(this).data("orderid"), hitURL = baseURL + "/web/confirm_order_by_admin", btn = $(this);
-        if (confirm("Confirm this order?")) {
-            jQuery.ajax({ type: "POST", dataType: "json", url: hitURL, data: { orderid: orderid } })
-                .done(function (data) {
-                    if (data.status) { btn.replaceWith('<span class="badge bg-success">Confirmed</span>'); }
-                    else { alert("Confirmation failed."); }
-                });
-        }
+$(function () {
+    $('#userOrderTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: { url: baseURL + 'web/user_order_data/<?= $userinfo->userId ?>', type: 'GET' },
+        columns: [
+            { data: 'order_no' },
+            { data: 'tickets',       orderable: false },
+            { data: 'price' },
+            { data: 'paymentType',   orderable: false },
+            { data: 'transactionId', orderable: false },
+            { data: 'date' },
+            { data: 'actions',       orderable: false, className: 'text-center' }
+        ]
     });
 });
-$(function () { $('#userOrderTable').DataTable({ paging: false, searching: false, info: false, columnDefs: [{ orderable: false, targets: -1 }] }); });
+jQuery(document).on('click', '.confirmOrder', function () {
+    var orderid = $(this).data('orderid'), hitURL = baseURL + 'web/confirm_order_by_admin', btn = $(this);
+    if (confirm('Confirm this order?')) {
+        jQuery.ajax({ type: 'POST', dataType: 'json', url: hitURL, data: { orderid: orderid } })
+            .done(function (data) {
+                if (data.status) { btn.replaceWith('<span class="badge bg-success">Confirmed</span>'); }
+                else { alert('Confirmation failed.'); }
+            });
+    }
+});
 </script>
