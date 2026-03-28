@@ -151,8 +151,9 @@ $routes->post('order/release_order','Order::release_order');
 // ── API (React frontend — served from admin.itanagarchoice.com) ──────────────
 $routes->options('api/(:any)', 'Api\GamesController::options');
 $routes->get('api/home',         'Api\GamesController::home');
-$routes->get('api/games',        'Api\GamesController::games');
-$routes->get('api/games/(:num)', 'Api\GamesController::game_detail/$1');
+$routes->get('api/games',              'Api\GamesController::games');
+$routes->get('api/games/upcoming',     'Api\GamesController::upcoming_games');
+$routes->get('api/games/(:num)',        'Api\GamesController::game_detail/$1');
 $routes->post('api/games/(:num)/tickets/search', 'Api\GamesController::ticket_search/$1');
 $routes->get('api/games/(:num)/tickets/(:num)/(:num)', 'Api\GamesController::game_tickets/$1/$2/$3');
 $routes->get('api/faq',          'Api\GamesController::faq');

@@ -36,6 +36,10 @@ class CartController extends ApiBaseController
 
         foreach ($tickets as $ticketNo) {
             $ticketNo = (int) $ticketNo;
+            if (!$this->gameModel->getRangeAvailability($ticketNo, $webId)) {
+                $errors[] = "Ticket $ticketNo is out of range";
+                continue;
+            }
             if (!$this->getTicketAvailability($ticketNo, $webId)) {
                 $errors[] = "Ticket $ticketNo is not available";
                 continue;

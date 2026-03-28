@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getHome } from '../api';
+import { getHome, getUpcomingGames } from '../api';
 import heroBg from '../assets/background.png';
 import browseEventsIcon from '../assets/browse_events.png';
 import selectTicketIcon from '../assets/select_ticket.png';
@@ -10,21 +10,49 @@ import GameCard from '../components/GameCard';
 import { SkeletonCard } from '../components/LoadingSpinner';
 import type { Game } from '../types';
 
+const PAGE_SIZE = 10; // matches backend default page size
+
 export default function Home() {
-  const [games, setGames]     = useState<Game[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [games, setGames]         = useState<Game[]>([]);
+  const [total, setTotal]         = useState(0);
+  const [loading, setLoading]     = useState(true);
+  const [loadingMore, setMore]    = useState(false);
+  const sentinelRef               = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     getHome()
-      .then(r => setGames(r.data.data?.games ?? []))
+      .then(r => {
+        setGames(r.data.data?.games ?? []);
+        setTotal(r.data.data?.total ?? 0);
+      })
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
 
-  const activeGames = games.filter(g => {
-    const drawDate = g.date || g.result_date;
-    return !drawDate || new Date(drawDate).getTime() > Date.now();
-  });
+  const hasMore = games.length < total;
+
+  // Fetch next page and append
+  const loadMore = () => {
+    if (loadingMore || !hasMore) return;
+    setMore(true);
+    getUpcomingGames(games.length)
+      .then(r => setGames(prev => [...prev, ...(r.data.data?.games ?? [])]))
+      .catch(() => {})
+      .finally(() => setMore(false));
+  };
+
+  // Infinite scroll via IntersectionObserver
+  useEffect(() => {
+    if (loading || !hasMore) return;
+    const el = sentinelRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) loadMore(); },
+      { rootMargin: '200px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [loading, hasMore, loadingMore, games.length]);
 
   const howItWorks = [
     { step: 'Browse Events',    desc: 'Explore upcoming events and draws.',  icon: browseEventsIcon,    link: '/games' },
@@ -91,14 +119,26 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {loading
               ? Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i} />)
-              : activeGames.map((g, i) => <GameCard key={g.id} game={g} index={i} />)
+              : games.map((g, i) => <GameCard key={g.id} game={g} index={i} />)
             }
           </div>
-          <div className="mt-8 text-center sm:hidden">
-            <Link to="/games" className="inline-flex items-center gap-1.5 text-sm text-brand-600 hover:text-brand-700 font-semibold bg-brand-50 hover:bg-brand-100 px-5 py-2.5 rounded-full border border-brand-200 transition-all">
-              View all Events →
-            </Link>
-          </div>
+
+          {/* Infinite scroll sentinel */}
+          {!loading && hasMore && (
+            <>
+              <div ref={sentinelRef} className="h-1" />
+              {loadingMore && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                  {Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i} />)}
+                </div>
+              )}
+            </>
+          )}
+
+          {/* End of list indicator */}
+          {!loading && !hasMore && total > PAGE_SIZE && (
+            <p className="mt-8 text-center text-sm text-gray-400">You've seen all upcoming events.</p>
+          )}
         </div>
       </section>
     </>

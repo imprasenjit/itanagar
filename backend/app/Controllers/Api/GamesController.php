@@ -10,16 +10,30 @@ class GamesController extends ApiBaseController
 
     public function home()
     {
-        // Fix: call home_web() once to avoid double query
-        $allGames = $this->gameModel->home_web();
+        $total = $this->gameModel->upcoming_games_count();
         return $this->json([
-            'games'   => array_slice($allGames, 0, 6),
+            'games'   => $this->gameModel->upcoming_games_paged(10, 0),
+            'total'   => $total,
             'faq'     => $this->contentModel->faq(1),
             'results' => $this->cartOrderModel->result_list(null, null, 5),
             'stats'   => [
-                'games' => count($allGames),
+                'games' => $total,
                 'users' => $this->userModel->userListingCount(''),
             ],
+        ]);
+    }
+
+    public function upcoming_games()
+    {
+        $limit  = (int) ($this->request->getGet('limit')  ?? 10);
+        $offset = (int) ($this->request->getGet('offset') ?? 0);
+        $limit  = max(1, min($limit, 50)); // clamp to prevent abuse
+        $total  = $this->gameModel->upcoming_games_count();
+        return $this->json([
+            'games'  => $this->gameModel->upcoming_games_paged($limit, $offset),
+            'total'  => $total,
+            'offset' => $offset,
+            'limit'  => $limit,
         ]);
     }
 
@@ -44,9 +58,11 @@ class GamesController extends ApiBaseController
 
     public function game_tickets(int $web_id, int $start, int $end)
     {
+        $sold = $this->cartOrderModel->get_sold_tickets($web_id);
+        $soldMap = array_flip($sold);
         $available = [];
         for ($i = $start; $i <= $end; $i++) {
-            if ($this->getTicketAvailability($i, $web_id)) {
+            if (!isset($soldMap[$i])) {
                 $available[] = $i;
             }
         }
@@ -64,18 +80,8 @@ class GamesController extends ApiBaseController
             return $this->error('Game not found', 404);
         }
         $checkRange = $this->gameModel->getRangeAvailability($search, $web_id);
-        $available  = $checkRange && $this->getTicketAvailability($search, $web_id);
-        // return $this->json(['available' => $available, 'ticket' => $search]);
-        return $this->json([
-    'available'  => $available,
-    'ticket'     => $search,
-    'debug'      => [
-        'checkRange'  => $checkRange,
-        'ticketAvail' => $this->getTicketAvailability($search, $web_id),
-        'web_id'      => $web_id,
-        'search'      => $search,
-    ],
-]);
+        $available = $checkRange && $this->getTicketAvailability($search, $web_id);
+        return $this->json(['available' => $available, 'ticket' => $search]);
     }
 
     // ── Public: FAQ, Pages, Results, Contact ─────────────────────────────────

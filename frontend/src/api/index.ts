@@ -8,6 +8,7 @@ const api = axios.create({
 
 // ── Public ────────────────────────────────────────────────────────────────────
 export const getHome = () => api.get('/home');
+export const getUpcomingGames = (offset: number, limit = 10) => api.get('/games/upcoming', { params: { offset, limit } });
 export const getGames = () => api.get('/games');
 export const getGameDetail = (id: string | number) => api.get(`/games/${id}`);
 export const getGameTickets = (webId: string | number, s: number, e: number) => api.get(`/games/${webId}/tickets/${s}/${e}`);

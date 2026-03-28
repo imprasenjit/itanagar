@@ -55,6 +55,28 @@ class GameModel extends Model
         return $builder->get()->getResult();
     }
 
+    public function upcoming_games_count(): int
+    {
+        return $this->db->table('tbl_webs')
+            ->join('tbl_ranges', 'tbl_ranges.web_id = tbl_webs.id')
+            ->where('tbl_webs.status', 'Active')
+            ->countAllResults();
+    }
+
+    public function upcoming_games_paged(int $limit = 10, int $offset = 0): array
+    {
+        $dateSub = '(SELECT date FROM `tbl_dates` WHERE web_id=tbl_webs.id AND date_con > "' . date('Y-m-d ') . '" ORDER BY date ASC LIMIT 1)';
+        $soldSub = '(SELECT COUNT(*) FROM `tbl_cart` WHERE `tbl_cart`.`web_id` = `tbl_webs`.`id` AND `tbl_cart`.`paid_status` = 1)';
+        return $this->db->table('tbl_webs')
+            ->select("tbl_webs.*, tbl_ranges.result_date, tbl_ranges.price, tbl_ranges.heading, tbl_ranges.logo, tbl_ranges.logo2, tbl_ranges.jackpot, tbl_ranges.quantity as totalTickets, $soldSub as soldTickets, $dateSub as date")
+            ->join('tbl_ranges', 'tbl_ranges.web_id = tbl_webs.id')
+            ->where('tbl_webs.status', 'Active')
+            ->orderBy('ISNULL(`date`) ASC, `date` ASC', '', false)
+            ->limit($limit, $offset)
+            ->get()
+            ->getResult();
+    }
+
     public function addNewWeb(array $data): int
     {
         $this->db->transStart();

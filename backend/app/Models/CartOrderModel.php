@@ -62,6 +62,16 @@ class CartOrderModel extends Model
             ->get()->getResult();
     }
 
+    public function get_sold_tickets(int $web_id): array
+    {
+        $rows = $this->db->table('tbl_cart')
+            ->select('ticket_no')
+            ->where('web_id', $web_id)
+            ->where('paid_status', 1)
+            ->get()->getResultArray();
+        return array_map(fn($row) => (int) $row['ticket_no'], $rows);
+    }
+
     public function up_cart(int $guestId, int $userId): bool
     {
         $this->db->table('tbl_cart')->where('user_id', $guestId)->update(['user_id' => $userId]);
