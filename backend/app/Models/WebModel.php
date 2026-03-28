@@ -8,6 +8,26 @@ class WebModel extends Model
 {
     // ── Games / Webs ─────────────────────────────────────────────────────────
 
+    public function weblist_count(string $search = ''): int
+    {
+        $builder = $this->db->table('tbl_webs');
+        if (!empty($search)) {
+            $builder->like('name', $search);
+        }
+        return $builder->countAllResults();
+    }
+
+    public function weblist_data(string $search = '', int $length = 10, int $start = 0)
+    {
+        $builder = $this->db->table('tbl_webs')
+            ->select('id, name, status, createdDtm')
+            ->orderBy('id', 'DESC');
+        if (!empty($search)) {
+            $builder->like('name', $search);
+        }
+        return $builder->limit($length, $start)->get()->getResult();
+    }
+
     public function get_allweb(string $searchText = '', string $limit = '')
     {
         $builder = $this->db->table('tbl_webs')->select('tbl_webs.*');

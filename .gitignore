@@ -129,7 +129,7 @@ _modules/*
 *.sublime-project
 .phpintel
 /api/
-
+/backend/writable/
 # Visual Studio Code
 .vscode/
 

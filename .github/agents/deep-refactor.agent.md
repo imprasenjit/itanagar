@@ -1,8 +1,8 @@
 ---
 name: Deep Refactor
-description: Large-scale structural improvements — breaking up monoliths, extracting abstractions, performance rewrites, cross-cutting concerns. Powered by Claude Sonnet 4.6.
+description: Large-scale structural improvements — breaking up monoliths, extracting abstractions, performance rewrites, cross-cutting concerns. Powered by GPT-4.1 Mini.
 argument-hint: Describe the structural problem to fix (e.g. "split the 1000-line WebModel into focused service classes").
-model: claude-sonnet-4.6
+model: GPT-5.1-Codex-Mini (Preview) (copilot)
 tools: ['codebase', 'editFiles', 'runCommands', 'search', 'problems', 'usages']
 ---
 

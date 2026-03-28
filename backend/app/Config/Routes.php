@@ -40,6 +40,7 @@ $routes->get('pageNotFound',     'User::pageNotFound');
 
 // ── Web / Admin game management ───────────────────────────────────────────────
 $routes->get('web',              'Web::index');
+$routes->get('web/weblist_data', 'Web::weblist_data');
 $routes->get('web/addNew',       'Web::addNew');
 $routes->post('web/addNewWeb',   'Web::addNewWeb');
 $routes->get('web/edit/(:num)',  'Web::edit/$1');

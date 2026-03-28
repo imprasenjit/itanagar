@@ -24,11 +24,53 @@ class Web extends BaseController
 
     public function index()
     {
-        $searchText         = esc($this->request->getPost('searchText') ?? '');
-        $data['searchText'] = $searchText;
-        $data['web']        = $this->webModel->get_allweb($searchText);
         $this->global['pageTitle'] = 'event : Web Listing';
-        return $this->loadViews('pages/weblist', $this->global, $data, null);
+        return $this->loadViews('pages/weblist', $this->global, [], null);
+    }
+
+    // ── Game Listing DataTable AJAX source ────────────────────────────────────
+
+    public function weblist_data()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['data' => []]);
+        }
+
+        $draw   = (int)($this->request->getGet('draw') ?? 1);
+        $start  = (int)($this->request->getGet('start') ?? 0);
+        $length = (int)($this->request->getGet('length') ?? 10);
+        $search = trim($this->request->getGet('search')['value'] ?? '');
+
+        $total    = $this->webModel->weblist_count();
+        $filtered = $this->webModel->weblist_count($search);
+        $rows     = $this->webModel->weblist_data($search, $length, $start);
+
+        $data = [];
+        foreach ($rows as $row) {
+            $badge = $row->status === 'Active'
+                ? '<span class="badge bg-success">Active</span>'
+                : '<span class="badge bg-secondary">' . esc($row->status) . '</span>';
+
+            $actions =
+                '<a class="btn btn-sm btn-primary" href="' . base_url('web/edit/' . $row->id) . '" title="Edit"><i class="bi bi-pencil-fill"></i></a> '
+                . '<a class="btn btn-sm btn-info" href="' . base_url('web/rangeEdit/' . $row->id) . '" title="Details"><i class="bi bi-gear-fill"></i> Details</a> '
+                . '<a class="btn btn-sm btn-secondary" href="' . base_url('web/descriptionEdit/' . $row->id) . '" title="Description"><i class="bi bi-text-left"></i> Desc</a> '
+                . '<a class="btn btn-sm btn-danger deleteWeb" href="#" data-userid="' . $row->id . '" title="Delete"><i class="bi bi-trash3-fill"></i></a>';
+
+            $data[] = [
+                'name'       => esc($row->name),
+                'status'     => $badge,
+                'createdDtm' => date('d-m-Y', strtotime($row->createdDtm)),
+                'actions'    => $actions,
+            ];
+        }
+
+        return $this->response->setJSON([
+            'draw'            => $draw,
+            'recordsTotal'    => $total,
+            'recordsFiltered' => $filtered,
+            'data'            => $data,
+        ]);
     }
 
     // ── Add Game ──────────────────────────────────────────────────────────────

@@ -3,23 +3,15 @@
 </div>
 <section class="section">
     <div class="card">
-        <div class="card-header">
-            <h4 class="card-title">event Games List</h4>
-            <div class="card-header-action d-flex gap-2">
-                <form action="<?php echo base_url() ?>web" method="POST" id="searchList" class="d-flex">
-                    <div class="input-group">
-                        <input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control" placeholder="Search...">
-                        <button class="btn btn-primary searchList" type="submit"><i class="bi bi-search"></i></button>
-                    </div>
-                </form>
-                <a class="btn btn-primary ms-2" href="<?php echo base_url(); ?>web/addNew">
-                    <i class="bi bi-plus"></i> Add New
-                </a>
-            </div>
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0">event Games List</h4>
+            <a class="btn btn-primary" href="<?= base_url('web/addNew') ?>">
+                <i class="bi bi-plus"></i> Add New
+            </a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table id="weblistTable" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -28,28 +20,51 @@
                             <th class="text-center">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php if (!empty($web)) foreach ($web as $record): ?>
-                        <tr>
-                            <td><?= $record->name ?></td>
-                            <td>
-                                <span class="badge <?= $record->status == 'Active' ? 'bg-success' : 'bg-secondary' ?>">
-                                    <?= $record->status ?>
-                                </span>
-                            </td>
-                            <td><?= date("d-m-Y", strtotime($record->createdDtm)) ?></td>
-                            <td class="text-center">
-                                <a class="btn btn-sm btn-primary" href="<?= base_url('web/edit/' . $record->id) ?>" title="Edit"><i class="bi bi-pencil-fill"></i></a>
-                                <a class="btn btn-sm btn-info" href="<?= base_url('web/rangeEdit/' . $record->id) ?>" title="Details"><i class="bi bi-gear-fill"></i> Details</a>
-                                <a class="btn btn-sm btn-secondary" href="<?= base_url('web/descriptionEdit/' . $record->id) ?>" title="Description"><i class="bi bi-text-left"></i> Desc</a>
-                                <a class="btn btn-sm btn-danger deleteWeb" href="#" data-userid="<?= $record->id ?>" title="Delete"><i class="bi bi-trash3-fill"></i></a>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>
     </div>
 </section>
-<script src="<?= base_url() ?>public/admin/js/common.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    $('#weblistTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: baseURL + 'web/weblist_data',
+            type: 'GET'
+        },
+        columns: [
+            { data: 'name' },
+            { data: 'status', orderable: false },
+            { data: 'createdDtm' },
+            { data: 'actions', orderable: false, className: 'text-center' }
+        ],
+        order: [[2, 'desc']],
+        pageLength: 10,
+        language: {
+            search: '',
+            searchPlaceholder: 'Search games...',
+            emptyTable: 'No games found.',
+            processing: '<div class="text-center py-4"><div class="spinner-border spinner-border-sm text-primary"></div> Loading...</div>',
+        }
+    });
+
+    // Delete handler — re-attach after every DataTables draw
+    $('#weblistTable').on('click', '.deleteWeb', function (e) {
+        e.preventDefault();
+        var id = $(this).data('userid');
+        if (!confirm('Are you sure you want to delete this game?')) return;
+        $.post(baseURL + 'web/deleteWeb', { id: id, [csrfTokenName]: Cookies.get(csrfCookieName) }, function (res) {
+            if (res.status === 'ok' || res.status === true) {
+                $('#weblistTable').DataTable().ajax.reload(null, false);
+            } else {
+                alert(res.message || 'Delete failed.');
+            }
+        }, 'json');
+    });
+});
+</script>
+
