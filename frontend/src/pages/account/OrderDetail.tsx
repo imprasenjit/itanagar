@@ -6,11 +6,11 @@ import { getOrderDetail } from '../../api';
 
 const STATUS: Record<string, [string, string]> = {
   CREATED:   ['Pending',   'yellow'],
-  PAID:      ['Completed', 'emerald'],
+  PAID:      ['Confirmed', 'emerald'],
   RELEASED:  ['Refunded',  'blue'],
   CANCELLED: ['Cancelled', 'red'],
   '0': ['Pending',   'yellow'],
-  '1': ['Completed', 'emerald'],
+  '1': ['Confirmed', 'emerald'],
   '2': ['Failed',    'red'],
 };
 
@@ -73,7 +73,7 @@ export default function OrderDetail() {
       <div className="card p-5 mb-6 space-y-3 text-sm">
         <div className="flex items-center justify-between">
           <span className="text-gray-500">Status</span>
-          <span className={`badge bg-${color}-500/15 text-${color}-400 border border-${color}-500/20`}>{label}</span>
+          <span className={`badge rounded-full bg-${color}-500/15 text-${color}-400 border border-${color}-500/20 px-2.5 py-0.5 text-xs font-semibold`}>{label}</span>
         </div>
         {order.order_id && (
           <div className="flex items-center justify-between gap-4">

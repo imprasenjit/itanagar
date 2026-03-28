@@ -42,9 +42,10 @@ class GameModel extends Model
 
     public function home_web(string $limit = '')
     {
-        $sub = '(SELECT date FROM `tbl_dates` WHERE web_id=tbl_webs.id AND date_con > "' . date('Y-m-d ') . '" ORDER BY date ASC LIMIT 1)';
+        $sub     = '(SELECT date FROM `tbl_dates` WHERE web_id=tbl_webs.id AND date_con > "' . date('Y-m-d ') . '" ORDER BY date ASC LIMIT 1)';
+        $soldSub = '(SELECT COUNT(*) FROM `tbl_cart` WHERE `tbl_cart`.`web_id` = `tbl_webs`.`id` AND `tbl_cart`.`paid_status` = 1)';
         $builder = $this->db->table('tbl_webs')
-            ->select("tbl_webs.*, tbl_ranges.result_date, tbl_ranges.price, tbl_ranges.heading, tbl_ranges.logo, tbl_ranges.logo2, tbl_ranges.jackpot, $sub as date")
+            ->select("tbl_webs.*, tbl_ranges.result_date, tbl_ranges.price, tbl_ranges.heading, tbl_ranges.logo, tbl_ranges.logo2, tbl_ranges.jackpot, tbl_ranges.quantity as totalTickets, $soldSub as soldTickets, $sub as date")
             ->join('tbl_ranges', 'tbl_ranges.web_id = tbl_webs.id')
             ->where('status', 'Active')
             ->orderBy('tbl_ranges.priority');

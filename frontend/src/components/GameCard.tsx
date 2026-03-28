@@ -45,7 +45,8 @@ export default function GameCard({ game, index = 0 }: { game: Game; index?: numb
 
   const remaining   = totalTickets != null && soldTickets != null ? totalTickets - soldTickets : null;
   const pct         = totalTickets && totalTickets > 0 ? Math.round(((soldTickets ?? 0) / totalTickets) * 100) : 0;
-  const hot         = pct >= 70;
+  const isSoldOut   = totalTickets != null && totalTickets > 0 && remaining !== null && remaining <= 0;
+  const hot         = !isSoldOut && pct >= 70;
   const jackpotText = stripHtml(jackpot ?? '');
   // Prefer upcoming draw date; fall back to result_date
   const drawDate    = date || result_date;
@@ -67,7 +68,7 @@ export default function GameCard({ game, index = 0 }: { game: Game; index?: numb
   return (
     <div ref={ref} className={visible ? 'animate-fade-in-up' : 'opacity-0'} style={visible ? { animationDelay: `${index * 120}ms` } : undefined}>
     <Link to={`/games/${id}`} className="group block h-full">
-      <div className="card h-full flex flex-col overflow-hidden hover:border-brand-500/30 hover:shadow-2xl hover:shadow-brand-500/10 transition-all duration-300 group-hover:-translate-y-1.5">
+      <div className={`card h-full flex flex-col overflow-hidden transition-all duration-300 ${isSoldOut ? 'opacity-80 grayscale-[30%]' : 'hover:border-brand-500/30 hover:shadow-2xl hover:shadow-brand-500/10 group-hover:-translate-y-1.5'}`}>
         {/* Image */}
         <div className="relative h-52 overflow-hidden bg-gray-100">
           {logo ? (
@@ -80,6 +81,15 @@ export default function GameCard({ game, index = 0 }: { game: Game; index?: numb
             </div>
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-dark-900/90 via-dark-900/20 to-transparent"/>
+
+          {/* Sold Out overlay */}
+          {isSoldOut && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+              <span className="bg-red-600 text-white text-sm font-bold uppercase tracking-widest px-5 py-2 rounded-full shadow-lg rotate-[-6deg]">
+                Sold Out
+              </span>
+            </div>
+          )}
 
           {/* Hot badge */}
           {hot && (
@@ -129,11 +139,14 @@ export default function GameCard({ game, index = 0 }: { game: Game; index?: numb
             <div className="mb-4">
               <div className="flex justify-between text-xs text-gray-500 mb-1.5">
                 <span>{soldTickets?.toLocaleString()} sold</span>
-                <span className="font-medium">{remaining?.toLocaleString()} left</span>
+                {isSoldOut
+                  ? <span className="font-semibold text-red-500">Sold Out</span>
+                  : <span className="font-medium">{remaining?.toLocaleString()} left</span>
+                }
               </div>
               <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
                 <div
-                  className={`h-full rounded-full transition-all ${pct >= 80 ? 'bg-red-500' : pct >= 50 ? 'bg-brand-500' : 'bg-emerald-500'}`}
+                  className={`h-full rounded-full transition-all ${isSoldOut ? 'bg-red-500' : pct >= 80 ? 'bg-red-500' : pct >= 50 ? 'bg-brand-500' : 'bg-emerald-500'}`}
                   style={{ width: `${pct}%` }}
                 />
               </div>
@@ -143,8 +156,12 @@ export default function GameCard({ game, index = 0 }: { game: Game; index?: numb
           {/* Spacer pushes footer down */}
           <div className="flex-1"/>
 
-          {/* Footer — Countdown + Buy Now */}
-          {countdown && !countdown.ended ? (
+          {/* Footer — Countdown + Buy Now / Sold Out */}
+          {isSoldOut ? (
+            <div className="border-t border-gray-100 pt-3 mt-1">
+              <p className="text-center text-sm font-semibold text-red-400">All tickets sold out</p>
+            </div>
+          ) : countdown && !countdown.ended ? (
             <div className="border-t border-gray-100 pt-3 mt-1 flex items-center justify-between">
               <FlipClock countdown={countdown} />
               <span className="inline-flex items-center gap-1 text-xs font-bold text-white bg-brand-600 group-hover:bg-brand-700 px-4 py-2 rounded-full transition-colors">

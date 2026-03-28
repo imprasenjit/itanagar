@@ -8,12 +8,12 @@ import type { CartItem } from '../../types';
 
 const STATUS: Record<string, [string, string]> = {
   CREATED:   ['Pending',   'yellow'],
-  PAID:      ['Completed', 'emerald'],
+  PAID:      ['Confirmed', 'emerald'],
   RELEASED:  ['Refunded',  'blue'],
   CANCELLED: ['Cancelled', 'red'],
   // legacy numeric values
   '0': ['Pending',   'yellow'],
-  '1': ['Completed', 'emerald'],
+  '1': ['Confirmed', 'emerald'],
   '2': ['Failed',    'red'],
 };
 
@@ -63,10 +63,13 @@ export default function OrderHistory() {
                       )}
                     </div>
                     {ticketNos.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mt-1.5">
-                        {ticketNos.map((no, i) => (
-                          <span key={i} className="text-xs font-mono bg-gray-100 text-gray-600 rounded px-1.5 py-0.5">{no}</span>
-                        ))}
+                      <div className="mt-1.5">
+                        <p className="text-[10px] text-gray-400 uppercase tracking-wide mb-1">Tickets</p>
+                        <div className="flex flex-wrap gap-1">
+                          {ticketNos.map((no, i) => (
+                            <span key={i} className="text-xs font-mono bg-gray-100 text-gray-600 rounded px-1.5 py-0.5">{no}</span>
+                          ))}
+                        </div>
                       </div>
                     )}
                     {o.prize && Number(o.prize) > 0 && (
@@ -74,7 +77,7 @@ export default function OrderHistory() {
                     )}
                   </div>
                   <div className="text-right shrink-0">
-                    <span className={`badge bg-${color}-500/15 text-${color}-400 border border-${color}-500/20`}>{label}</span>
+                    <span className={`badge rounded-full bg-${color}-500/15 text-${color}-400 border border-${color}-500/20 px-2.5 py-0.5 text-xs font-semibold`}>{label}</span>
                     {amount && <p className="text-sm font-bold text-gray-900 mt-1.5">₹{Number(amount).toLocaleString('en-IN')}</p>}
                   </div>
                 </div>
