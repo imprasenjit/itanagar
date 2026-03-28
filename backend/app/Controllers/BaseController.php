@@ -42,6 +42,25 @@ abstract class BaseController extends Controller
         $this->global['role']       = $this->role;
         $this->global['role_text']  = $this->roleText;
         $this->global['last_login'] = $this->lastLogin;
+
+        // — Permission cache: load once per session ———————————————————————
+        if (! $session->has('permissions')) {
+            if ($this->roleText === ROLE_ADMIN) {
+                $session->set('permissions', ['*']);
+            } else {
+                $model = model(\App\Models\RolePermissionModel::class);
+                $session->set('permissions', $model->getPermissionsForRole((int) $this->role));
+            }
+        }
+        $this->global['can'] = function (string $key): bool {
+            return $this->hasPermission($key);
+        };
+    }
+
+    protected function hasPermission(string $key): bool
+    {
+        $perms = session()->get('permissions') ?? [];
+        return in_array('*', $perms, true) || in_array($key, $perms, true);
     }
 
     /** Returns TRUE when user IS admin (used as a guard: if isAdmin() == FALSE → deny) */

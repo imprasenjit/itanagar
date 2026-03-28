@@ -56,30 +56,45 @@
             </a>
           </li>
 
-          <?php if ($role_text == ROLE_ADMIN): ?>
+          <?php
+            $can = $can ?? function (string $k): bool { return false; };
+            $showManagement = $can('users.view') || $can('games.view') || $can('games.create') || $can('games.settings');
+            $showOrders     = $can('orders.view') || $can('transactions.view') || $can('tickets.view') || $can('winners.view') || $can('reports.view');
+            $showContent    = $can('contact.view') || $can('faq.view') || $can('pages.view');
+            $showSettings   = $can('rbac.manage');
+          ?>
 
+          <?php if ($showManagement): ?>
           <li class="sidebar-title">Management</li>
+          <?php endif; ?>
 
+          <?php if ($can('users.view')): ?>
           <li class="sidebar-item <?= (strpos(uri_string(), 'userListing') !== false) ? 'active' : '' ?>">
             <a href="<?= base_url('userListing') ?>" class="sidebar-link">
               <i class="bi bi-people-fill"></i>
               <span>Users</span>
             </a>
           </li>
+          <?php endif; ?>
 
+          <?php if ($can('games.view') || $can('games.create')): ?>
           <li class="sidebar-item <?= (strpos(uri_string(), 'web') !== false && strpos(uri_string(), 'order') === false && strpos(uri_string(), 'wallet') === false && strpos(uri_string(), 'winner') === false && strpos(uri_string(), 'refund') === false && strpos(uri_string(), 'withdrawl') === false && strpos(uri_string(), 'transfer') === false) ? 'active' : '' ?> has-sub">
             <a href="#" class="sidebar-link">
               <i class="bi bi-ticket-perforated-fill"></i>
               <span>event Games</span>
             </a>
             <ul class="submenu">
+              <?php if ($can('games.view')): ?>
               <li class="submenu-item <?= (uri_string() === 'web') ? 'active' : '' ?>">
                 <a href="<?= base_url('web') ?>" class="submenu-link">All Games</a>
               </li>
+              <?php endif; ?>
+              <?php if ($can('games.create')): ?>
               <li class="submenu-item <?= (uri_string() === 'web/addNew') ? 'active' : '' ?>">
                 <a href="<?= base_url('web/addNew') ?>" class="submenu-link">Add New Game</a>
               </li>
-              <?php
+              <?php endif; ?>
+              <?php if ($can('games.view')):
                 $web = (new \App\Models\WebModel())->get_allweb();
                 foreach ($web as $w):
                   if ($w->status == 0):
@@ -89,113 +104,118 @@
                   &bull; <?= esc($w->name) ?>
                 </a>
               </li>
-              <?php
-                  endif;
+              <?php   endif;
                 endforeach;
-              ?>
+              endif; ?>
             </ul>
           </li>
+          <?php endif; ?>
 
+          <?php if ($can('games.settings')): ?>
           <li class="sidebar-item <?= (uri_string() === 'web/common') ? 'active' : '' ?>">
             <a href="<?= base_url('web/common') ?>" class="sidebar-link">
               <i class="bi bi-gear-fill"></i>
               <span>Common Settings</span>
             </a>
           </li>
+          <?php endif; ?>
 
+          <?php if ($showOrders): ?>
           <li class="sidebar-title">Orders &amp; Finance</li>
+          <?php endif; ?>
 
+          <?php if ($can('orders.view')): ?>
           <li class="sidebar-item <?= (strpos(uri_string(), 'web/order') !== false) ? 'active' : '' ?>">
             <a href="<?= base_url('web/order') ?>" class="sidebar-link">
               <i class="bi bi-receipt"></i>
               <span>Orders</span>
             </a>
           </li>
+          <?php endif; ?>
 
+          <?php if ($can('transactions.view')): ?>
           <li class="sidebar-item <?= (strpos(uri_string(), 'web/transactions') !== false) ? 'active' : '' ?>">
             <a href="<?= base_url('web/transactions') ?>" class="sidebar-link">
               <i class="bi bi-arrow-left-right"></i>
               <span>Transactions</span>
             </a>
           </li>
+          <?php endif; ?>
 
+          <?php if ($can('tickets.view')): ?>
           <li class="sidebar-item <?= (strpos(uri_string(), 'web/tickets') !== false) ? 'active' : '' ?>">
             <a href="<?= base_url('web/tickets') ?>" class="sidebar-link">
               <i class="bi bi-ticket-detailed-fill"></i>
               <span>Ticket Management</span>
             </a>
           </li>
+          <?php endif; ?>
 
-          <?php /*
-          <li class="sidebar-item <?= (strpos(uri_string(), 'web/wallet') !== false) ? 'active' : '' ?>">
-            <a href="<?= base_url('web/wallet') ?>" class="sidebar-link">
-              <i class="bi bi-wallet2"></i>
-              <span>Wallet History</span>
-            </a>
-          </li>
-          */ ?>
-
+          <?php if ($can('winners.view')): ?>
           <li class="sidebar-item <?= (strpos(uri_string(), 'winner') !== false) ? 'active' : '' ?>">
             <a href="<?= base_url('web/winner') ?>" class="sidebar-link">
               <i class="bi bi-trophy-fill"></i>
               <span>Winners</span>
             </a>
           </li>
+          <?php endif; ?>
 
-          <?php /*
-          <li class="sidebar-item <?= (strpos(uri_string(), 'web/refund') !== false) ? 'active' : '' ?>">
-            <a href="<?= base_url('web/refund') ?>" class="sidebar-link">
-              <i class="bi bi-arrow-counterclockwise"></i>
-              <span>Refunds</span>
-            </a>
-          </li>
-
-          <li class="sidebar-item <?= (strpos(uri_string(), 'web/withdrawl') !== false) ? 'active' : '' ?>">
-            <a href="<?= base_url('web/withdrawl') ?>" class="sidebar-link">
-              <i class="bi bi-cash-coin"></i>
-              <span>Withdrawals</span>
-            </a>
-          </li>
-
-          <li class="sidebar-item <?= (strpos(uri_string(), 'web/transfer') !== false) ? 'active' : '' ?>">
-            <a href="<?= base_url('web/transfer') ?>" class="sidebar-link">
-              <i class="bi bi-paypal"></i>
-              <span>PayPal Transfers</span>
-            </a>
-          </li>
-          */ ?>
-
+          <?php if ($can('reports.view')): ?>
           <li class="sidebar-item <?= (strpos(uri_string(), 'web/reports') !== false) ? 'active' : '' ?>">
             <a href="<?= base_url('web/reports') ?>" class="sidebar-link">
               <i class="bi bi-file-earmark-bar-graph-fill"></i>
               <span>Reports</span>
             </a>
           </li>
+          <?php endif; ?>
 
+          <?php if ($showContent): ?>
           <li class="sidebar-title">Content</li>
+          <?php endif; ?>
 
+          <?php if ($can('contact.view')): ?>
           <li class="sidebar-item <?= (strpos(uri_string(), 'contact') !== false) ? 'active' : '' ?>">
             <a href="<?= base_url('web/contact_list') ?>" class="sidebar-link">
               <i class="bi bi-envelope-fill"></i>
               <span>Contact Requests</span>
             </a>
           </li>
+          <?php endif; ?>
 
+          <?php if ($can('faq.view')): ?>
           <li class="sidebar-item <?= (strpos(uri_string(), 'faq') !== false) ? 'active' : '' ?>">
             <a href="<?= base_url('web/faq') ?>" class="sidebar-link">
               <i class="bi bi-megaphone-fill"></i>
               <span>Announcements</span>
             </a>
           </li>
+          <?php endif; ?>
 
+          <?php if ($can('pages.view')): ?>
           <li class="sidebar-item <?= (strpos(uri_string(), 'page') !== false) ? 'active' : '' ?>">
             <a href="<?= base_url('web/page') ?>" class="sidebar-link">
               <i class="bi bi-file-earmark-text-fill"></i>
               <span>Pages</span>
             </a>
           </li>
-          
           <?php endif; ?>
+
+          <?php if ($showSettings): ?>
+          <li class="sidebar-title">Settings</li>
+          <li class="sidebar-item <?= (uri_string() === 'web/rbac') ? 'active' : '' ?>">
+            <a href="<?= base_url('web/rbac') ?>" class="sidebar-link">
+              <i class="bi bi-shield-lock-fill"></i>
+              <span>Role Permissions</span>
+            </a>
+          </li>
+          <li class="sidebar-item <?= (uri_string() === 'web/migrations') ? 'active' : '' ?>">
+            <a href="<?= base_url('web/migrations') ?>" class="sidebar-link">
+              <i class="bi bi-database-gear"></i>
+              <span>Migrations</span>
+            </a>
+          </li>
+          <?php endif; ?>
+
 
         </ul>
       </div>

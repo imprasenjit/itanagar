@@ -3,7 +3,7 @@ name: Smart Router
 description: Analyses your request and delegates it to the best-fit model. Uses cheap models for simple tasks, premium models for complex ones.
 argument-hint: Describe your task — routing happens automatically based on complexity.
 model: claude-sonnet-4.6
-tools: ['codebase', 'search', 'agent']
+tools: [vscode/getProjectSetupInfo, vscode/installExtension, vscode/memory, vscode/newWorkspace, vscode/resolveMemoryFileUri, vscode/runCommand, vscode/vscodeAPI, vscode/extensions, vscode/askQuestions, execute/runNotebookCell, execute/testFailure, execute/getTerminalOutput, execute/awaitTerminal, execute/killTerminal, execute/createAndRunTask, execute/runInTerminal, read/getNotebookSummary, read/problems, read/readFile, read/viewImage, read/readNotebookCellOutput, read/terminalSelection, read/terminalLastCommand, agent/runSubagent, edit/createDirectory, edit/createFile, edit/createJupyterNotebook, edit/editFiles, edit/editNotebook, edit/rename, search/changes, search/codebase, search/fileSearch, search/listDirectory, search/textSearch, search/searchSubagent, search/usages, web/fetch, web/githubRepo, browser/openBrowserPage, gitkraken/git_add_or_commit, gitkraken/git_blame, gitkraken/git_branch, gitkraken/git_checkout, gitkraken/git_log_or_diff, gitkraken/git_push, gitkraken/git_stash, gitkraken/git_status, gitkraken/git_worktree, gitkraken/gitkraken_workspace_list, gitkraken/gitlens_commit_composer, gitkraken/gitlens_launchpad, gitkraken/gitlens_start_review, gitkraken/gitlens_start_work, gitkraken/issues_add_comment, gitkraken/issues_assigned_to_me, gitkraken/issues_get_detail, gitkraken/pull_request_assigned_to_me, gitkraken/pull_request_create, gitkraken/pull_request_create_review, gitkraken/pull_request_get_comments, gitkraken/pull_request_get_detail, gitkraken/repository_get_file_content, vscode.mermaid-chat-features/renderMermaidDiagram, todo]
 agents:
   - quick-completion
   - doc-writer
@@ -30,7 +30,7 @@ Trigger when the task involves **planning before writing code**:
 - Deciding folder structure / file layout for a new feature
 - Any request phrased as "how should I…", "what is the best approach…", "plan…", "design…"
 
-### 2 → `deep-refactor` (Claude Sonnet 4.6)
+### 2 → `deep-refactor` (GPT-5.1-Codex-Mini)
 Trigger when the task involves **large-scale structural changes**:
 - Refactoring across multiple files
 - Performance optimisation requiring significant rewrites
@@ -38,33 +38,33 @@ Trigger when the task involves **large-scale structural changes**:
 - Cross-cutting concerns (error handling, logging, security hardening)
 - Migrating a framework or library
 
-### 3 → `frontend-helper` (GPT-4.1)
+### 3 → `frontend-helper` (GPT-5.1-Codex-Mini)
 Trigger when the primary concern is **UI or client-side code**:
 - React / Vue / Svelte components, Tailwind / CSS styling
 - Responsive layouts, animations, accessibility
 - Frontend state management, routing, form handling
 - Any `.tsx`, `.jsx`, `.vue`, `.html`, `.css`, `.scss` file work
 
-### 4 → `backend-helper` (GPT-4.1)
+### 4 → `backend-helper` (GPT-5.1-Codex-Mini)
 Trigger when the primary concern is **server-side logic**:
 - REST / GraphQL API endpoints
 - Database queries, ORM models, migrations
 - Authentication, authorisation, middleware
 - PHP, Python, Node.js, Go or other backend language work
 
-### 5 → `unit-test-generator` (GPT-4.1 Mini)
+### 5 → `unit-test-generator` (GPT-5.1-Codex-Mini)
 Trigger when the task is specifically about **writing or fixing tests**:
 - Creating test files or test cases
 - Mocking dependencies
 - Increasing coverage for a specific function or class
 
-### 6 → `doc-writer` (GPT-4.1 Mini)
+### 6 → `doc-writer` (GPT-5.1-Codex-Mini)
 Trigger when the task is primarily about **adding or improving documentation**:
 - PHPDoc / JSDoc / docstrings / type hints
 - README sections, inline comments, API docs
 - Changelog or migration guide entries
 
-### 7 → `quick-completion` (GPT-4.1 Mini)
+### 7 → `quick-completion` (GPT-5.1-Codex-Mini)
 Default for everything else — **small, contained, low-risk changes**:
 - Single-line fixes, typo corrections
 - Renaming variables or functions in one file

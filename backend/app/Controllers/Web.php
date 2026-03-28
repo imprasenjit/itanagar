@@ -1120,6 +1120,132 @@ class Web extends BaseController
         return $this->loadViews('pages/web/transfer', $this->global, $data, null);
     }
 
+    // ── Migrations ────────────────────────────────────────────────────────────
+
+    public function migrations(): string
+    {
+        if (! $this->isAdmin()) {
+            return $this->loadThis();
+        }
+
+        $migrate   = \Config\Services::migrations();
+        $db        = \Config\Database::connect();
+
+        // All migration files on disk
+        $allFiles  = $migrate->findMigrations();
+
+        // History rows already run (from `migrations` table)
+        $history   = [];
+        $ranByClass = [];
+        if ($db->tableExists('migrations')) {
+            $rows = $db->table('migrations')->orderBy('batch', 'ASC')->orderBy('time', 'ASC')->get()->getResult();
+            foreach ($rows as $row) {
+                $history[] = $row;
+                // Key by short class name only (strip namespace) so it matches findMigrations()
+                $shortKey = preg_replace('/^.*\\\\/', '', ltrim($row->class, '\\'));
+                $ranByClass[$shortKey] = $row;
+            }
+        }
+
+        $migrations = [];
+        foreach ($allFiles as $file) {
+            // $file is a stdClass with properties: class, path, namespace, version
+            $shortClass  = ltrim(preg_replace('/^.*\\\\/', '', $file->class ?? ''), '\\');
+            $ran         = isset($ranByClass[$shortClass]);
+            $historyRow  = $ranByClass[$shortClass] ?? null;
+
+            // Human-readable description from class name e.g. CreatePermissionsTables → Create Permissions Tables
+            $description = trim(preg_replace('/([A-Z])/', ' $1', $shortClass));
+
+            $migrations[] = [
+                'file'        => $shortClass,
+                'description' => $description,
+                'ran'         => $ran,
+                'batch'       => $historyRow->batch ?? null,
+                'run_at'      => $historyRow ? date('Y-m-d H:i:s', $historyRow->time) : null,
+            ];
+        }
+
+        $ranCount     = count(array_filter($migrations, fn($m) => $m['ran']));
+        $pendingCount = count($migrations) - $ranCount;
+
+        $data = [
+            'migrations'   => $migrations,
+            'history'      => $history,
+            'totalCount'   => count($migrations),
+            'ranCount'     => $ranCount,
+            'pendingCount' => $pendingCount,
+        ];
+        $this->global['pageTitle'] = 'Itanagarchoice : Migrations';
+        return $this->loadViews('pages/migrations', $this->global, $data, null);
+    }
+
+    public function runMigrations(): \CodeIgniter\HTTP\RedirectResponse
+    {
+        if (! $this->isAdmin()) {
+            return redirect()->to(base_url('web/migrations'));
+        }
+        try {
+            $migrate = \Config\Services::migrations();
+            $migrate->latest();
+            session()->setFlashdata('success', 'All pending migrations have been run successfully.');
+        } catch (\Throwable $e) {
+            session()->setFlashdata('error', 'Migration failed: ' . $e->getMessage());
+        }
+        return redirect()->to(base_url('web/migrations'));
+    }
+
+    // ── RBAC ─────────────────────────────────────────────────────────────────
+
+    public function rbac(): string
+    {
+        if (! $this->isAdmin()) {
+            return $this->loadThis();
+        }
+
+        // Auto-run migration + seed if tables don't exist yet
+        $db = \Config\Database::connect();
+        if (! $db->tableExists('tbl_permissions')) {
+            $migrate = \Config\Services::migrations();
+            $migrate->latest();
+            \Config\Database::seeder()->call('PermissionsSeeder');
+        }
+
+        $model = model(\App\Models\RolePermissionModel::class);
+        $data  = [
+            'roles'       => $model->getAllRoles(),
+            'permissions' => $model->getAllPermissions(),
+            'assigned'    => $model->getAllAssigned(),
+        ];
+        $this->global['pageTitle'] = 'Itanagarchoice : Role Permissions';
+        return $this->loadViews('pages/rbac', $this->global, $data, null);
+    }
+
+    public function rbacSave(): void
+    {
+        if (! $this->isAdmin()) {
+            echo json_encode(['status' => 'access']);
+            return;
+        }
+        $roleId = (int) $this->request->getPost('role_id');
+        if ($roleId <= 0) {
+            echo json_encode(['status' => 'error', 'msg' => 'Invalid role']);
+            return;
+        }
+        $model       = model(\App\Models\RolePermissionModel::class);
+        $validKeys   = array_column($model->getAllPermissions(), 'key');
+        $rawKeys     = (array) ($this->request->getPost('permissions') ?? []);
+        $cleanKeys   = array_values(array_intersect($rawKeys, $validKeys));
+
+        $model->saveRolePermissions($roleId, $cleanKeys);
+
+        // Bust the cached permissions for any active session of this role
+        // (users will get fresh data on their next request)
+        session()->remove('permissions');
+
+        echo json_encode(['status' => 'ok']);
+    }
+
     private function _datearray(int $webId): array
     {
         $dateArray = [];

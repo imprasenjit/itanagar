@@ -85,6 +85,10 @@ $routes->get('web/transactions',        'Web::transactions');
 $routes->get('web/transactions/(:num)', 'Web::transactions');
 $routes->get('web/dashboard_stats',     'Web::dashboard_stats');
 $routes->get('web/dashboard_txn_data',  'Web::dashboard_txn_data');
+$routes->get('web/migrations',          'Web::migrations');
+$routes->post('web/runMigrations',      'Web::runMigrations');
+$routes->get('web/rbac',                'Web::rbac');
+$routes->post('web/rbacSave',           'Web::rbacSave');
 
 // ── Tickets ───────────────────────────────────────────────────────────────────
 $routes->get('web/tickets',             'Web::tickets');
