@@ -65,6 +65,22 @@ class PaymentController extends ApiBaseController
             return $this->error('Cart is empty');
         }
 
+        // ── Re-validate: confirm every ticket is still ours and extend TTL ────
+        // Re-fetch the cart to detect items silently removed by the cron
+        // (expired reservation cleanup) since the page loaded.
+        $freshCart = $this->cartOrderModel->order_data($userId);
+        if (count($freshCart) !== count($cart)) {
+            return $this->error(
+                'One or more tickets in your cart are no longer available. ' .
+                'Please review your cart and try again.'
+            );
+        }
+
+        // Extend reservation TTL by 30 min so it does not expire mid-payment.
+        $extendedUntil = date('Y-m-d H:i:s', strtotime('+30 minutes'));
+        $this->cartOrderModel->extend_reservations($userId, $extendedUntil);
+        // ─────────────────────────────────────────────────────────────────────
+
         $tickets    = [];
         $totalPrice = 0;
         foreach ($cart as $item) {

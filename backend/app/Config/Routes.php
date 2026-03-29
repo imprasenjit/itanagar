@@ -69,6 +69,7 @@ $routes->get('web/dashboard_txn_data',   'SettingsController::dashboard_txn_data
 // ── MigrationController — migration tracker
 $routes->get('web/migrations',           'MigrationController::migrations');
 $routes->post('web/runMigrations',       'MigrationController::runMigrations');
+$routes->post('web/runSingleMigration',   'MigrationController::runSingleMigration');
 
 // ── RoleController — role CRUD and RBAC permission assignment
 $routes->get('web/rbac',                 'RoleController::rbac');
@@ -123,6 +124,9 @@ $routes->get('web/tickets/(:num)',           'FinanceController::tickets');
 $routes->post('web/ticket_cancel',           'FinanceController::ticket_cancel');
 $routes->post('web/ticket_resend',           'FinanceController::ticket_resend');
 $routes->post('web/ticket_verify',           'FinanceController::ticket_verify');
+$routes->get('web/blocked_tickets_count',    'FinanceController::blocked_tickets_count');
+$routes->post('web/release_expired_holds',   'FinanceController::release_expired_holds');
+$routes->post('web/force_release_holds',     'FinanceController::force_release_holds');
 $routes->get('web/transactions_data',        'FinanceController::transactions_data');
 $routes->get('web/transactions',             'FinanceController::transactions');
 $routes->get('web/transactions/(:num)',      'FinanceController::transactions');
@@ -173,6 +177,9 @@ $routes->get('api/order/confirm', 'Api\CartController::order_confirm');
 $routes->post('api/payment/create',  'Api\PaymentController::payment_create');
 $routes->post('api/payment/confirm', 'Api\PaymentController::payment_confirm');
 $routes->post('api/payment/cancel',  'Api\PaymentController::payment_cancel');
+
+// ── Cron: release expired cart reservations (secured by CRON_SECRET env var) ─
+$routes->get('api/cron/release-reservations', 'Api\GamesController::release_reservations');
 
 // ── API Account (authenticated) ─────────────────────────────────────────────
 $routes->get('api/account/profile',           'Api\AccountController::account_profile');

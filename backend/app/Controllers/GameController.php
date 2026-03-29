@@ -164,12 +164,23 @@ class GameController extends BaseController
             return $this->loadThis();
         }
 
-        $webId = (int) $this->request->getPost('web_id');
-        $id    = (int) $this->request->getPost('id');
+        $webId      = (int) $this->request->getPost('web_id');
+        $id         = (int) $this->request->getPost('id');
+        $rangeStart = trim((string) $this->request->getPost('rangeStart'));
+
+        // Validate format: comma-separated entries, each "NUM" or "NUM-NUM".
+        // Example valid value: "250381-250400,250405,250410-250420"
+        if ($rangeStart !== '' && !preg_match('/^(\d+(-\d+)?,)*\d+(-\d+)?$/', $rangeStart)) {
+            session()->setFlashdata(
+                'error',
+                'Invalid ticket range format. Use comma-separated numbers or ranges, e.g. "250381-250400,250405"'
+            );
+            return redirect()->to("web/rangeEdit/$webId");
+        }
 
         $rangeInfo = [
             'price'       => $this->request->getPost('price'),
-            'rangeStart'  => $this->request->getPost('rangeStart'),
+            'rangeStart'  => $rangeStart,
             'priority'    => $this->request->getPost('priority'),
             'heading'     => $this->request->getPost('heading'),
             'result_date' => $this->request->getPost('result_date'),

@@ -52,24 +52,131 @@ class CartOrderModel extends Model
             ->update($data);
     }
 
-    public function get_ticket_availability(int $ticket, int $web_id)
+    /**
+     * Check whether a ticket is taken by anyone (optionally excluding one user).
+     *
+     * A ticket is considered taken if:
+     *  - paid_status = 1  (committed / sold), OR
+     *  - paid_status = 0 AND reserved_until is set and in the future
+     *    (another user is actively holding it in their cart).
+     *
+     * @param int $excludeUserId  Pass the current user's ID to ignore their own hold.
+     */
+    public function get_ticket_availability(int $ticket, int $web_id, int $excludeUserId = 0)
     {
-        return $this->db->table('tbl_cart')
-            ->where('web_id',     $web_id)
-            ->where('ticket_no',  $ticket)
+        $now     = date('Y-m-d H:i:s');
+        $builder = $this->db->table('tbl_cart')
+            ->where('web_id',    $web_id)
+            ->where('ticket_no', $ticket);
+
+        if ($excludeUserId > 0) {
+            $builder->where('user_id !=', $excludeUserId);
+        }
+
+        $builder->groupStart()
             ->where('paid_status', 1)
-            ->orderBy('id')
-            ->get()->getResult();
+            ->orGroupStart()
+                ->where('paid_status', 0)
+                ->where('reserved_until IS NOT NULL', null, false)
+                ->where('reserved_until >', $now)
+            ->groupEnd()
+        ->groupEnd();
+
+        return $builder->orderBy('id')->get()->getResult();
     }
 
+    /**
+     * Returns ticket numbers that are unavailable for a given game — either
+     * permanently sold (paid_status=1) or actively reserved by someone.
+     * Used by the ticket-picker UI to grey out taken ticket numbers.
+     */
     public function get_sold_tickets(int $web_id): array
     {
+        $now  = date('Y-m-d H:i:s');
         $rows = $this->db->table('tbl_cart')
             ->select('ticket_no')
             ->where('web_id', $web_id)
-            ->where('paid_status', 1)
+            ->groupStart()
+                ->where('paid_status', 1)
+                ->orGroupStart()
+                    ->where('paid_status', 0)
+                    ->where('reserved_until IS NOT NULL', null, false)
+                    ->where('reserved_until >', $now)
+                ->groupEnd()
+            ->groupEnd()
             ->get()->getResultArray();
         return array_map(fn($row) => (int) $row['ticket_no'], $rows);
+    }
+
+    /**
+     * Extend the reservation TTL on all unpaid cart items for a user.
+     * Called just before creating a Razorpay order to keep tickets from
+     * expiring during the payment window.
+     */
+    public function extend_reservations(int $userId, string $until): void
+    {
+        $this->db->table('tbl_cart')
+            ->where('user_id',    $userId)
+            ->where('paid_status', 0)
+            ->update(['reserved_until' => $until]);
+    }
+
+    /**
+     * Delete expired holds for a specific ticket by OTHER users before a new
+     * insert. This prevents the UNIQUE KEY from blocking a valid new hold when
+     * a stale expired row still exists (cron hasn't run yet).
+     */
+    public function release_expired_for_ticket(int $ticketNo, int $webId, int $excludeUserId): void
+    {
+        $this->db->table('tbl_cart')
+            ->where('web_id',        $webId)
+            ->where('ticket_no',     $ticketNo)
+            ->where('user_id !=',    $excludeUserId)
+            ->where('paid_status',   0)
+            ->where('reserved_until IS NOT NULL', null, false)
+            ->where('reserved_until <', date('Y-m-d H:i:s'))
+            ->delete();
+    }
+
+    /**
+     * Delete all unpaid cart rows whose reservation window has expired.
+     * Run by the cron endpoint.  Returns the number of rows released.
+     */
+    public function release_expired_reservations(): int
+    {
+        $this->db->table('tbl_cart')
+            ->where('paid_status', 0)
+            ->where('reserved_until IS NOT NULL', null, false)
+            ->where('reserved_until <', date('Y-m-d H:i:s'))
+            ->delete();
+        return $this->db->affectedRows();
+    }
+
+    /**
+     * Count all unpaid cart rows that have an active reservation hold
+     * (reserved_until is set and still in the future).
+     * Used by the admin dashboard to show how many tickets are currently blocked.
+     */
+    public function count_blocked_tickets(): int
+    {
+        return $this->db->table('tbl_cart')
+            ->where('paid_status', 0)
+            ->where('reserved_until IS NOT NULL', null, false)
+            ->where('reserved_until >', date('Y-m-d H:i:s'))
+            ->countAllResults();
+    }
+
+    /**
+     * Force-release ALL unpaid holds regardless of expiry.
+     * Admin-only action: clears every cart row that is not yet committed.
+     * Returns the number of rows deleted.
+     */
+    public function force_release_all_holds(): int
+    {
+        $this->db->table('tbl_cart')
+            ->where('paid_status', 0)
+            ->delete();
+        return $this->db->affectedRows();
     }
 
     public function up_cart(int $guestId, int $userId): bool

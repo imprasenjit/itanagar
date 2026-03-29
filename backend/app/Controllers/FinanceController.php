@@ -173,6 +173,53 @@ class FinanceController extends BaseController
         return $this->loadViews('pages/web/tickets', $this->global, $data, null);
     }
 
+    /**
+     * Returns the current count of actively-blocked (reserved but unpaid) tickets.
+     * Called by the admin tickets page to populate the counter badge.
+     */
+    public function blocked_tickets_count()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['status' => 'access']);
+        }
+        $count = $this->cartOrderModel->count_blocked_tickets();
+        return $this->response->setJSON(['status' => true, 'count' => $count]);
+    }
+
+    /**
+     * Release only expired holds (reserved_until < NOW()).
+     * Safe to run at any time — does not affect active carts.
+     */
+    public function release_expired_holds()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['status' => 'access']);
+        }
+        $released = $this->cartOrderModel->release_expired_reservations();
+        return $this->response->setJSON([
+            'status'   => true,
+            'released' => $released,
+            'message'  => $released . ' expired hold(s) have been released.',
+        ]);
+    }
+
+    /**
+     * Force-release ALL unpaid cart holds, including ones that haven't expired yet.
+     * This is a destructive admin action — use only when tickets are genuinely stuck.
+     */
+    public function force_release_holds()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['status' => 'access']);
+        }
+        $released = $this->cartOrderModel->force_release_all_holds();
+        return $this->response->setJSON([
+            'status'   => true,
+            'released' => $released,
+            'message'  => $released . ' blocked ticket hold(s) have been released.',
+        ]);
+    }
+
     public function ticket_cancel()
     {
         if ($this->isAdmin() === false) {

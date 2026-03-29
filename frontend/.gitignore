@@ -1,3 +1,6 @@
+# FTP credentials — never commit
+.env.deploy
+
 # Logs
 logs
 *.log

@@ -1,0 +1,22 @@
+# Environment config — contains DB credentials, API keys, secrets
+.env
+
+# CI4 writable directory — logs, cache, sessions, uploads
+writable/logs/*
+writable/cache/*
+writable/session/*
+writable/uploads/*
+
+# Keep the directory structure
+!writable/logs/.gitkeep
+!writable/cache/.gitkeep
+!writable/session/.gitkeep
+!writable/uploads/.gitkeep
+
+# Composer vendor (restore with: composer install)
+vendor/
+
+# IDE
+.idea/
+.vscode/
+*.swp

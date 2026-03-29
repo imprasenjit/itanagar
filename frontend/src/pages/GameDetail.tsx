@@ -153,11 +153,22 @@ export default function GameDetail() {
     if (selected.length === 0) { addToast('Select at least one ticket', 'error'); return; }
     setAdding(true);
     try {
-      await addToCart({ web_id: id, range_id: range?.id, tickets: selected });
-      addToast(`${selected.length} ticket(s) added to cart!`, 'success');
-      setSelected([]);
-      setAddSuccess(true);
-      setTimeout(() => setAddSuccess(false), 2000);
+      const result = await addToCart({ web_id: id, range_id: range?.id, tickets: selected }) as { data?: { added?: number; errors?: string[] } };
+      const added: number = result?.data?.added ?? selected.length;
+      const errs: string[] = result?.data?.errors ?? [];
+      if (added > 0) {
+        addToast(`${added} ticket(s) added to cart!`, 'success');
+        setSelected([]);
+        setAddSuccess(true);
+        setTimeout(() => setAddSuccess(false), 2000);
+      }
+      if (errs.length > 0) {
+        // Show first error; if some were added successfully still show success above
+        addToast(errs[0], added > 0 ? 'info' : 'error');
+      }
+      if (added === 0 && errs.length === 0) {
+        addToast('Tickets already in your cart', 'info');
+      }
     } catch (e: unknown) {
       addToast((e as Error).message || 'Failed to add tickets', 'error');
     } finally {

@@ -1,5 +1,16 @@
-<div class="page-heading">
-    <h3><i class="bi bi-ticket-perforated-fill me-2"></i> Ticket Management</h3>
+<div class="page-heading d-flex align-items-center justify-content-between flex-wrap gap-2">
+    <h3 class="mb-0"><i class="bi bi-ticket-perforated-fill me-2"></i> Ticket Management</h3>
+    <div class="d-flex align-items-center gap-2">
+        <span class="text-muted small" id="blockedLabel">Checking blocked tickets...</span>
+        <button id="releaseExpiredBtn" class="btn btn-outline-warning btn-sm" onclick="confirmReleaseExpired()" disabled>
+            <i class="bi bi-hourglass-bottom me-1"></i> Release Expired
+            <span class="badge bg-dark ms-1" id="expiredCount">—</span>
+        </button>
+        <button id="releaseHoldsBtn" class="btn btn-warning btn-sm" onclick="confirmReleaseHolds()" disabled>
+            <i class="bi bi-unlock-fill me-1"></i> Release All Blocked
+            <span class="badge bg-dark ms-1" id="blockedCount">—</span>
+        </button>
+    </div>
 </div>
 
 <!-- ── Verify Ticket Modal ──────────────────────────────────────────────── -->
@@ -159,7 +170,115 @@ function verifyTicket() {
     })
     .catch(() => { result.innerHTML = '<div class="alert alert-danger mb-0">Network error. Please try again.</div>'; });
 }
+// ── Blocked-ticket counter & release buttons ─────────────────────────────────
+function loadBlockedCount() {
+    fetch(baseURL + 'web/blocked_tickets_count', { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+    .then(r => r.json())
+    .then(data => {
+        const count  = data.count ?? 0;
+        const btn    = document.getElementById('releaseHoldsBtn');
+        const expBtn = document.getElementById('releaseExpiredBtn');
+        const badge  = document.getElementById('blockedCount');
+        const label  = document.getElementById('blockedLabel');
+        badge.textContent = count;
+        if (count > 0) {
+            btn.disabled    = false;
+            expBtn.disabled = false;
+            label.textContent = count + ' ticket(s) currently blocked by active cart holds';
+            label.className = 'text-warning small fw-semibold';
+        } else {
+            btn.disabled    = true;
+            expBtn.disabled = true;
+            document.getElementById('expiredCount').textContent = '0';
+            label.textContent = 'No tickets are currently blocked';
+            label.className = 'text-muted small';
+        }
+    })
+    .catch(() => {
+        document.getElementById('blockedLabel').textContent = 'Could not load blocked count';
+    });
+}
+
+// ── Release EXPIRED holds only ───────────────────────────────────────────────
+function confirmReleaseExpired() {
+    if (!confirm(
+        'This will delete cart holds that have ALREADY EXPIRED.\n\n' +
+        'Active holds (users still within their 15-minute window) will NOT be touched.\n\n' +
+        'Continue?'
+    )) return;
+
+    const btn = document.getElementById('releaseExpiredBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Releasing...';
+
+    fetch(baseURL + 'web/release_expired_holds', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: new URLSearchParams({ <?= csrf_token() ?>: '<?= csrf_hash() ?>' })
+    })
+    .then(r => r.json())
+    .then(data => {
+        const alertEl = document.createElement('div');
+        alertEl.className = 'alert alert-info alert-dismissible fade show';
+        alertEl.innerHTML = '<i class="bi bi-hourglass-bottom me-1"></i>' + data.message +
+                            '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+        document.querySelector('.section').prepend(alertEl);
+        loadBlockedCount();
+        btn.innerHTML = '<i class="bi bi-hourglass-bottom me-1"></i> Release Expired <span class="badge bg-dark ms-1" id="expiredCount">0</span>';
+    })
+    .catch(() => {
+        alert('Network error. Please try again.');
+        btn.disabled = false;
+    });
+}
+
+// ── Force-release ALL holds (including active) ───────────────────────────────
+function confirmReleaseHolds() {
+    const count = document.getElementById('blockedCount').textContent;
+    if (!confirm(
+        'This will IMMEDIATELY free ' + count + ' ticket hold(s) from all users\' carts.\n\n' +
+        'Those users will lose their reserved tickets.\n\n' +
+        'Only proceed if the tickets are genuinely stuck. Continue?'
+    )) return;
+
+    const btn = document.getElementById('releaseHoldsBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Releasing...';
+
+    fetch(baseURL + 'web/force_release_holds', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: new URLSearchParams({ <?= csrf_token() ?>: '<?= csrf_hash() ?>' })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.status === true) {
+            const alertEl = document.createElement('div');
+            alertEl.className = 'alert alert-success alert-dismissible fade show';
+            alertEl.innerHTML = '<i class="bi bi-unlock-fill me-1"></i>' + data.message +
+                                '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+            document.querySelector('.section').prepend(alertEl);
+            loadBlockedCount();
+        } else {
+            alert('Failed: ' + (data.message || 'Unknown error'));
+            btn.disabled = false;
+            btn.innerHTML = '<i class="bi bi-unlock-fill me-1"></i> Release All Blocked <span class="badge bg-dark ms-1" id="blockedCount">' + count + '</span>';
+        }
+    })
+    .catch(() => {
+        alert('Network error. Please try again.');
+        btn.disabled = false;
+    });
+}
+
 $(function () {
+    loadBlockedCount(); // load count on page open
     var tickTable = $('#ticketsTable').DataTable({
         processing: true,
         serverSide: true,

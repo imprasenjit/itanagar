@@ -84,8 +84,91 @@ class MigrationController extends BaseController
             $migrate->latest();
             session()->setFlashdata('success', 'All pending migrations have been run successfully.');
         } catch (\Throwable $e) {
-            session()->setFlashdata('error', 'Migration failed: ' . $e->getMessage());
+            $detail = $e->getMessage()
+                . ' | File: ' . $e->getFile() . ':' . $e->getLine();
+            session()->setFlashdata('error', 'Migration failed: ' . $detail);
         }
         return redirect()->to(base_url('web/migrations'));
+    }
+
+    /**
+     * Run a single migration file by version string and return rich JSON error info.
+     */
+    public function runSingleMigration(): \CodeIgniter\HTTP\ResponseInterface
+    {
+        if (! $this->isAdmin()) {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+        }
+
+        $version = $this->request->getPost('version');
+        if (empty($version)) {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'No version provided']);
+        }
+
+        $db = \Config\Database::connect();
+
+        try {
+            // Build the class name from the migration file
+            $migrationPath = APPPATH . 'Database/Migrations/';
+            $files         = glob($migrationPath . $version . '_*.php') ?: [];
+
+            if (empty($files)) {
+                return $this->response->setJSON([
+                    'status'  => 'error',
+                    'message' => 'Migration file not found for version: ' . $version,
+                ]);
+            }
+
+            $filename  = basename($files[0], '.php');           // e.g. 2026-03-29-000006_AddTicketReservation
+            $className = preg_replace('/^\d{4}-\d{2}-\d{2}-\d{6}_/', '', $filename); // AddTicketReservation
+
+            require_once $files[0];
+            $fqcn = 'App\\Database\\Migrations\\' . $className;
+
+            if (! class_exists($fqcn)) {
+                return $this->response->setJSON([
+                    'status'  => 'error',
+                    'message' => 'Class ' . $fqcn . ' not found in file',
+                ]);
+            }
+
+            $forge     = \Config\Database::forge();
+            $migration = new $fqcn($forge, $db);
+            $migration->up();
+
+            // Record it as applied in the migrations table
+            if ($db->tableExists('migrations')) {
+                $existing = $db->table('migrations')->where('version', $version)->countAllResults();
+                if (! $existing) {
+                    $db->table('migrations')->insert([
+                        'version' => $version,
+                        'class'   => $fqcn,
+                        'group'   => 'default',
+                        'namespace' => 'App',
+                        'time'    => time(),
+                        'batch'   => ($db->table('migrations')->selectMax('batch')->get()->getRow()->batch ?? 0) + 1,
+                    ]);
+                }
+            }
+
+            return $this->response->setJSON([
+                'status'  => 'success',
+                'message' => $className . ' applied successfully.',
+            ]);
+
+        } catch (\Throwable $e) {
+            $dbError = $db->error();
+            return $this->response->setJSON([
+                'status'        => 'error',
+                'message'       => $e->getMessage(),
+                'file'          => $e->getFile() . ':' . $e->getLine(),
+                'db_error_code' => $dbError['code']  ?? null,
+                'db_error_msg'  => $dbError['message'] ?? null,
+                'trace'         => array_slice(
+                    array_map(fn($f) => ($f['file'] ?? '') . ':' . ($f['line'] ?? '') . ' ' . ($f['function'] ?? ''), $e->getTrace()),
+                    0, 8
+                ),
+            ]);
+        }
     }
 }

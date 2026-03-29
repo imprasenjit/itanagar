@@ -128,9 +128,15 @@ class ApiBaseController extends BaseController
 
     // ── Ticket helpers ────────────────────────────────────────────────────────
 
-    protected function getTicketAvailability(int $ticket, int $web_id): bool
+    /**
+     * Returns true if the ticket is free to add to cart.
+     *
+     * @param int $excludeUserId  The current user's ID — their own existing hold
+     *                            must not block them from refreshing their cart.
+     */
+    protected function getTicketAvailability(int $ticket, int $web_id, int $excludeUserId = 0): bool
     {
-        return count($this->cartOrderModel->get_ticket_availability($ticket, $web_id)) === 0;
+        return count($this->cartOrderModel->get_ticket_availability($ticket, $web_id, $excludeUserId)) === 0;
     }
 
     protected function _getFirstAvailableTickets($range): array

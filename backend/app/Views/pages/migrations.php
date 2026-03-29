@@ -53,16 +53,17 @@
                             <th>Migration File</th>
                             <th style="width:210px">Version</th>
                             <th style="width:110px" class="text-center">Status</th>
+                        <th style="width:90px"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php if (empty($migrationList)): ?>
                         <tr>
-                            <td colspan="4" class="text-center text-muted py-4">No migration files found.</td>
+                            <td colspan="5" class="text-center text-muted py-4">No migration files found.</td>
                         </tr>
                         <?php else: ?>
                         <?php foreach ($migrationList as $i => $m): ?>
-                        <tr>
+                        <tr id="row-<?= $i ?>">
                             <td class="text-muted small"><?= $i + 1 ?></td>
                             <td><code class="text-dark"><?= esc($m['filename']) ?></code></td>
                             <td class="small text-muted font-monospace"><?= esc($m['version']) ?></td>
@@ -70,8 +71,21 @@
                                 <?php if ($m['status'] === 'Applied'): ?>
                                 <span class="badge bg-success"><i class="bi bi-check-lg me-1"></i>Applied</span>
                                 <?php else: ?>
-                                <span class="badge bg-warning text-dark"><i class="bi bi-clock me-1"></i>Pending</span>
+                                <span class="badge bg-warning text-dark" id="badge-<?= $i ?>"><i class="bi bi-clock me-1"></i>Pending</span>
                                 <?php endif; ?>
+                            </td>
+                            <td class="text-center">
+                                <?php if ($m['status'] !== 'Applied'): ?>
+                                <button class="btn btn-sm btn-outline-primary py-0 px-2"
+                                    onclick="runSingle('<?= esc($m['version']) ?>', <?= $i ?>)">
+                                    <i class="bi bi-play-fill"></i> Run
+                                </button>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <tr id="err-<?= $i ?>" class="d-none">
+                            <td colspan="5" class="p-0">
+                                <div class="alert alert-danger mb-0 rounded-0 small" id="errmsg-<?= $i ?>"></div>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -83,4 +97,41 @@
     </div>
 
 </section>
-<script>$(function () { $('#migrationsTable').DataTable({ paging: false }); });</script>
+<script>
+$(function () { /* DataTable removed — colspan error rows are incompatible with DataTables */ });
+
+function runSingle(version, idx) {
+    const btn = event.target.closest('button');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Running...';
+    $('#err-' + idx).addClass('d-none');
+
+    $.ajax({
+        url: '<?= base_url('web/runSingleMigration') ?>',
+        method: 'POST',
+        data: { version: version, <?= csrf_token() ?>: '<?= csrf_hash() ?>' },
+        dataType: 'json',
+        success: function(res) {
+            if (res.status === 'success') {
+                $('#badge-' + idx).removeClass('bg-warning text-dark').addClass('bg-success').html('<i class="bi bi-check-lg me-1"></i>Applied');
+                btn.closest('td').html('');
+            } else {
+                let html = '<strong>Error:</strong> ' + res.message;
+                if (res.db_error_msg) html += '<br><strong>DB:</strong> [' + res.db_error_code + '] ' + res.db_error_msg;
+                if (res.file)        html += '<br><strong>File:</strong> ' + res.file;
+                if (res.trace)       html += '<br><strong>Trace:</strong><br>' + res.trace.join('<br>');
+                $('#errmsg-' + idx).html(html);
+                $('#err-' + idx).removeClass('d-none');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="bi bi-play-fill"></i> Retry';
+            }
+        },
+        error: function(xhr) {
+            $('#errmsg-' + idx).text('HTTP ' + xhr.status + ': ' + xhr.responseText.substring(0, 300));
+            $('#err-' + idx).removeClass('d-none');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="bi bi-play-fill"></i> Retry';
+        }
+    });
+}
+</script>

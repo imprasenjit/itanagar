@@ -166,5 +166,30 @@ class GamesController extends ApiBaseController
         ]);
         return $this->json([], true, 'Message sent successfully');
     }
+
+    // ── Cron: release expired ticket reservations ────────────────────────────
+
+    /**
+     * Deletes unpaid cart rows whose reservation window has passed.
+     *
+     * Secure this by setting CRON_SECRET in your .env and calling:
+     *   GET /api/cron/release-reservations?key=<CRON_SECRET>
+     *
+     * Add to crontab (every 5 minutes):
+     *   * /5 * * * * curl -s "https://yourdomain.com/api/cron/release-reservations?key=SECRET"
+     */
+    public function release_reservations()
+    {
+        $secret = env('CRON_SECRET', '');
+        $key    = $this->request->getGet('key') ?? '';
+
+        // Reject if no secret is configured or key does not match.
+        if (empty($secret) || !hash_equals($secret, $key)) {
+            return $this->error('Unauthorized', 403);
+        }
+
+        $released = $this->cartOrderModel->release_expired_reservations();
+        return $this->json(['released' => $released], true, 'Expired reservations released');
+    }
 }
 
