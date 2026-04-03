@@ -75,6 +75,7 @@ $routes->post('web/runSingleMigration',   'MigrationController::runSingleMigrati
 $routes->get('web/rbac',                 'RoleController::rbac');
 $routes->post('web/rbacSave',            'RoleController::rbacSave');
 $routes->get('web/roles',                'RoleController::roles');
+$routes->get('web/addRole',              'RoleController::addRole');
 $routes->post('web/addRole',             'RoleController::addRole');
 $routes->get('web/editRole/(:num)',       'RoleController::editRole/$1');
 $routes->post('web/updateRole',          'RoleController::updateRole');

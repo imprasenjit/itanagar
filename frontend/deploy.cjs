@@ -31,7 +31,7 @@ const config = {
     password: FTP_PASS,
     host: FTP_HOST,
     port: parseInt(FTP_PORT, 10),
-    localRoot: __dirname + '/dist',
+    localRoot: __dirname + '/../public',
     remoteRoot: FTP_REMOTE_DIR,
     include: ['*', '**/*'],
     deleteRemote: false,

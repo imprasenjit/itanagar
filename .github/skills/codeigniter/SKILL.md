@@ -2,7 +2,7 @@
 name: codeigniter
 description: 'CodeIgniter 4 patterns, conventions, and rules for the Itanagarchoice project. Use when writing or editing controllers, models, routes, helpers, filters, or any backend PHP file in backend/app/. Covers: controller inheritance, model query conventions, route registration, session & auth guards, JSON API responses, form validation, XSS-clean input, flash messages, view loading, helper loading, config items, Razorpay integration, and CI4 transaction patterns.'
 argument-hint: 'Optional: the feature area (e.g. "auth", "payment", "cart", "model query", "API endpoint")'
-model: GPT-5.1-Codex-Mini (Preview) (copilot)
+model: GROK CODE FAST 1
 ---
 
 # CodeIgniter 4 — Project Skill

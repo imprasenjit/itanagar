@@ -2,6 +2,7 @@
 name: frontend-design
 description: 'Expert React.js + Tailwind CSS frontend design skill. Use when building React components, designing UIs, applying Tailwind utility classes, creating responsive layouts, designing dashboards, landing pages, forms, modals, cards, navbars, tables, or any web UI task. Triggers: React component, Tailwind CSS, UI design, responsive layout, component library, webapp design, frontend, design system, dark mode, animation, accessibility.'
 argument-hint: 'Describe the UI to build, e.g. "pricing card", "admin dashboard layout", "responsive navbar with mobile menu"'
+Model: GROK CODE FAST 1
 ---
 
 # Frontend Design — React + Tailwind CSS

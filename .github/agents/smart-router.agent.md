@@ -30,7 +30,7 @@ Trigger when the task involves **planning before writing code**:
 - Deciding folder structure / file layout for a new feature
 - Any request phrased as "how should I…", "what is the best approach…", "plan…", "design…"
 
-### 2 → `deep-refactor` (GPT-5.1-Codex-Mini)
+### 2 → `deep-refactor` (GROK CODE FAST 1)
 Trigger when the task involves **large-scale structural changes**:
 - Refactoring across multiple files
 - Performance optimisation requiring significant rewrites
@@ -38,33 +38,33 @@ Trigger when the task involves **large-scale structural changes**:
 - Cross-cutting concerns (error handling, logging, security hardening)
 - Migrating a framework or library
 
-### 3 → `frontend-helper` (GPT-5.1-Codex-Mini)
+### 3 → `frontend-helper` (GROK CODE FAST 1)
 Trigger when the primary concern is **UI or client-side code**:
 - React / Vue / Svelte components, Tailwind / CSS styling
 - Responsive layouts, animations, accessibility
 - Frontend state management, routing, form handling
 - Any `.tsx`, `.jsx`, `.vue`, `.html`, `.css`, `.scss` file work
 
-### 4 → `backend-helper` (GPT-5.1-Codex-Mini)
+### 4 → `backend-helper` (GROK CODE FAST 1)
 Trigger when the primary concern is **server-side logic**:
 - REST / GraphQL API endpoints
 - Database queries, ORM models, migrations
 - Authentication, authorisation, middleware
 - PHP, Python, Node.js, Go or other backend language work
 
-### 5 → `unit-test-generator` (GPT-5.1-Codex-Mini)
+### 5 → `unit-test-generator` (GROK CODE FAST 1)
 Trigger when the task is specifically about **writing or fixing tests**:
 - Creating test files or test cases
 - Mocking dependencies
 - Increasing coverage for a specific function or class
 
-### 6 → `doc-writer` (GPT-5.1-Codex-Mini)
+### 6 → `doc-writer` (GROK CODE FAST 1)
 Trigger when the task is primarily about **adding or improving documentation**:
 - PHPDoc / JSDoc / docstrings / type hints
 - README sections, inline comments, API docs
 - Changelog or migration guide entries
 
-### 7 → `quick-completion` (GPT-5.1-Codex-Mini)
+### 7 → `quick-completion` (GROK CODE FAST 1)
 Default for everything else — **small, contained, low-risk changes**:
 - Single-line fixes, typo corrections
 - Renaming variables or functions in one file

@@ -68,7 +68,8 @@ class PaymentController extends ApiBaseController
         // ── Re-validate: confirm every ticket is still ours and extend TTL ────
         // Re-fetch the cart to detect items silently removed by the cron
         // (expired reservation cleanup) since the page loaded.
-        $freshCart = $this->cartOrderModel->order_data($userId);
+        // Use $customUserId for guests so we look under the right session identity.
+        $freshCart = $this->cartOrderModel->order_data($customUserId ?? $userId);
         if (count($freshCart) !== count($cart)) {
             return $this->error(
                 'One or more tickets in your cart are no longer available. ' .

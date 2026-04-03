@@ -34,14 +34,23 @@ class RoleController extends BaseController
         if ($this->isAdmin() === false) {
             return $this->loadThis();
         }
+
+        if ($this->request->getMethod() === 'get') {
+            $this->global['pageTitle'] = 'Itanagarchoice : Add Role';
+            return $this->loadViews('pages/addRole', $this->global, [], null);
+        }
+
         if (! $this->validate(['name' => 'required|max_length[64]|is_unique[tbl_roles.role]'])) {
             session()->setFlashdata('error', implode(' ', $this->validator->getErrors()));
-            return redirect()->to('web/roles');
+            return redirect()->to('web/addRole');
         }
         $name  = esc($this->request->getPost('name', true));
         $model = model(\App\Models\RolePermissionModel::class);
-        $model->addRole($name);
-        session()->setFlashdata('success', 'Role "' . $name . '" added successfully.');
+        if ($model->addRole($name)) {
+            session()->setFlashdata('success', 'Role "' . $name . '" added successfully.');
+        } else {
+            session()->setFlashdata('error', 'Failed to add role. Please try again.');
+        }
         return redirect()->to('web/roles');
     }
 
