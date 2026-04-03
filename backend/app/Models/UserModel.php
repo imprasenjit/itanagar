@@ -115,7 +115,7 @@ class UserModel extends Model
     public function getUserInfo(int $userId)
     {
         return $this->db->table('tbl_users')
-            ->select('userId, name, email, mobile, roleId')
+            ->select('userId, name, email, mobile, roleId, phonecode')
             ->where('isDeleted', 0)
             ->where('roleId !=', 1)
             ->where('userId',    $userId)
@@ -135,7 +135,7 @@ class UserModel extends Model
     public function getUserInfoWithRole(int $userId)
     {
         return $this->db->table('tbl_users as u')
-            ->select('u.userId, u.name, u.email, u.mobile, u.roleId, u.bank, u.paypal, u.phonecode, r.role')
+            ->select('u.userId, u.name, u.email, u.mobile, u.roleId, u.phonecode, r.role')
             ->join('tbl_roles as r', 'r.roleId = u.roleId', 'left')
             ->where('u.userId', $userId)
             ->get()->getRow();

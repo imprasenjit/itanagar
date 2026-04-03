@@ -98,6 +98,7 @@ $routes->get('web/withdrawl_data',                  'FinanceController::withdraw
 $routes->get('web/tickets_data',                    'FinanceController::tickets_data');
 $routes->get('web/refund_data',                     'FinanceController::refund_data');
 $routes->get('web/user_wallet_data/(:num)',          'FinanceController::user_wallet_data/$1');
+$routes->get('web/user_order/(:num)',              'FinanceController::user_order/$1');
 $routes->get('web/user_order_data/(:num)',           'FinanceController::user_order_data/$1');
 $routes->get('web/detail_data/(:num)',               'GameController::detail_data/$1');
 

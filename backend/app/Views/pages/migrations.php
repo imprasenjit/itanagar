@@ -169,7 +169,7 @@ function runSingle(version, idx) {
         success: function(res) {
             if (res.status === 'success') {
                 $('#badge-' + idx).removeClass('bg-warning text-dark').addClass('bg-success').html('<i class="bi bi-check-lg me-1"></i>Applied');
-                btn.closest('td').html('');
+                $(btn).closest('td').html('');
             } else {
                 let html = '<strong>Error:</strong> ' + res.message;
                 if (res.db_error_msg) html += '<br><strong>DB:</strong> [' + res.db_error_code + '] ' + res.db_error_msg;

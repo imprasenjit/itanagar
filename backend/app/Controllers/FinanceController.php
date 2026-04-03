@@ -740,6 +740,25 @@ class FinanceController extends BaseController
         return $this->response->setJSON(['draw' => $draw, 'recordsTotal' => $total, 'recordsFiltered' => $filtered, 'data' => $data]);
     }
 
+    public function user_order(int $userId = 0): string|\CodeIgniter\HTTP\RedirectResponse
+    {
+        if ($this->isAdmin() === false) {
+            return $this->loadThis();
+        }
+        if ($userId === 0) {
+            return redirect()->to(base_url('userListing'));
+        }
+
+        $userInfo = $this->userModel->getUserInfoWithRole($userId);
+        if ($userInfo === null) {
+            return redirect()->to(base_url('userListing'));
+        }
+
+        $data = ['userInfo' => $userInfo, 'userId' => $userId];
+        $this->global['pageTitle'] = 'Itanagarchoice : Orders — ' . esc($userInfo->name);
+        return $this->loadViews('pages/user_order', $this->global, $data, null);
+    }
+
     public function user_order_data(int $userId = 0)
     {
         if ($this->isAdmin() === false) {

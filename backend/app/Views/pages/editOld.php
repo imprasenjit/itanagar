@@ -69,7 +69,8 @@ $roleId = $userInfo->roleId;
                                     <select class="form-select" name="phonecode" required>
                                         <option value="">Choose Country Phone Code</option>
                                         <?php foreach ($country as $c): ?>
-                                        <option value="<?= $c->phonecode ?>" <?= $userInfo->phonecode == $c->phonecode ? 'selected' : '' ?>><?= $c->name . " (+" . $c->phonecode . ")" ?></option>
+                                        <?php $code = $c->phonecode ?? ''; $saved = $userInfo->phonecode ?? '91'; ?>
+                                        <option value="<?= $code ?>" <?= $saved == $code ? 'selected' : '' ?>><?= esc($c->name) . ($code !== '' ? " (+" . $code . ")" : '') ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>

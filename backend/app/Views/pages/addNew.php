@@ -66,7 +66,7 @@
                                     <label class="form-label">Phone Code</label>
                                     <select class="form-select" name="phonecode" id="phonecode" required>
                                         <?php foreach ($country as $c): ?>
-                                        <option value="<?= $c->phonecode ?>"><?= $c->name . " (+" . $c->phonecode . ")" ?></option>
+                                        <option value="<?= $c->phonecode ?>" <?= $c->phonecode === '91' ? 'selected' : '' ?>><?= esc($c->name) . " (+" . $c->phonecode . ")" ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -97,4 +97,4 @@
         </div>
     </div>
 </section>
-<script src="<?= base_url() ?>public/admin/js/addUser.js" type="text/javascript"></script>
+<script src="<?= base_url('admin/js/addUser.js') ?>" type="text/javascript"></script>

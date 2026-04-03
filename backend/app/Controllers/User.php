@@ -356,7 +356,6 @@ class User extends BaseController
             $phone   = $r->phonecode != '' ? '+' . esc($r->phonecode) : '';
             $badge   = $r->role == 'Admin' ? 'bg-danger' : 'bg-primary';
             $actions = '<a class="btn btn-sm btn-light" href="' . base_url('login-history/' . $r->userId) . '" title="Login History"><i class="bi bi-clock-history"></i></a> '
-                     . '<a class="btn btn-sm btn-info" href="' . base_url('web/user_order/' . $r->userId) . '" title="Orders"><i class="bi bi-bag-fill"></i></a> '
                      . '<a class="btn btn-sm btn-primary" href="' . base_url('editOld/' . $r->userId) . '" title="Edit"><i class="bi bi-pencil-fill"></i></a> '
                      . '<a class="btn btn-sm btn-danger deleteUser" href="#" data-userid="' . $r->userId . '" title="Delete"><i class="bi bi-trash3-fill"></i></a>';
             $data[] = [
@@ -390,8 +389,7 @@ class User extends BaseController
         foreach ($rows as $r) {
             $phone   = $r->phonecode != '' ? '+' . esc($r->phonecode) : '';
             $actions = '<a class="btn btn-sm btn-light" href="' . base_url('login-history/' . $r->userId) . '" title="Login History"><i class="bi bi-clock-history"></i></a> '
-                     . '<a class="btn btn-sm btn-info" href="' . base_url('web/user_order/' . $r->userId) . '" title="Orders"><i class="bi bi-bag-fill"></i></a> '
-                     . '<a class="btn btn-sm btn-secondary" href="' . base_url('web/user_wallet/' . $r->userId) . '" title="Wallet"><i class="bi bi-wallet2"></i></a>';
+                     . '<a class="btn btn-sm btn-info" href="' . base_url('web/user_order/' . $r->userId) . '" title="Orders"><i class="bi bi-bag-fill"></i></a>';
             $data[] = [
                 'name'       => esc($r->name),
                 'email'      => esc($r->email),
