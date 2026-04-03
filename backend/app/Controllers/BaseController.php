@@ -16,7 +16,7 @@ abstract class BaseController extends Controller
     protected string $lastLogin = '';
     protected array  $global    = [];
 
-    protected $helpers = ['url', 'cias_helper'];
+    protected $helpers = ['url', 'form', 'cias_helper'];
 
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger): void
     {

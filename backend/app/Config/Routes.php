@@ -71,6 +71,7 @@ $routes->get('web/dashboard_txn_data',   'SettingsController::dashboard_txn_data
 $routes->get('web/migrations',           'MigrationController::migrations');
 $routes->post('web/runMigrations',       'MigrationController::runMigrations');
 $routes->post('web/runSingleMigration',   'MigrationController::runSingleMigration');
+$routes->post('web/runSeeder',            'MigrationController::runSeeder');
 
 // ── RoleController — role CRUD and RBAC permission assignment
 $routes->get('web/rbac',                 'RoleController::rbac');

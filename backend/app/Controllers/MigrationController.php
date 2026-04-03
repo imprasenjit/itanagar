@@ -63,11 +63,22 @@ class MigrationController extends BaseController
         $ranCount     = count(array_filter($migrationList, fn($m) => $m['status'] === 'Applied'));
         $pendingCount = $totalCount - $ranCount;
 
+        // Build seeder status list
+        $seederList = [
+            [
+                'name'        => 'PermissionsSeeder',
+                'label'       => 'Permissions Seeder',
+                'description' => 'Seeds tbl_permissions with all RBAC permission keys.',
+                'rowCount'    => $db->table('tbl_permissions')->countAll(),
+            ],
+        ];
+
         $data = [
             'migrationList' => $migrationList,
             'totalCount'    => $totalCount,
             'ranCount'      => $ranCount,
             'pendingCount'  => $pendingCount,
+            'seederList'    => $seederList,
         ];
 
         $this->global['pageTitle'] = 'Itanagarchoice : Migrations';
@@ -168,6 +179,41 @@ class MigrationController extends BaseController
                     array_map(fn($f) => ($f['file'] ?? '') . ':' . ($f['line'] ?? '') . ' ' . ($f['function'] ?? ''), $e->getTrace()),
                     0, 8
                 ),
+            ]);
+        }
+    }
+
+    /**
+     * Run a named seeder class and return JSON status.
+     * POST web/runSeeder  { seeder: 'PermissionsSeeder' }
+     */
+    public function runSeeder(): \CodeIgniter\HTTP\ResponseInterface
+    {
+        if (! $this->isAdmin()) {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+        }
+
+        // Allowlist — only known seeders can be invoked from the UI
+        $allowed = ['PermissionsSeeder'];
+
+        $seederName = $this->request->getPost('seeder');
+        if (empty($seederName) || ! in_array($seederName, $allowed, true)) {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Invalid or unknown seeder.']);
+        }
+
+        try {
+            $seeder = \Config\Database::seeder();
+            $seeder->call('App\\Database\\Seeds\\' . $seederName);
+
+            return $this->response->setJSON([
+                'status'  => 'success',
+                'message' => $seederName . ' ran successfully.',
+            ]);
+        } catch (\Throwable $e) {
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => $e->getMessage(),
+                'file'    => $e->getFile() . ':' . $e->getLine(),
             ]);
         }
     }

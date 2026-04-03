@@ -94,7 +94,62 @@
                 </table>
             </div>
         </div>
-    </div>
+    </div><!-- /.card migrations -->
+
+    <!-- ── Seeders ─────────────────────────────────────────────────────── -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <h4 class="card-title mb-0"><i class="bi bi-seedling me-2"></i>Database Seeders</h4>
+            <p class="text-muted small mb-0 mt-1">Run seeders to populate reference / lookup data.</p>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Seeder</th>
+                            <th>Description</th>
+                            <th style="width:120px" class="text-center">Rows in Table</th>
+                            <th style="width:90px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($seederList as $si => $s): ?>
+                        <tr id="srow-<?= $si ?>">
+                            <td class="text-muted small"><?= $si + 1 ?></td>
+                            <td><code class="text-dark"><?= esc($s['name']) ?></code></td>
+                            <td class="small text-muted"><?= esc($s['description']) ?></td>
+                            <td class="text-center">
+                                <?php if ($s['rowCount'] > 0): ?>
+                                <span class="badge bg-success" id="sbadge-<?= $si ?>">
+                                    <i class="bi bi-check-lg me-1"></i><?= $s['rowCount'] ?> rows
+                                </span>
+                                <?php else: ?>
+                                <span class="badge bg-warning text-dark" id="sbadge-<?= $si ?>">
+                                    <i class="bi bi-exclamation-triangle me-1"></i>Empty
+                                </span>
+                                <?php endif; ?>
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-outline-success py-0 px-2"
+                                    id="sbtn-<?= $si ?>"
+                                    onclick="runSeeder('<?= esc($s['name']) ?>', <?= $si ?>)">
+                                    <i class="bi bi-play-fill"></i> Run
+                                </button>
+                            </td>
+                        </tr>
+                        <tr id="serr-<?= $si ?>" class="d-none">
+                            <td colspan="5" class="p-0">
+                                <div class="alert alert-danger mb-0 rounded-0 small" id="serrmsg-<?= $si ?>"></div>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div><!-- /.card seeders -->
 
 </section>
 <script>
@@ -129,6 +184,42 @@ function runSingle(version, idx) {
         error: function(xhr) {
             $('#errmsg-' + idx).text('HTTP ' + xhr.status + ': ' + xhr.responseText.substring(0, 300));
             $('#err-' + idx).removeClass('d-none');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="bi bi-play-fill"></i> Retry';
+        }
+    });
+}
+
+function runSeeder(seederName, idx) {
+    const btn = document.getElementById('sbtn-' + idx);
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Running...';
+    document.getElementById('serr-' + idx).classList.add('d-none');
+
+    $.ajax({
+        url: '<?= base_url('web/runSeeder') ?>',
+        method: 'POST',
+        data: { seeder: seederName, <?= csrf_token() ?>: '<?= csrf_hash() ?>' },
+        dataType: 'json',
+        success: function(res) {
+            if (res.status === 'success') {
+                const badge = document.getElementById('sbadge-' + idx);
+                badge.className = 'badge bg-success';
+                badge.innerHTML = '<i class="bi bi-check-lg me-1"></i>Seeded';
+                btn.disabled = false;
+                btn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Re-run';
+            } else {
+                let html = '<strong>Error:</strong> ' + res.message;
+                if (res.file) html += '<br><strong>File:</strong> ' + res.file;
+                document.getElementById('serrmsg-' + idx).innerHTML = html;
+                document.getElementById('serr-' + idx).classList.remove('d-none');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="bi bi-play-fill"></i> Retry';
+            }
+        },
+        error: function(xhr) {
+            document.getElementById('serrmsg-' + idx).textContent = 'HTTP ' + xhr.status + ': ' + xhr.responseText.substring(0, 300);
+            document.getElementById('serr-' + idx).classList.remove('d-none');
             btn.disabled = false;
             btn.innerHTML = '<i class="bi bi-play-fill"></i> Retry';
         }

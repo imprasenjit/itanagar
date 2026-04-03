@@ -87,6 +87,7 @@ class UserModel extends Model
         return $this->db->table('tbl_roles')
             ->select('roleId, role')
             ->where('roleId !=', 1)
+            ->where('role !=', ROLE_CUSTOMER)
             ->get()->getResult();
     }
 
