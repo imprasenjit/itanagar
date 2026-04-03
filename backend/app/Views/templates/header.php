@@ -56,6 +56,7 @@
 
             // Determine which section the current page belongs to
             $isUserMgmt = strpos($uri, 'userListing') !== false
+                || strpos($uri, 'customerListing') !== false
                 || strpos($uri, 'web/roles') !== false
                 || strpos($uri, 'web/editRole') !== false
                 || $uri === 'web/rbac';
@@ -110,6 +111,11 @@
               <li class="submenu-item <?= strpos($uri, 'userListing') !== false ? 'active' : '' ?>">
                 <a href="<?= base_url('userListing') ?>" class="submenu-link">
                   <i class="bi bi-people me-1"></i> Users
+                </a>
+              </li>
+              <li class="submenu-item <?= strpos($uri, 'customerListing') !== false ? 'active' : '' ?>">
+                <a href="<?= base_url('customerListing') ?>" class="submenu-link">
+                  <i class="bi bi-person-hearts me-1"></i> Customers
                 </a>
               </li>
               <?php endif; ?>

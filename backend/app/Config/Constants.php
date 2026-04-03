@@ -23,8 +23,9 @@ defined('APP_NAMESPACE') || define('APP_NAMESPACE', 'App');
 defined('APP_NAME')   || define('APP_NAME',   'Itanagarchoice');
 defined('APP_TYPE')   || define('APP_TYPE',   'ERP');
 defined('APP_LOGO')   || define('APP_LOGO',   'public/admin/images/jaihind.jpg');
-defined('ROLE_ADMIN') || define('ROLE_ADMIN', 'Admin');
-defined('TIMEVAL')    || define('TIMEVAL',     '00:00');
+defined('ROLE_ADMIN')     || define('ROLE_ADMIN',     'Admin');
+defined('ROLE_CUSTOMER')  || define('ROLE_CUSTOMER',  'Customer');
+defined('TIMEVAL')        || define('TIMEVAL',         '00:00');
 
 /*
  | --------------------------------------------------------------------------

@@ -50,13 +50,13 @@ class RolePermissionModel extends Model
      */
     public function saveRolePermissions(int $roleId, array $keys): void
     {
-        $this->db->trans_start();
+        $this->db->transBegin();
         $this->db->table('tbl_role_permissions')->where('role_id', $roleId)->delete();
         if (!empty($keys)) {
             $batch = array_map(fn($k) => ['role_id' => $roleId, 'permission_key' => $k], $keys);
             $this->db->table('tbl_role_permissions')->insertBatch($batch);
         }
-        $this->db->trans_complete();
+        $this->db->transCommit();
     }
 
     public function getAllRoles(): array

@@ -12,7 +12,8 @@ class UserModel extends Model
             ->select('BaseTbl.userId')
             ->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left')
             ->where('BaseTbl.isDeleted', 0)
-            ->where('BaseTbl.roleId !=', 1);
+            ->where('BaseTbl.roleId !=', 1)
+            ->where('Role.role !=', ROLE_CUSTOMER);
         if (!empty($searchText)) {
             $builder->groupStart()
                 ->like('BaseTbl.email',  $searchText)
@@ -30,6 +31,45 @@ class UserModel extends Model
             ->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left')
             ->where('BaseTbl.isDeleted', 0)
             ->where('BaseTbl.roleId !=', 1)
+            ->where('Role.role !=', ROLE_CUSTOMER)
+            ->orderBy('BaseTbl.userId', 'DESC')
+            ->limit($limit, $offset);
+        if (!empty($searchText)) {
+            $builder->groupStart()
+                ->like('BaseTbl.email',   $searchText)
+                ->orLike('BaseTbl.name',  $searchText)
+                ->orLike('BaseTbl.mobile', $searchText)
+                ->groupEnd();
+        }
+        return $builder->get()->getResult();
+    }
+
+    // ── Customer-specific listing (Customer role only) ────────────────────────
+
+    public function customerListingCount(string $searchText = ''): int
+    {
+        $builder = $this->db->table('tbl_users as BaseTbl')
+            ->select('BaseTbl.userId')
+            ->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left')
+            ->where('BaseTbl.isDeleted', 0)
+            ->where('Role.role', ROLE_CUSTOMER);
+        if (!empty($searchText)) {
+            $builder->groupStart()
+                ->like('BaseTbl.email',  $searchText)
+                ->orLike('BaseTbl.name', $searchText)
+                ->orLike('BaseTbl.mobile', $searchText)
+                ->groupEnd();
+        }
+        return $builder->get()->getNumRows();
+    }
+
+    public function customerListing(string $searchText, int $limit, int $offset)
+    {
+        $builder = $this->db->table('tbl_users as BaseTbl')
+            ->select('BaseTbl.userId, BaseTbl.email, BaseTbl.name, BaseTbl.mobile, BaseTbl.phonecode, BaseTbl.createdDtm')
+            ->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left')
+            ->where('BaseTbl.isDeleted', 0)
+            ->where('Role.role', ROLE_CUSTOMER)
             ->orderBy('BaseTbl.userId', 'DESC')
             ->limit($limit, $offset);
         if (!empty($searchText)) {

@@ -44,7 +44,7 @@ class RoleController extends BaseController
             session()->setFlashdata('error', implode(' ', $this->validator->getErrors()));
             return redirect()->to('web/addRole');
         }
-        $name  = esc($this->request->getPost('name', true));
+        $name  = esc($this->request->getPost('name'));
         $model = model(\App\Models\RolePermissionModel::class);
         if ($model->addRole($name)) {
             session()->setFlashdata('success', 'Role "' . $name . '" added successfully.');
@@ -64,6 +64,10 @@ class RoleController extends BaseController
         if (! $data['role']) {
             return redirect()->to('web/roles');
         }
+        if ($data['role']->role === ROLE_CUSTOMER) {
+            session()->setFlashdata('error', 'The Customer role cannot be edited.');
+            return redirect()->to('web/roles');
+        }
         $this->global['pageTitle'] = 'Itanagarchoice : Edit Role';
         return $this->loadViews('pages/roles_edit', $this->global, $data, null);
     }
@@ -73,13 +77,18 @@ class RoleController extends BaseController
         if ($this->isAdmin() === false) {
             return $this->loadThis();
         }
-        $id = (int) $this->request->getPost('id');
+        $id    = (int) $this->request->getPost('id');
+        $model = model(\App\Models\RolePermissionModel::class);
+        $role  = $model->getRoleById($id);
+        if ($role && $role->role === ROLE_CUSTOMER) {
+            session()->setFlashdata('error', 'The Customer role cannot be edited.');
+            return redirect()->to('web/roles');
+        }
         if (! $this->validate(['name' => 'required|max_length[64]|is_unique[tbl_roles.role,roleId,' . $id . ']'])) {
             session()->setFlashdata('error', implode(' ', $this->validator->getErrors()));
             return redirect()->to("web/editRole/$id");
         }
-        $name  = esc($this->request->getPost('name', true));
-        $model = model(\App\Models\RolePermissionModel::class);
+        $name  = esc($this->request->getPost('name'));
         $model->updateRole($id, $name);
         session()->setFlashdata('success', 'Role updated successfully.');
         return redirect()->to('web/roles');
@@ -91,9 +100,15 @@ class RoleController extends BaseController
             echo json_encode(['status' => 'access']);
             return;
         }
-        $id = (int) $this->request->getPost('userId');
+        $id    = (int) $this->request->getPost('userId');
         if ($id === 1) {
             echo json_encode(['status' => false, 'msg' => 'Cannot delete the Super Admin role.']);
+            return;
+        }
+        $model = model(\App\Models\RolePermissionModel::class);
+        $role  = $model->getRoleById($id);
+        if ($role && $role->role === ROLE_CUSTOMER) {
+            echo json_encode(['status' => false, 'msg' => 'Cannot delete the Customer role.']);
             return;
         }
         $model  = model(\App\Models\RolePermissionModel::class);
@@ -111,14 +126,17 @@ class RoleController extends BaseController
         $roles = $model->getAllRoles();
         $data  = [];
         foreach ($roles as $role) {
-            $superBadge = (int)$role->roleId === 1 ? ' <span class="badge bg-warning text-dark ms-1">Super Admin</span>' : '';
-            if ((int)$role->roleId !== 1) {
+            $isSuper    = (int)$role->roleId === 1;
+            $isCustomer = $role->role === ROLE_CUSTOMER;
+            $extraBadge = $isSuper    ? ' <span class="badge bg-warning text-dark ms-1">Super Admin</span>'
+                        : ($isCustomer ? ' <span class="badge bg-success ms-1">Customer</span>' : '');
+            if (!$isSuper && !$isCustomer) {
                 $actions = '<a href="' . base_url('web/editRole/' . $role->roleId) . '" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i> Edit</a> '
                          . '<button class="btn btn-sm btn-danger btn-delete-role" data-id="' . $role->roleId . '"><i class="bi bi-trash3-fill"></i> Delete</button>';
             } else {
                 $actions = '<span class="text-muted small">Protected</span>';
             }
-            $data[] = ['roleId' => esc($role->roleId), 'role' => esc($role->role) . $superBadge, 'actions' => $actions];
+            $data[] = ['roleId' => esc($role->roleId), 'role' => esc($role->role) . $extraBadge, 'actions' => $actions];
         }
         $count = count($data);
         return $this->response->setJSON(['draw' => $draw, 'recordsTotal' => $count, 'recordsFiltered' => $count, 'data' => $data]);
@@ -136,13 +154,18 @@ class RoleController extends BaseController
         if (! $db->tableExists('tbl_permissions')) {
             $migrate = \Config\Services::migrations();
             $migrate->latest();
-            \Config\Database::seeder()->call('PermissionsSeeder');
         }
 
         $model = model(\App\Models\RolePermissionModel::class);
+        $permissions = $model->getAllPermissions();
+        if (empty($permissions)) {
+            \Config\Database::seeder()->call('PermissionsSeeder');
+            $permissions = $model->getAllPermissions();
+        }
+
         $data  = [
             'roles'       => $model->getAllRoles(),
-            'permissions' => $model->getAllPermissions(),
+            'permissions' => $permissions,
             'assigned'    => $model->getAllAssigned(),
         ];
         $this->global['pageTitle'] = 'Itanagarchoice : Role Permissions';

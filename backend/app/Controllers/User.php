@@ -59,6 +59,18 @@ class User extends BaseController
         return $this->loadViews('pages/users', $this->global, $data, null);
     }
 
+    // ── Customer Listing (Customer-role users only) ───────────────────────────
+
+    public function customerListing()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->loadThis();
+        }
+
+        $this->global['pageTitle'] = 'event : Customers';
+        return $this->loadViews('pages/customers', $this->global, [], null);
+    }
+
     // ── Add New User ──────────────────────────────────────────────────────────
 
     public function addNew()
@@ -353,6 +365,38 @@ class User extends BaseController
                 'phonecode'  => $phone,
                 'mobile'     => esc($r->mobile),
                 'role'       => '<span class="badge ' . $badge . '">' . esc($r->role) . '</span>',
+                'createdDtm' => date('d-m-Y', strtotime($r->createdDtm)),
+                'actions'    => $actions,
+            ];
+        }
+        return $this->response->setJSON(['draw' => $draw, 'recordsTotal' => $total, 'recordsFiltered' => $filtered, 'data' => $data]);
+    }
+
+    public function customers_data()
+    {
+        if ($this->isAdmin() === false) {
+            return $this->response->setJSON(['error' => 'access']);
+        }
+        $draw   = (int)($this->request->getGet('draw') ?? 1);
+        $start  = (int)($this->request->getGet('start') ?? 0);
+        $length = (int)($this->request->getGet('length') ?? 10);
+        $search = trim($this->request->getGet('search')['value'] ?? '');
+
+        $total    = $this->userModel->customerListingCount('');
+        $filtered = $this->userModel->customerListingCount($search);
+        $rows     = $this->userModel->customerListing($search, $length, $start);
+
+        $data = [];
+        foreach ($rows as $r) {
+            $phone   = $r->phonecode != '' ? '+' . esc($r->phonecode) : '';
+            $actions = '<a class="btn btn-sm btn-light" href="' . base_url('login-history/' . $r->userId) . '" title="Login History"><i class="bi bi-clock-history"></i></a> '
+                     . '<a class="btn btn-sm btn-info" href="' . base_url('web/user_order/' . $r->userId) . '" title="Orders"><i class="bi bi-bag-fill"></i></a> '
+                     . '<a class="btn btn-sm btn-secondary" href="' . base_url('web/user_wallet/' . $r->userId) . '" title="Wallet"><i class="bi bi-wallet2"></i></a>';
+            $data[] = [
+                'name'       => esc($r->name),
+                'email'      => esc($r->email),
+                'phonecode'  => $phone,
+                'mobile'     => esc($r->mobile),
                 'createdDtm' => date('d-m-Y', strtotime($r->createdDtm)),
                 'actions'    => $actions,
             ];
